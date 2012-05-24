@@ -4,8 +4,6 @@ using System.Diagnostics;
 
 using Echo.Objects;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo
 {
 	[DebuggerDisplay("{Location}: {Count}")]
@@ -23,7 +21,8 @@ namespace Echo
 
 		public ObjectCollection(ILocation location, IEnumerable<T> collection) : this(location)
 		{
-			ListUtility.ForEach(collection, Add);
+			foreach (var o in collection)
+				Add(o);
 		}
 
 		public override void Add(T item)

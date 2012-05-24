@@ -4,8 +4,6 @@ using System.Xml;
 
 using Echo.Entities;
 
-using Ubiquity.u2ool.Serialisation;
-
 namespace Echo.Objects
 {
 	public partial class Universe
@@ -67,8 +65,8 @@ namespace Echo.Objects
 			{
 				base.ReadXml(xUniverse);
 
-				this.universe.nextObjectID = ulong.Parse(XmlHelper.GetAttribute(xUniverse, "nextObjectID"));
-				this.universe.currentTick = ulong.Parse(XmlHelper.GetAttribute(xUniverse, "currentTick"));
+				this.universe.nextObjectID = ulong.Parse(xUniverse.String("nextObjectId"));
+				this.universe.currentTick = ulong.Parse(xUniverse.String("currentTick"));
 				
 				LoadCorporations(xUniverse);
 

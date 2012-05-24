@@ -1,11 +1,10 @@
 using System;
+using System.Linq;
 using System.Xml;
 
 using Echo.Entities;
 using Echo.Events;
 using Echo.Vectors;
-
-using Ubiquity.u2ool.Collections;
 
 namespace Echo.Objects
 {
@@ -44,7 +43,7 @@ namespace Echo.Objects
 			{
 				lock (this.corporations)
 				{
-					return ListUtility.Upcast<Corporation, PlayerCorporation>(this.corporations).ReadOnly();
+					return this.corporations.OfType<PlayerCorporation>().ReadOnly();
 				}
 			}
 		}

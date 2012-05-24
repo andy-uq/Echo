@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo.Web.Controls
 {
 	public class Validation : ValidationSummary

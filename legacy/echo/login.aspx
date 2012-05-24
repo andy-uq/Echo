@@ -10,7 +10,7 @@
 	</asp:updatepanel>
 
 	<e:panel id="info" runat="server" cssclass="info">
-		<strong>Not Registered?</strong> Click <asp:hyperlink runat="server" text="here" navigateurl="~/register.aspx" /> to register now.</p>
+		<strong>Not Registered?</strong> Click <asp:hyperlink runat="server" text="here" navigateurl="~/register.aspx" /> to register now.
 	</e:panel>
 	
 	<fieldset>

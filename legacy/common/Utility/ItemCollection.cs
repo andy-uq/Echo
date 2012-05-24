@@ -5,8 +5,6 @@ using System.Diagnostics;
 using Echo.Entities;
 using Echo.Objects;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo
 {
 	public class ItemCollection<T> : BaseCollection<T> where T : IItem
@@ -17,7 +15,7 @@ namespace Echo
 
 		public ItemCollection(IEnumerable<T> collection)
 		{
-			ListUtility.ForEach(collection, Add);
+			AddRange(collection);
 		}
 
 		#region IList<T> Members

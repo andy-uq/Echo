@@ -55,10 +55,6 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Ubiquity.u2ool.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\usuite3\dev\u2ool\common\bin\Debug\Ubiquity.u2ool.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\images\bg-gradient.png" />
@@ -297,7 +293,7 @@
   <ItemGroup>
     <ProjectReference Include="..\common\common.csproj">
       <Project>{ECA5354F-35E4-4DF0-A4D1-1106C75FED37}</Project>
-      <Name>common</Name>
+      <Name>common %28legacy\common%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -7,8 +7,6 @@ using Echo.Events;
 using Echo.Objects;
 using Echo.Vectors;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo.Ships
 {
 	public delegate bool ShipAction(Ship ship, ILocation target);
@@ -257,7 +255,8 @@ namespace Echo.Ships
 		public void SetHardPoints(params HardPoint[] shipHardPoints)
 		{
 			this.hardPoints = new List<HardPoint>();
-			ListUtility.ForEach(shipHardPoints, h => this.hardPoints.Add(h.Clone()));
+			foreach (var h in shipHardPoints)
+				this.hardPoints.Add(h.Clone());
 		}
 
 		#endregion

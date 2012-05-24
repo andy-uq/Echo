@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 using Echo.Entities;
 using Echo.Events;
+using Echo.Exceptions;
 using Echo.Objects;
-
-using Ubiquity.u2ool.Collections;
-using Ubiquity.u2ool.Exceptions;
 
 namespace Echo.Bank
 {
@@ -15,7 +13,7 @@ namespace Echo.Bank
 		private readonly List<Auction> auctions;
 		private readonly StarCluster starCluster;
 
-		public ReadOnlyList<Auction> Auctions
+		public IEnumerable<Auction> Auctions
 		{
 			get { return this.auctions; }
 		}

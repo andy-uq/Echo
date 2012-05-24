@@ -67,10 +67,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Ubiquity.u2ool.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\usuite3\dev\u2ool\common\bin\Debug\Ubiquity.u2ool.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
@@ -107,7 +103,7 @@
   <ItemGroup>
     <ProjectReference Include="..\common\common.csproj">
       <Project>{ECA5354F-35E4-4DF0-A4D1-1106C75FED37}</Project>
-      <Name>common</Name>
+      <Name>common %28legacy\common%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,6 @@ using Echo.Entities;
 using Echo.Ships;
 using Echo.Vectors;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo.Objects
 {
 	public abstract class Structure : OrbitingObject

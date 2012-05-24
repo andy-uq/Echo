@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo.Objects
 {
 	public partial class BaseObject
@@ -67,7 +65,10 @@ namespace Echo.Objects
 
 			public void Save(IEnumerable<T> list, XmlElement xObjectRoot)
 			{
-				ListUtility.ForEach(list, o => Save(o, xObjectRoot));
+				foreach (var o in list)
+				{
+					Save(o, xObjectRoot);
+				}
 			}
 
 			public void LoadAll(IList<T> list, XmlElement xObjectRoot)

@@ -6,8 +6,6 @@ using Echo.Events;
 using Echo.Objects;
 using Echo.Ships;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo.Entities
 {
 	public partial class Corporation : BaseObject
@@ -40,14 +38,14 @@ namespace Echo.Entities
 
 		public List<IItem> Property { get; private set; }
 
-		public ReadOnlyList<Ship> Ships
+		public IReadOnlyList<Ship> Ships
 		{
-			get { return this.ships; }
+			get { return this.ships.ReadOnly(); }
 		}
 
-		public ReadOnlyList<Structure> Structures
+		public IReadOnlyList<Structure> Structures
 		{
-			get { return this.structures; }
+			get { return this.structures.ReadOnly(); }
 		}
 
 		public IReadOnlyList<Agent> Employees

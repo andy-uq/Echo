@@ -2,7 +2,7 @@
 
 namespace data
 {
-	public class Repository<T> : Ia
+	public class Repository<T> 
 	{
 		private List<T> contents;
 

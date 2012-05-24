@@ -1,4 +1,4 @@
-﻿<%@  language="C#" masterpagefile="~/Views/Shared/Site.Master" inherits="System.Web.Mvc.ViewPage" subtitle="Change Password" %>
+﻿<%@  language="C#" masterpagefile="~/Views/Shared/Site.Master" inherits="System.Web.Mvc.ViewPage" Title="Change Password" %>
 
 <asp:content contentplaceholderid="Main" runat="server">
 	<div class="ui-widget">

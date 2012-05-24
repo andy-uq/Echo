@@ -5,8 +5,6 @@ using System.Diagnostics;
 
 using Echo.Objects;
 
-using Ubiquity.u2ool.Collections;
-
 namespace Echo
 {
 	[DebuggerDisplay("Count: {Count}")]
@@ -22,7 +20,7 @@ namespace Echo
 		public BaseCollection(IEnumerable<T> collection)
 			: this()
 		{
-			ListUtility.ForEach(collection, Add);
+			AddRange(collection);
 		}
 
 		public int Count
@@ -143,7 +141,10 @@ namespace Echo
 
 		public void AddRange(IEnumerable<T> collection)
 		{
-			ListUtility.ForEach(collection, Add);
+			foreach (var o in collection)
+			{
+				Add(o);
+			}
 		}
 
 		public void Sort(Comparison<T> comparison)

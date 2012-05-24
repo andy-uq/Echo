@@ -7,7 +7,7 @@ namespace Echo
 {
 	public static class ListExtensions
 	{
-		public static IReadOnlyList<T> ReadOnly<T>(this List<T> list) where T : IObject
+		public static IReadOnlyList<T> ReadOnly<T>(this IEnumerable<T> list) where T : IObject
 		{
 			return new BaseCollection<T>(list);
 		}

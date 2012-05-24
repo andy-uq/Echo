@@ -64,10 +64,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Ubiquity.u2ool.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\usuite3\dev\u2ool\common\bin\Debug\Ubiquity.u2ool.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bank\Auction.cs" />
@@ -91,6 +87,7 @@
     <Compile Include="Events\EventFilter.cs" />
     <Compile Include="Events\EventPump.cs" />
     <Compile Include="Events\IEventListener.cs" />
+    <Compile Include="Exceptions\ItemNotFoundException.cs" />
     <Compile Include="Maths\Rand.cs" />
     <Compile Include="Maths\Units.cs" />
     <Compile Include="Maths\Vector.cs" />

@@ -2,8 +2,6 @@ using System;
 using System.Web;
 using System.Web.UI;
 
-using Ubiquity.u2ool;
-
 namespace Echo.Web.Controls
 {
 	public delegate string RenderValueEventHandler(object value);
@@ -94,14 +92,7 @@ namespace Echo.Web.Controls
 			{
 				if (outputFormat == null)
 				{
-					if (renderedValue is Enum)
-					{
-						renderedValue = EnumHelper.GetText((Enum)renderedValue);
-					}
-					else
-					{
-						renderedValue = renderedValue.ToString();
-					}
+					renderedValue = renderedValue.ToString();
 				}
 				else
 				{

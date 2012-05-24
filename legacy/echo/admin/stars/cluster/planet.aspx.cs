@@ -8,8 +8,6 @@ using Echo.Objects;
 using Echo.Vectors;
 using Echo.Web.Controls.Base;
 
-using Ubiquity.u2ool;
-
 namespace Echo.Web.Administration.Stars
 {
 	public partial class EditPlanetPage : EchoAdminPage, IStarClusterPage
@@ -124,7 +122,7 @@ namespace Echo.Web.Administration.Stars
 				return;
 
 			this._starCluster = Global.Universe.ObjectFactory.StarClusters.Find(t => t.TemplateID == ulong.Parse(Request.QueryString["t"])).Clone();
-			this.cacheKey = GuidHelper.GuidToString(Guid.NewGuid());
+			this.cacheKey = Guid.NewGuid().ToString();
 			Cache.Add(this.cacheKey, this._starCluster, null, Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(20), CacheItemPriority.High, null);
 		}
 

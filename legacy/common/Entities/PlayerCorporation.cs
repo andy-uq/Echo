@@ -2,15 +2,13 @@ using System;
 
 using Echo.Objects;
 
-using Ubiquity.u2ool;
-
 namespace Echo.Entities
 {
 	public partial class PlayerCorporation : Corporation
 	{
 		public PlayerCorporation()
 		{
-			ID = GuidHelper.DatabaseGuid();
+			ID = Guid.NewGuid();
 		}
 
 		public Guid ID { get; set; }

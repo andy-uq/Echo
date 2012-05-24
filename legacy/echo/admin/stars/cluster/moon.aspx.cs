@@ -8,8 +8,6 @@ using Echo.Objects;
 using Echo.Vectors;
 using Echo.Web.Controls.Base;
 
-using Ubiquity.u2ool;
-
 namespace Echo.Web.Administration.Stars
 {
 	public partial class EditMoonPage : EchoAdminPage, IStarClusterPage

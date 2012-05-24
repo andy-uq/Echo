@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 
-using Ubiquity.u2ool;
-
 namespace Echo.Objects
 {
 	public static class XmlExtensions
@@ -108,7 +106,7 @@ namespace Echo.Objects
 		public static T Enum<T>(this XmlElement element, string name)
 		{
 			string value = String(element, name);
-			return EnumHelper.Parse<T>(value);
+			return (T)(System.Enum.Parse(typeof(T), value, true));
 		}
 
 		/// <summary>Returns the enumeration value of an attribute, returns defaultValue if the attribute was not present</summary>
@@ -118,7 +116,7 @@ namespace Echo.Objects
 			string value = String(element, name, null);
 			return (value == null)
 			       	? defaultValue
-			       	: EnumHelper.Parse<T>(value);
+					: (T)(System.Enum.Parse(typeof(T), value, true));
 		}
 
 		/// <summary>Returns the enumeration value of an attribute, returns defaultValue if the attribute was not present</summary>
@@ -133,7 +131,7 @@ namespace Echo.Objects
 				return null;
 			}
 
-			return EnumHelper.Parse<T>(value);
+			return (T)(System.Enum.Parse(typeof(T), value, true));
 		}
 
 		/// <summary>Returns the date/time value of an attribute, throws an XmlException if the attribute was not present</summary>
@@ -480,7 +478,7 @@ namespace Echo.Objects
 				return defaultValue;
 			}
 
-			return GuidHelper.StringToGuid(value);
+			return new Guid(value);
 		}
 
 		/// <summary>Returns the guid value of an attribute, returns null if the attribute was not present and required was set to false</summary>
@@ -497,14 +495,14 @@ namespace Echo.Objects
 				return null;
 			}
 
-			return GuidHelper.StringToGuid(value);
+			return new Guid(value);
 		}
 
 		/// <summary>Returns the guid value of an attribute, throws an XmlException if the attribute was not present</summary>
 		public static Guid Guid(this XmlElement element, string name)
 		{
 			string value = String(element, name);
-			return GuidHelper.StringToGuid(value);
+			return new Guid(value);
 		}
 	}
 }

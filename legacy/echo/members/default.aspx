@@ -3,7 +3,7 @@
 <asp:content contentplaceholderid="main" runat="server">
 
 		<div class="info">
-			<strong>Hey!</strong> Placeholder content.</p>
+			<strong>Hey!</strong> Placeholder content.
 		</div>
 		
 </asp:content>
