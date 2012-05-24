@@ -1,0 +1,6 @@
+<Configuration>
+  <NamespaceFolders>
+    <SkipFolder>B7583D35-6D99-4A88-8AB7-A9D1CD39066B/d:Code</SkipFolder>
+    <SkipFolder>B7583D35-6D99-4A88-8AB7-A9D1CD39066B/d:UserControls</SkipFolder>
+  </NamespaceFolders>
+</Configuration>

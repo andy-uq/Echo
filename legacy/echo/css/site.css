@@ -1,0 +1,417 @@
+﻿/*
+* jQuery UI CSS Framework
+* Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
+* Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
+*/
+
+body
+{
+	font-family: "Transponder AOE" , "Trebuchet MS" , sans-serif;
+	font-size: 14pt;
+	color: #21b60c;
+	margin: 0px;
+	background-color: #126607;
+	background-image: url(images/bg-gradient.png);
+	background-repeat: repeat-x;
+	font-weight: bold;
+}
+
+p, td
+{
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3, h4
+{
+	font-family: Starcraft, "Trebuchet MS" , sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #12e22a;
+}
+
+h1
+{
+	font-size: 2em;
+	margin-bottom: 20px;
+}
+h2
+{
+	font-size: 1.5em;
+}
+h3
+{
+	font-size: 1.1em;
+}
+
+table
+{
+	width: 100%;
+	border: 1px solid #173a12;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+tr>td
+{
+	padding-left: 20px;
+}
+
+thead
+{
+	text-align: left;
+	color: Black;
+	background-color: #173a12;
+}
+
+tbody tr:hover
+{
+	color: #000;
+	background-color: #21b60c;
+}
+
+fieldset
+{
+	border: 1px solid #173a12;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	margin-bottom: 20px;
+}
+
+legend
+{
+	font-family: Starcraft, "Trebuchet MS" , sans-serif;
+	color: #12e22a;
+	margin-bottom: 10px;
+}
+
+fieldset p
+{
+	margin-bottom: 20px;
+}
+
+fieldset label, fieldset input, fieldset textarea, fieldset select
+{
+	margin-left: 40px;
+}
+
+fieldset input[type=checkbox]+label
+{
+	margin-left: 5px;
+}
+
+a, a:hover, a:visited
+{
+	color: #5aff43;
+	cursor: pointer;
+}
+
+div.clearfix
+{
+	clear: both;
+}
+
+#header
+{
+	background-color: #093304;
+}
+
+#header-inner
+{
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.logo
+{
+	position: fixed;
+	width: 150px;
+	height: 500px;
+}
+
+#header .logo
+{
+	left: 0px;
+	top: 0px;
+}
+
+#footer .logo
+{
+	bottom: 0px;
+	right: 0px;
+}
+
+.logo h2
+{
+	background-image: url(images/logo-2.png);
+	display: block;
+	text-indent: -99999px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	height: 100%;
+}
+
+#logindisplay
+{
+	float: right;
+}
+
+#logindisplay li
+{
+	display: inline;
+	list-style-type: none;
+}
+
+#logindisplay a
+{
+	color: #5aff43;
+}
+
+#logindisplay .username
+{
+	color: #126607;
+}
+
+#content
+{
+	width: 1200px;
+	margin: 0 auto;
+	background-color: #000000;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border: 1px solid #21b60c;
+	clear: both;
+}
+
+#main
+{
+	padding: 20px;
+}
+
+#nav
+{
+	margin: 0 auto 20px auto;
+	width: 1200px;
+}
+
+#nav ul
+{
+	margin: 0px 0px 20px;
+	padding: 0px;
+	float: left;
+}
+
+#nav li
+{
+	text-align: center;
+	color: #5aff43;
+	border-right: 1px solid #173a12;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	width: 237px;
+	height: 45px;
+	list-style-type: none;
+}
+
+#nav li a
+{
+	background-image: url(images/nav.png);
+	width: 100%;
+	height: 35px;
+	float: left;
+	padding-top: 10px;
+}
+
+#nav li.active, #nav li:hover, #nav li.active a, #nav li:hover a
+{
+	background-position: left bottom;
+}
+
+#nav li.right.active, #nav li.right:hover, #nav li.right.active a, #nav li.right:hover a
+{
+	background-position: right bottom;
+}
+
+#nav li.left
+{
+	background-image: url(images/nav-left.png);
+	background-repeat: no-repeat;
+	width: 232px;
+	padding-left: 5px;
+}
+
+#nav li.right
+{
+	background-image: url(images/nav-right.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+	border-right: none;
+	width: 233px;
+	padding-right: 5px;
+}    
+
+#alpha
+{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #030;
+	filter: alpha(opacity=75);
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+	z-index: 100;
+}
+
+#error
+{
+}
+
+#error-inner
+{
+	position: fixed;
+	width: 800px;
+	top: 33%;
+	left: 50%;
+	background-image: url(images/alert.png);
+	background-position: 20px 20px;
+	background-color: #000;
+	min-height: 100px;
+	background-repeat: no-repeat;
+	padding: 20px;
+	padding-left: 155px;
+	margin: 0 400px 20px -400px;
+	border: 1px solid #21b60c;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	z-index: 101;
+}
+
+#error ul
+{
+	padding-left: 0px;
+}
+
+#error li
+{
+	display: block;
+	list-style-type: disc;
+}
+
+#error span.close
+{
+	position:relative;
+	left: 320px;
+	margin:20px 75px 0px -75px;
+}
+
+div.popup div.inner
+{
+	position: fixed;
+	width: 800px;
+	top: 20%;
+	left: 50%;
+	background-image: url(images/info.png);
+	background-position: 20px 20px;
+	background-color: #000;
+	min-height: 100px;
+	background-repeat: no-repeat;
+	padding: 20px;
+	padding-left: 155px;
+	margin: 0 400px 20px -400px;
+	border: 1px solid #21b60c;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	z-index: 101;
+}
+
+div.popup fieldset
+{
+	float:left;
+	width:580px;
+}
+
+div.popup span.close
+{
+	float:right;
+}
+
+input, textarea, select
+{
+	font: 14pt "Transponder AOE" , "Trebuchet MS" , sans-serif;
+	color: #21b60c;
+	background-color: #173a12;
+	border: 1px solid #21b60c;
+	padding: 2px;
+	padding-left: 5px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+input.error, textarea.error, select.error, input:hover, textarea:hover, select:hover, input:focus, textarea:focus, select:focus
+{
+	color: #5aff43;
+	background-color: #126607;
+	border: 1px solid #5aff43;
+}
+
+.button
+{
+	background-image: url(images/button-right.png);
+	background-repeat: no-repeat;
+	background-position: bottom right;
+	height: 30px;
+	float: left;
+	padding-right: 5px;
+}
+
+.button a
+{
+	background-position: bottom left;
+	background-image: url(images/button-left.png);
+	background-repeat: no-repeat;
+	text-align: center;
+	display: block;
+	height: 27px;
+	padding: 3px 20px 0px;
+	min-width: 125px;
+	text-decoration: none;
+}
+
+.button:hover a
+{
+	background-position: top left;
+	text-decoration: none;
+}
+
+.button:hover
+{
+	background-position: top right;
+}
+
+div.submit
+{
+	margin-top: 20px;
+	clear: both;
+}
+
+.info
+{
+	background-image: url(images/info.png);
+	min-height: 100px;
+	background-repeat: no-repeat;
+	padding-left: 135px;
+	margin-bottom: 20px;
+}
+
+th.details, td.details
+{
+	text-align: right;
+	width: 50px;
+	padding-left: 0px;
+	padding-right: 20px;
+}

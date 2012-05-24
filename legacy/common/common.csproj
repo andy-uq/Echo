@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ECA5354F-35E4-4DF0-A4D1-1106C75FED37}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Echo</RootNamespace>
+    <AssemblyName>Echo.Common</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Ubiquity.u2ool.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\usuite3\dev\u2ool\common\bin\Debug\Ubiquity.u2ool.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bank\Auction.cs" />
+    <Compile Include="Bank\MarketPlace.cs" />
+    <Compile Include="Entities\Agent.cs" />
+    <Compile Include="Entities\Corporation.cs" />
+    <Compile Include="Entities\PlayerCorporation.cs" />
+    <Compile Include="Entities\AgentStatistics.cs" />
+    <Compile Include="Entities\Templates\Corporation.cs" />
+    <Compile Include="Entities\Templates\PlayerCorporation.cs" />
+    <Compile Include="Entities\State\Agent.cs" />
+    <Compile Include="Entities\State\Corporation.cs" />
+    <Compile Include="Entities\State\PlayerCorporation.cs" />
+    <Compile Include="Enumerations\AgentStatistic.cs" />
+    <Compile Include="Enumerations\DamageType.cs" />
+    <Compile Include="Enumerations\HardPointPosition.cs" />
+    <Compile Include="Enumerations\ObjectType.cs" />
+    <Compile Include="Enumerations\Statistic.cs" />
+    <Compile Include="Enumerations\StructureType.cs" />
+    <Compile Include="Events\EventClass.cs" />
+    <Compile Include="Events\EventFilter.cs" />
+    <Compile Include="Events\EventPump.cs" />
+    <Compile Include="Events\IEventListener.cs" />
+    <Compile Include="Maths\Rand.cs" />
+    <Compile Include="Maths\Units.cs" />
+    <Compile Include="Maths\Vector.cs" />
+    <Compile Include="Objects\AsteroidBelt.cs" />
+    <Compile Include="Objects\Blueprint.cs" />
+    <Compile Include="Objects\CelestialBody.cs" />
+    <Compile Include="Objects\IItem.cs" />
+    <Compile Include="Objects\Item.cs" />
+    <Compile Include="Objects\JumpGate.cs" />
+    <Compile Include="Objects\BaseLocation.cs" />
+    <Compile Include="Objects\Manufactory.cs" />
+    <Compile Include="Objects\Moon.cs" />
+    <Compile Include="Objects\BaseObject.cs" />
+    <Compile Include="Objects\OrbitingObject.cs" />
+    <Compile Include="Objects\Ore.cs" />
+    <Compile Include="Objects\Planet.cs" />
+    <Compile Include="Objects\Refinery.cs" />
+    <Compile Include="Objects\ShipYard.cs" />
+    <Compile Include="Objects\Templates\BaseLocation.cs" />
+    <Compile Include="Objects\Templates\BaseObject.cs" />
+    <Compile Include="Objects\Templates\Moon.cs" />
+    <Compile Include="Objects\Templates\ObjectFactory.cs" />
+    <Compile Include="Objects\State\XmlExtensions.cs" />
+    <Compile Include="Objects\State\Universe.cs" />
+    <Compile Include="Objects\Templates\Planet.cs" />
+    <Compile Include="Objects\Templates\SolarSystem.cs" />
+    <Compile Include="Objects\Templates\StarCluster.cs" />
+    <Compile Include="Ships\Ship.cs" />
+    <Compile Include="Ships\ShipTask.cs" />
+    <Compile Include="Objects\SolarSystem.cs" />
+    <Compile Include="Objects\StarCluster.cs" />
+    <Compile Include="Objects\Structure.cs" />
+    <Compile Include="Objects\Universe.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ships\HardPoint.cs" />
+    <Compile Include="Ships\ShipStatistics.cs" />
+    <Compile Include="Ships\StatisticValue.cs" />
+    <Compile Include="Ships\Weapon.cs" />
+    <Compile Include="Entities\Templates\Agent.cs" />
+    <Compile Include="Utility\BaseCollection.cs" />
+    <Compile Include="Utility\IReadOnlyList.cs" />
+    <Compile Include="Utility\ItemCollection.cs" />
+    <Compile Include="Utility\ListExtensions.cs" />
+    <Compile Include="Utility\ObjectCollection.cs" />
+    <Compile Include="Utility\RomanNumbers.cs" />
+    <Compile Include="Utility\StringExtensions.cs" />
+    <Compile Include="Objects\State\BaseObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

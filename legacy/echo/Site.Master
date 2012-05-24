@@ -1,0 +1,46 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Echo.Web.Site" %>
+<%@ Register src="UserControls/loggedin.ascx" tagname="loggedin" tagprefix="echo" %>
+<%@ Register src="UserControls/nav.ascx" tagname="nav" tagprefix="echo" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="head" runat="server">
+	<title></title>
+	<link href="~/css/site.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/script/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="/script/jquery.validate.js"></script>
+	<script type="text/javascript" src="/script/jquery-ui-1.7.custom.min.js"></script>
+	<script type="text/javascript" src="/script/site.js"></script>
+</head>
+<body>
+	<div id="header">
+		<div id="header-inner">
+			<div class="logo">
+				<h2>ECHO</h2>				
+			</div>		
+			<echo:loggedin id="loggedin" runat="server" />
+		</div>
+		<div style="clear:both"></div>
+	</div>
+	<echo:nav runat="server" />
+	<div id="content">
+		<div id="main">
+			<e:panel id="phTitle" runat="server">
+				<h1><asp:literal id="litSubTitle" runat="server" /></h1>
+			</e:panel>
+
+			<form id="form" runat="server">
+				<asp:scriptmanager id="_scriptmanager" runat="server" />
+				<asp:customvalidator id="globalvalidate" runat="server" display="None" clientvalidationfunction="validate" />
+			
+				<asp:contentplaceholder id="main" runat="server" />
+				<div class="clearfix"></div>
+			</form>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="logo">
+			<h2>ECHO</h2>				
+		</div>		
+	</div>
+</body>
+</html>

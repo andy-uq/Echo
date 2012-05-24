@@ -1,0 +1,10 @@
+﻿div.coord input[type=text]
+{
+	width: 100px;
+	margin: 0px;
+}
+
+div.coord input+label
+{
+	margin-left: 10px;
+}

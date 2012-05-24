@@ -1,0 +1,8 @@
+<Configuration>
+  <NamespaceFolders>
+    <SkipFolder>ECA5354F-35E4-4DF0-A4D1-1106C75FED37/d:Entities/d:State</SkipFolder>
+    <SkipFolder>ECA5354F-35E4-4DF0-A4D1-1106C75FED37/d:Enumerations</SkipFolder>
+    <SkipFolder>ECA5354F-35E4-4DF0-A4D1-1106C75FED37/d:Objects/d:Templates</SkipFolder>
+    <SkipFolder>ECA5354F-35E4-4DF0-A4D1-1106C75FED37/d:Utility</SkipFolder>
+  </NamespaceFolders>
+</Configuration>

@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B7583D35-6D99-4A88-8AB7-A9D1CD39066B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Echo.Web</RootNamespace>
+    <AssemblyName>Echo.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <UseIISExpress>false</UseIISExpress>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Ubiquity.u2ool.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\usuite3\dev\u2ool\common\bin\Debug\Ubiquity.u2ool.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\images\bg-gradient.png" />
+    <Content Include="css\images\logo.png" />
+    <Content Include="css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="css\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="css\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="css\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="css\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="css\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="css\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="css\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="css\images\ui-icons_222222_256x240.png" />
+    <Content Include="css\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="css\images\ui-icons_454545_256x240.png" />
+    <Content Include="css\images\ui-icons_888888_256x240.png" />
+    <Content Include="css\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="css\site.css" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="admin\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\starclusters.aspx.cs">
+      <DependentUpon>starclusters.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\starclusters.aspx.designer.cs">
+      <DependentUpon>starclusters.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\cluster\moon.aspx.cs">
+      <DependentUpon>moon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\cluster\moon.aspx.designer.cs">
+      <DependentUpon>moon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\cluster\planet.aspx.cs">
+      <DependentUpon>planet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\cluster\planet.aspx.designer.cs">
+      <DependentUpon>planet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\cluster\edit.aspx.cs">
+      <DependentUpon>edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\cluster\edit.aspx.designer.cs">
+      <DependentUpon>edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\controls\moon.ascx.cs">
+      <DependentUpon>moon.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\controls\moon.ascx.designer.cs">
+      <DependentUpon>moon.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\controls\planet.ascx.cs">
+      <DependentUpon>planet.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\controls\planet.ascx.designer.cs">
+      <DependentUpon>planet.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\controls\solarsystem.ascx.cs">
+      <DependentUpon>solarsystem.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\controls\solarsystem.ascx.designer.cs">
+      <DependentUpon>solarsystem.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\cluster\solarsystem.aspx.cs">
+      <DependentUpon>solarsystem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\cluster\solarsystem.aspx.designer.cs">
+      <DependentUpon>solarsystem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\view.aspx.cs">
+      <DependentUpon>view.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\view.aspx.designer.cs">
+      <DependentUpon>view.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\stars\cluster\create.aspx.cs">
+      <DependentUpon>create.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\stars\cluster\create.aspx.designer.cs">
+      <DependentUpon>create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Code\CreateMode.cs" />
+    <Compile Include="Code\DisplayMode.cs" />
+    <Compile Include="Code\XmlMembershipProvider.cs" />
+    <Compile Include="Controls\Base\EchoAdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Base\EchoMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Base\EchoPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Base\Pages.cs" />
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\ClientButton.cs" />
+    <Compile Include="Controls\Field.cs" />
+    <Compile Include="Controls\Popup.cs" />
+    <Compile Include="Controls\Validation.cs" />
+    <Compile Include="Controls\Value.cs" />
+    <Compile Include="Controls\Panel.cs" />
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="logout.aspx.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="logout.aspx.designer.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="members\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="members\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="members\market.aspx.cs">
+      <DependentUpon>market.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="members\market.aspx.designer.cs">
+      <DependentUpon>market.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="members\personnel.aspx.cs">
+      <DependentUpon>personnel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="members\personnel.aspx.designer.cs">
+      <DependentUpon>personnel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="members\settings.aspx.cs">
+      <DependentUpon>settings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="members\settings.aspx.designer.cs">
+      <DependentUpon>settings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="register.aspx.cs">
+      <DependentUpon>register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="register.aspx.designer.cs">
+      <DependentUpon>register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\loggedin.ascx.cs">
+      <DependentUpon>loggedin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\loggedin.ascx.designer.cs">
+      <DependentUpon>loggedin.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\nav.ascx.cs">
+      <DependentUpon>nav.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\nav.ascx.designer.cs">
+      <DependentUpon>nav.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="login.aspx" />
+    <Content Include="logout.aspx" />
+    <Content Include="members\settings.aspx" />
+    <Content Include="register.aspx" />
+    <Content Include="script\jquery-1.3.2.min.js" />
+    <Content Include="script\jquery-ui-1.7.custom.min.js" />
+    <Content Include="script\jquery.validate.js" />
+    <Content Include="script\site.js" />
+    <Content Include="Site.Master" />
+    <Content Include="UserControls\loggedin.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="admin\default.aspx" />
+    <Content Include="admin\starclusters.aspx" />
+    <Content Include="admin\stars\cluster\moon.aspx" />
+    <Content Include="admin\stars\cluster\planet.aspx" />
+    <Content Include="admin\stars\cluster\edit.aspx" />
+    <Content Include="admin\stars\controls\moon.ascx" />
+    <Content Include="admin\stars\controls\planet.ascx" />
+    <Content Include="admin\stars\controls\solarsystem.ascx" />
+    <Content Include="admin\stars\cluster\solarsystem.aspx" />
+    <Content Include="admin\stars\view.aspx" />
+    <Content Include="admin\stars\cluster\create.aspx" />
+    <Content Include="App_Data\templates.xml" />
+    <Content Include="App_Data\universe.xml" />
+    <Content Include="css\admin.css" />
+    <Content Include="members\default.aspx" />
+    <Content Include="members\market.aspx" />
+    <Content Include="members\personnel.aspx" />
+    <Content Include="members\Web.config" />
+    <Content Include="UserControls\nav.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\common\common.csproj">
+      <Project>{ECA5354F-35E4-4DF0-A4D1-1106C75FED37}</Project>
+      <Name>common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1071</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

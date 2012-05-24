@@ -1,0 +1,51 @@
+<universe nextTemplateID="5">
+  <playercorporation templateID="1" startupEmployeeCount="5" startupCapital="10000" />
+  <corporation templateID="2" startupEmployeeCount="5" startupCapital="10000" />
+  <agent templateID="3">
+    <stats variation="0.5000">
+      <stat type="Charisma" value="5" current="0" />
+      <stat type="Intelligence" value="5" current="0" />
+      <stat type="Perception" value="5" current="0" />
+      <stat type="Memory" value="5" current="0" />
+      <stat type="Willpower" value="5" current="0" />
+    </stats>
+  </agent>
+  <starclusters>
+    <starcluster templateID="4">
+      <coordinates x="0.0000" y="0.0000" />
+      <solarsystems>
+        <solarsystem templateID="5">
+          <coordinates x="0.0000" y="0.0000" />
+          <planets />
+        </solarsystem>
+        <solarsystem templateID="6">
+          <coordinates x="0.0000" y="0.0000" />
+          <planets>
+            <planet templateID="7" size="0.0000">
+              <coordinates x="0.0000" y="0.0000" />
+              <moons />
+            </planet>
+            <planet templateID="8" size="0.0000">
+              <coordinates x="0.0000" y="0.0000" />
+              <moons />
+            </planet>
+            <planet templateID="9" size="0.0000">
+              <coordinates x="0.0000" y="0.0000" />
+              <moons>
+                <moon templateID="10" size="0.0000">
+                  <coordinates x="0.0000" y="0.0000" />
+                </moon>
+                <moon templateID="11" size="0.0000">
+                  <coordinates x="0.0000" y="0.0000" />
+                </moon>
+                <moon templateID="12" size="0.0000">
+                  <coordinates x="0.0000" y="0.0000" />
+                </moon>
+              </moons>
+            </planet>
+          </planets>
+        </solarsystem>
+      </solarsystems>
+    </starcluster>
+  </starclusters>
+</universe>

@@ -1,0 +1,130 @@
+<universe objectID="0" nextObjectID="7" currentTick="0">
+  <corporations>
+    <player objectID="1" name="AndyCorp">
+      <details id="62982fd7-7ee3-4531-8984-92fb4778cb08">
+        <username>andy</username>
+        <password>3Mpal9j5Zy1E/BDwtL5GVva0WF4=</password>
+        <email>andy@ubiquity.co.nz</email>
+        <lastLoginDate>Mar 21, 2009 19:37:58</lastLoginDate>
+        <lastActivityDate>Mar 21, 2009 19:37:58</lastActivityDate>
+        <createDate>Jan 1, 0001</createDate>
+        <isApproved>True</isApproved>
+        <passwordAttempts>1</passwordAttempts>
+      </details>
+      <agents>
+        <agent objectID="2" name="Drone 0">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="6" current="6" />
+            <stat type="Intelligence" value="5" current="5" />
+            <stat type="Perception" value="4" current="4" />
+            <stat type="Memory" value="3" current="3" />
+            <stat type="Willpower" value="5" current="5" />
+          </stats>
+        </agent>
+        <agent objectID="3" name="Drone 1">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="4" current="4" />
+            <stat type="Intelligence" value="4" current="4" />
+            <stat type="Perception" value="5" current="5" />
+            <stat type="Memory" value="7" current="7" />
+            <stat type="Willpower" value="7" current="7" />
+          </stats>
+        </agent>
+        <agent objectID="4" name="Drone 2">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="3" current="3" />
+            <stat type="Intelligence" value="6" current="6" />
+            <stat type="Perception" value="5" current="5" />
+            <stat type="Memory" value="7" current="7" />
+            <stat type="Willpower" value="3" current="3" />
+          </stats>
+        </agent>
+        <agent objectID="5" name="Drone 3">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="5" current="5" />
+            <stat type="Intelligence" value="4" current="4" />
+            <stat type="Perception" value="5" current="5" />
+            <stat type="Memory" value="4" current="4" />
+            <stat type="Willpower" value="7" current="7" />
+          </stats>
+        </agent>
+        <agent objectID="6" name="Drone 4">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="7" current="7" />
+            <stat type="Intelligence" value="4" current="4" />
+            <stat type="Perception" value="3" current="3" />
+            <stat type="Memory" value="3" current="3" />
+            <stat type="Willpower" value="4" current="4" />
+          </stats>
+        </agent>
+      </agents>
+    </player>
+    <player objectID="1" name="Bob">
+      <details id="f419c3b3-e40f-458a-8ab6-08cef8cdd67a">
+        <username>andy-c</username>
+        <password>1sHiXN5zJs+s3/TElIqAnZYDkcs=</password>
+        <email>andy.uq@gmail.com</email>
+        <createDate>May 5, 2012 12:00:45</createDate>
+        <isApproved>False</isApproved>
+        <passwordAttempts>0</passwordAttempts>
+      </details>
+      <agents>
+        <agent objectID="2" name="Drone 0">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="7" current="7" />
+            <stat type="Intelligence" value="5" current="5" />
+            <stat type="Perception" value="3" current="3" />
+            <stat type="Memory" value="5" current="5" />
+            <stat type="Willpower" value="3" current="3" />
+          </stats>
+        </agent>
+        <agent objectID="3" name="Drone 1">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="6" current="6" />
+            <stat type="Intelligence" value="5" current="5" />
+            <stat type="Perception" value="7" current="7" />
+            <stat type="Memory" value="5" current="5" />
+            <stat type="Willpower" value="6" current="6" />
+          </stats>
+        </agent>
+        <agent objectID="4" name="Drone 2">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="3" current="3" />
+            <stat type="Intelligence" value="4" current="4" />
+            <stat type="Perception" value="6" current="6" />
+            <stat type="Memory" value="5" current="5" />
+            <stat type="Willpower" value="4" current="4" />
+          </stats>
+        </agent>
+        <agent objectID="5" name="Drone 3">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="4" current="4" />
+            <stat type="Intelligence" value="5" current="5" />
+            <stat type="Perception" value="4" current="4" />
+            <stat type="Memory" value="3" current="3" />
+            <stat type="Willpower" value="7" current="7" />
+          </stats>
+        </agent>
+        <agent objectID="6" name="Drone 4">
+          <employer objID="1" objType="Corporation" />
+          <stats>
+            <stat type="Charisma" value="6" current="6" />
+            <stat type="Intelligence" value="4" current="4" />
+            <stat type="Perception" value="7" current="7" />
+            <stat type="Memory" value="7" current="7" />
+            <stat type="Willpower" value="3" current="3" />
+          </stats>
+        </agent>
+      </agents>
+    </player>
+  </corporations>
+</universe>
