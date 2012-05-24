@@ -65,8 +65,8 @@ namespace Echo.Objects
 			{
 				base.ReadXml(xUniverse);
 
-				this.universe.nextObjectID = ulong.Parse(xUniverse.String("nextObjectId"));
-				this.universe.currentTick = ulong.Parse(xUniverse.String("currentTick"));
+				this.universe.nextObjectID = xUniverse.UInt64("nextObjectID");
+				this.universe.currentTick = xUniverse.UInt64("currentTick");
 				
 				LoadCorporations(xUniverse);
 

@@ -37,7 +37,7 @@ namespace Echo.Web {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Echo.Web.Controls.panel info;
+        protected global::Echo.Web.Controls.Panel info;
         
         /// <summary>
         /// txtUsername control.
@@ -73,6 +73,6 @@ namespace Echo.Web {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Echo.Web.Controls.button btnLogin;
+        protected global::Echo.Web.Controls.Button btnLogin;
     }
 }

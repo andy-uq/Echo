@@ -4,7 +4,7 @@
 	if ( Request.IsAuthenticated )
 	{
 %>
-	<li class="username"><%= Html.Encode(Page.User.Identity.Name) %></span></li>
+	<li class="username"><%= Html.Encode(Page.User.Identity.Name) %></li>
 	<li><%= Html.ActionLink("My Settings", "Settings", "Account") %></li>
 	<li><%= Html.ActionLink("Logout", "LogOff", "Account") %></li>
 <%

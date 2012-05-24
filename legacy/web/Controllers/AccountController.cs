@@ -50,6 +50,11 @@ namespace Echo.Web.Controllers
 			return View();
 		}
 
+		public ActionResult Settings()
+		{
+			return Content("TODO");
+		}
+
 		[AcceptVerbs(HttpVerbs.Post)]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings",
 			Justification = "Needs to take same parameter type as Controller.Redirect()")]
