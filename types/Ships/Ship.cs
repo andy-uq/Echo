@@ -1,9 +1,13 @@
-﻿using Echo.Celestial;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Echo.Celestial;
 
 namespace Echo.Ships
 {
-	public class Ship : ILocation, IMoves
+	public partial class Ship : ILocation, IMoves
 	{
+		private List<HardPoint> _hardPoints;
+
 		public ObjectType ObjectType
 		{
 			get { return ObjectType.Ship; }
@@ -13,31 +17,34 @@ namespace Echo.Ships
 		public string Name { get; set; }
 		public Position Position { get; set; }
 
+		public IEnumerable<HardPoint> HardPoints
+		{
+			get { return _hardPoints; }
+		}
+
 		public SolarSystem SolarSystem
 		{
 			get { return Position.GetSolarSystem(); }
 		}
 
+		/// <summary>
+		/// Returns true if a hard point can aim at a particular location
+		/// </summary>
+		public bool CanTrack(ILocation target)
+		{
+			return _hardPoints.Any(x => x.CanTrack(target));
+		}
+
+		/// <summary>
+		/// Returns true if a hard point can move in time to aim at a target
+		/// </summary>
+		public bool CanAimAt(ILocation target)
+		{
+			return _hardPoints.Any(x => x.InRange(target));
+		}
+
 		public void Tick(ulong tick)
 		{
-
-		}
-	}
-
-	public static class PositionExtensions
-	{
-		public static SolarSystem GetSolarSystem(this Position position)
-		{
-			while (position.Location != null)
-			{
-				var solarSystem = position.Location as SolarSystem;
-				if (solarSystem != null)
-					return solarSystem;
-
-				position = position.Location.Position;
-			}
-
-			return null;
 		}
 	}
 }

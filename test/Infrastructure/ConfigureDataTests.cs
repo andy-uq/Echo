@@ -10,7 +10,6 @@ namespace Echo.Tests.Infrastructure
 	[TestFixture]
 	public class ConfigureDataTests
 	{
-
 		public class A
 		{
 			public string Name { get; set; }
@@ -35,29 +34,33 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void CanCreateDb()
 		{
-			var fresh = new CreateFreshDatabase("empty");
-			var configurationBuilder = new Autofac.ContainerBuilder();
-			
-			fresh.Create(configurationBuilder);
-			var resolver = configurationBuilder.Build();
+			using ( var fresh = new CreateFreshDatabase("empty") )
+			{
+				var configurationBuilder = new Autofac.ContainerBuilder();
 
-			var dbA = resolver.Resolve<ISisoDatabase>();
-			var dbB = resolver.Resolve<ISisoDatabase>();
+				fresh.Create(configurationBuilder);
+				var resolver = configurationBuilder.Build();
 
-			Assert.That(dbA, Is.SameAs(dbB));
+				var dbA = resolver.Resolve<ISisoDatabase>();
+				var dbB = resolver.Resolve<ISisoDatabase>();
+
+				Assert.That(dbA, Is.SameAs(dbB));
+			}
 		}
 
-		[Test, Ignore("Siso does not support nested structures")]
+		[Test, Ignore("Siso does not support nested structures (Causes infinite loop)")]
 		public void CanCreateNestedStructure()
 		{
-			var fresh = new CreateFreshDatabase("db_for_a");
-			var configurationBuilder = new Autofac.ContainerBuilder();
+			using ( var fresh = new CreateFreshDatabase("db_for_a") )
+			{
+				var configurationBuilder = new Autofac.ContainerBuilder();
 
-			fresh.Create(configurationBuilder);
-			var resolver = configurationBuilder.Build();
+				fresh.Create(configurationBuilder);
+				var resolver = configurationBuilder.Build();
 
-			var dbA = resolver.Resolve<ISisoDatabase>();
-			dbA.UseOnceTo().Insert(new A() { Name = "Bob" });
+				var dbA = resolver.Resolve<ISisoDatabase>();
+				dbA.UseOnceTo().Insert(new A() {Name = "Bob"});
+			}
 		}
 	}
 }

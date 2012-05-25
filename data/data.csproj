@@ -45,17 +45,21 @@
     <Reference Include="NCore">
       <HintPath>..\packages\NCore.0.28.0\lib\net40\NCore.dll</HintPath>
     </Reference>
-    <Reference Include="PineCone">
-      <HintPath>..\packages\PineCone.1.0.0\lib\net40\PineCone.dll</HintPath>
+    <Reference Include="PineCone, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PineCone.2.0.0\lib\net40\PineCone.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb">
-      <HintPath>..\packages\SisoDb.11.5.0\lib\net40\SisoDb.dll</HintPath>
+    <Reference Include="SisoDb, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SisoDb.12.0.0\lib\net40\SisoDb.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.Serialization">
-      <HintPath>..\packages\SisoDb.11.5.0\lib\net40\SisoDb.Serialization.dll</HintPath>
+    <Reference Include="SisoDb.Serialization, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SisoDb.12.0.0\lib\net40\SisoDb.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.SqlCe4">
-      <HintPath>..\packages\SisoDb.SqlCe4.11.5.0\lib\net40\SisoDb.SqlCe4.dll</HintPath>
+    <Reference Include="SisoDb.SqlCe4, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SisoDb.SqlCe4.12.0.0\lib\net40\SisoDb.SqlCe4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

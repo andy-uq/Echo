@@ -12,12 +12,13 @@ namespace Echo.Tests.StatePersistence
 	public class StateTest
 	{
 		private string _connectionString;
+		private IDisposable _databaseHandle;
 
 		protected ISisoDatabase Database { get; set; }
 		protected MockUniverse Universe { get; set; }
 
 		[SetUp]
-		public void SetUp()
+		public virtual void SetUp()
 		{
 			var fresh = new CreateFreshDatabase("starClusters");
 			var configurationBuilder = new Autofac.ContainerBuilder();
@@ -29,6 +30,15 @@ namespace Echo.Tests.StatePersistence
 
 			Database = resolver.Resolve<ISisoDatabase>();
 			Universe = new MockUniverse();
+
+			_databaseHandle = fresh;
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			if (_databaseHandle != null)
+				_databaseHandle.Dispose();
 		}
 
 		protected void DumpObjects(string name)

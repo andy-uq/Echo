@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -7,6 +8,7 @@ namespace test
 	public class TestSettings
 	{
 		public string BasePath { get; set; }
+		private static Dictionary<string, int> _uniqueSeed = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
 		private static readonly TestSettings LaptopSettings = new TestSettings()
 		                                              	{
@@ -28,12 +30,20 @@ namespace test
 
 			Debug.Assert(directory != null, "directory != null");
 
-			int num = 1;
+			int num = 0;
 			Func<string> fname = () => Path.Combine(directory, string.Format("{0}_{1:d4}{2}", name, num, extension));
-
-			while (File.Exists(fname()))
+	
+			lock ( _uniqueSeed )
 			{
-				num++;
+				if (!_uniqueSeed.TryGetValue(filename, out num))
+					num = 1;
+
+				while (File.Exists(fname()))
+				{
+					num++;
+				}
+
+				_uniqueSeed[filename] = (num + 1);
 			}
 
 			return fname();

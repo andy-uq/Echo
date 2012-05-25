@@ -2,22 +2,10 @@
 
 namespace Echo
 {
-	public class ExceptionHandler
+	public static class ExceptionHandler
 	{
-		private static IExceptionHandler _exceptionHandler = new NullExceptionHandler();
-
-		private class NullExceptionHandler : IExceptionHandler
-		{
-			public Exception Warn(Exception exception)
-			{
-				throw exception;
-			}
-		}
-
-		static ExceptionHandler() { }
-
-		private ExceptionHandler()
-		{}
+		private static readonly NullExceptionHandler _nullExceptionHandler = new NullExceptionHandler();
+		private static IExceptionHandler _exceptionHandler = null;
 
 		public static void Initialise(IExceptionHandler exceptionHandler)
 		{
@@ -26,8 +14,24 @@ namespace Echo
 
 		public static Exception Warn(Exception exception)
 		{
-			return _exceptionHandler.Warn(exception);
+			return (_exceptionHandler ?? _nullExceptionHandler).Warn(exception);
 		}
+
+		#region Nested type: NullExceptionHandler
+
+		private class NullExceptionHandler : IExceptionHandler
+		{
+			#region IExceptionHandler Members
+
+			Exception IExceptionHandler.Warn(Exception exception)
+			{
+				throw exception;
+			}
+
+			#endregion
+		}
+
+		#endregion
 	}
 
 	public interface IExceptionHandler

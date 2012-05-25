@@ -1,6 +1,6 @@
 ﻿namespace Echo.Ships
 {
-	public class Weapon : ILocation
+	public partial class Weapon : ILocation
 	{
 		public ObjectType ObjectType
 		{

@@ -4,6 +4,7 @@ namespace Echo.Maths
 	{
 		public const double EarthRadius = 6378.1;
 		public const double MoonRadius = 1738.1;
+		public const double Tolerance = 0.0001;
 
 		/// <summary>150,000,000 km per AU</summary>
 		public const double AstronomicalUnits = 1.5E8;

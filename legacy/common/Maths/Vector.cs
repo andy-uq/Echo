@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Echo.Maths;
 
 namespace Echo.Vectors
 {
@@ -37,7 +38,7 @@ namespace Echo.Vectors
 
 		private static bool AreWithinTolerance(double a, double b)
 		{
-			return Math.Round(a, 4) == Math.Round(b, 4);
+			return Math.Abs(a - b) < Units.Tolerance;
 		}
 
 		#endregion

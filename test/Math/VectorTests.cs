@@ -24,6 +24,9 @@ namespace Echo.Tests.Math
 			Assert.That(Vector.Parse("(1.2345, 2.3456, 3.4567)"), Is.EqualTo(new Vector(1.2345, 2.3456, 3.4567)));
 			Assert.That(Vector.Parse("(1, 0, 0)"), Is.EqualTo(new Vector(1, 0, 0)));
 			Assert.That(Vector.Parse("(1,0,0)"), Is.EqualTo(new Vector(1, 0, 0)));
+			Assert.That(Vector.Parse("(-1,0,0)"), Is.EqualTo(new Vector(-1, 0, 0)));
+			Assert.That(Vector.Parse("(-1,-1,0)"), Is.EqualTo(new Vector(-1, -1, 0)));
+			Assert.That(Vector.Parse("(-1,-1,-1)"), Is.EqualTo(new Vector(-1, -1, -1)));
 		}
 
 		[Test]

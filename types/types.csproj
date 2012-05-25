@@ -51,12 +51,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\Builders.cs" />
+    <Compile Include="Builders\Ships\HardPoint.cs" />
+    <Compile Include="Builders\Ships\Ship.cs" />
+    <Compile Include="Builders\Ships\Weapon.cs" />
     <Compile Include="DamageType.cs" />
+    <Compile Include="Resharper\Annotations.cs" />
     <Compile Include="Ships\HardPoint.cs" />
     <Compile Include="Ships\HardPointPosition.cs" />
+    <Compile Include="PositionExtensions.cs" />
     <Compile Include="Ships\Ship.cs" />
     <Compile Include="Ships\ShipStatistics.cs" />
     <Compile Include="Ships\Weapon.cs" />
+    <Compile Include="State\HardPointState.cs" />
+    <Compile Include="State\ShipState.cs" />
+    <Compile Include="State\WeaponState.cs" />
     <Compile Include="Statistics\ShipStatistic.cs" />
     <Compile Include="Statistics\StructureStatistic.cs" />
     <Compile Include="Statistics\StatisticValue.cs" />
@@ -87,7 +96,6 @@
     <Compile Include="Mapping\IDemandBuilder.cs" />
     <Compile Include="Mapping\IDependencyResolver.cs" />
     <Compile Include="Mapping\ITypeMapper.cs" />
-    <Compile Include="ObjectCollection.cs" />
     <Compile Include="ObjectType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Universe\Celestial\SolarSystem.cs" />

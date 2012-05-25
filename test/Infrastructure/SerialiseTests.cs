@@ -10,7 +10,8 @@ namespace Echo.Tests.Infrastructure
 {
 	public class SerialiseTests
 	{
-		private IJsonSerializer _serialiser;
+		private ISisoDbSerializer _serialiser;
+		private IDisposable _databaseHandle;
 
 		public class A
 		{
@@ -26,13 +27,21 @@ namespace Echo.Tests.Infrastructure
 		[SetUp]
 		public void SetUp()
 		{
-			var fresh = new CreateFreshDatabase("empty");
+			var fresh = new CreateFreshDatabase("serialise-tests");
 			var configurationBuilder = new Autofac.ContainerBuilder();
 
 			fresh.Create(configurationBuilder);
 			var resolver = configurationBuilder.Build();
 
 			_serialiser = resolver.Resolve<ISisoDatabase>().Serializer;
+			_databaseHandle = fresh;
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			if (_databaseHandle != null)
+				_databaseHandle.Dispose();
 		}
 
 		[Test]
