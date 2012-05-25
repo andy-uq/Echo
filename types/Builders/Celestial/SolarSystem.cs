@@ -25,6 +25,11 @@ namespace Echo.Celestial
 					Position = new Position(starCluster, state.LocalCoordinates),
 				};
 
+				var shipBuilder = new Echo.Ships.Ship.Builder();
+				solarSystem.Ships = state.Ships
+					.Select(x => shipBuilder.Build(solarSystem, x))
+					.ToList();
+
 				solarSystem.Satellites = state.Satellites
 					.Select(x => CelestialObject.Builder.For(x).Build(solarSystem, x))
 					.ToList();
@@ -33,8 +38,8 @@ namespace Echo.Celestial
 					.Select(x => Structure.Builder.For(x).Build(solarSystem, x))
 					.ToList();
 
-				var satellites = Enumerable.ToDictionary<CelestialObject, long>(solarSystem.Satellites, x => x.Id);
-				var structures = Enumerable.ToDictionary<Structure, long>(solarSystem.Structures, x => x.Id);
+				var satellites = solarSystem.Satellites.ToDictionary(x => x.Id);
+				var structures = solarSystem.Structures.ToDictionary(x => x.Id);
 
 				AssignSatellites(state, satellites);
 				AssignStructures(state, satellites, structures);

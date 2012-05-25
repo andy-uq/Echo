@@ -13,6 +13,7 @@
 		Agent,
 		Corporation,
 		MarketPlace,
-		Auction
+		Auction,
+		JumpGate
 	}
 }

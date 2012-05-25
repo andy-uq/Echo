@@ -10,5 +10,6 @@ namespace Echo.State
 		public Vector LocalCoordinates { get; set; }
 		public List<CelestialObjectState> Satellites { get; set; }
 		public List<StructureState> Structures { get; set; }
+		public List<ShipState> Ships { get; set; }
 	}		 
 }

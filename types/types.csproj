@@ -52,10 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\Builders.cs" />
+    <Compile Include="Builders\JumpGates\JumpGate.cs" />
     <Compile Include="Builders\Ships\HardPoint.cs" />
     <Compile Include="Builders\Ships\Ship.cs" />
     <Compile Include="Builders\Ships\Weapon.cs" />
     <Compile Include="DamageType.cs" />
+    <Compile Include="EnsureThat\EnsureThatObjectExtensions.cs" />
+    <Compile Include="Exceptions\ItemNotFoundException.cs" />
     <Compile Include="Resharper\Annotations.cs" />
     <Compile Include="Ships\HardPoint.cs" />
     <Compile Include="Ships\HardPointPosition.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="Ships\ShipStatistics.cs" />
     <Compile Include="Ships\Weapon.cs" />
     <Compile Include="State\HardPointState.cs" />
+    <Compile Include="State\JumpGateState.cs" />
     <Compile Include="State\ShipState.cs" />
     <Compile Include="State\WeaponState.cs" />
     <Compile Include="Statistics\ShipStatistic.cs" />
@@ -72,7 +76,10 @@
     <Compile Include="Statistics\WeaponStatistic.cs" />
     <Compile Include="Units.cs" />
     <Compile Include="Universe\Corporations\Corporation.cs" />
-    <Compile Include="Universe\JumpGate.cs" />
+    <Compile Include="Universe\JumpGates\IJumpGateResolver.cs" />
+    <Compile Include="Universe\JumpGates\IJumpGateRegister.cs" />
+    <Compile Include="Universe\JumpGates\JumpGate.cs" />
+    <Compile Include="Universe\JumpGates\JumpGateRegister.cs" />
     <Compile Include="Universe\Mobiles\Actor.cs" />
     <Compile Include="Builders\Celestial\CelestialObject.cs" />
     <Compile Include="Builders\Structures\Manufactory.cs" />
