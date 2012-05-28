@@ -49,7 +49,7 @@ namespace Echo.Tests.Math
 		public void GetSolarSystem()
 		{
 			var s = new MockUniverse();
-			var u = new Universe.Builder().Build(s.Universe);
+			var u = Universe.Builder.Build(s.Universe);
 
 			var sol = u.SolarSystems().Single(x => x.Id == s.SolarSystem.Id);
 			var earth = u.Planets().Single(p => p.Id == s.Earth.Id);

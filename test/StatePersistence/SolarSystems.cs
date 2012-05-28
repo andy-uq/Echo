@@ -49,7 +49,7 @@ namespace Echo.Tests.StatePersistence
 			var state = Database.UseOnceTo().GetById<SolarSystemState>(1L);
 			Assert.That(state, Is.Not.Null);
 
-			var solarSystem = new SolarSystem.Builder().Build(new StarCluster(), state);
+			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, state);
 			
 			var earth = solarSystem.Satellites.OfType<Planet>().Single(x => x.Id == Earth.Id);
 			Assert.That(earth.Sun, Is.EqualTo(solarSystem));

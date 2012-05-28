@@ -43,8 +43,8 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(state.HardPoints, Has.Some.Matches<HardPointState>(x => x.Position == HardPointPosition.Front));
 			Assert.That(state.HardPoints.First().Orientation, Is.EqualTo(new Vector(0, -1, 0)));
 
-			var solarSystem = new SolarSystem.Builder().Build(new StarCluster(), Universe.SolarSystem);
-			var ship = new Ship.Builder().Build(solarSystem, state);
+			var solarSystem = SolarSystem.Builder.Build(null, Universe.SolarSystem);
+			var ship = Ship.Builder.Build(solarSystem, state);
 
 			Assert.That(ship.SolarSystem, Is.EqualTo(solarSystem));
 			Assert.That(ship.Position.GetSolarSystem(), Is.EqualTo(solarSystem));

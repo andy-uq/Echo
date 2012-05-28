@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
 using Echo.Structures;
@@ -10,13 +11,22 @@ namespace Echo.Celestial
 {
 	partial class SolarSystem
 	{
-		public class Builder
+		public static class Builder
 		{
-			public Builder()
+			public static SolarSystemState Save(SolarSystem solarSystem)
 			{
+				return new SolarSystemState
+				{
+					Id = solarSystem.Id,
+					Name = solarSystem.Name,
+					LocalCoordinates = solarSystem.Position.LocalCoordinates,
+					Satellites = solarSystem.Satellites.Save(),
+					Structures = solarSystem.Structures.Save(),
+					Ships = solarSystem.Ships.Save(),
+				};
 			}
 
-			public SolarSystem Build(StarCluster starCluster, SolarSystemState state)
+			public static SolarSystem Build(StarCluster starCluster, SolarSystemState state)
 			{
 				var solarSystem = new SolarSystem
 				{
@@ -25,16 +35,15 @@ namespace Echo.Celestial
 					Position = new Position(starCluster, state.LocalCoordinates),
 				};
 
-				var shipBuilder = new Echo.Ships.Ship.Builder();
-				solarSystem.Ships = state.Ships
-					.Select(x => shipBuilder.Build(solarSystem, x))
+				solarSystem.Ships = (state.Ships ?? Enumerable.Empty<ShipState>())
+					.Select(x => Echo.Ships.Ship.Builder.Build(solarSystem, x))
 					.ToList();
 
-				solarSystem.Satellites = state.Satellites
+				solarSystem.Satellites = (state.Satellites ?? Enumerable.Empty<CelestialObjectState>())
 					.Select(x => CelestialObject.Builder.For(x).Build(solarSystem, x))
 					.ToList();
 
-				solarSystem.Structures = state.Structures
+				solarSystem.Structures = (state.Structures ?? Enumerable.Empty<StructureState>())
 					.Select(x => Structure.Builder.For(x).Build(solarSystem, x))
 					.ToList();
 
@@ -47,7 +56,7 @@ namespace Echo.Celestial
 				return solarSystem;
 			}
 
-			private void AssignStructures(SolarSystemState state, Dictionary<long, CelestialObject> satellites, Dictionary<long, Structure> structures)
+			private static void AssignStructures(SolarSystemState state, Dictionary<long, CelestialObject> satellites, Dictionary<long, Structure> structures)
 			{
 				var query =
 					(

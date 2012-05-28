@@ -16,6 +16,17 @@ namespace Echo.Structures
 
 				return structure;
 			}
+
+			protected override StructureState SaveStructure(Structure structure, StructureState state)
+			{
+				var manufactory = (Manufactory) structure;
+				state.Manufactory = new ManufactoryState
+				{
+					Efficiency = manufactory.Efficiency,
+				};
+
+				return state;
+			}
 		}
 	}
 }

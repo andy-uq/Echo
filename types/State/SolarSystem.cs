@@ -8,8 +8,8 @@ namespace Echo.State
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
-		public List<CelestialObjectState> Satellites { get; set; }
-		public List<StructureState> Structures { get; set; }
-		public List<ShipState> Ships { get; set; }
+		public IEnumerable<CelestialObjectState> Satellites { get; set; }
+		public IEnumerable<StructureState> Structures { get; set; }
+		public IEnumerable<ShipState> Ships { get; set; }
 	}		 
 }

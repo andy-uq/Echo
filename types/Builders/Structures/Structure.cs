@@ -8,6 +8,20 @@ namespace Echo.Structures
 	{
 		public abstract class Builder
 		{
+			public StructureState Save(Structure structure)
+			{
+				var state = new StructureState
+				{
+					Id = structure.Id,
+					Name = structure.Name,
+					LocalCoordinates = structure.Position.LocalCoordinates,
+					OrbitsId = structure.Position.Location.Id,
+					StructureType = structure.StructureType,
+				};
+
+				return SaveStructure(structure, state);
+			}
+
 			public Structure Build(ILocation location, StructureState state)
 			{
 				var structure = BuildStructure(location, state);
@@ -19,6 +33,15 @@ namespace Echo.Structures
 			}
 
 			protected abstract Structure BuildStructure(ILocation location, StructureState state);
+			protected abstract StructureState SaveStructure(Structure structure, StructureState state);
+
+			public static Builder For(Structure structure)
+			{
+				if (structure is Manufactory)
+					return new Manufactory.Builder();
+
+				throw new InvalidOperationException("Cannot determine builder for Structure");
+			}
 
 			public static Builder For(StructureState state)
 			{

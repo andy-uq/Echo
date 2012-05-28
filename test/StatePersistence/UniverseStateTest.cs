@@ -18,9 +18,8 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void MaterialiseUniverse()
 		{
-			var builder = new Universe.Builder();
 			var state = GetUniverse();
-			var u = builder.Build(state);
+			var u = Echo.Universe.Builder.Build(state);
 		}
 
 		[Test]
@@ -47,7 +46,6 @@ namespace Echo.Tests.StatePersistence
 			var universe = GetUniverse();
 			Database.UseOnceTo().InsertMany(universe.StarClusters);
 
-			var starClusterBuilder = new StarCluster.Builder();
 			var state = Database.UseOnceTo().GetById<StarClusterState>(1L);
 
 			SolarSystemState solState = state.SolarSystems.First();
@@ -57,7 +55,7 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(earthState, Is.Not.Null);
 			Assert.That(earthState, Is.InstanceOf<CelestialObjectState>());
 
-			var starCluster = starClusterBuilder.Build(new Universe(), state);
+			var starCluster = StarCluster.Builder.Build(new Universe(), state);
 
 			Assert.That(starCluster, Is.Not.Null);
 			Assert.That(starCluster.SolarSystems, Is.Not.Empty);

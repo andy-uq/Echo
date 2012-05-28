@@ -7,6 +7,6 @@ namespace Echo.State
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }
-		public List<StarClusterState> StarClusters { get; set; }
+		public IEnumerable<StarClusterState> StarClusters { get; set; }
 	}
 }

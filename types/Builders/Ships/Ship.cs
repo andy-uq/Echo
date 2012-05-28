@@ -6,9 +6,20 @@ namespace Echo.Ships
 {
 	partial class Ship
 	{
-		public class Builder
+		public static class Builder
 		{
-			public Ship Build(ILocation location, ShipState state)
+			public static ShipState Save(Ship ship)
+			{
+				return new ShipState
+				{
+					Id = ship.Id,
+					Name = ship.Name,
+					LocalCoordinates = ship.Position.LocalCoordinates,
+					HardPoints = ship.HardPoints.Save()
+				};
+			}
+
+			public static Ship Build(ILocation location, ShipState state)
 			{
 				var ship = new Ship
 				{

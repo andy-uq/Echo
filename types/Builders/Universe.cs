@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
 using Echo;
@@ -7,15 +8,24 @@ namespace Echo
 {
 	partial class Universe
 	{
-		public class Builder
+		public static class Builder
 		{
-			public Universe Build(UniverseState state)
+			public static UniverseState Save(Universe universe)
+			{
+				return new UniverseState
+				{
+					Id = universe.Id,
+					Name = universe.Name,
+					StarClusters = universe.StarClusters.Save(),
+				};
+			}
+
+			public static Universe Build(UniverseState state)
 			{
 				var universe = new Universe();
 
-				var starClusterBuilder = new StarCluster.Builder();
 				universe.StarClusters = state.StarClusters
-					.Select(x => starClusterBuilder.Build(universe, x))
+					.Select(x => StarCluster.Builder.Build(universe, x))
 					.ToList();
 
 				return universe;

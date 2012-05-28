@@ -7,6 +7,6 @@ namespace Echo.State
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
-		public List<SolarSystemState> SolarSystems { get; set; }
+		public IEnumerable<SolarSystemState> SolarSystems { get; set; }
 	}
 }

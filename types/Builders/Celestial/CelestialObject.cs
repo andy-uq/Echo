@@ -22,6 +22,25 @@ namespace Echo.Celestial
 				return celestialObject;
 			}
 
+			public CelestialObjectState Save(CelestialObject celestialObject)
+			{
+				var state = new CelestialObjectState
+				{
+					Id = celestialObject.Id,
+					Name = celestialObject.Name,
+					LocalCoordinates = celestialObject.Position.LocalCoordinates,
+					Mass = celestialObject.Mass,
+					Size = celestialObject.Size
+				};
+
+				return Save(celestialObject, state);
+			}
+
+			protected virtual CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
+			{
+				return state;
+			}
+
 			protected virtual CelestialObject Build(CelestialObjectState state)
 			{
 				CelestialObject celestialObject;
@@ -43,6 +62,14 @@ namespace Echo.Celestial
 				return celestialObject;
 			}
 
+			public static Builder For(CelestialObject celestialObject)
+			{
+				if (celestialObject is AsteroidBelt)
+					return new AsteroidBeltBuilder();
+				
+				return new Builder();
+			}
+
 			public static Builder For(CelestialObjectState state)
 			{
 				switch (state.CelestialObjectType)
@@ -59,6 +86,18 @@ namespace Echo.Celestial
 
 			private class AsteroidBeltBuilder : Builder
 			{
+				protected override CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
+				{
+					var asteroidBelt = (AsteroidBelt) celestialObject;
+					state.AsteroidBelt = new AsteroidBeltState
+					{
+						AmountRemaining = asteroidBelt.AmountRemaining,
+						Richness = asteroidBelt.Richness,
+					};
+
+					return state;
+				}
+
 				protected override CelestialObject Build(CelestialObjectState state)
 				{
 					return new AsteroidBelt
@@ -70,6 +109,7 @@ namespace Echo.Celestial
 			}
 
 			#endregion
+
 		}
 
 		#endregion

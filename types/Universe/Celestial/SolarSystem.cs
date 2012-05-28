@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Echo.Ships;
+using Echo.State;
 using Echo.Structures;
 using Echo;
 using EnsureThat;

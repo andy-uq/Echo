@@ -62,14 +62,14 @@ namespace Echo.Tests
 			{
 				Id = Id(),
 				Name = "Sol",
-				Satellites = new List<CelestialObjectState>() { Earth, Moon, AsteroidBelt, },
-				Structures = new List<StructureState>() { Manufactory }
+				Satellites = new[] { Earth, Moon, AsteroidBelt, },
+				Structures = new[] { Manufactory }
 			};
 			StarCluster = new StarClusterState
 			{
 				Id = Id(),
 				Name = "Revvon",
-				SolarSystems = new List<SolarSystemState>() { SolarSystem },
+				SolarSystems = new[] { SolarSystem },
 			};
 			Universe = new UniverseState
 			{
