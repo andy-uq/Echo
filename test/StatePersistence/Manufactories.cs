@@ -1,3 +1,5 @@
+using System;
+using Echo.Builders;
 using Echo.State;
 using Echo.Structures;
 using NUnit.Framework;
@@ -21,13 +23,27 @@ namespace Echo.Tests.StatePersistence
 		}
 
 		[Test]
+		public void Save()
+		{
+			var structure = Manufactory.Build(new Universe());
+			var state = structure.Save();
+
+			Assert.That(state.Manufactory, Is.Not.Null);
+
+			var json = Database.Serializer.Serialize(state);
+			Console.WriteLine(json);
+		}
+
+		[Test]
 		public void Deserialise()
 		{
 			Database.UseOnceTo().Insert(Manufactory);
-			var state = Database.UseOnceTo().GetById<StructureState>(1L);
+			var state = Database.UseOnceTo().GetById<StructureState>(Manufactory.Id);
 			Assert.That(state, Is.Not.Null);
+			Assert.That(state.Manufactory, Is.Not.Null);
+			Assert.That(state.TradingStation, Is.Null);
 
-			var structure = Structure.Builder.For(state).Build(new Universe(), state);
+			var structure = state.Build(null);
 			Assert.That(structure, Is.InstanceOf<Manufactory>());
 		}
 	}

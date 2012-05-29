@@ -52,13 +52,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\Builders.cs" />
+    <Compile Include="Builders\Items\Item.cs" />
     <Compile Include="Builders\JumpGates\JumpGate.cs" />
+    <Compile Include="Builders\Market\BuyOrder.cs" />
+    <Compile Include="Builders\Market\SellOrder.cs" />
     <Compile Include="Builders\Ships\HardPoint.cs" />
     <Compile Include="Builders\Ships\Ship.cs" />
     <Compile Include="Builders\Ships\Weapon.cs" />
+    <Compile Include="Builders\Structures\TradingStation.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="EnsureThat\EnsureThatObjectExtensions.cs" />
     <Compile Include="Exceptions\ItemNotFoundException.cs" />
+    <Compile Include="IdResolutionContext.cs" />
+    <Compile Include="IItem.cs" />
     <Compile Include="Resharper\Annotations.cs" />
     <Compile Include="Ships\HardPoint.cs" />
     <Compile Include="Ships\HardPointPosition.cs" />
@@ -66,9 +72,14 @@
     <Compile Include="Ships\Ship.cs" />
     <Compile Include="Ships\ShipStatistics.cs" />
     <Compile Include="Ships\Weapon.cs" />
+    <Compile Include="State\ItemState.cs" />
+    <Compile Include="State\Market\BuyOrderState.cs" />
     <Compile Include="State\HardPointState.cs" />
     <Compile Include="State\JumpGateState.cs" />
+    <Compile Include="State\Market\AuctionState.cs" />
+    <Compile Include="State\Market\SellOrderState.cs" />
     <Compile Include="State\ShipState.cs" />
+    <Compile Include="State\TradingStationState.cs" />
     <Compile Include="State\WeaponState.cs" />
     <Compile Include="Statistics\ShipStatistic.cs" />
     <Compile Include="Statistics\StructureStatistic.cs" />
@@ -76,10 +87,14 @@
     <Compile Include="Statistics\WeaponStatistic.cs" />
     <Compile Include="Units.cs" />
     <Compile Include="Universe\Corporations\Corporation.cs" />
-    <Compile Include="Universe\JumpGates\IJumpGateResolver.cs" />
+    <Compile Include="Items\Item.cs" />
     <Compile Include="Universe\JumpGates\IJumpGateRegister.cs" />
     <Compile Include="Universe\JumpGates\JumpGate.cs" />
     <Compile Include="Universe\JumpGates\JumpGateRegister.cs" />
+    <Compile Include="Universe\Market\Auction.cs" />
+    <Compile Include="Universe\Market\BuyOrder.cs" />
+    <Compile Include="Universe\Market\MarketPlace.cs" />
+    <Compile Include="Universe\Market\SellOrder.cs" />
     <Compile Include="Universe\Mobiles\Actor.cs" />
     <Compile Include="Builders\Celestial\CelestialObject.cs" />
     <Compile Include="Builders\Structures\Manufactory.cs" />
@@ -115,6 +130,7 @@
     <Compile Include="State\Universe.cs" />
     <Compile Include="Universe\Structures\Structure.cs" />
     <Compile Include="IMoves.cs" />
+    <Compile Include="Universe\Structures\TradingStation.cs" />
     <Compile Include="Universe\Universe.cs" />
     <Compile Include="Universe\Structures\StructureType.cs" />
     <Compile Include="Vector.cs" />

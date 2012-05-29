@@ -103,6 +103,7 @@
     <Compile Include="Infrastructure\SerialiseTests.cs" />
     <Compile Include="StatePersistence\ShipStateTest.cs" />
     <Compile Include="StatePersistence\SolarSystems.cs" />
+    <Compile Include="StatePersistence\TradingStations.cs" />
     <Compile Include="TestSettings.cs" />
     <Compile Include="StatePersistence\StateTest.cs" />
     <Compile Include="StatePersistence\UniverseStateTest.cs" />

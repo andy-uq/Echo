@@ -40,6 +40,9 @@ namespace Echo.Structures
 				if (structure is Manufactory)
 					return new Manufactory.Builder();
 
+				if (structure is TradingStation)
+					return new TradingStation.Builder();
+
 				throw new InvalidOperationException("Cannot determine builder for Structure");
 			}
 
@@ -47,6 +50,9 @@ namespace Echo.Structures
 			{
 				if (state.Manufactory != null)
 					return new Manufactory.Builder();
+
+				if (state.TradingStation != null)
+					return new TradingStation.Builder();
 
 				throw new InvalidOperationException("Cannot determine builder for Structure");
 			}

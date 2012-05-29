@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
 using NUnit.Framework;
@@ -27,6 +28,16 @@ namespace Echo.Tests.StatePersistence
 		{
 			var universe = GetUniverse();
 			var json = Database.Serializer.Serialize(universe);
+			Console.WriteLine(json);
+		}
+
+		[Test]
+		public void Save()
+		{
+			var universe = Echo.Universe.Builder.Build(GetUniverse());
+			var state = universe.Save();
+
+			var json = Database.Serializer.Serialize(state);
 			Console.WriteLine(json);
 		}
 		
@@ -62,10 +73,10 @@ namespace Echo.Tests.StatePersistence
 
 			SolarSystem sol = starCluster.SolarSystems.First();
 
-			var earth = sol.Satellites.OfType<CelestialObject>().Single(x => x.Name == "Earth");
+			var earth = sol.Satellites.Single(x => x.Name == "Earth");
 			Assert.That(earth, Is.InstanceOf<Planet>());
 
-			var moon = earth.Satellites.OfType<CelestialObject>().Single(x => x.Name == "Moon");
+			var moon = earth.Satellites.Single(x => x.Name == "Moon");
 			Assert.That(moon, Is.InstanceOf<Moon>());
 		}
 	}

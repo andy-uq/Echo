@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Echo.Builders;
 using Echo.Celestial;
 using Echo.JumpGates;
 using Echo.Ships;
@@ -18,17 +19,20 @@ namespace Echo.Tests.SolarSystems
 		[SetUp]
 		public void SetUp()
 		{
-			_s1 = new Celestial.SolarSystem() { Ships = new List<Ship>() };
-			_s2 = new Celestial.SolarSystem() { Ships = new List<Ship>() };
+			_s1 = new SolarSystemState().Build(starCluster: null);
+			_s2 = new SolarSystemState().Build(starCluster: null);
 
 			var builder = new JumpGate.Builder();
-			_j1 = builder.Build(_s1, new JumpGateState {Id = 1, ConnectsTo = 2});
-			_j2 = builder.Build(_s2, new JumpGateState {Id = 2, ConnectsTo = 3});
-			_j3 = builder.Build(_s2, new JumpGateState {Id = 3, ConnectsTo = -1});
+			var j1 = builder.Build(_s1, new JumpGateState {Id = 1, ConnectsTo = 2});
+			var j2 = builder.Build(_s2, new JumpGateState {Id = 2, ConnectsTo = 3});
+			var j3 = builder.Build(_s2, new JumpGateState {Id = 3, ConnectsTo = -1});
 
 			var register = new JumpGateRegister();
-			register.Register(new[] { _j1, _j2, _j3 } );
-			register.ResolveGateConnections();
+			register.Register(new[] { j1.Target, j2.Target, j3.Target } );
+
+			_j1 = j1.Resolve(register);
+			_j2 = j2.Resolve(register);
+			_j3 = j3.Resolve(register);
 		}
 
 		[Test]

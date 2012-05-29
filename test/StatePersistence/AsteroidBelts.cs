@@ -1,3 +1,5 @@
+using System;
+using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
 using NUnit.Framework;
@@ -21,13 +23,26 @@ namespace Echo.Tests.StatePersistence
 		}
 
 		[Test]
+		public void Save()
+		{
+			var asteroidBelt = AsteroidBelt.Build(null);
+			Assert.That(asteroidBelt, Is.InstanceOf<AsteroidBelt>());
+			var state = asteroidBelt.Save();
+
+			Assert.That(state.AsteroidBelt, Is.Not.Null);
+
+			var json = Database.Serializer.Serialize(state);
+			Console.WriteLine(json);
+		}
+
+		[Test]
 		public void Deserialise()
 		{
 			Database.UseOnceTo().Insert(AsteroidBelt);
 			var state = Database.UseOnceTo().GetById<CelestialObjectState>(1L);
 			Assert.That(state, Is.Not.Null);
 
-			var celestialObject = CelestialObject.Builder.For(state).Build(new Universe(), state);
+			var celestialObject = state.Build(null);
 			Assert.That(celestialObject, Is.InstanceOf<AsteroidBelt>());
 
 			var asteroidBelt = (AsteroidBelt) celestialObject;

@@ -28,6 +28,15 @@ namespace Echo.Ships
 			Orientation = _origin;
 		}
 
+		public static Vector CalculateOrientation(HardPointPosition position)
+		{
+			double radiansOfMovement;
+			Vector origin;
+
+			CalculateHardPoint(position, out origin, out radiansOfMovement);
+			return origin;
+		}
+
 		public static void CalculateHardPoint(HardPointPosition position, out Vector origin, out double radiansOfMovement)
 		{
 			switch ( position )

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Echo.Exceptions;
 
 namespace Echo.JumpGates
 {
-	public class JumpGateRegister : IJumpGateRegister
+	public class JumpGateRegister : IIdResolver
 	{
 		private readonly Dictionary<long, JumpGate> _registry = new Dictionary<long, JumpGate>();
 
@@ -18,22 +19,18 @@ namespace Echo.JumpGates
 				Register(x);
 		}
 
-		public JumpGate this[long id]
+		public T GetById<T>(long id) where T : class, IObject
 		{
-			get
+			if (typeof(T) == typeof(JumpGate))
 			{
-				JumpGate value;
-				if (_registry.TryGetValue(id, out value))
-					return value;
+				JumpGate jumpGate;
+				if (_registry.TryGetValue(id, out jumpGate))
+					return jumpGate as T;
 
 				throw new ItemNotFoundException("Jump Gate", id);
 			}
-		}
 
-		public void ResolveGateConnections()
-		{
-			foreach (var jumpGate in _registry.Values)
-				((IJumpGateResolver )jumpGate).ResolveConnectedGate(this);
+			throw new ArgumentException("Cannot resolve objects that are not jump gates");
 		}
 	}
 }

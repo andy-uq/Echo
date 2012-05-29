@@ -1,4 +1,5 @@
 using Echo.Celestial;
+using Echo.Market;
 
 namespace Echo.Ships
 {
@@ -16,6 +17,20 @@ namespace Echo.Ships
 				var solarSystem = position.Location as SolarSystem;
 				if (solarSystem != null)
 					return solarSystem;
+
+				position = position.Location.Position;
+			}
+
+			return null;
+		}
+
+		public static MarketPlace GetMarketPlace(this Position position)
+		{
+			while (position.Location != null)
+			{
+				var starCluster = position.Location as StarCluster;
+				if (starCluster != null)
+					return starCluster.MarketPlace;
 
 				position = position.Location.Position;
 			}

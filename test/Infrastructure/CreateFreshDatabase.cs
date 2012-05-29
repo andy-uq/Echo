@@ -17,14 +17,17 @@ namespace Echo.Tests.Infrastructure
 		public CreateFreshDatabase(string templateName)
 		{
 			TemplateName = templateName;
-			DbFilename = TestSettings.UniqueFileName(string.Concat(templateName, ".sdf"));
-			ConnectionString = string.Format(@"data source={0}", DbFilename);
 		}
 
 		public void Create(ContainerBuilder containerBuilder)
 		{
-			_database = new SqlCe4Database(new SqlCe4ConnectionInfo(ConnectionString), new SqlCe4ProviderFactory());
-			_database.EnsureNewDatabase();
+			lock ( TestSettings.SyncObject )
+			{
+				DbFilename = TestSettings.UniqueFileName(string.Concat(TemplateName, ".sdf"));
+				ConnectionString = string.Format(@"data source={0}", DbFilename);
+				_database = new SqlCe4Database(new SqlCe4ConnectionInfo(ConnectionString), new SqlCe4ProviderFactory());
+				_database.EnsureNewDatabase();
+			}
 
 			containerBuilder.RegisterInstance(_database).As<ISisoDatabase>();
 		}

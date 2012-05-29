@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Echo.Ships;
 using Echo.State;
 using Echo;
+using Echo.State.Market;
 
 namespace Echo.Tests
 {
@@ -8,7 +10,9 @@ namespace Echo.Tests
 	{
 		private long _nextId;
 
+		public ShipState Ship { get; set; }
 		public StructureState Manufactory { get; set; }
+		public StructureState TradingStation { get; set; }
 		public CelestialObjectState Moon { get; set; }
 		public CelestialObjectState Earth { get; set; }
 		public CelestialObjectState AsteroidBelt { get; set; }
@@ -31,7 +35,7 @@ namespace Echo.Tests
 				Id = Id(),
 				CelestialObjectType = CelestialObjectType.AsteriodBelt,
 				Name = "Asteroid Belt",
-				OrbitsId = 1,
+				OrbitsId = Earth.Id,
 				Mass = 0d,
 				LocalCoordinates = new Vector(5.1, 0, 0),
 				AsteroidBelt = new AsteroidBeltState
@@ -58,12 +62,41 @@ namespace Echo.Tests
 				LocalCoordinates = new Vector(0.5001, 0, 0),
 				Manufactory = new ManufactoryState() { Efficiency = 0.5d },
 			};
+			TradingStation = new StructureState()
+			{
+				Id = Id(),
+				Name = "TS",
+				OrbitsId = Moon.Id,
+				LocalCoordinates = new Vector(-0.5001, 0, 0),
+				TradingStation = new TradingStationState()
+				{
+					BuyOrders = new[] { new BuyOrderState { Auction = new AuctionState {} }, },
+					SellOrders = new[] { new SellOrderState { Auction = new AuctionState { } }, }
+				},
+			};
+			Ship = new ShipState()
+			{
+				Id = Id(),
+				Name = "Ship",
+				LocalCoordinates = new Vector(8.5, 0, 0),
+				HardPoints = new[]
+				{
+					new HardPointState
+					{
+						Position = HardPointPosition.Front, 
+						Orientation = HardPoint.CalculateOrientation(HardPointPosition.Front),
+						Speed = 0.5d, 
+						Weapon = new WeaponState { Id = Id(), Name = "Blaster" }
+					},
+				}
+			};
 			SolarSystem = new SolarSystemState
 			{
 				Id = Id(),
 				Name = "Sol",
 				Satellites = new[] { Earth, Moon, AsteroidBelt, },
-				Structures = new[] { Manufactory }
+				Structures = new[] { Manufactory, TradingStation },
+				Ships = new[] { Ship }
 			};
 			StarCluster = new StarClusterState
 			{

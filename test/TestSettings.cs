@@ -17,6 +17,8 @@ namespace test
 
 		private static readonly TestSettings Settings = LaptopSettings;
 
+		public static readonly object SyncObject = new object();
+
 		private TestSettings()
 		{
 		}
@@ -33,7 +35,7 @@ namespace test
 			int num = 0;
 			Func<string> fname = () => Path.Combine(directory, string.Format("{0}_{1:d4}{2}", name, num, extension));
 	
-			lock ( _uniqueSeed )
+			lock ( SyncObject )
 			{
 				if (!_uniqueSeed.TryGetValue(filename, out num))
 					num = 1;

@@ -4,6 +4,7 @@
 	{
 		Refinery,
 		Manufactory,
-		ShipYard
+		ShipYard,
+		TradingStation
 	}
 }

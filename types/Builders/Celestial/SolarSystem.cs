@@ -58,6 +58,9 @@ namespace Echo.Celestial
 
 			private static void AssignStructures(SolarSystemState state, Dictionary<long, CelestialObject> satellites, Dictionary<long, Structure> structures)
 			{
+				if ( state.Structures == null )
+					return;
+
 				var query =
 					(
 						from s in state.Structures
@@ -74,19 +77,22 @@ namespace Echo.Celestial
 				foreach ( var structure in query )
 				{
 					CelestialObject parent;
-					if ( satellites.TryGetValue(structure.OrbitsId, out parent) )
-					{
-						parent.Structures.Add(structure.Instance);
-						structure.Instance.Position = new Position(parent, structure.LocalCoordinates);
+					if (!satellites.TryGetValue(structure.OrbitsId, out parent)) 
+						continue;
 
-						var orbitDistance = structure.LocalCoordinates.Magnitude;
-						CheckOrbitDistance(structure.Instance, parent, orbitDistance);
-					}
+					parent.Structures.Add(structure.Instance);
+					structure.Instance.Position = new Position(parent, structure.LocalCoordinates);
+
+					var orbitDistance = structure.LocalCoordinates.Magnitude;
+					CheckOrbitDistance(structure.Instance, parent, orbitDistance);
 				}
 			}
 
 			private static void AssignSatellites(SolarSystemState state, Dictionary<long, CelestialObject> satellites)
 			{
+				if ( state.Satellites == null )
+					return;
+
 				var query =
 					(
 						from s in state.Satellites
@@ -103,14 +109,14 @@ namespace Echo.Celestial
 				foreach (var satellite in query)
 				{
 					CelestialObject parent;
-					if (satellites.TryGetValue(satellite.OrbitsId, out parent))
-					{
-						parent.Satellites.Add(satellite.Instance);
-						satellite.Instance.Position = new Position(parent, satellite.LocalCoordinates);
+					if (!satellites.TryGetValue(satellite.OrbitsId, out parent)) 
+						continue;
 
-						var orbitDistance = satellite.LocalCoordinates.Magnitude - satellite.Instance.Size;
-						CheckOrbitDistance(satellite.Instance, parent, orbitDistance);
-					}
+					parent.Satellites.Add(satellite.Instance);
+					satellite.Instance.Position = new Position(parent, satellite.LocalCoordinates);
+
+					var orbitDistance = satellite.LocalCoordinates.Magnitude - satellite.Instance.Size;
+					CheckOrbitDistance(satellite.Instance, parent, orbitDistance);
 				}
 			}
 

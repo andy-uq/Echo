@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Echo.Celestial;
+using Echo.Items;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
@@ -11,6 +12,41 @@ namespace Echo
 	{
 		public static class BuilderExtensions
 		{
+			public static UniverseState Save(this Universe universe)
+			{
+				return Universe.Builder.Save(universe);
+			}
+
+			public static CelestialObject Build(this CelestialObjectState state, ILocation location)
+			{
+				return CelestialObject.Builder.For(state).Build(location, state);
+			}
+
+			public static CelestialObjectState Save(this CelestialObject celestialObject)
+			{
+				return CelestialObject.Builder.For(celestialObject).Save(celestialObject);
+			}
+
+			public static Structure Build(this StructureState state, ILocation location)
+			{
+				return Structure.Builder.For(state).Build(location, state);
+			}
+
+			public static Item Build(this ItemState state, ILocation location, IIdResolver resolver)
+			{
+				return Item.Builder.Build(location, state, resolver);
+			}
+
+			public static IdResolutionContext<Item> Build(this ItemState state, ILocation location)
+			{
+				return Item.Builder.Build(location, state);
+			}
+
+			public static StructureState Save(this Structure structure)
+			{
+				return Structure.Builder.For(structure).Save(structure);
+			}
+
 			public static Weapon Build(this WeaponState state, ILocation location)
 			{
 				if ( state == null )
@@ -53,6 +89,11 @@ namespace Echo
 			public static IEnumerable<ShipState> Save(this IEnumerable<Ship> ships)
 			{
 				return ships.Select(Ship.Builder.Save);
+			}
+
+			public static SolarSystem Build(this SolarSystemState state, StarCluster starCluster)
+			{
+				return SolarSystem.Builder.Build(starCluster, state);
 			}
 
 			public static IEnumerable<SolarSystemState> Save(this IEnumerable<SolarSystem> solarSystems)

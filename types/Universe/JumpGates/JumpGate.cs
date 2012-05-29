@@ -6,10 +6,8 @@ using EnsureThat;
 
 namespace Echo.JumpGates
 {
-	public partial class JumpGate : OrbitingObject, IJumpGateResolver
+	public partial class JumpGate : OrbitingObject
 	{
-		private long _connectsToJumpGateId;
-
 		public override ObjectType ObjectType
 		{
 			get { return ObjectType.JumpGate; }
@@ -33,11 +31,6 @@ namespace Echo.JumpGates
 
 			ship.SolarSystem.LeaveSystem(ship);
 			ConnectsTo.SolarSystem.EnterSystem(ship, ConnectsTo.Position.LocalCoordinates);
-		}
-
-		void IJumpGateResolver.ResolveConnectedGate(IJumpGateRegister jumpGateRegister)
-		{
-			ConnectsTo = _connectsToJumpGateId == -1L ? null : jumpGateRegister[_connectsToJumpGateId];
 		}
 	}
 }

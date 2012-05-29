@@ -1,3 +1,5 @@
+using System;
+using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
 using NUnit.Framework;
@@ -18,6 +20,18 @@ namespace Echo.Tests.StatePersistence
 		{
 			Database.UseOnceTo().Insert(Moon);
 			DumpObjects("CelestialObject");
+		}
+
+		[Test]
+		public void Save()
+		{
+			var moon = Moon.Build(null);
+			Assert.That(moon, Is.InstanceOf<Moon>());
+
+			var state = moon.Save();
+
+			var json = Database.Serializer.Serialize(state);
+			Console.WriteLine(json);
 		}
 
 		[Test]

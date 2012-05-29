@@ -8,17 +8,21 @@ namespace Echo.JumpGates
 	{
 		public class Builder
 		{
-			public JumpGate Build(SolarSystem location, JumpGateState state)
+			public IdResolutionContext<JumpGate> Build(SolarSystem location, JumpGateState state)
 			{
-				var jumpGate = new JumpGate
+				return new IdResolutionContext<JumpGate>
 				{
-					Id = state.Id,
-					Name = state.Name,
-					Position = new Position(location, state.LocalCoordinates),
-					_connectsToJumpGateId = state.ConnectsTo
+					Target = new JumpGate
+					{
+						Id = state.Id,
+						Name = state.Name,
+						Position = new Position(location, state.LocalCoordinates),
+					},
+					Resolved =
+					{
+						(resolver, target) => target.ConnectsTo = state.ConnectsTo == -1 ? null : resolver.GetById<JumpGate>(state.ConnectsTo)
+					}
 				};
-			
-				return jumpGate;
 			}
 		}
 	}

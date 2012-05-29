@@ -12,5 +12,6 @@ namespace Echo.State
 
 		public StructureType StructureType { get; set; }
 		public ManufactoryState Manufactory { get; set; }
+		public TradingStationState TradingStation { get; set; }
 	}
 }

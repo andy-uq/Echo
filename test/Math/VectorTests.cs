@@ -97,6 +97,29 @@ namespace Echo.Tests.Math
 		}
 
 		[Test]
+		public void Distance()
+		{
+			Assert.That(Vector.Distance(new Vector(3, 4, 0), Vector.Zero), Is.EqualTo(5));
+		}
+
+		[Test]
+		public void Subtract()
+		{
+			var a = new Vector(5, 12, 0);
+			Assert.That((Vector.Zero - a).Magnitude, Is.EqualTo(13));
+		}
+
+		[Test]
+		public void Intersects()
+		{
+			var a = new Vector(3, 4, 0);
+			var b = new Vector(5, 4, 0);
+
+			Assert.That(Vector.Intersects(a, 1, b, 0.5d), Is.False);
+			Assert.That(Vector.Intersects(a, 1, b, 1), Is.True);
+		}
+
+		[Test]
 		public void CrossProduct()
 		{
 			var a = new Vector(1, 0, 0);

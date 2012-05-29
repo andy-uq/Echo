@@ -1,3 +1,5 @@
+using System;
+using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
 using NUnit.Framework;
@@ -20,6 +22,17 @@ namespace Echo.Tests.StatePersistence
 			DumpObjects("CelestialObject");
 		}
 
+		[Test]
+		public void Save()
+		{
+			var planet = Earth.Build(null);
+			Assert.That(planet, Is.InstanceOf<Planet>());
+
+			var state = planet.Save();
+
+			var json = Database.Serializer.Serialize(state);
+			Console.WriteLine(json);
+		}
 		[Test]
 		public void Deserialise()
 		{

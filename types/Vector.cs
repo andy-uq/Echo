@@ -246,15 +246,11 @@ namespace Echo
 			var d = tmp.Magnitude;
 
 			if (d > (r0 + r1))
+			{
 				return false;
+			}
 
-			if (d < Math.Abs(r0 - r1))
-				return true;
-
-			if (Math.Abs(d - 0) < TOLERANCE && Math.Abs(r0 - r1) < TOLERANCE)
-				return true;
-
-			return false;
+			return true;
 		}
 	}
 }

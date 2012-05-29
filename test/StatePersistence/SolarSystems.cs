@@ -1,8 +1,10 @@
+using System;
 using System.Linq;
 using Echo.Celestial;
 using Echo.State;
 using NUnit.Framework;
 using Echo;
+using SisoDb.Serialization;
 
 namespace Echo.Tests.StatePersistence
 {
@@ -40,6 +42,15 @@ namespace Echo.Tests.StatePersistence
 		{
 			Database.UseOnceTo().Insert(SolarSystem);
 			DumpObjects("SolarSystem");
+		}
+
+		[Test]
+		public void Save()
+		{
+			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem);
+			var state = Echo.Celestial.SolarSystem.Builder.Save(solarSystem);
+
+			Console.WriteLine(state.SerializeAndFormat());
 		}
 
 		[Test]
