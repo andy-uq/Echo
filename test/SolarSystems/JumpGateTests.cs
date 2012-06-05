@@ -98,6 +98,7 @@ namespace Echo.Tests.SolarSystems
 			connect("f1", "c2");
 			connect("g1", "d3");
 			connect("e1", "g2");
+			connect("g2", "e1");
 		}
 
 		[Test]
@@ -111,12 +112,32 @@ namespace Echo.Tests.SolarSystems
 			Assert.That(directConnections[_a].DirectConnections[0].SolarSystem, Is.EqualTo(_b));
 			Assert.That(directConnections[_a].DirectConnections[1].SolarSystem, Is.EqualTo(_d));
 			Assert.That(directConnections[_a].GetJumpCount(_b), Is.EqualTo(1));
-			Assert.That(directConnections[_a].GetJumpCount(_e), Is.EqualTo(3));
-			Assert.That(directConnections[_a].GetJumpCount(_f), Is.EqualTo(4));
+			Assert.That(directConnections[_a].GetJumpCount(_e), Is.EqualTo(2));
+			Assert.That(directConnections[_a].GetJumpCount(_f), Is.EqualTo(3));
 
 			Assert.That(jumpCountTable.GetJumpCount(_e, _d), Is.EqualTo(1));
 			Assert.That(jumpCountTable.GetJumpCount(_e, _f), Is.EqualTo(3));
 			Assert.That(jumpCountTable.GetJumpCount(_e, _c), Is.EqualTo(2));
+		}
+
+		[TestCase("a", "b", 1)]
+		[TestCase("b", "d", 1)]
+		[TestCase("d", "e", 1)]
+		[TestCase("d", "c", 1)]
+		[TestCase("a", "c", 2)]
+		[TestCase("a", "e", 2)]
+		[TestCase("e", "a", 2)]
+		[TestCase("e", "g", 1)]
+		[TestCase("g", "e", 1)]
+		[TestCase("a", "f", 3)]
+		[TestCase("e", "f", 3)]
+		public void JumpCounts(string fromName, string toName, int expectedJumps)
+		{
+			var jumpCountTable = new JumpCountTable(_solarSystems);
+			var from = (SolarSystem)Fields[string.Concat("_", fromName)].GetValue(this);
+			var to = (SolarSystem)Fields[string.Concat("_", toName)].GetValue(this);
+
+			Assert.That(jumpCountTable.GetJumpCount(from, to), Is.EqualTo(expectedJumps));
 		}
 
 		[TestCase("e2", "d2")]

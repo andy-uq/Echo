@@ -72,7 +72,11 @@ namespace Echo
 					return 0;
 
 				seen.Push(SolarSystem.Id);
-				var leg = DirectConnections.Min(x => x.GetJumpCount(target, seen));
+				
+				var options = DirectConnections.Select(x => new {x.SolarSystem.Name, JumpCount = x.GetJumpCount(target, seen)}).ToArray();
+				var leg = options.Min(x => x.JumpCount);
+
+				seen.Pop();
 				return leg + 1;
 			}
 
