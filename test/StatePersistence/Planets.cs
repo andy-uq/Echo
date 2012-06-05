@@ -25,7 +25,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var planet = Earth.Build(null);
+			var planet = CelestialObject.Builder.For(Earth).Build(new Universe(), Earth).Materialise();
 			Assert.That(planet, Is.InstanceOf<Planet>());
 
 			var state = planet.Save();
@@ -33,14 +33,15 @@ namespace Echo.Tests.StatePersistence
 			var json = Database.Serializer.Serialize(state);
 			Console.WriteLine(json);
 		}
+
 		[Test]
 		public void Deserialise()
 		{
 			Database.UseOnceTo().Insert(Earth);
-			var state = Database.UseOnceTo().GetById<CelestialObjectState>(1L);
+			var state = Database.UseOnceTo().GetById<CelestialObjectState>(Earth.Id);
 			Assert.That(state, Is.Not.Null);
 
-			var earth = CelestialObject.Builder.For(state).Build(new Universe(), state);
+			var earth = CelestialObject.Builder.For(state).Build(null, state).Materialise();
 			Assert.That(earth, Is.InstanceOf<Planet>());
 		}
 	}

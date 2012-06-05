@@ -16,44 +16,15 @@ namespace Echo
 			{
 				return Universe.Builder.Save(universe);
 			}
-
-			public static CelestialObject Build(this CelestialObjectState state, ILocation location)
-			{
-				return CelestialObject.Builder.For(state).Build(location, state);
-			}
-
 			public static CelestialObjectState Save(this CelestialObject celestialObject)
 			{
 				return CelestialObject.Builder.For(celestialObject).Save(celestialObject);
-			}
-
-			public static Structure Build(this StructureState state, ILocation location)
-			{
-				return Structure.Builder.For(state).Build(location, state);
-			}
-
-			public static Item Build(this ItemState state, ILocation location, IIdResolver resolver)
-			{
-				return Item.Builder.Build(location, state, resolver);
-			}
-
-			public static IdResolutionContext<Item> Build(this ItemState state, ILocation location)
-			{
-				return Item.Builder.Build(location, state);
 			}
 
 			public static StructureState Save(this Structure structure)
 			{
 				return Structure.Builder.For(structure).Save(structure);
 			}
-
-			public static Weapon Build(this WeaponState state, ILocation location)
-			{
-				if ( state == null )
-					return null;
-
-				return Weapon.Builder.Build(location, state);
-			}	
 	
 			public static WeaponState Save(this Weapon weapon)
 			{
@@ -61,19 +32,6 @@ namespace Echo
 					return null;
 
 				return Weapon.Builder.Save(weapon);
-			}
-			
-			public static Ship Build(this ShipState state, ILocation location)
-			{
-				return Ship.Builder.Build(location, state);
-			}		
-	
-			public static IEnumerable<HardPoint> Build(this IEnumerable<HardPointState> states, Ship ship)
-			{
-				if (states == null)
-					return Enumerable.Empty<HardPoint>();
-
-				return states.Select(state => HardPoint.Builder.Build(ship, state));
 			}
 
 			public static IEnumerable<CelestialObjectState> Save(this IEnumerable<CelestialObject> celestialObjects)
@@ -89,11 +47,6 @@ namespace Echo
 			public static IEnumerable<ShipState> Save(this IEnumerable<Ship> ships)
 			{
 				return ships.Select(Ship.Builder.Save);
-			}
-
-			public static SolarSystem Build(this SolarSystemState state, StarCluster starCluster)
-			{
-				return SolarSystem.Builder.Build(starCluster, state);
 			}
 
 			public static IEnumerable<SolarSystemState> Save(this IEnumerable<SolarSystem> solarSystems)

@@ -24,7 +24,7 @@ namespace Echo.Ships
 				{
 					Orientation = state.Orientation,
 					Speed = state.Speed,
-					Weapon = state.Weapon.Build(ship)
+					Weapon = Weapon.Builder.Build(ship, state.Weapon)
 				};
 			}
 		}

@@ -1,6 +1,6 @@
 ﻿namespace Echo.State.Market
 {
-	public class AuctionState
+	public class AuctionState : IObjectState
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }

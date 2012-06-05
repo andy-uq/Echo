@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.JumpGates;
@@ -12,51 +14,139 @@ namespace Echo.Tests.SolarSystems
 	[TestFixture]
 	public class JumpGateTests
 	{
-		private JumpGate _j1, _j2, _j3;
-		private SolarSystem _s1, _s2;
-
+		private JumpGate _a1, _a2;
+		private JumpGate _b1, _b2;
+		private JumpGate _c1, _c2;
+		private JumpGate _d1, _d2, _d3, _d4, _d5;
+		private JumpGate _e1, _e2;
+		private JumpGate _f1;
+		private JumpGate _g1, _g2;
+		
+		private SolarSystem _a, _b, _c, _d, _e, _f, _g;
+		private SolarSystem[] _solarSystems;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_s1 = new SolarSystemState().Build(starCluster: null);
-			_s2 = new SolarSystemState().Build(starCluster: null);
+			_a = new SolarSystem() { Name = "A" };
+			_b = new SolarSystem() { Name = "B" };
+			_c = new SolarSystem() { Name = "C" };
+			_d = new SolarSystem() { Name = "D" };
+			_e = new SolarSystem() { Name = "E" };
+			_f = new SolarSystem() { Name = "F" };
+			_g = new SolarSystem() { Name = "G" };
+			_solarSystems = new[] { _a, _b, _c, _d, _e, _f, _g, };
 
-			var builder = new JumpGate.Builder();
-			var j1 = builder.Build(_s1, new JumpGateState {Id = 1, ConnectsTo = 2});
-			var j2 = builder.Build(_s2, new JumpGateState {Id = 2, ConnectsTo = 3});
-			var j3 = builder.Build(_s2, new JumpGateState {Id = 3, ConnectsTo = -1});
+			var fields = Fields;
+			var states = 
+					fields.Values
+					.Where(x => x.FieldType == typeof (JumpGate))
+					.Select((f, i) => new JumpGateState { Name = f.Name, Id = i + 1, ConnectsTo = -1 })
+					.ToArray();
+
+			SetConnections(states.ToDictionary(s => s.Name));
 
 			var register = new JumpGateRegister();
-			register.Register(new[] { j1.Target, j2.Target, j3.Target } );
+			var builders = new List<ObjectBuilder<JumpGate>>();
+			
+			foreach (var state in states)
+			{
+				var solarSystem = (SolarSystem) fields[state.Name.Substring(0, 2)].GetValue(this);
+				var builder = JumpGate.Builder.Build(solarSystem, state);
+				register.Register(builder.Target);
 
-			_j1 = j1.Resolve(register);
-			_j2 = j2.Resolve(register);
-			_j3 = j3.Resolve(register);
+				builders.Add(builder);
+			}
+
+			foreach (var builder in builders)
+			{
+				var jumpGate = builder.Resolve(register);
+				fields[builder.Target.Name].SetValue(this, jumpGate);
+				jumpGate.SolarSystem.JumpGates.Add(jumpGate);
+			}
+
+			foreach ( var x in _solarSystems.Select((s, i) => new { s, i }) )
+			{
+				x.s.Id = (x.i + 10);
+			}
+		}
+
+		private static Dictionary<string, FieldInfo> Fields
+		{
+			get
+			{
+				var fields = typeof (JumpGateTests).GetFields(BindingFlags.NonPublic | BindingFlags.Instance).ToDictionary(f => f.Name);
+				return fields;
+			}
+		}
+
+		private void SetConnections(IDictionary<string, JumpGateState> states)
+		{
+			Action<string, string> connect = (src, target) => { states["_"+src].ConnectsTo = states["_"+target].Id; };
+			connect("a1", "b2");
+			connect("a2", "d5");
+			connect("b1", "d1");
+			connect("b2", "a1");
+			connect("c1", "d4");
+			connect("c2", "f1");
+			connect("d1", "b1");
+			connect("d2", "e1");
+			connect("d3", "g1");
+			connect("d4", "c1");
+			connect("d5", "a2");
+			connect("e2", "d2");
+			connect("f1", "c2");
+			connect("g1", "d3");
+			connect("e1", "g2");
 		}
 
 		[Test]
-		public void JumpConnections()
+		public void JumpCounts()
 		{
-			Assert.That(_j1.ConnectsTo, Is.EqualTo(_j2));
-			Assert.That(_j2.ConnectsTo, Is.EqualTo(_j3));
-			Assert.That(_j3.ConnectsTo, Is.Null);
+			var jumpCountTable = new JumpCountTable(_solarSystems);
+			var directConnections = jumpCountTable.Table.ToDictionary(x => x.SolarSystem);
+
+			Assert.That(directConnections[_a].SolarSystem, Is.EqualTo(_a));
+			Assert.That(directConnections[_a].DirectConnections.Count, Is.EqualTo(2));
+			Assert.That(directConnections[_a].DirectConnections[0].SolarSystem, Is.EqualTo(_b));
+			Assert.That(directConnections[_a].DirectConnections[1].SolarSystem, Is.EqualTo(_d));
+			Assert.That(directConnections[_a].GetJumpCount(_b), Is.EqualTo(1));
+			Assert.That(directConnections[_a].GetJumpCount(_e), Is.EqualTo(3));
+			Assert.That(directConnections[_a].GetJumpCount(_f), Is.EqualTo(4));
+
+			Assert.That(jumpCountTable.GetJumpCount(_e, _d), Is.EqualTo(1));
+			Assert.That(jumpCountTable.GetJumpCount(_e, _f), Is.EqualTo(3));
+			Assert.That(jumpCountTable.GetJumpCount(_e, _c), Is.EqualTo(2));
+		}
+
+		[TestCase("e2", "d2")]
+		[TestCase("e1", "g2")]
+		[TestCase("a1", "b2")]
+		[TestCase("b1", "d1")]
+		[TestCase("c1", "d4")]
+		public void JumpConnections(string fromName, string toName)
+		{
+			var from = (JumpGate)Fields[string.Concat("_", fromName)].GetValue(this);
+			var to = (JumpGate)Fields[string.Concat("_", toName)].GetValue(this);
+
+			Assert.That(from.ConnectsTo, Is.EqualTo(to));
+
 		}
 
 		[Test, ExpectedException(typeof (ArgumentNullException))]
 		public void JumpNullShip()
 		{
-			_j1.Jump(null);
+			_a1.Jump(null);
 		}
 
 		[Test]
 		public void JumpShip()
 		{
 			var s = new Ship();
-			_s1.EnterSystem(s, Vector.Zero);
-			_j1.Jump(s);
+			_a.EnterSystem(s, Vector.Zero);
+			_a1.Jump(s);
 
-			Assert.That(s.SolarSystem, Is.EqualTo(_s2));
+			Assert.That(s.SolarSystem, Is.EqualTo(_b));
 		}
 	}
 }

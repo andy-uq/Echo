@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.JumpGates;
+using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
 using Echo;
+using EnsureThat;
 
 namespace Echo.Celestial
 {
@@ -26,7 +29,7 @@ namespace Echo.Celestial
 				};
 			}
 
-			public static SolarSystem Build(StarCluster starCluster, SolarSystemState state)
+			public static ObjectBuilder<SolarSystem> Build(StarCluster starCluster, SolarSystemState state)
 			{
 				var solarSystem = new SolarSystem
 				{
@@ -35,36 +38,49 @@ namespace Echo.Celestial
 					Position = new Position(starCluster, state.LocalCoordinates),
 				};
 
-				solarSystem.Ships = (state.Ships ?? Enumerable.Empty<ShipState>())
-					.Select(x => Echo.Ships.Ship.Builder.Build(solarSystem, x))
-					.ToList();
+				var builder = new ObjectBuilder<SolarSystem>(solarSystem)
+				{
+					Connect =
+						{
+							(target, resolver) => BuildOrbits(state, target)
+						}
+				};
 
-				solarSystem.Satellites = (state.Satellites ?? Enumerable.Empty<CelestialObjectState>())
-					.Select(x => CelestialObject.Builder.For(x).Build(solarSystem, x))
-					.ToList();
+				builder
+					.Dependents(state.Ships)
+					.Build(Echo.Ships.Ship.Builder.Build)
+					.Resolve((target, resolver, dependent) => target.Ships.Add(dependent));
+				
+				builder
+					.Dependents(state.JumpGates)
+					.Build(Echo.JumpGates.JumpGate.Builder.Build)
+					.Resolve((target, resolver, dependent) => target.JumpGates.Add(dependent));
 
-				solarSystem.Structures = (state.Structures ?? Enumerable.Empty<StructureState>())
-					.Select(x => Structure.Builder.For(x).Build(solarSystem, x))
-					.ToList();
+				builder
+					.Dependents(state.Satellites)
+					.Build((target, dependent) => CelestialObject.Builder.For(dependent).Build(solarSystem, dependent))
+					.Resolve((target, resolver, dependent) => target.Satellites.Add(dependent));
 
-				var satellites = solarSystem.Satellites.ToDictionary(x => x.Id);
-				var structures = solarSystem.Structures.ToDictionary(x => x.Id);
+				builder
+					.Dependents(state.Structures)
+					.Build((target, dependent) => Structure.Builder.For(dependent).Build(solarSystem, dependent))
+					.Resolve((target, resolver, dependent) => target.Structures.Add(dependent));
 
-				AssignSatellites(state, satellites);
-				AssignStructures(state, satellites, structures);
-
-				return solarSystem;
+				return builder;
+			}
+			
+			private static void BuildOrbits(SolarSystemState arg1, IIdResolver arg2)
+			{
+				BuildSatelliteOrbits(arg1, arg2);
+				BuildStructureOrbits(arg1, arg2);
 			}
 
-			private static void AssignStructures(SolarSystemState state, Dictionary<long, CelestialObject> satellites, Dictionary<long, Structure> structures)
+			private static void BuildStructureOrbits(SolarSystemState state, IIdResolver resolver)
 			{
-				if ( state.Structures == null )
-					return;
-
 				var query =
 					(
 						from s in state.Structures
-						let structure = structures[s.Id]
+						let structure = resolver.GetById<Structure>(s.Id)
 						select new
 						{
 							s.Id,
@@ -76,10 +92,8 @@ namespace Echo.Celestial
 
 				foreach ( var structure in query )
 				{
-					CelestialObject parent;
-					if (!satellites.TryGetValue(structure.OrbitsId, out parent)) 
-						continue;
-
+					var parent = resolver.GetById<CelestialObject>(structure.OrbitsId);
+					
 					parent.Structures.Add(structure.Instance);
 					structure.Instance.Position = new Position(parent, structure.LocalCoordinates);
 
@@ -88,15 +102,17 @@ namespace Echo.Celestial
 				}
 			}
 
-			private static void AssignSatellites(SolarSystemState state, Dictionary<long, CelestialObject> satellites)
+			private static void BuildSatelliteOrbits(SolarSystemState state, IIdResolver resolver)
 			{
+				Ensure.That(resolver).IsNotNull();
+
 				if ( state.Satellites == null )
 					return;
 
 				var query =
 					(
 						from s in state.Satellites
-						let satellite = satellites[s.Id]
+						let satellite = resolver.GetById<CelestialObject>(s.Id)
 						select new
 						{
 							s.Id,
@@ -109,7 +125,7 @@ namespace Echo.Celestial
 				foreach (var satellite in query)
 				{
 					CelestialObject parent;
-					if (!satellites.TryGetValue(satellite.OrbitsId, out parent)) 
+					if ( !resolver.TryGetById(satellite.OrbitsId, out parent) ) 
 						continue;
 
 					parent.Satellites.Add(satellite.Instance);

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\Builders.cs" />
+    <Compile Include="Builders\Corporations\Corporation.cs" />
     <Compile Include="Builders\Items\Item.cs" />
     <Compile Include="Builders\JumpGates\JumpGate.cs" />
     <Compile Include="Builders\Market\BuyOrder.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="EnsureThat\EnsureThatObjectExtensions.cs" />
     <Compile Include="Exceptions\ItemNotFoundException.cs" />
     <Compile Include="IdResolutionContext.cs" />
+    <Compile Include="ObjectBuilder.cs" />
     <Compile Include="IItem.cs" />
     <Compile Include="Resharper\Annotations.cs" />
     <Compile Include="Ships\HardPoint.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Ships\Ship.cs" />
     <Compile Include="Ships\ShipStatistics.cs" />
     <Compile Include="Ships\Weapon.cs" />
+    <Compile Include="State\CorporationState.cs" />
     <Compile Include="State\ItemState.cs" />
     <Compile Include="State\Market\BuyOrderState.cs" />
     <Compile Include="State\HardPointState.cs" />

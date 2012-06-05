@@ -6,13 +6,13 @@ namespace Echo.Structures
 	{
 		 public new class Builder : Structure.Builder
 		 {
-		 	protected override Structure BuildStructure(ILocation location, StructureState state)
+		 	protected override ObjectBuilder<Structure> BuildStructure(ILocation location, StructureState state)
 		 	{
 				var structure = new TradingStation
 				{
 				};
 
-				return structure;
+				return new ObjectBuilder<Structure>(structure);
 			}
 
 		 	protected override StructureState SaveStructure(Structure structure, StructureState state)

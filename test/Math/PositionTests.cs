@@ -1,5 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using Echo.Celestial;
 using Echo.Ships;
+using Moq;
 using NUnit.Framework;
 using Echo;
 
@@ -32,6 +37,8 @@ namespace Echo.Tests.Math
 
 			public Position Position { get; set; }
 		}
+		
+		private Mock<IIdResolver> _idResolver = new Mock<IIdResolver>(MockBehavior.Strict);
 
 		[Test]
 		public void UniversalCoordinates()
@@ -49,7 +56,12 @@ namespace Echo.Tests.Math
 		public void GetSolarSystem()
 		{
 			var s = new MockUniverse();
-			var u = Universe.Builder.Build(s.Universe);
+			Assert.That(s.Universe.StarClusters, Is.Not.Empty);
+			
+			var u = Universe.Builder.Build(s.Universe).Materialise();
+
+			Assert.That(u.StarClusters, Is.Not.Empty);
+			Assert.That(u.SolarSystems(), Is.Not.Empty);
 
 			var sol = u.SolarSystems().Single(x => x.Id == s.SolarSystem.Id);
 			var earth = u.Planets().Single(p => p.Id == s.Earth.Id);

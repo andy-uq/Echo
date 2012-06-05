@@ -6,19 +6,20 @@ namespace Echo.JumpGates
 {
 	partial class JumpGate
 	{
-		public class Builder
+		public static class Builder
 		{
-			public IdResolutionContext<JumpGate> Build(SolarSystem location, JumpGateState state)
+			public static ObjectBuilder<JumpGate> Build(SolarSystem location, JumpGateState state)
 			{
-				return new IdResolutionContext<JumpGate>
+				var jumpGate = new JumpGate
 				{
-					Target = new JumpGate
-					{
-						Id = state.Id,
-						Name = state.Name,
-						Position = new Position(location, state.LocalCoordinates),
-					},
-					Resolved =
+					Id = state.Id,
+					Name = state.Name,
+					Position = new Position(location, state.LocalCoordinates),
+				};
+
+				return new ObjectBuilder<JumpGate>(jumpGate)
+				{
+					Connect =
 					{
 						(resolver, target) => target.ConnectsTo = state.ConnectsTo == -1 ? null : resolver.GetById<JumpGate>(state.ConnectsTo)
 					}

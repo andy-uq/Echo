@@ -2,7 +2,7 @@
 
 namespace Echo.State
 {
-	public class StarClusterState
+	public class StarClusterState : IObjectState
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }

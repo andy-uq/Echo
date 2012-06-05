@@ -24,7 +24,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var structure = TradingStation.Build(new Universe());
+			var structure = Structure.Builder.For(TradingStation).Build(null, TradingStation).Resolve(null);
 			var state = structure.Save();
 
 			Assert.That(state.TradingStation, Is.Not.Null);
@@ -41,7 +41,7 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(state, Is.Not.Null);
 			Assert.That(state.TradingStation, Is.Not.Null);
 
-			var structure = state.Build(null);
+			var structure = Structure.Builder.For(state).Build(null, state).Resolve(null);
 			Assert.That(structure, Is.InstanceOf<TradingStation>());
 		}
 	}

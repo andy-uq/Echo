@@ -32,5 +32,17 @@ namespace Echo.JumpGates
 
 			throw new ArgumentException("Cannot resolve objects that are not jump gates");
 		}
+
+		public bool TryGetById<T>(long id, out T value) where T : class, IObject
+		{
+			JumpGate jumpGate;
+			if (!_registry.TryGetValue(id, out jumpGate))
+			{
+				jumpGate = null;
+			}
+
+			value = jumpGate as T;
+			return value != null;
+		}
 	}
 }

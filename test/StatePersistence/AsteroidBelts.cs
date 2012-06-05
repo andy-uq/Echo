@@ -25,7 +25,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var asteroidBelt = AsteroidBelt.Build(null);
+			var asteroidBelt = CelestialObject.Builder.For(AsteroidBelt).Build(null, AsteroidBelt).Resolve(null);
 			Assert.That(asteroidBelt, Is.InstanceOf<AsteroidBelt>());
 			var state = asteroidBelt.Save();
 
@@ -42,7 +42,7 @@ namespace Echo.Tests.StatePersistence
 			var state = Database.UseOnceTo().GetById<CelestialObjectState>(1L);
 			Assert.That(state, Is.Not.Null);
 
-			var celestialObject = state.Build(null);
+			var celestialObject = CelestialObject.Builder.For(state).Build(null, state).Resolve(null);
 			Assert.That(celestialObject, Is.InstanceOf<AsteroidBelt>());
 
 			var asteroidBelt = (AsteroidBelt) celestialObject;

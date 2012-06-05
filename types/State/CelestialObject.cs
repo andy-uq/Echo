@@ -2,7 +2,7 @@
 
 namespace Echo.State
 {
-	public class CelestialObjectState 
+	public class CelestialObjectState : IObjectState
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }

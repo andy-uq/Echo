@@ -92,6 +92,7 @@
     <Compile Include="Ships\ShipTests.cs" />
     <Compile Include="SolarSystems\JumpGateTests.cs" />
     <Compile Include="StatePersistence\AsteroidBelts.cs" />
+    <Compile Include="StatePersistence\BuilderSystemTests.cs" />
     <Compile Include="StatePersistence\Manufactories.cs" />
     <Compile Include="MockUniverse.cs" />
     <Compile Include="StatePersistence\Moons.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="StatePersistence\ShipStateTest.cs" />
     <Compile Include="StatePersistence\SolarSystems.cs" />
     <Compile Include="StatePersistence\TradingStations.cs" />
+    <Compile Include="TestExtensions.cs" />
     <Compile Include="TestSettings.cs" />
     <Compile Include="StatePersistence\StateTest.cs" />
     <Compile Include="StatePersistence\UniverseStateTest.cs" />

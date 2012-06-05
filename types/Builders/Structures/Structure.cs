@@ -1,6 +1,7 @@
 ﻿using System;
 using Echo.State;
 using Echo;
+using EnsureThat;
 
 namespace Echo.Structures
 {
@@ -10,29 +11,31 @@ namespace Echo.Structures
 		{
 			public StructureState Save(Structure structure)
 			{
+				Ensure.That(structure, "structure").IsNotNull();
+
 				var state = new StructureState
 				{
 					Id = structure.Id,
 					Name = structure.Name,
 					LocalCoordinates = structure.Position.LocalCoordinates,
-					OrbitsId = structure.Position.Location.Id,
+					OrbitsId = (structure.Position.Location == null) ? -1L : structure.Position.Location.Id,
 					StructureType = structure.StructureType,
 				};
 
 				return SaveStructure(structure, state);
 			}
 
-			public Structure Build(ILocation location, StructureState state)
+			public ObjectBuilder<Structure> Build(ILocation location, StructureState state)
 			{
-				var structure = BuildStructure(location, state);
-				structure.Id = state.Id;
-				structure.Name = state.Name;
-				structure.Position = new Position(location, state.LocalCoordinates);
+				var builder = BuildStructure(location, state);
+				builder.Target.Id = state.Id;
+				builder.Target.Name = state.Name;
+				builder.Target.Position = new Position(location, state.LocalCoordinates);
 
-				return structure;
+				return builder;
 			}
 
-			protected abstract Structure BuildStructure(ILocation location, StructureState state);
+			protected abstract ObjectBuilder<Structure> BuildStructure(ILocation location, StructureState state);
 			protected abstract StructureState SaveStructure(Structure structure, StructureState state);
 
 			public static Builder For(Structure structure)

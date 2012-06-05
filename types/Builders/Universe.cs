@@ -20,15 +20,20 @@ namespace Echo
 				};
 			}
 
-			public static Universe Build(UniverseState state)
+			public static ObjectBuilder<Universe> Build(UniverseState state)
 			{
-				var universe = new Universe();
+				var universe = new Universe
+				{
+					Id = state.Id,
+				};
 
-				universe.StarClusters = state.StarClusters
-					.Select(x => StarCluster.Builder.Build(universe, x))
-					.ToList();
+				var builder = new ObjectBuilder<Universe>(universe);
+				builder
+					.Dependents(state.StarClusters)
+					.Build(StarCluster.Builder.Build)
+					.Resolve((target, resolver, dependent) => target.StarClusters.Add(dependent));
 
-				return universe;
+				return builder;
 			}
 		}
 	}

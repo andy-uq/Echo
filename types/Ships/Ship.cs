@@ -8,6 +8,11 @@ namespace Echo.Ships
 	{
 		private List<HardPoint> _hardPoints;
 
+		public Ship()
+		{
+			_hardPoints = new List<HardPoint>();
+		}
+
 		public ObjectType ObjectType
 		{
 			get { return ObjectType.Ship; }

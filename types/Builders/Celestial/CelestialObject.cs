@@ -9,17 +9,17 @@ namespace Echo.Celestial
 
 		public class Builder
 		{
-			public CelestialObject Build(ILocation target, CelestialObjectState state)
+			public ObjectBuilder<CelestialObject> Build(ILocation target, CelestialObjectState state)
 			{
-				CelestialObject celestialObject = Build(state);
+				var builder = Build(state);
 
-				celestialObject.Id = state.Id;
-				celestialObject.Name = state.Name;
-				celestialObject.Position = new Position(target, state.LocalCoordinates);
-				celestialObject.Mass = state.Mass;
-				celestialObject.Size = state.Size;
+				builder.Target.Id = state.Id;
+				builder.Target.Name = state.Name;
+				builder.Target.Position = new Position(target, state.LocalCoordinates);
+				builder.Target.Mass = state.Mass;
+				builder.Target.Size = state.Size;
 
-				return celestialObject;
+				return builder;
 			}
 
 			public CelestialObjectState Save(CelestialObject celestialObject)
@@ -38,10 +38,11 @@ namespace Echo.Celestial
 
 			protected virtual CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
 			{
+				state.OrbitsId = (celestialObject.Position.Location == null) ? -1L : celestialObject.Position.Location.Id;
 				return state;
 			}
 
-			protected virtual CelestialObject Build(CelestialObjectState state)
+			protected virtual ObjectBuilder<CelestialObject> Build(CelestialObjectState state)
 			{
 				CelestialObject celestialObject;
 
@@ -50,6 +51,7 @@ namespace Echo.Celestial
 					case CelestialObjectType.Planet:
 						celestialObject = new Planet();
 						break;
+
 					case CelestialObjectType.Moon:
 						celestialObject = new Moon();
 						break;
@@ -59,7 +61,8 @@ namespace Echo.Celestial
 						celestialObject = new CelestialObject();
 						break;
 				}
-				return celestialObject;
+				
+				return new ObjectBuilder<CelestialObject>(celestialObject);
 			}
 
 			public static Builder For(CelestialObject celestialObject)
@@ -98,13 +101,13 @@ namespace Echo.Celestial
 					return state;
 				}
 
-				protected override CelestialObject Build(CelestialObjectState state)
+				protected override ObjectBuilder<CelestialObject> Build(CelestialObjectState state)
 				{
-					return new AsteroidBelt
+					return new ObjectBuilder<CelestialObject>(new AsteroidBelt
 					{
 						Richness = state.AsteroidBelt.Richness,
 						AmountRemaining = state.AsteroidBelt.AmountRemaining
-					};
+					});
 				}
 			}
 

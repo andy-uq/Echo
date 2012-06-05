@@ -18,6 +18,11 @@ namespace Echo.Ships
 
 			public static Weapon Build(ILocation location, WeaponState state)
 			{
+				if ( state == null )
+				{
+					return null;
+				}
+
 				var weapon = new Weapon
 				{
 					Id = state.Id,

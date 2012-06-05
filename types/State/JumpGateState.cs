@@ -1,6 +1,6 @@
 ﻿namespace Echo.State
 {
-	public class JumpGateState
+	public class JumpGateState : IObjectState
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }

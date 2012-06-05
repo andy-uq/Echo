@@ -2,7 +2,7 @@
 
 namespace Echo.State
 {
-	public class ShipState
+	public class ShipState : IObjectState
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }

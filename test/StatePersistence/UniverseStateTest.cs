@@ -34,7 +34,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var universe = Echo.Universe.Builder.Build(GetUniverse());
+			var universe = Echo.Universe.Builder.Build(GetUniverse()).Materialise();
 			var state = universe.Save();
 
 			var json = Database.Serializer.Serialize(state);
@@ -66,7 +66,7 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(earthState, Is.Not.Null);
 			Assert.That(earthState, Is.InstanceOf<CelestialObjectState>());
 
-			var starCluster = StarCluster.Builder.Build(new Universe(), state);
+			var starCluster = StarCluster.Builder.Build(null, state).Materialise();
 
 			Assert.That(starCluster, Is.Not.Null);
 			Assert.That(starCluster.SolarSystems, Is.Not.Empty);

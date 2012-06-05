@@ -47,7 +47,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem);
+			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem).Materialise();
 			var state = Echo.Celestial.SolarSystem.Builder.Save(solarSystem);
 
 			Console.WriteLine(state.SerializeAndFormat());
@@ -60,7 +60,7 @@ namespace Echo.Tests.StatePersistence
 			var state = Database.UseOnceTo().GetById<SolarSystemState>(1L);
 			Assert.That(state, Is.Not.Null);
 
-			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, state);
+			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, state).Materialise();
 			
 			var earth = solarSystem.Satellites.OfType<Planet>().Single(x => x.Id == Earth.Id);
 			Assert.That(earth.Sun, Is.EqualTo(solarSystem));

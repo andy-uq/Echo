@@ -11,8 +11,8 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void ShipWithNoHardPointsCantTrack()
 		{
-			var ship = new ShipState { LocalCoordinates = new Vector(0, 0, 0) }.Build(null);
-			var ship2 = new ShipState { LocalCoordinates = new Vector(0, 0, 0) }.Build(null);
+			var ship = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0) });
+			var ship2 = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0) });
 			
 			Assert.That(ship.HardPoints, Is.Empty);
 			Assert.That(ship.CanAimAt(ship2), Is.False);
@@ -28,7 +28,10 @@ namespace Echo.Tests.Ships
 			HardPoint.CalculateHardPoint(HardPointPosition.Left, out left, out radiansOfMovement);
 			HardPoint.CalculateHardPoint(HardPointPosition.Right, out right, out radiansOfMovement);
 			
-			var ship = new ShipState
+			Assert.That(left, Is.Not.EqualTo(Vector.Zero));
+			Assert.That(right, Is.Not.EqualTo(Vector.Zero));
+
+			var state = new ShipState
 			{
 				HardPoints = new[]
 				{
@@ -36,10 +39,11 @@ namespace Echo.Tests.Ships
 					new HardPointState {Position = HardPointPosition.Right, Speed = 0.5d, Orientation = right },
 				},
 				LocalCoordinates = new Vector(0, 0, 0)
-			}.Build(null);
+			};
 
-			var inFront = new ShipState {LocalCoordinates = new Vector(0, 10, 0)}.Build(null);
-			var toTheSide = new ShipState {LocalCoordinates = new Vector(-10, 0, 0)}.Build(null);
+			var ship = Build(state);
+			var inFront = Build(new ShipState {LocalCoordinates = new Vector(0, 10, 0)});
+			var toTheSide = Build(new ShipState {LocalCoordinates = new Vector(-10, 0, 0)});
 
 			Assert.That(ship.HardPoints, Is.Not.Empty);
 
@@ -48,6 +52,11 @@ namespace Echo.Tests.Ships
 
 			Assert.That(ship.CanAimAt(inFront), Is.False);
 			Assert.That(ship.CanTrack(inFront), Is.False);
+		}
+
+		private Ship Build(ShipState state)
+		{
+			return Ship.Builder.Build(null, state).Materialise();
 		}
 	}
 }

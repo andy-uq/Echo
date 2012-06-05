@@ -57,6 +57,7 @@
     <Compile Include="AutofacResolver.cs" />
     <Compile Include="AutoMapTypeMapper.cs" />
     <Compile Include="EchoContext.cs" />
+    <Compile Include="JumpCountTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

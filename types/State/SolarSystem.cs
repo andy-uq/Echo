@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Echo;
 
 namespace Echo.State
 {
-	public class SolarSystemState
+	public class SolarSystemState : IObjectState
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }
@@ -11,5 +10,6 @@ namespace Echo.State
 		public IEnumerable<CelestialObjectState> Satellites { get; set; }
 		public IEnumerable<StructureState> Structures { get; set; }
 		public IEnumerable<ShipState> Ships { get; set; }
+		public IEnumerable<JumpGateState> JumpGates { get; set; }
 	}		 
 }

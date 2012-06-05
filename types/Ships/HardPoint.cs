@@ -24,7 +24,6 @@ namespace Echo.Ships
 			Speed = 0.5d;
 
 			CalculateHardPoint(position, out _origin, out _radiansOfMovement);
-
 			Orientation = _origin;
 		}
 
@@ -106,14 +105,21 @@ namespace Echo.Ships
 			get { return _orientation; }
 			private set
 			{
-				value = value.ToUnitVector();
-				var newAngle = CalculateCurrentAngle(value);
-				if (newAngle >= _radiansOfMovement)
+				if ( value == Vector.Zero )
 				{
-					throw new ArgumentOutOfRangeException("value", "Cannot move to new position because it is out of range");
+					_orientation = _origin;
 				}
+				else
+				{
+					value = value.ToUnitVector();
+					var newAngle = CalculateCurrentAngle(value);
+					if (newAngle >= _radiansOfMovement)
+					{
+						throw new ArgumentOutOfRangeException("value", "Cannot move to new position because it is out of range");
+					}
 
-				_orientation = value;
+					_orientation = value;
+				}
 			}
 		}
 
@@ -178,7 +184,15 @@ namespace Echo.Ships
 		/// <returns></returns>
 		public bool InRange(ILocation target)
 		{
+			if (target.Position.UniversalCoordinates == Ship.Position.UniversalCoordinates)
+			{
+				throw new ArgumentException("Target must not be at the same position as the ship");
+			}
+
 			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
+			if (targetPosition == Vector.Zero)
+				throw new ArgumentException("Target is co-incident", "target");
+
 			targetPosition = targetPosition.ToUnitVector();
 
 			double extent = Vector.Angle(_origin, targetPosition);

@@ -20,7 +20,7 @@ namespace Echo.Celestial
 				};
 			}
 
-			public static StarCluster Build(Universe universe, StarClusterState state)
+			public static ObjectBuilder<StarCluster> Build(Universe universe, StarClusterState state)
 			{
 				var starCluster = new StarCluster
 				{
@@ -29,11 +29,13 @@ namespace Echo.Celestial
 					Position = new Position(universe, state.LocalCoordinates),
 				};
 
-				starCluster.SolarSystems = state.SolarSystems
-					.Select(x => SolarSystem.Builder.Build(starCluster, x))
-					.ToList();
+				var builder = new ObjectBuilder<StarCluster>(starCluster);
+				builder
+					.Dependents(state.SolarSystems)
+					.Build(SolarSystem.Builder.Build)
+					.Resolve((target, resolver, dependent) => target.SolarSystems.Add(dependent));
 
-				return starCluster;
+				return builder;
 			}
 		}
 	}

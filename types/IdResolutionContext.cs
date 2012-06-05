@@ -1,33 +1,45 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
-using Echo.JumpGates;
 
 namespace Echo
 {
-	public interface IIdResolver
+	public class IdResolutionContext : IIdResolver
 	{
-		T GetById<T>(long id) where T : class, IObject;
-	}
+		private Dictionary<long, IObject> _lookup;
 
-	public static class IdResolverExtensions
-	{
-		public static T Resolve<T>(this IdResolutionContext<T> context, IIdResolver register)
+		public IdResolutionContext(IEnumerable<IObject> collection)
 		{
-			foreach ( var action in context.Resolved )
-				action(register, context.Target);
+			collection = collection.ToArray();
 
-			return context.Target;
+			var q =
+				(
+					from o in collection
+					group o by o.Id
+					into g
+					where g.Count() > 1
+					select string.Format("{0}: {1}", g.Key, string.Join(", ", g.Select(x => x.Name)))
+				).ToArray();
+
+			if (q.Any())
+				throw new InvalidOperationException("Duplicate keys detected: " + string.Join("; ", q));
+
+			_lookup = collection.Where(x => x.Id != 0).ToDictionary(x => x.Id);
 		}
-	}
 
-	public class IdResolutionContext<T>
-	{
-		public IdResolutionContext()
+		public T GetById<T>(long id) where T : class, IObject
 		{
-			Resolved = new List<Action<IIdResolver, T>>();
+			return (T) _lookup[id];
 		}
 
-		public T Target { get; set; }
-		public List<Action<IIdResolver, T>> Resolved { get; set; }
+		public bool TryGetById<T>(long id, out T value) where T : class, IObject
+		{
+			IObject rawValue;
+			if ( !_lookup.TryGetValue(id, out rawValue) )
+				rawValue = null;
+			
+			value = rawValue as T;
+			return value != null;
+		}
 	}
 }

@@ -10,7 +10,16 @@ namespace Echo
 		public static Param<T> IsNull<T>(this Param<T> param) where T : class
 		{
 			if ( param.Value != null )
-				throw new ArgumentException("Value must be null", param.Name);
+				throw new ArgumentException(param.Name + " must be null", param.Name);
+			
+			return param;
+		}
+
+		[DebuggerStepThrough]
+		public static Param<T> IsNotEqualTo<T>(this Param<T> param, T value, string name = null)
+		{
+			if ( Equals(param.Value, value) )
+				throw new ArgumentException(param.Name + " must not equal " + (name ?? value.ToString()), param.Name);
 			
 			return param;
 		}

@@ -32,5 +32,10 @@ namespace Echo.JumpGates
 			ship.SolarSystem.LeaveSystem(ship);
 			ConnectsTo.SolarSystem.EnterSystem(ship, ConnectsTo.Position.LocalCoordinates);
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

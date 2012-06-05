@@ -22,6 +22,8 @@ namespace Echo.Tests
 
 		public MockUniverse()
 		{
+			var universeId = Id();
+
 			Earth = new CelestialObjectState
 			{
 				Id = Id(),
@@ -106,7 +108,7 @@ namespace Echo.Tests
 			};
 			Universe = new UniverseState
 			{
-				Id = Id(),
+				Id = universeId,
 				StarClusters = new List<StarClusterState>() {StarCluster}
 			};
 		}
