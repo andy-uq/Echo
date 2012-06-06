@@ -70,28 +70,30 @@ namespace Echo.Tests.Ships
 					select _shipStatistics.ArmourStrength(d)
 				).ToArray();
 
-			Assert.That(armours.All(value => !value.IsBuffed));
-			Assert.That(armours.All(value => !value.IsDebuffed));
+			Assert.That(armours.All(value => !value.Buffs.Any()));
+			Assert.That(armours.All(value => !value.Debuffs.Any()));
 		}
 
 		[Test]
 		public void DebuffArmour()
 		{
+			var shipDamage = new Damage(DamageType.Ballistic) { Value = 50 };
 			var ballistic = _shipStatistics.ArmourStrength(DamageType.Ballistic);
-			ballistic.Alter(40);
+			ballistic.Alter(shipDamage);
 
-			Assert.That(ballistic.IsDebuffed, Is.True);
-			Assert.That(ballistic.IsBuffed, Is.False);
+			Assert.That(ballistic.Debuffs.Any(), Is.True);
+			Assert.That(ballistic.Buffs.Any(), Is.False);
 		}
 
 		[Test]
 		public void BuffArmour()
 		{
+			var armourPlating = new ArmourPlating(ShipStatistic.BallisticArmourStrength) { Value = 50 };
 			var ballistic = _shipStatistics.ArmourStrength(DamageType.Ballistic);
-			ballistic.Alter(60);
-			
-			Assert.That(ballistic.IsBuffed, Is.True);
-			Assert.That(ballistic.IsDebuffed, Is.False);
+			ballistic.Alter(armourPlating);
+
+			Assert.That(ballistic.Buffs.Any(), Is.True);
+			Assert.That(ballistic.Debuffs.Any(), Is.False);
 		}
 
 		[Test]
@@ -102,10 +104,12 @@ namespace Echo.Tests.Ships
 			var hullIntegrity = x[ShipStatistic.HullIntegrity];
 			Assert.That(hullIntegrity.Value, Is.EqualTo(1000));
 
-			hullIntegrity.Alter(10);
+			var shipDamage = new Damage(DamageType.Ballistic) { Value = 10 };
+			hullIntegrity.Alter(shipDamage);
+
 			Assert.That(hullIntegrity.Value, Is.EqualTo(1000));
-			Assert.That(hullIntegrity.CurrentValue, Is.EqualTo(10));
-			Assert.That(hullIntegrity.IsDebuffed, Is.True);
+			Assert.That(hullIntegrity.CurrentValue, Is.EqualTo(990));
+			Assert.That(hullIntegrity.Debuffs.Any(), Is.True);
 		}
 
 		public IEnumerable<ShipStatisticValue> StatFactory()

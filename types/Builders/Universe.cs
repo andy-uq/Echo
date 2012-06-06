@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
@@ -31,7 +32,7 @@ namespace Echo
 				builder
 					.Dependents(state.StarClusters)
 					.Build(StarCluster.Builder.Build)
-					.Resolve((target, resolver, dependent) => target.StarClusters.Add(dependent));
+					.Resolve((resolver, target, dependent) => target.StarClusters.Add(dependent));
 
 				return builder;
 			}

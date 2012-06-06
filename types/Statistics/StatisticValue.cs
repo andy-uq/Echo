@@ -1,78 +1,98 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Echo.Statistics
 {
-	public class StatisticValue<T, V> : IComparable<V> where V : IComparable<V>
+	public class StatisticValue<T, TValue> : IComparable<TValue> where TValue : IComparable<TValue>
 	{
-		public StatisticValue(T stat, V value)
+		private readonly HashSet<IStatisticDelta<TValue>> _deltas;
+
+		private static Math<TValue> Math { get; set; }
+
+		public static void InitMath(Math<TValue> math)
+		{
+			Math = math;
+		}
+
+		public StatisticValue(T stat, TValue value) : this(stat, value, Enumerable.Empty<IStatisticDelta<TValue>>())
+		{
+		}
+
+		public StatisticValue(T stat, TValue value, IEnumerable<IStatisticDelta<TValue>> deltas)
 		{
 			Stat = stat;
-
 			Value = value;
-			CurrentValue = value;
+
+			_deltas = new HashSet<IStatisticDelta<TValue>>(deltas);
+			Recalculate();
 		}
 
-		public V Value { get; set; }
-		public V CurrentValue { get; set; }
+		public void Recalculate()
+		{
+			CurrentValue = _deltas.Aggregate(Value, (x, delta) => Math.Add(x, delta.Value));
+		}
+
+		public TValue Value { get; set; }
+		public TValue CurrentValue { get; set; }
 		public T Stat { get; private set; }
 
-		public StatisticValue<T, V> Clone()
+		public IEnumerable<IStatisticDelta<TValue>> Buffs { get { return _deltas.Where(x => Math.IsPositive(x.Value)); } }
+		public IEnumerable<IStatisticDelta<TValue>> Debuffs { get { return _deltas.Where(x => Math.IsNegative(x.Value)); } }
+
+		public StatisticValue<T, TValue> Clone()
 		{
-			return (StatisticValue<T, V>)MemberwiseClone();
+			return (StatisticValue<T, TValue>)MemberwiseClone();
 		}
 
-		public void SetValue(V value)
+		public void SetValue(TValue value)
 		{
 			Value = value;
 			CurrentValue = value;
 		}
 
-		public void SetValue(V value, V currentValue)
+		public void SetValue(TValue value, TValue currentValue)
 		{
 			Value = value;
 			CurrentValue = currentValue;
 		}
 
-		public bool IsBuffed
+		public void Alter(IStatisticDelta<TValue> delta)
 		{
-			get { return CurrentValue.CompareTo(Value) > 0; }
+			_deltas.Add(delta);
+			Recalculate();
 		}
 
-		public bool IsDebuffed
+		public bool Remove(IStatisticDelta<TValue> delta)
 		{
-			get { return CurrentValue.CompareTo(Value) < 0; }
-		}
-
-		public void Alter(V buffedValue)
-		{
-			CurrentValue = buffedValue;
+			return _deltas.Remove(delta);
 		}
 
 		#region Operators
 
-		public static bool operator <(StatisticValue<T, V> stat, V value)
+		public static bool operator <(StatisticValue<T, TValue> stat, TValue value)
 		{
 			return stat.CurrentValue.CompareTo(value) < 0;
 		}
 
-		public static bool operator >(StatisticValue<T, V> stat, V value)
+		public static bool operator >(StatisticValue<T, TValue> stat, TValue value)
 		{
 			return stat.CurrentValue.CompareTo(value) > 0;
 		}
 
-		public static bool operator <=(StatisticValue<T, V> stat, V value)
+		public static bool operator <=(StatisticValue<T, TValue> stat, TValue value)
 		{
 			return stat.CurrentValue.CompareTo(value) <= 0;
 		}
 
-		public static bool operator >=(StatisticValue<T, V> stat, V value)
+		public static bool operator >=(StatisticValue<T, TValue> stat, TValue value)
 		{
 			return stat.CurrentValue.CompareTo(value) >= 0;
 		}
 
 		#endregion
 
-		int IComparable<V>.CompareTo(V other)
+		public int CompareTo(TValue other)
 		{
 			return CurrentValue.CompareTo(other);
 		}

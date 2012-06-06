@@ -90,7 +90,9 @@
     <Compile Include="Ships\HardPointTests.cs" />
     <Compile Include="Ships\ShipStatisticTests.cs" />
     <Compile Include="Ships\ShipTests.cs" />
+    <Compile Include="Skills\SkillTests.cs" />
     <Compile Include="SolarSystems\JumpGateTests.cs" />
+    <Compile Include="StatePersistence\Agents.cs" />
     <Compile Include="StatePersistence\AsteroidBelts.cs" />
     <Compile Include="StatePersistence\BuilderSystemTests.cs" />
     <Compile Include="StatePersistence\Manufactories.cs" />

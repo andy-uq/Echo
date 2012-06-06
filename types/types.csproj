@@ -51,6 +51,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agents\Agent.cs" />
+    <Compile Include="Agents\AgentStatistics.cs" />
+    <Compile Include="Agents\Implant.cs" />
+    <Compile Include="Agents\Skills\CategoryAttribute.cs" />
+    <Compile Include="Agents\Skills\Skill.cs" />
+    <Compile Include="Agents\Skills\SkillLevel.cs" />
+    <Compile Include="Agents\Skills\SkillCategories.cs" />
+    <Compile Include="Agents\Skills\SkillCode.cs" />
+    <Compile Include="Builders\DependentObject.cs" />
+    <Compile Include="Builders\IBuilderContext.cs" />
+    <Compile Include="IIdResolver.cs" />
+    <Compile Include="Builders\ObjectBuilderT.cs" />
+    <Compile Include="Ships\ArmourPlating.cs" />
+    <Compile Include="Ships\Damage.cs" />
+    <Compile Include="Statistics\IStatisticDelta.cs" />
+    <Compile Include="Builders\Agents\Agent.cs" />
     <Compile Include="Builders\Builders.cs" />
     <Compile Include="Builders\Corporations\Corporation.cs" />
     <Compile Include="Builders\Items\Item.cs" />
@@ -65,7 +81,7 @@
     <Compile Include="EnsureThat\EnsureThatObjectExtensions.cs" />
     <Compile Include="Exceptions\ItemNotFoundException.cs" />
     <Compile Include="IdResolutionContext.cs" />
-    <Compile Include="ObjectBuilder.cs" />
+    <Compile Include="Builders\ObjectBuilder.cs" />
     <Compile Include="IItem.cs" />
     <Compile Include="Resharper\Annotations.cs" />
     <Compile Include="Ships\HardPoint.cs" />
@@ -74,6 +90,7 @@
     <Compile Include="Ships\Ship.cs" />
     <Compile Include="Ships\ShipStatistics.cs" />
     <Compile Include="Ships\Weapon.cs" />
+    <Compile Include="State\AgentState.cs" />
     <Compile Include="State\CorporationState.cs" />
     <Compile Include="State\ItemState.cs" />
     <Compile Include="State\Market\BuyOrderState.cs" />
@@ -82,14 +99,17 @@
     <Compile Include="State\Market\AuctionState.cs" />
     <Compile Include="State\Market\SellOrderState.cs" />
     <Compile Include="State\ShipState.cs" />
+    <Compile Include="State\StatisticState.cs" />
     <Compile Include="State\TradingStationState.cs" />
     <Compile Include="State\WeaponState.cs" />
+    <Compile Include="Statistics\AgentStatistic.cs" />
+    <Compile Include="Statistics\Math.cs" />
     <Compile Include="Statistics\ShipStatistic.cs" />
     <Compile Include="Statistics\StructureStatistic.cs" />
     <Compile Include="Statistics\StatisticValue.cs" />
     <Compile Include="Statistics\WeaponStatistic.cs" />
     <Compile Include="Units.cs" />
-    <Compile Include="Universe\Corporations\Corporation.cs" />
+    <Compile Include="Corporations\Corporation.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Universe\JumpGates\IJumpGateRegister.cs" />
     <Compile Include="Universe\JumpGates\JumpGate.cs" />

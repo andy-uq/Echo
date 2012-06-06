@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.JumpGates;
@@ -60,7 +61,7 @@ namespace Echo.Tests.SolarSystems
 
 			foreach (var builder in builders)
 			{
-				var jumpGate = builder.Resolve(register);
+				var jumpGate = builder.Build(register);
 				fields[builder.Target.Name].SetValue(this, jumpGate);
 				jumpGate.SolarSystem.JumpGates.Add(jumpGate);
 			}

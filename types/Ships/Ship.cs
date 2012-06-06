@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Echo.Agents;
 using Echo.Celestial;
 
 namespace Echo.Ships
 {
 	public partial class Ship : ILocation, IMoves
 	{
-		private List<HardPoint> _hardPoints;
-
-		public Ship()
-		{
-			_hardPoints = new List<HardPoint>();
-		}
+		private readonly List<HardPoint> _hardPoints;
 
 		public ObjectType ObjectType
 		{
@@ -21,6 +17,7 @@ namespace Echo.Ships
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Position Position { get; set; }
+		public ShipStatistics Statistics { get; set; }
 
 		public IEnumerable<HardPoint> HardPoints
 		{
@@ -30,6 +27,13 @@ namespace Echo.Ships
 		public SolarSystem SolarSystem
 		{
 			get { return Position.GetSolarSystem(); }
+		}
+
+		public Agent Pilot { get; set; }
+
+		public Ship()
+		{
+			_hardPoints = new List<HardPoint>();
 		}
 
 		/// <summary>

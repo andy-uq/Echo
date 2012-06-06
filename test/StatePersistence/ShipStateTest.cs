@@ -24,10 +24,12 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var ship = Echo.Ships.Ship.Builder.Build(null, Ship).Resolve(null);
+			var ship = Echo.Ships.Ship.Builder.Build(null, Ship).Materialise();
 			Assert.That(ship, Is.InstanceOf<Ship>());
 
 			var state = Echo.Ships.Ship.Builder.Save(ship);
+
+			Assert.That(state.Pilot, Is.Not.Null);
 
 			var json = Database.Serializer.Serialize(state);
 			Console.WriteLine(json);
@@ -44,8 +46,7 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(state.LocalCoordinates, Is.EqualTo(Ship.LocalCoordinates));
 			Assert.That(state.HardPoints, Has.Some.Matches<HardPointState>(x => x.Position == HardPointPosition.Front));
 			Assert.That(state.HardPoints.First().Orientation, Is.EqualTo(HardPoint.CalculateOrientation(HardPointPosition.Front)));
-
-			// TODO: use a common id resolver
+		
 			var solarSystem = SolarSystem.Builder.Build(null, Universe.SolarSystem).Materialise();
 			var ship = Echo.Ships.Ship.Builder.Build(solarSystem, state).Materialise();
 

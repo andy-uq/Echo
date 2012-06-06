@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Echo.Statistics;
@@ -6,16 +7,16 @@ using ShipStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.ShipSt
 
 namespace Echo.Ships
 {
-	public class ShipStatistics
+	public class ShipStatistics : IEnumerable<ShipStatisticValue>
 	{
 		private readonly Dictionary<ShipStatistic, ShipStatisticValue> _stats;
 
-		public ShipStatistics()
-			: this(null)
+		static ShipStatistics()
 		{
+			ShipStatisticValue.InitMath(Statistics.Math.Double);
 		}
 
-		public ShipStatistics(IEnumerable<ShipStatisticValue> initialStats)
+		public ShipStatistics(IEnumerable<ShipStatisticValue> initialStats = null)
 		{
 			_stats = new Dictionary<ShipStatistic, ShipStatisticValue>();
 
@@ -57,6 +58,16 @@ namespace Echo.Ships
 				default:
 					throw new ArgumentOutOfRangeException("damageType");
 			}
+		}
+
+		public IEnumerator<ShipStatisticValue> GetEnumerator()
+		{
+			return _stats.Values.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 	}
 }

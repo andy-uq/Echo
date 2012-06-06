@@ -83,9 +83,7 @@ namespace Echo.Ships
 		}
 
 		public HardPointPosition Position { get; private set; }
-
 		public Ship Ship { get; private set; }
-
 		public Weapon Weapon { get; private set; }
 
 		/// <summary>Current position (in Degrees)</summary>

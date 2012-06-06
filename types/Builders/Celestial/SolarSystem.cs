@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.JumpGates;
@@ -39,32 +40,27 @@ namespace Echo.Celestial
 				};
 
 				var builder = new ObjectBuilder<SolarSystem>(solarSystem)
-				{
-					Connect =
-						{
-							(target, resolver) => BuildOrbits(state, target)
-						}
-				};
+					.Resolve((target, resolver) => BuildOrbits(state, target));
 
 				builder
 					.Dependents(state.Ships)
 					.Build(Echo.Ships.Ship.Builder.Build)
-					.Resolve((target, resolver, dependent) => target.Ships.Add(dependent));
+					.Resolve((resolver, target, dependent) => target.Ships.Add(dependent));
 				
 				builder
 					.Dependents(state.JumpGates)
 					.Build(Echo.JumpGates.JumpGate.Builder.Build)
-					.Resolve((target, resolver, dependent) => target.JumpGates.Add(dependent));
+					.Resolve((resolver, target, dependent) => target.JumpGates.Add(dependent));
 
 				builder
 					.Dependents(state.Satellites)
 					.Build((target, dependent) => CelestialObject.Builder.For(dependent).Build(solarSystem, dependent))
-					.Resolve((target, resolver, dependent) => target.Satellites.Add(dependent));
+					.Resolve((resolver, target, dependent) => target.Satellites.Add(dependent));
 
 				builder
 					.Dependents(state.Structures)
 					.Build((target, dependent) => Structure.Builder.For(dependent).Build(solarSystem, dependent))
-					.Resolve((target, resolver, dependent) => target.Structures.Add(dependent));
+					.Resolve((resolver, target, dependent) => target.Structures.Add(dependent));
 
 				return builder;
 			}

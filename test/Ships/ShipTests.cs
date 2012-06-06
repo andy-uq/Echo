@@ -1,4 +1,5 @@
-﻿using Echo.Builders;
+﻿using System.Linq;
+using Echo.Builders;
 using Echo.Ships;
 using Echo.State;
 using NUnit.Framework;
@@ -11,8 +12,8 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void ShipWithNoHardPointsCantTrack()
 		{
-			var ship = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0) });
-			var ship2 = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0) });
+			var ship = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
+			var ship2 = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
 			
 			Assert.That(ship.HardPoints, Is.Empty);
 			Assert.That(ship.CanAimAt(ship2), Is.False);
@@ -38,12 +39,13 @@ namespace Echo.Tests.Ships
 					new HardPointState {Position = HardPointPosition.Left, Speed = 0.5d, Orientation = left },
 					new HardPointState {Position = HardPointPosition.Right, Speed = 0.5d, Orientation = right },
 				},
-				LocalCoordinates = new Vector(0, 0, 0)
+				LocalCoordinates = new Vector(0, 0, 0),
+				Statistics = Enumerable.Empty<ShipStatisticState>()
 			};
 
 			var ship = Build(state);
-			var inFront = Build(new ShipState {LocalCoordinates = new Vector(0, 10, 0)});
-			var toTheSide = Build(new ShipState {LocalCoordinates = new Vector(-10, 0, 0)});
+			var inFront = Build(new ShipState { LocalCoordinates = new Vector(0, 10, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
+			var toTheSide = Build(new ShipState { LocalCoordinates = new Vector(-10, 0, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
 
 			Assert.That(ship.HardPoints, Is.Not.Empty);
 

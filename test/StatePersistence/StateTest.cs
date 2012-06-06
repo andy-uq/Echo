@@ -20,7 +20,7 @@ namespace Echo.Tests.StatePersistence
 		[SetUp]
 		public virtual void SetUp()
 		{
-			var fresh = new CreateFreshDatabase("starClusters");
+			var fresh = new CreateFreshDatabase(GetType().Name);
 			var configurationBuilder = new Autofac.ContainerBuilder();
 
 			fresh.Create(configurationBuilder);

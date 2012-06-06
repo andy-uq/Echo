@@ -12,11 +12,10 @@ namespace Echo.Ships
 				{
 					Id = weapon.Id,
 					Name = weapon.Name,
-					LocalCoordinates = weapon.Position.LocalCoordinates
 				};
 			}
 
-			public static Weapon Build(ILocation location, WeaponState state)
+			public static Weapon Build(WeaponState state)
 			{
 				if ( state == null )
 				{
@@ -27,7 +26,6 @@ namespace Echo.Ships
 				{
 					Id = state.Id,
 					Name = state.Name,
-					Position = new Position(location, state.LocalCoordinates)
 				};
 
 				return weapon;

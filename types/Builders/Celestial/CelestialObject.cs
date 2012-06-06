@@ -1,4 +1,5 @@
-﻿using Echo.State;
+﻿using Echo.Builder;
+using Echo.State;
 using Echo;
 
 namespace Echo.Celestial

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Echo.Agents;
 using Echo.Celestial;
 using Echo.Items;
 using Echo.Ships;
@@ -26,6 +27,14 @@ namespace Echo
 				return Structure.Builder.For(structure).Save(structure);
 			}
 	
+			public static AgentState Save(this Agent agent)
+			{
+				if ( agent == null )
+					return null;
+
+				return Agent.Builder.Save(agent);
+			}
+
 			public static WeaponState Save(this Weapon weapon)
 			{
 				if ( weapon == null )

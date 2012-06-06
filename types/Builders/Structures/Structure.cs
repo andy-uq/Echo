@@ -1,4 +1,5 @@
 ﻿using System;
+using Echo.Builder;
 using Echo.State;
 using Echo;
 using EnsureThat;

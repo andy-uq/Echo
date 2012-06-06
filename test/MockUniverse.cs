@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Echo.Agents;
 using Echo.Ships;
 using Echo.State;
 using Echo;
 using Echo.State.Market;
+using Echo.Statistics;
 
 namespace Echo.Tests
 {
@@ -11,6 +15,7 @@ namespace Echo.Tests
 		private long _nextId;
 
 		public ShipState Ship { get; set; }
+		public AgentState John { get; set; }
 		public StructureState Manufactory { get; set; }
 		public StructureState TradingStation { get; set; }
 		public CelestialObjectState Moon { get; set; }
@@ -23,6 +28,14 @@ namespace Echo.Tests
 		public MockUniverse()
 		{
 			var universeId = Id();
+
+			John = new AgentState
+			{
+				Id = Id(),
+				Name = "John",
+				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
+				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower, }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 })
+			};
 
 			Earth = new CelestialObjectState
 			{
@@ -90,7 +103,9 @@ namespace Echo.Tests
 						Speed = 0.5d, 
 						Weapon = new WeaponState { Id = Id(), Name = "Blaster" }
 					},
-				}
+				},
+				Pilot = John,
+				Statistics = Enum.GetValues(typeof(ShipStatistic)).Cast<ShipStatistic>().Select(x => new ShipStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
 			};
 			SolarSystem = new SolarSystemState
 			{

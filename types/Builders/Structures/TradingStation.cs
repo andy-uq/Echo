@@ -1,13 +1,14 @@
-﻿using Echo.State;
+﻿using Echo.Builder;
+using Echo.State;
 
 namespace Echo.Structures
 {
 	partial class TradingStation
 	{
-		 public new class Builder : Structure.Builder
-		 {
-		 	protected override ObjectBuilder<Structure> BuildStructure(ILocation location, StructureState state)
-		 	{
+		public new class Builder : Structure.Builder
+		{
+			protected override ObjectBuilder<Structure> BuildStructure(ILocation location, StructureState state)
+			{
 				var structure = new TradingStation
 				{
 				};
@@ -15,8 +16,8 @@ namespace Echo.Structures
 				return new ObjectBuilder<Structure>(structure);
 			}
 
-		 	protected override StructureState SaveStructure(Structure structure, StructureState state)
-		 	{
+			protected override StructureState SaveStructure(Structure structure, StructureState state)
+			{
 				var tradingStation = (TradingStation)structure;
 				state.TradingStation = new TradingStationState
 				{
@@ -24,6 +25,6 @@ namespace Echo.Structures
 
 				return state;
 			}
-		 }
+		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Echo.Builder;
 using Echo.Builders;
 using Echo.State;
 using Echo;
@@ -33,7 +34,7 @@ namespace Echo.Celestial
 				builder
 					.Dependents(state.SolarSystems)
 					.Build(SolarSystem.Builder.Build)
-					.Resolve((target, resolver, dependent) => target.SolarSystems.Add(dependent));
+					.Resolve((resolver, target, dependent) => target.SolarSystems.Add(dependent));
 
 				return builder;
 			}

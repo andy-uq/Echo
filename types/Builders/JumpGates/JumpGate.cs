@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Echo.Builder;
 using Echo.Celestial;
 using Echo.State;
 
@@ -18,12 +19,12 @@ namespace Echo.JumpGates
 				};
 
 				return new ObjectBuilder<JumpGate>(jumpGate)
-				{
-					Connect =
-					{
-						(resolver, target) => target.ConnectsTo = state.ConnectsTo == -1 ? null : resolver.GetById<JumpGate>(state.ConnectsTo)
-					}
-				};
+					.Resolve(
+						(resolver, target) =>
+						target.ConnectsTo = state.ConnectsTo == -1
+						                    	? null
+						                    	: resolver.GetById<JumpGate>(state.ConnectsTo)
+					);
 			}
 		}
 	}

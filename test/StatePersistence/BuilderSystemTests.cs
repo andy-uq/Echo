@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Echo.Builder;
 using Moq;
 using NUnit.Framework;
 
@@ -44,8 +45,8 @@ namespace Echo.Tests.StatePersistence
 			var builder = new ObjectBuilder<IObject>(mObject.Object);
 			builder.Dependents(new[] { mChildState.Object }).Build(state => new ObjectBuilder<IObject>(mChildObject.Object));
 			
-			Assert.That(builder.Dependents, Is.Not.Empty);
-			Assert.That(builder.Dependents, Has.Exactly(1).Matches<IResolutionContext>(x => x.Target.Id == 2));
+			Assert.That(builder.DependentObjects, Is.Not.Empty);
+			Assert.That(builder.DependentObjects, Has.Exactly(1).Matches<IBuilderContext>(x => x.Target.Id == 2));
 		}
 
 		[Test]
@@ -60,7 +61,7 @@ namespace Echo.Tests.StatePersistence
 			var builder = new ObjectBuilder<IObject>(testObject);
 			builder.Dependents(new[] { mChildState.Object }).Build(state => new ObjectBuilder<IObject>(mChildObject.Object));
 
-			var r = builder.Resolve(null);
+			var r = builder.Materialise();
 			Assert.That(r, Is.EqualTo(testObject));
 		}
 
@@ -77,17 +78,17 @@ namespace Echo.Tests.StatePersistence
 				.Build(state => new ObjectBuilder<TestObject>(child));
 				
 			var t2 = t1.Resolve(
-					(target, resolver, dependent) => target.Add(dependent)
+					(resolver, target, dependent) => target.Add(dependent)
 				);
 
 			Assert.That(t1, Is.EqualTo(t2));
-			Assert.That(builder.Dependents.First(), Is.EqualTo(t2));
+			Assert.That(builder.DependentObjects.First(), Is.EqualTo(t2));
 
-			var context = (IResolutionContext) t2;
-			var resolved = context.Resolve(null);
+			var context = (IBuilderContext) t2;
+			var resolved = context.Build(null);
 			Assert.That(resolved, Is.EqualTo(child));
 
-			var r = builder.Resolve(null);
+			var r = builder.Materialise();
 			Assert.That(r, Is.EqualTo(testObject));
 			Assert.That(r.Children, Is.Not.Null);
 			Assert.That(r.Children.First(), Is.EqualTo(child));
