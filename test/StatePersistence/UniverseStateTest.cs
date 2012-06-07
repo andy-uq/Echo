@@ -44,11 +44,44 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			var universe = GetUniverse();
-
-			Database.UseOnceTo().InsertMany(universe.StarClusters);
+			SaveToDb();
 
 			DumpObjects("StarCluster");
+			DumpObjects("Corporation");
+			DumpObjects("Item", isInfo:true);
+			DumpObjects("Skill", isInfo: true);
+		}
+
+		private void SaveToDb()
+		{
+			var universe = GetUniverse();
+
+			using (var session = Database.BeginSession())
+			{
+				session.InsertMany(universe.StarClusters);
+				session.InsertMany(universe.Corporations);
+				session.InsertMany(universe.Items);
+				session.InsertMany(universe.Skills);
+			}
+		}
+
+		[Test]
+		public void LoadFromDb()
+		{
+			SaveToDb();
+
+			using ( var session = Database.BeginSession() )
+			{
+				var universe = new UniverseState
+				{
+					StarClusters = session.Query<StarClusterState>().ToArray(),
+					Corporations = session.Query<CorporationState>().ToArray(),
+					Items = session.Query<ItemInfo>().ToArray(),
+					Skills = session.Query<SkillInfo>().ToArray()
+				};
+
+				Check(universe.StarClusters.First());
+			}
 		}
 
 		[Test]
@@ -57,8 +90,12 @@ namespace Echo.Tests.StatePersistence
 			var universe = GetUniverse();
 			Database.UseOnceTo().InsertMany(universe.StarClusters);
 
-			var state = Database.UseOnceTo().GetById<StarClusterState>(1L);
+			var state = Database.UseOnceTo().Query<StarClusterState>().First();
+			Check(state);
+		}
 
+		private static void Check(StarClusterState state)
+		{
 			SolarSystemState solState = state.SolarSystems.First();
 			Assert.That(solState, Is.Not.Null);
 

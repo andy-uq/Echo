@@ -2,6 +2,8 @@
 using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.Corporations;
+using Echo.Items;
 using Echo.State;
 using Echo;
 
@@ -25,16 +27,36 @@ namespace Echo
 			{
 				var universe = new Universe
 				{
-					Id = state.Id,
 				};
 
 				var builder = new ObjectBuilder<Universe>(universe);
+				
+				builder
+					.Dependents(state.Corporations)
+					.Build(Corporation.Builder.Build)
+					.Resolve((resolver, target, dependent) => target.Corporations.Add(dependent));
+				
+				builder
+					.Dependents(state.Items)
+					.Build(BuildInfo)
+					.Resolve((resolver, target, itemInfo) => target.Items.Add(itemInfo.Code, itemInfo));
+				
+				builder
+					.Dependents(state.Skills)
+					.Build(BuildInfo)
+					.Resolve((resolver, target, skillInfo) => target.Skills.Add(skillInfo.Code, skillInfo));
+				
 				builder
 					.Dependents(state.StarClusters)
 					.Build(StarCluster.Builder.Build)
 					.Resolve((resolver, target, dependent) => target.StarClusters.Add(dependent));
 
 				return builder;
+			}
+
+			private static ObjectBuilder<T> BuildInfo<T>(T value) where T : IObject, IObjectState
+			{
+				return new ObjectBuilder<T>(value);
 			}
 		}
 	}

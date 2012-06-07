@@ -1,4 +1,5 @@
 using Echo;
+using Echo.State;
 
 namespace Echo
 {
@@ -9,5 +10,24 @@ namespace Echo
 		string Name { get; }
 
 		void Tick(ulong tick);
+	}
+
+	public static class ObjectExtensions
+	{
+		public static ObjectReference AsObjectReference(this IObject @object)
+		{
+			if ( @object == null )
+				return null;
+
+			return new ObjectReference { Id = @object.Id, Name = @object.Name };
+		}
+
+		public static ObjectReference AsObjectReference(this IObjectState state)
+		{
+			if ( state == null )
+				return null;
+
+			return new ObjectReference { Id = state.Id, Name = state.Name };
+		}
 	}
 }

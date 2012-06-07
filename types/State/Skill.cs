@@ -1,10 +1,10 @@
 ﻿using Echo.Agents.Skills;
 
-namespace Echo.Agents
+namespace Echo.State
 {
 	public class SkillLevel
 	{
-		public Skill Skill { get; set; }
+		public SkillCode SkillCode { get; set; }
 		public int Level { get; set; }
 	}
 }

@@ -39,7 +39,7 @@ namespace Echo.Celestial
 
 			protected virtual CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
 			{
-				state.OrbitsId = (celestialObject.Position.Location == null) ? -1L : celestialObject.Position.Location.Id;
+				state.Orbits = celestialObject.AsObjectReference();
 				return state;
 			}
 

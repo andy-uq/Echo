@@ -12,7 +12,9 @@ namespace Echo.State
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public IEnumerable<AgentStatisticState> Statistics { get; set; }		
-		public IEnumerable<Implant> Implants { get; set; }		
+		public IEnumerable<Implant> Implants { get; set; }
+		public IEnumerable<SkillLevel> Skills { get; set; }
+		public IEnumerable<SkillTraining> Training { get; set; }
 	}
 
 	public class AgentStatisticState : StatisticState<int>

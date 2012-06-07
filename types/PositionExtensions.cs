@@ -24,18 +24,23 @@ namespace Echo.Ships
 			return null;
 		}
 
-		public static MarketPlace GetMarketPlace(this Position position)
+		public static MarketPlace GetMarketPlace(this ILocation location)
 		{
-			while (position.Location != null)
+			while (location != null)
 			{
-				var starCluster = position.Location as StarCluster;
+				var starCluster = location as StarCluster;
 				if (starCluster != null)
 					return starCluster.MarketPlace;
 
-				position = position.Location.Position;
+				location = location.Position.Location;
 			}
 
 			return null;
+		}
+
+		public static MarketPlace GetMarketPlace(this Position position)
+		{
+			return GetMarketPlace(position.Location);
 		}
 	}
 }

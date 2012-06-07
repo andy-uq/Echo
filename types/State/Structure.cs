@@ -1,4 +1,8 @@
-﻿using Echo.Structures;
+﻿using System.Collections.Generic;
+using Echo.Items;
+using Echo.Market;
+using Echo.State.Market;
+using Echo.Structures;
 using Echo;
 
 namespace Echo.State
@@ -8,7 +12,13 @@ namespace Echo.State
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
-		public long OrbitsId { get; set; }
+
+		public ObjectReference Orbits { get; set; }
+		public ObjectReference Owner { get; set; }
+
+		public IEnumerable<ItemState> HangerItems { get; set; }
+		public IEnumerable<BuyOrderState> BuyOrders { get; set; }
+		public IEnumerable<SellOrderState> SellOrders { get; set; }
 
 		public StructureType StructureType { get; set; }
 		public ManufactoryState Manufactory { get; set; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
+using Echo.Agents.Skills;
 using Echo.Ships;
 using Echo.State;
 using Echo;
@@ -14,8 +15,10 @@ namespace Echo.Tests
 	{
 		private long _nextId;
 
+		public SkillInfo SpaceshipCommand { get; set; }
 		public ShipState Ship { get; set; }
 		public AgentState John { get; set; }
+		public CorporationState MSCorp { get; set; }
 		public StructureState Manufactory { get; set; }
 		public StructureState TradingStation { get; set; }
 		public CelestialObjectState Moon { get; set; }
@@ -37,6 +40,13 @@ namespace Echo.Tests
 				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower, }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 })
 			};
 
+			MSCorp = new CorporationState
+			{
+				Id = Id(),
+				Name = "MS",
+				Employees = new[] { John }
+			};
+
 			Earth = new CelestialObjectState
 			{
 				Id = Id(),
@@ -50,7 +60,7 @@ namespace Echo.Tests
 				Id = Id(),
 				CelestialObjectType = CelestialObjectType.AsteriodBelt,
 				Name = "Asteroid Belt",
-				OrbitsId = Earth.Id,
+				Orbits = Earth.AsObjectReference(),
 				Mass = 0d,
 				LocalCoordinates = new Vector(5.1, 0, 0),
 				AsteroidBelt = new AsteroidBeltState
@@ -64,7 +74,7 @@ namespace Echo.Tests
 				Id = Id(),
 				CelestialObjectType = CelestialObjectType.Moon,
 				Name = "Moon",
-				OrbitsId = Earth.Id,
+				Orbits = Earth.AsObjectReference(),
 				Mass = 0.5d,
 				Size = 0.5d,
 				LocalCoordinates = new Vector(7.5, 0, 0)
@@ -73,7 +83,7 @@ namespace Echo.Tests
 			{
 				Id = Id(),
 				Name = "MFC",
-				OrbitsId = Moon.Id,
+				Orbits = Moon.AsObjectReference(),
 				LocalCoordinates = new Vector(0.5001, 0, 0),
 				Manufactory = new ManufactoryState() { Efficiency = 0.5d },
 			};
@@ -81,7 +91,7 @@ namespace Echo.Tests
 			{
 				Id = Id(),
 				Name = "TS",
-				OrbitsId = Moon.Id,
+				Orbits = Moon.AsObjectReference(),
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
 				TradingStation = new TradingStationState()
 				{
@@ -121,10 +131,22 @@ namespace Echo.Tests
 				Name = "Revvon",
 				SolarSystems = new[] { SolarSystem },
 			};
+
+			SpaceshipCommand = new SkillInfo
+			{
+				Code = SkillCode.SpaceshipCommand,
+				Name = "Spaceship Command",
+				PrimaryStat = AgentStatistic.Perception,
+				SecondaryStat = AgentStatistic.Willpower,
+				TrainingMultiplier = 1,
+				Prerequisites = new State.SkillLevel[0],
+			};
+
 			Universe = new UniverseState
 			{
 				Id = universeId,
-				StarClusters = new List<StarClusterState>() {StarCluster}
+				StarClusters = new[] {StarCluster},
+				Skills = new[] { SpaceshipCommand, }
 			};
 		}
 

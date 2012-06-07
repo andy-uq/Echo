@@ -1,4 +1,5 @@
-﻿using Echo.Corporations;
+﻿using Echo.Builder;
+using Echo.Corporations;
 using Echo.State;
 
 namespace Echo.Items
@@ -11,20 +12,20 @@ namespace Echo.Items
 			{
 				return new ItemState
 				{
-					Id = item.Id,
-					Name = item.Name,
+					Code = item.ItemInfo.Code,
 					Quantity = item.Quantity,
 				};
 			}
 
-			public static Item Build(ItemState state)
+			public static Item Build(ItemState state, IIdResolver resolver)
 			{
-				return new Item
+				var item = new Item
 				{
-					Id = state.Id,
-					Name = state.Name,
 					Quantity = state.Quantity,
+					ItemInfo = state.Code.GetItemInfo(resolver)
 				};
+
+				return item;
 			}
 		}
 	}

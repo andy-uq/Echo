@@ -1,20 +1,14 @@
 ﻿using System;
 using Echo.Corporations;
+using Echo.Items;
+using Echo.Ships;
+using Echo.Structures;
 
 namespace Echo.Market
 {
 	public class Auction : IObject
 	{
-		private IItem _item;
-
-		public Auction(MarketPlace marketPlace)
-		{
-			if ( marketPlace == null )
-				throw new ArgumentNullException("marketPlace");
-
-			this.MarketPlace = marketPlace;
-			Expires = marketPlace.AuctionLength;
-		}
+		private Item _item;
 
 		public ObjectType ObjectType
 		{
@@ -24,15 +18,20 @@ namespace Echo.Market
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Corporation Owner { get; private set; }
-		public MarketPlace MarketPlace { get; private set; }
+		public Structure Location { get; set; }
 
-		public IItem Item
+		public MarketPlace MarketPlace
 		{
-			get { return this._item; }
+			get { return Location.Position.GetMarketPlace(); }
+		}
+
+		public Item Item
+		{
+			get { return _item; }
 			set
 			{
-				this._item = value;
-				this.Owner = value.Owner;
+				_item = value;
+				Owner = value.Owner;
 			}
 		}
 
@@ -48,7 +47,6 @@ namespace Echo.Market
 
 		public void Tick(ulong tick)
 		{
-			throw new NotImplementedException();
 		}
 	}
 }

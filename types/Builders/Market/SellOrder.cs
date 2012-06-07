@@ -1,16 +1,18 @@
-﻿using Echo.Builders;
+﻿using Echo.Builder;
+using Echo.Builders;
 using Echo.Ships;
 using Echo.State.Market;
+using Echo.Structures;
 
 namespace Echo.Market
 {
 	partial class SellOrder
 	{
-		public class Builder
+		public static class Builder
 		{
-			public SellOrder Build(ILocation location, SellOrderState state)
+			public static ObjectBuilder<SellOrder> Build(Structure location, SellOrderState state)
 			{
-				return new SellOrder(location.Position.GetMarketPlace())
+				var sellOrder = new SellOrder
 				{
 					Id = state.Auction.Id,
 					Name = state.Auction.Name,
@@ -18,7 +20,26 @@ namespace Echo.Market
 					Expires = state.Auction.Expires,
 					PricePerUnit = state.Auction.PricePerUnit,
 					Range = state.Auction.Range,
-					Item = Echo.Items.Item.Builder.Build(state.Auction.Item)
+				};
+
+				return new ObjectBuilder<SellOrder>(sellOrder)
+					.Resolve((resolver, target) => target.Item = Items.Item.Builder.Build(state.Auction.Item, resolver));
+			}
+
+			public static SellOrderState Save(SellOrder auction)
+			{
+				return new SellOrderState
+				{
+					Auction = new AuctionState
+					{
+						Id = auction.Id,
+						Name = auction.Name,
+						BlockSize = auction.BlockSize,
+						Expires = auction.Expires,
+						PricePerUnit = auction.PricePerUnit,
+						Range = auction.Range,
+						Item = Items.Item.Builder.Save(auction.Item)
+					}
 				};
 			}
 		}

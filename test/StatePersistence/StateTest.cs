@@ -41,14 +41,21 @@ namespace Echo.Tests.StatePersistence
 				_databaseHandle.Dispose();
 		}
 
-		protected void DumpObjects(string name)
+		protected void DumpObjects(string name, bool isInfo = false)
 		{
 			using (var connection = new SqlCeConnection(_connectionString))
 			{
 				connection.Open();
 
 				// RunQuery(connection, "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%Structure'");
-				RunQuery(connection, string.Format("SELECT * FROM {0}StateStructure", name));
+				if (isInfo)
+				{
+					RunQuery(connection, string.Format("SELECT * FROM {0}InfoStructure", name));
+				}
+				else
+				{
+					RunQuery(connection, string.Format("SELECT * FROM {0}StateStructure", name));
+				}
 			}
 		}
 

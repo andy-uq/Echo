@@ -1,5 +1,8 @@
-﻿using Echo.Celestial;
+﻿using System.Collections.Generic;
+using Echo.Celestial;
 using Echo;
+using Echo.Corporations;
+using Echo.Market;
 
 namespace Echo.Structures
 {
@@ -11,5 +14,15 @@ namespace Echo.Structures
 		}
 
 		public abstract StructureType StructureType { get; }
+
+		public Corporation Owner { get; set; }
+		public List<SellOrder> SellOrders { get; private set; }
+		public List<BuyOrder> BuyOrders { get; private set; }
+
+		protected Structure()
+		{
+			SellOrders = new List<SellOrder>();
+			BuyOrders = new List<BuyOrder>();
+		}
 	}
 }

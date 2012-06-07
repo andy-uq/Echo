@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Echo.Agents.Skills;
 using Echo.Celestial;
 using Echo;
+using Echo.Corporations;
+using Echo.Items;
+using Echo.State;
 
 namespace Echo
 {
@@ -23,6 +27,9 @@ namespace Echo
 		public Universe()
 		{
 			StarClusters = new List<StarCluster>();
+			Corporations = new List<Corporation>();
+			Items = new Dictionary<ItemCode, ItemInfo>();
+			Skills = new Dictionary<SkillCode, SkillInfo>();
 		}
 
 		public ObjectType ObjectType
@@ -33,7 +40,6 @@ namespace Echo
 		public long Id
 		{
 			get { return 1L; }
-			set { }
 		}
 
 		public string Name
@@ -47,6 +53,9 @@ namespace Echo
 		}
 
 		public List<StarCluster> StarClusters { get; private set; }
+		public List<Corporation> Corporations { get; private set; }
+		public Dictionary<ItemCode, ItemInfo> Items { get; private set; }
+		public Dictionary<SkillCode, SkillInfo> Skills { get; private set; }
 
 		public void Tick(ulong tick)
 		{
@@ -61,5 +70,6 @@ namespace Echo
 		{
 			get { return new Position(); }
 		}
+
 	}
 }

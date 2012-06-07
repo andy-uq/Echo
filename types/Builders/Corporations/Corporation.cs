@@ -1,4 +1,5 @@
-﻿using Echo.State;
+﻿using Echo.Builder;
+using Echo.State;
 
 namespace Echo.Corporations
 {
@@ -6,13 +7,15 @@ namespace Echo.Corporations
 	{
 		public static class Builder
 		{
-			public static Corporation Build(CorporationState state)
+			public static ObjectBuilder<Corporation> Build(CorporationState state)
 			{
-				return new Corporation
+				var corporation = new Corporation
 				{
 					Id = state.Id,
 					Name = state.Name,
 				};
+
+				return new ObjectBuilder<Corporation>(corporation);
 			}
 		}
 	}

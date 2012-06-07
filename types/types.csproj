@@ -61,10 +61,16 @@
     <Compile Include="Agents\Skills\SkillCode.cs" />
     <Compile Include="Builders\DependentObject.cs" />
     <Compile Include="Builders\IBuilderContext.cs" />
+    <Compile Include="Builders\Items\ItemCode.cs" />
     <Compile Include="IIdResolver.cs" />
     <Compile Include="Builders\ObjectBuilderT.cs" />
     <Compile Include="Ships\ArmourPlating.cs" />
     <Compile Include="Ships\Damage.cs" />
+    <Compile Include="State\ItemInfo.cs" />
+    <Compile Include="State\ObjectReference.cs" />
+    <Compile Include="State\Skill.cs" />
+    <Compile Include="State\SkillInfo.cs" />
+    <Compile Include="State\SkillTraining.cs" />
     <Compile Include="Statistics\IStatisticDelta.cs" />
     <Compile Include="Builders\Agents\Agent.cs" />
     <Compile Include="Builders\Builders.cs" />

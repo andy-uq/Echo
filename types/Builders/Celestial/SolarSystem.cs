@@ -80,7 +80,7 @@ namespace Echo.Celestial
 						select new
 						{
 							s.Id,
-							s.OrbitsId,
+							s.Orbits,
 							s.LocalCoordinates,
 							Instance = structure,
 						}
@@ -88,7 +88,7 @@ namespace Echo.Celestial
 
 				foreach ( var structure in query )
 				{
-					var parent = resolver.GetById<CelestialObject>(structure.OrbitsId);
+					var parent = resolver.GetById<CelestialObject>(structure.Orbits.Id);
 					
 					parent.Structures.Add(structure.Instance);
 					structure.Instance.Position = new Position(parent, structure.LocalCoordinates);
@@ -109,10 +109,11 @@ namespace Echo.Celestial
 					(
 						from s in state.Satellites
 						let satellite = resolver.GetById<CelestialObject>(s.Id)
+						where s.Orbits != null
 						select new
 						{
 							s.Id,
-							s.OrbitsId,
+							s.Orbits,
 							s.LocalCoordinates,
 							Instance = satellite,
 						}
@@ -121,7 +122,7 @@ namespace Echo.Celestial
 				foreach (var satellite in query)
 				{
 					CelestialObject parent;
-					if ( !resolver.TryGetById(satellite.OrbitsId, out parent) ) 
+					if ( !resolver.TryGetById(satellite.Orbits.Id, out parent) ) 
 						continue;
 
 					parent.Satellites.Add(satellite.Instance);

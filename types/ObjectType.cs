@@ -9,6 +9,7 @@
 		CelestialObject,
 		Structure,
 		Ship,
+		Info,
 		Item,
 		Agent,
 		Corporation,

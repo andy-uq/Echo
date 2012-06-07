@@ -3,6 +3,7 @@ using System.Linq;
 using Echo.Agents;
 using Echo.Celestial;
 using Echo.Items;
+using Echo.Market;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;

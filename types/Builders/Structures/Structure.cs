@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Echo.Builder;
+using Echo.Market;
 using Echo.State;
 using Echo;
 using EnsureThat;
@@ -19,8 +21,10 @@ namespace Echo.Structures
 					Id = structure.Id,
 					Name = structure.Name,
 					LocalCoordinates = structure.Position.LocalCoordinates,
-					OrbitsId = (structure.Position.Location == null) ? -1L : structure.Position.Location.Id,
+					Orbits = structure.Position.Location.AsObjectReference(),
 					StructureType = structure.StructureType,
+					BuyOrders = structure.BuyOrders.Select(BuyOrder.Builder.Save),
+					SellOrders = structure.SellOrders.Select(SellOrder.Builder.Save),
 				};
 
 				return SaveStructure(structure, state);
@@ -32,6 +36,16 @@ namespace Echo.Structures
 				builder.Target.Id = state.Id;
 				builder.Target.Name = state.Name;
 				builder.Target.Position = new Position(location, state.LocalCoordinates);
+
+				builder
+					.Dependents(state.BuyOrders)
+					.Build(x => BuyOrder.Builder.Build(builder.Target, x))
+					.Resolve((resolver, target, buyOrder) => target.BuyOrders.Add(buyOrder));
+				
+				builder
+					.Dependents(state.SellOrders)
+					.Build(x => SellOrder.Builder.Build(builder.Target, x))
+					.Resolve((resolver, target, buyOrder) => target.SellOrders.Add(buyOrder));
 
 				return builder;
 			}
