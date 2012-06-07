@@ -29,10 +29,6 @@ namespace Echo.Celestial
 			JumpGates = new List<JumpGate>();
 		}
 
-		public void Tick(ulong tick)
-		{
-		}
-
 		public void LeaveSystem(Ship ship)
 		{
 			if ( Ships.Remove(ship) )

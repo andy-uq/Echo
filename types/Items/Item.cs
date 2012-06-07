@@ -14,9 +14,5 @@ namespace Echo.Items
 		
 		public uint Quantity { get; set; }
 		public Corporation Owner { get; set; }
-
-		public void Tick(ulong tick)
-		{
-		}
 	}
 }

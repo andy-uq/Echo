@@ -8,10 +8,5 @@ namespace Echo.Celestial
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Position Position { get; set; }
-		
-		public virtual void Tick(ulong tick)
-		{
-			
-		}
 	}
 }

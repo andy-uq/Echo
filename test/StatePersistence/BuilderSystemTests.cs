@@ -21,11 +21,6 @@ namespace Echo.Tests.StatePersistence
 
 			public List<TestObject> Children { get; set; }
 
-			public void Tick(ulong tick)
-			{
-				throw new System.NotImplementedException();
-			}
-
 			public void Add(TestObject dependent)
 			{
 				Children.Add(dependent);

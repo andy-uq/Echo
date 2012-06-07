@@ -21,10 +21,5 @@ namespace Echo.Agents
 		public AgentStatistics Statistics { get; set; }
 		public Dictionary<AgentStatistic, Implant> Implants { get; set; }
 		public Dictionary<SkillCode, SkillLevel> Skills { get; set; }
-
-		public void Tick(ulong tick)
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 }

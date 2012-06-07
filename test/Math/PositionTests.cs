@@ -30,11 +30,6 @@ namespace Echo.Tests.Math
 				get { throw new System.NotImplementedException(); }
 			}
 
-			public void Tick(ulong tick)
-			{
-				throw new System.NotImplementedException();
-			}
-
 			public Position Position { get; set; }
 		}
 		

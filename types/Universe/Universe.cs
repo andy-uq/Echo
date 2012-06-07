@@ -57,10 +57,6 @@ namespace Echo
 		public Dictionary<ItemCode, ItemInfo> Items { get; private set; }
 		public Dictionary<SkillCode, SkillInfo> Skills { get; private set; }
 
-		public void Tick(ulong tick)
-		{
-		}
-
 		public string SystematicName
 		{
 			get { return Name; }

@@ -17,9 +17,5 @@ namespace Echo.State
 		{
 			get { return ObjectType.Info; }
 		}
-
-		void IObject.Tick(ulong tick)
-		{
-		}
 	}
 }

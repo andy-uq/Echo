@@ -51,9 +51,5 @@ namespace Echo.Ships
 		{
 			return _hardPoints.Any(x => x.InRange(target));
 		}
-
-		public void Tick(ulong tick)
-		{
-		}
 	}
 }

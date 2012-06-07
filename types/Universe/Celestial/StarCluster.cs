@@ -24,9 +24,5 @@ namespace Echo.Celestial
 		public List<SolarSystem> SolarSystems { get; set; }
 
 		public Position Position { get; set; }
-
-		public void Tick(ulong tick)
-		{
-		}
 	}
 }

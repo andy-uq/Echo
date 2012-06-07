@@ -17,10 +17,5 @@ namespace Echo.Market
 		public List<Auction> Auctions { get; set; }
 
 		public ulong AuctionLength { get; set; }
-
-		public void Tick(ulong tick)
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 }

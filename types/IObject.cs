@@ -8,8 +8,6 @@ namespace Echo
 		ObjectType ObjectType { get; }
 		long Id { get; }
 		string Name { get; }
-
-		void Tick(ulong tick);
 	}
 
 	public static class ObjectExtensions

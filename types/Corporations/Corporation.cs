@@ -24,9 +24,5 @@ namespace Echo.Corporations
 		public List<SellOrder> SellOrders { get; set; }
 		public List<Item> BluePrints { get; set; }
 		public List<Item> Assets { get; set; }
-
-		public void Tick(ulong tick)
-		{
-		}
 	}
 }

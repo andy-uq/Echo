@@ -44,9 +44,5 @@ namespace Echo.Market
 		{
 			get { return Item.Quantity; }
 		}
-
-		public void Tick(ulong tick)
-		{
-		}
 	}
 }
