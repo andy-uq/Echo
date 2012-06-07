@@ -1,4 +1,5 @@
-﻿using Echo.Builder;
+﻿using Echo.Agents;
+using Echo.Builder;
 using Echo.Items;
 using Echo.State;
 using Echo.State.Market;
@@ -24,7 +25,8 @@ namespace Echo.Market
 				};
 
 				return new ObjectBuilder<BuyOrder>(buyOrder)
-					.Resolve((resolver, target) => target.Item = Item.Builder.Build(state.Auction.Item, resolver));
+					.Resolve((resolver, target) => target.Item = Item.Builder.Build(state.Auction.Item, resolver))
+					.Resolve((resolver, target) => target.Trader = resolver.Get<Agent>(state.Auction.Trader));
 			}
 
 			public static BuyOrderState Save(BuyOrder auction)
@@ -39,6 +41,8 @@ namespace Echo.Market
 						Expires = auction.Expires,
 						PricePerUnit = auction.PricePerUnit,
 						Range = auction.Range,
+						Trader = auction.Trader.AsObjectReference(),
+						Owner = auction.Owner.AsObjectReference(),
 						Item = Item.Builder.Save(auction.Item)
 					}
 				};

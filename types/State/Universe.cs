@@ -12,6 +12,7 @@ namespace Echo.State
 		public IEnumerable<CorporationState> Corporations { get; set; }
 		public IEnumerable<SkillInfo> Skills { get; set; }
 		public IEnumerable<ItemInfo> Items { get; set; }
+		public IEnumerable<ShipInfo> Ships { get; set; }
 
 		public UniverseState()
 		{
@@ -19,6 +20,7 @@ namespace Echo.State
 			Corporations = Enumerable.Empty<CorporationState>();
 			Skills = Enumerable.Empty<SkillInfo>();
 			Items = Enumerable.Empty<ItemInfo>();
+			Ships = Enumerable.Empty<ShipInfo>();
 		}
 	}
 }

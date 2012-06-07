@@ -5,7 +5,9 @@ namespace Echo.Items
 {
 	public enum ItemCode
 	{
-		Invalid
+		Invalid,
+
+		LightFrigate,
 	}
 
 	public static class ItemCodeExtensions
@@ -14,6 +16,9 @@ namespace Echo.Items
 
 		public static long ToId(this ItemCode code)
 		{
+			if (code == ItemCode.Invalid)
+				throw new InvalidOperationException("Cannot generate an Id for an Invalid item");
+
 			return ITEM_ID_MASK | (long)code;
 		}
 

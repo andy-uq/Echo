@@ -8,6 +8,10 @@
 		public ulong Expires { get; set; }
 		public uint PricePerUnit { get; set; }
 		public uint Range { get; set; }
+
+		public ObjectReference Owner { get; set; }
+		public ObjectReference Trader { get; set; }
+	
 		public ItemState Item { get; set; }
 	}
 }

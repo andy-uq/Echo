@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using Echo.Builder;
 using Echo.Builders;
+using Echo.Items;
 using Echo.Ships;
 using Echo.State;
 using NUnit.Framework;
@@ -12,7 +14,7 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void ShipWithNoHardPointsCantTrack()
 		{
-			var ship = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
+			var ship = Build(new ShipState { Code = ItemCode.LightFrigate, LocalCoordinates = new Vector(0, 0, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
 			var ship2 = Build(new ShipState { LocalCoordinates = new Vector(0, 0, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
 			
 			Assert.That(ship.HardPoints, Is.Empty);
@@ -58,7 +60,13 @@ namespace Echo.Tests.Ships
 
 		private Ship Build(ShipState state)
 		{
-			return Ship.Builder.Build(null, state).Materialise();
+			state.Code = ItemCode.LightFrigate;
+			var builder = Ship.Builder.Build(null, state);
+			builder
+				.Dependent(new ShipInfo {Code = ItemCode.LightFrigate})
+				.Build(info => new ObjectBuilder<ShipInfo>(info));
+
+			return builder.Materialise();
 		}
 	}
 }

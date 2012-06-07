@@ -2,6 +2,7 @@
 using System.Linq;
 using Echo.Agents;
 using Echo.Celestial;
+using Echo.State;
 
 namespace Echo.Ships
 {
@@ -18,6 +19,7 @@ namespace Echo.Ships
 		public string Name { get; set; }
 		public Position Position { get; set; }
 		public ShipStatistics Statistics { get; set; }
+		public ShipInfo ShipInfo { get; set; }
 
 		public IEnumerable<HardPoint> HardPoints
 		{

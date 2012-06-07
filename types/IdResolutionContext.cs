@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Echo.State;
+using EnsureThat;
 
 namespace Echo
 {
@@ -40,6 +42,17 @@ namespace Echo
 			
 			value = rawValue as T;
 			return value != null;
+		}
+
+		public T Get<T>(ObjectReference objectReference) where T : class, IObject
+		{
+			return objectReference == null ? null : GetById<T>(objectReference.Id);
+		}
+
+		public bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject
+		{
+			Ensure.That(objectReference, "objectReference").IsNotNull();
+			return TryGetById<T>(objectReference.Id, out value);
 		}
 	}
 }

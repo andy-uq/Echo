@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Echo.Items;
 using Echo.Statistics;
 
 namespace Echo.State
@@ -7,8 +8,9 @@ namespace Echo.State
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }
+		public ItemCode Code { get; set; }
 		public Vector LocalCoordinates { get; set; }
-
+		
 		public AgentState Pilot { get; set; }
 
 		public IEnumerable<ShipStatisticState> Statistics { get; set; }

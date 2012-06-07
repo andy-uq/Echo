@@ -42,6 +42,11 @@ namespace Echo
 					.Resolve((resolver, target, itemInfo) => target.Items.Add(itemInfo.Code, itemInfo));
 				
 				builder
+					.Dependents(state.Ships)
+					.Build(BuildInfo)
+					.Resolve((resolver, target, shipInfo) => target.Ships.Add(shipInfo.Code, shipInfo));
+				
+				builder
 					.Dependents(state.Skills)
 					.Build(BuildInfo)
 					.Resolve((resolver, target, skillInfo) => target.Skills.Add(skillInfo.Code, skillInfo));

@@ -88,7 +88,7 @@ namespace Echo.Celestial
 
 				foreach ( var structure in query )
 				{
-					var parent = resolver.GetById<CelestialObject>(structure.Orbits.Id);
+					var parent = resolver.Get<CelestialObject>(structure.Orbits);
 					
 					parent.Structures.Add(structure.Instance);
 					structure.Instance.Position = new Position(parent, structure.LocalCoordinates);

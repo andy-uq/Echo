@@ -62,6 +62,7 @@ namespace Echo.Tests.StatePersistence
 				session.InsertMany(universe.Corporations);
 				session.InsertMany(universe.Items);
 				session.InsertMany(universe.Skills);
+				session.InsertMany(universe.Ships);
 			}
 		}
 
@@ -77,7 +78,8 @@ namespace Echo.Tests.StatePersistence
 					StarClusters = session.Query<StarClusterState>().ToArray(),
 					Corporations = session.Query<CorporationState>().ToArray(),
 					Items = session.Query<ItemInfo>().ToArray(),
-					Skills = session.Query<SkillInfo>().ToArray()
+					Skills = session.Query<SkillInfo>().ToArray(),
+					Ships = session.Query<ShipInfo>().ToArray()
 				};
 
 				Check(universe.StarClusters.First());

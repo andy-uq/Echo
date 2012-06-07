@@ -59,6 +59,8 @@
     <Compile Include="EchoContext.cs" />
     <Compile Include="JumpCountTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShipTask.cs" />
+    <Compile Include="LocationServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

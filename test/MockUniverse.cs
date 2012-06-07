@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
 using Echo.Agents.Skills;
+using Echo.Items;
 using Echo.Ships;
 using Echo.State;
 using Echo;
@@ -104,6 +105,7 @@ namespace Echo.Tests
 				Id = Id(),
 				Name = "Ship",
 				LocalCoordinates = new Vector(8.5, 0, 0),
+				Code = ItemCode.LightFrigate,
 				HardPoints = new[]
 				{
 					new HardPointState
@@ -146,7 +148,19 @@ namespace Echo.Tests
 			{
 				Id = universeId,
 				StarClusters = new[] {StarCluster},
-				Skills = new[] { SpaceshipCommand, }
+				Skills = new[] { SpaceshipCommand, },
+				Ships = new[]
+				{
+					new ShipInfo
+					{
+						Code = ItemCode.LightFrigate, 
+						ShipClass = ShipClass.LightFrigate, 
+						PilotRequirements = new[]
+						{
+							new State.SkillLevel { Level  = 1, SkillCode = SkillCode.SpaceshipCommand },
+						}
+					}
+				}
 			};
 		}
 

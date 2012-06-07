@@ -30,6 +30,7 @@ namespace Echo
 			Corporations = new List<Corporation>();
 			Items = new Dictionary<ItemCode, ItemInfo>();
 			Skills = new Dictionary<SkillCode, SkillInfo>();
+			Ships = new Dictionary<ItemCode, ShipInfo>();
 		}
 
 		public ObjectType ObjectType
@@ -56,11 +57,7 @@ namespace Echo
 		public List<Corporation> Corporations { get; private set; }
 		public Dictionary<ItemCode, ItemInfo> Items { get; private set; }
 		public Dictionary<SkillCode, SkillInfo> Skills { get; private set; }
-
-		public string SystematicName
-		{
-			get { return Name; }
-		}
+		public Dictionary<ItemCode, ShipInfo> Ships { get; private set; }
 
 		public Position Position
 		{

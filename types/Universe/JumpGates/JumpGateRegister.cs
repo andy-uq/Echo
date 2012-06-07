@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Echo.Exceptions;
+using Echo.State;
 
 namespace Echo.JumpGates
 {
@@ -43,6 +44,16 @@ namespace Echo.JumpGates
 
 			value = jumpGate as T;
 			return value != null;
+		}
+
+		public T Get<T>(ObjectReference objectReference) where T : class, IObject
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

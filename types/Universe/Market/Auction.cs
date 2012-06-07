@@ -1,4 +1,5 @@
 ﻿using System;
+using Echo.Agents;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.Ships;
@@ -18,6 +19,7 @@ namespace Echo.Market
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Corporation Owner { get; private set; }
+		public Agent Trader { get; set; }
 		public Structure Location { get; set; }
 
 		public MarketPlace MarketPlace

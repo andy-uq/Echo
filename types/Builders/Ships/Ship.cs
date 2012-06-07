@@ -3,6 +3,7 @@ using System.Linq;
 using Echo.Agents;
 using Echo.Builder;
 using Echo.Builders;
+using Echo.Items;
 using Echo.State;
 
 using ShipStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.ShipStatistic, double>;
@@ -19,6 +20,7 @@ namespace Echo.Ships
 				{
 					Id = ship.Id,
 					Name = ship.Name,
+					Code = ship.ShipInfo.Code,
 					LocalCoordinates = ship.Position.LocalCoordinates,
 		 			Statistics = ship.Statistics.Select(Save),
 					HardPoints = ship.HardPoints.Save(),
@@ -37,7 +39,8 @@ namespace Echo.Ships
 				};
 
 				var builder = new ObjectBuilder<Ship>(ship)
-					.Resolve((resolver, target) => BuildHardPoints(ship, state.HardPoints));
+					.Resolve((resolver, target) => BuildHardPoints(ship, state.HardPoints))
+					.Resolve((resolver, target) => target.ShipInfo = resolver.GetById<ShipInfo>(state.Code.ToId()));
 
 				builder
 					.Dependent(state.Pilot)
