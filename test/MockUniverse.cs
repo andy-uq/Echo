@@ -14,7 +14,7 @@ namespace Echo.Tests
 {
 	public class MockUniverse
 	{
-		private long _nextId;
+		private long _nextId = 1;
 
 		public SkillInfo SpaceshipCommand { get; set; }
 		public ShipState Ship { get; set; }
@@ -35,7 +35,7 @@ namespace Echo.Tests
 
 			John = new AgentState
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				Name = "John",
 				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
 				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower, }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 })
@@ -43,36 +43,35 @@ namespace Echo.Tests
 
 			MSCorp = new CorporationState
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				Name = "MS",
 				Employees = new[] { John }
 			};
 
 			Earth = new CelestialObjectState
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				CelestialObjectType = CelestialObjectType.Planet,
 				Name = "Earth",
 				Mass = 50d,
 				Size = 5d,
 			};
-			AsteroidBelt = new CelestialObjectState()
+			AsteroidBelt = new CelestialObjectState
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				CelestialObjectType = CelestialObjectType.AsteriodBelt,
 				Name = "Asteroid Belt",
 				Orbits = Earth.AsObjectReference(),
-				Mass = 0d,
 				LocalCoordinates = new Vector(5.1, 0, 0),
 				AsteroidBelt = new AsteroidBeltState
 				{
 					Richness = 500000,
-					AmountRemaining = 0,
+					AmountRemaining = 250000,
 				},
 			};
 			Moon = new CelestialObjectState
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				CelestialObjectType = CelestialObjectType.Moon,
 				Name = "Moon",
 				Orbits = Earth.AsObjectReference(),
@@ -82,7 +81,7 @@ namespace Echo.Tests
 			};
 			Manufactory = new StructureState()
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				Name = "MFC",
 				Orbits = Moon.AsObjectReference(),
 				LocalCoordinates = new Vector(0.5001, 0, 0),
@@ -90,7 +89,7 @@ namespace Echo.Tests
 			};
 			TradingStation = new StructureState()
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				Name = "TS",
 				Orbits = Moon.AsObjectReference(),
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
@@ -102,7 +101,7 @@ namespace Echo.Tests
 			};
 			Ship = new ShipState()
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				Name = "Ship",
 				LocalCoordinates = new Vector(8.5, 0, 0),
 				Code = ItemCode.LightFrigate,
@@ -121,7 +120,7 @@ namespace Echo.Tests
 			};
 			SolarSystem = new SolarSystemState
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				Name = "Sol",
 				Satellites = new[] { Earth, Moon, AsteroidBelt, },
 				Structures = new[] { Manufactory, TradingStation },
@@ -129,7 +128,7 @@ namespace Echo.Tests
 			};
 			StarCluster = new StarClusterState
 			{
-				Id = Id(),
+				ObjectId = Id(),
 				Name = "Revvon",
 				SolarSystems = new[] { SolarSystem },
 			};
@@ -146,7 +145,7 @@ namespace Echo.Tests
 
 			Universe = new UniverseState
 			{
-				Id = universeId,
+				ObjectId = universeId,
 				StarClusters = new[] {StarCluster},
 				Skills = new[] { SpaceshipCommand, },
 				Ships = new[]

@@ -18,7 +18,7 @@ namespace Echo.Structures
 
 				var state = new StructureState
 				{
-					Id = structure.Id,
+					ObjectId = structure.Id,
 					Name = structure.Name,
 					LocalCoordinates = structure.Position.LocalCoordinates,
 					Orbits = structure.Position.Location.AsObjectReference(),
@@ -33,7 +33,7 @@ namespace Echo.Structures
 			public ObjectBuilder<Structure> Build(ILocation location, StructureState state)
 			{
 				var builder = BuildStructure(location, state);
-				builder.Target.Id = state.Id;
+				builder.Target.Id = state.ObjectId;
 				builder.Target.Name = state.Name;
 				builder.Target.Position = new Position(location, state.LocalCoordinates);
 

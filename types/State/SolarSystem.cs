@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Echo.State
 {
 	public class SolarSystemState : IObjectState
 	{
-		public long Id { get; set; }
+		public Guid Id { get; set; }
+		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 		public IEnumerable<CelestialObjectState> Satellites { get; set; }

@@ -15,17 +15,17 @@ namespace Echo
 		public static ObjectReference AsObjectReference(this IObject @object)
 		{
 			if ( @object == null )
-				return null;
+				return new ObjectReference();
 
-			return new ObjectReference { Id = @object.Id, Name = @object.Name };
+			return new ObjectReference(@object.Id, @object.Name);
 		}
 
 		public static ObjectReference AsObjectReference(this IObjectState state)
 		{
 			if ( state == null )
-				return null;
+				return new ObjectReference();
 
-			return new ObjectReference { Id = state.Id, Name = state.Name };
+			return new ObjectReference(state.ObjectId, state.Name);
 		}
 	}
 }

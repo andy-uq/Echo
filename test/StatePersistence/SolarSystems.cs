@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using Echo.Builder;
 using Echo.Celestial;
+using Echo.Items;
 using Echo.State;
 using NUnit.Framework;
 using Echo;
@@ -47,7 +49,10 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem).Materialise();
+			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem);
+			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
+
+			var solarSystem = builder.Materialise();
 			var state = Echo.Celestial.SolarSystem.Builder.Save(solarSystem);
 
 			Console.WriteLine(state.SerializeAndFormat());
@@ -57,21 +62,24 @@ namespace Echo.Tests.StatePersistence
 		public void Deserialise()
 		{
 			Database.UseOnceTo().Insert(SolarSystem);
-			var state = Database.UseOnceTo().GetById<SolarSystemState>(1L);
+			var state = Database.UseOnceTo().GetById<SolarSystemState>(SolarSystem.Id);
 			Assert.That(state, Is.Not.Null);
 
-			var solarSystem = Echo.Celestial.SolarSystem.Builder.Build(null, state).Materialise();
-			
-			var earth = solarSystem.Satellites.OfType<Planet>().Single(x => x.Id == Earth.Id);
+			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);
+			builder.Dependent(new ShipInfo {Code = ItemCode.LightFrigate}).Build(x => new ObjectBuilder<ShipInfo>(x));
+
+			var solarSystem = builder.Materialise();
+
+			var earth = solarSystem.Satellites.OfType<Planet>().Single(x => x.Id == Earth.ObjectId);
 			Assert.That(earth.Sun, Is.EqualTo(solarSystem));
-			
-			var asteroidBelt = solarSystem.Satellites.OfType<AsteroidBelt>().Single(x => x.Id == AsteroidBelt.Id);
+
+			var asteroidBelt = solarSystem.Satellites.OfType<AsteroidBelt>().Single(x => x.Id == AsteroidBelt.ObjectId);
 			Assert.That(asteroidBelt.Position.Location, Is.EqualTo(earth));
 
-			var moon = solarSystem.Satellites.OfType<Moon>().Single(x => x.Id == Moon.Id);
+			var moon = solarSystem.Satellites.OfType<Moon>().Single(x => x.Id == Moon.ObjectId);
 			Assert.That(moon.Planet, Is.EqualTo(earth));
 
-			var manufactory = solarSystem.Structures.Single(x => x.Id == Manufactory.Id);
+			var manufactory = solarSystem.Structures.Single(x => x.Id == Manufactory.ObjectId);
 			Assert.That(manufactory.Position.Location, Is.EqualTo(moon));
 		}
 	}

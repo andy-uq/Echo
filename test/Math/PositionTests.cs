@@ -58,8 +58,8 @@ namespace Echo.Tests.Math
 			Assert.That(u.StarClusters, Is.Not.Empty);
 			Assert.That(u.SolarSystems(), Is.Not.Empty);
 
-			var sol = u.SolarSystems().Single(x => x.Id == s.SolarSystem.Id);
-			var earth = u.Planets().Single(p => p.Id == s.Earth.Id);
+			var sol = u.SolarSystems().Single(x => x.Id == s.SolarSystem.ObjectId);
+			var earth = u.Planets().Single(p => p.Id == s.Earth.ObjectId);
 
 			Assert.That(earth.Position.GetSolarSystem(), Is.EqualTo(sol));
 

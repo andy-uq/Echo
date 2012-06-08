@@ -15,7 +15,7 @@ namespace Echo.Market
 			{
 				var buyOrder = new BuyOrder
 				{
-					Id = state.Auction.Id,
+					Id = state.Auction.ObjectId,
 					Name = state.Auction.Name,
 					BlockSize = state.Auction.BlockSize,
 					Expires = state.Auction.Expires,
@@ -35,7 +35,7 @@ namespace Echo.Market
 				{
 					Auction = new AuctionState
 					{
-						Id = auction.Id,
+						ObjectId = auction.Id,
 						Name = auction.Name,
 						BlockSize = auction.BlockSize,
 						Expires = auction.Expires,

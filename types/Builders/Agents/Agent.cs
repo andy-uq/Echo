@@ -14,7 +14,7 @@ namespace Echo.Agents
 		 	{
 		 		var agent = new Agent
 		 		{
-		 			Id = state.Id,
+					Id = state.ObjectId,
 					Name = state.Name,
 					Location = location,
 					Statistics = new AgentStatistics(state.Statistics.Select(Build)),
@@ -29,7 +29,7 @@ namespace Echo.Agents
 		 	{
 		 		return new AgentState
 		 		{
-		 			Id = agent.Id,
+					ObjectId = agent.Id,
 		 			Name = agent.Name,
 		 			Statistics = agent.Statistics.Select(Save)
 		 		};

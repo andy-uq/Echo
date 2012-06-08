@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Echo.Items;
 using Echo.Statistics;
 
@@ -6,7 +7,8 @@ namespace Echo.State
 {
 	public class ShipState : IObjectState
 	{
-		public long Id { get; set; }
+		public Guid Id { get; set; }
+		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public ItemCode Code { get; set; }
 		public Vector LocalCoordinates { get; set; }

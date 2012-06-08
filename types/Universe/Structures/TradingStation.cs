@@ -9,8 +9,5 @@ namespace Echo.Structures
 		{
 			get { return StructureType.TradingStation; }
 		}
-
-		public List<SellOrder> SellOrders { get; set; }
-		public List<BuyOrder> BuyOrders { get; set; }
 	}
 }

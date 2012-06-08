@@ -1,8 +1,10 @@
-﻿namespace Echo
+﻿using System;
+
+namespace Echo
 {
 	public interface IObjectState
 	{
-		long Id { get; }
+		long ObjectId { get; }
 		string Name { get; }
 	}
 }

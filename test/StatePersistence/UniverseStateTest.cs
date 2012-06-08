@@ -82,7 +82,7 @@ namespace Echo.Tests.StatePersistence
 					Ships = session.Query<ShipInfo>().ToArray()
 				};
 
-				Check(universe.StarClusters.First());
+				Check(universe);
 			}
 		}
 
@@ -92,22 +92,24 @@ namespace Echo.Tests.StatePersistence
 			var universe = GetUniverse();
 			Database.UseOnceTo().InsertMany(universe.StarClusters);
 
-			var state = Database.UseOnceTo().Query<StarClusterState>().First();
-			Check(state);
+			universe.StarClusters = Database.UseOnceTo().Query<StarClusterState>().ToList();
+			Check(universe);
 		}
 
-		private static void Check(StarClusterState state)
+		private static void Check(UniverseState state)
 		{
-			SolarSystemState solState = state.SolarSystems.First();
+			var starClusterState = state.StarClusters.First();
+			SolarSystemState solState = starClusterState.SolarSystems.First();
 			Assert.That(solState, Is.Not.Null);
 
 			var earthState = solState.Satellites.FirstOrDefault();
 			Assert.That(earthState, Is.Not.Null);
 			Assert.That(earthState, Is.InstanceOf<CelestialObjectState>());
 
-			var starCluster = StarCluster.Builder.Build(null, state).Materialise();
+			var universe = Echo.Universe.Builder.Build(state).Materialise();
+			Assert.That(universe.StarClusters, Is.Not.Empty);
 
-			Assert.That(starCluster, Is.Not.Null);
+			var starCluster = universe.StarClusters.First();
 			Assert.That(starCluster.SolarSystems, Is.Not.Empty);
 
 			SolarSystem sol = starCluster.SolarSystems.First();

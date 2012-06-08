@@ -21,7 +21,7 @@ namespace Echo.Celestial
 			{
 				return new SolarSystemState
 				{
-					Id = solarSystem.Id,
+					ObjectId = solarSystem.Id,
 					Name = solarSystem.Name,
 					LocalCoordinates = solarSystem.Position.LocalCoordinates,
 					Satellites = solarSystem.Satellites.Save(),
@@ -34,7 +34,7 @@ namespace Echo.Celestial
 			{
 				var solarSystem = new SolarSystem
 				{
-					Id = state.Id,
+					Id = state.ObjectId,
 					Name = state.Name,
 					Position = new Position(starCluster, state.LocalCoordinates),
 				};
@@ -76,7 +76,7 @@ namespace Echo.Celestial
 				var query =
 					(
 						from s in state.Structures
-						let structure = resolver.GetById<Structure>(s.Id)
+						let structure = resolver.GetById<Structure>(s.ObjectId)
 						select new
 						{
 							s.Id,
@@ -89,7 +89,9 @@ namespace Echo.Celestial
 				foreach ( var structure in query )
 				{
 					var parent = resolver.Get<CelestialObject>(structure.Orbits);
-					
+					if (parent == null)
+						throw new InvalidOperationException(string.Format("{0} is not orbiting anything", structure.Instance.AsObjectReference()));
+
 					parent.Structures.Add(structure.Instance);
 					structure.Instance.Position = new Position(parent, structure.LocalCoordinates);
 
@@ -108,8 +110,7 @@ namespace Echo.Celestial
 				var query =
 					(
 						from s in state.Satellites
-						let satellite = resolver.GetById<CelestialObject>(s.Id)
-						where s.Orbits != null
+						let satellite = resolver.GetById<CelestialObject>(s.ObjectId)
 						select new
 						{
 							s.Id,

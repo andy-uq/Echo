@@ -1,10 +1,12 @@
-﻿using Echo;
+﻿using System;
+using Echo;
 
 namespace Echo.State
 {
 	public class CelestialObjectState : IObjectState
 	{
-		public long Id { get; set; }
+		public Guid Id { get; set; }
+		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 

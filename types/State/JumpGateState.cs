@@ -1,8 +1,11 @@
-﻿namespace Echo.State
+﻿using System;
+
+namespace Echo.State
 {
 	public class JumpGateState : IObjectState
 	{
-		public long Id { get; set; }
+		public Guid Id { get; set; }
+		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 		public long ConnectsTo { get; set; }

@@ -14,7 +14,7 @@ namespace Echo.Celestial
 			{
 				return new StarClusterState
 				{
-					Id = starCluster.Id,
+					ObjectId = starCluster.Id,
 					Name = starCluster.Name,
 					LocalCoordinates = starCluster.Position.LocalCoordinates,
 					SolarSystems = starCluster.SolarSystems.Save(),
@@ -25,7 +25,7 @@ namespace Echo.Celestial
 			{
 				var starCluster = new StarCluster
 				{
-					Id = state.Id,
+					Id = state.ObjectId,
 					Name = state.Name,
 					Position = new Position(universe, state.LocalCoordinates),
 				};

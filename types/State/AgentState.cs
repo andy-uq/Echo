@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
 using Echo.Statistics;
@@ -9,7 +10,8 @@ namespace Echo.State
 {
 	public class AgentState : IObjectState
 	{
-		public long Id { get; set; }
+		public Guid Id { get; set; }
+		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public IEnumerable<AgentStatisticState> Statistics { get; set; }		
 		public IEnumerable<Implant> Implants { get; set; }

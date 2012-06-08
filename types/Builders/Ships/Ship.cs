@@ -18,7 +18,7 @@ namespace Echo.Ships
 			{
 				return new ShipState
 				{
-					Id = ship.Id,
+					ObjectId = ship.Id,
 					Name = ship.Name,
 					Code = ship.ShipInfo.Code,
 					LocalCoordinates = ship.Position.LocalCoordinates,
@@ -32,7 +32,7 @@ namespace Echo.Ships
 			{
 				var ship = new Ship
 				{
-					Id = state.Id,
+					Id = state.ObjectId,
 					Name = state.Name,
 					Position = new Position(location, state.LocalCoordinates),
 					Statistics = new ShipStatistics(state.Statistics.Select(Build)),

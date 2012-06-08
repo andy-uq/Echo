@@ -11,7 +11,7 @@ namespace Echo.Corporations
 			{
 				var corporation = new Corporation
 				{
-					Id = state.Id,
+					Id = state.ObjectId,
 					Name = state.Name,
 				};
 

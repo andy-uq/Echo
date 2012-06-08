@@ -17,7 +17,7 @@ namespace Echo
 			{
 				return new UniverseState
 				{
-					Id = universe.Id,
+					ObjectId = universe.Id,
 					Name = universe.Name,
 					StarClusters = universe.StarClusters.Save(),
 				};

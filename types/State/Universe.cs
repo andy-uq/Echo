@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo;
 
@@ -6,7 +7,8 @@ namespace Echo.State
 {
 	public class UniverseState : IObjectState
 	{
-		public long Id { get; set; }
+		public Guid Id { get; set; }
+		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public IEnumerable<StarClusterState> StarClusters { get; set; }
 		public IEnumerable<CorporationState> Corporations { get; set; }

@@ -38,7 +38,7 @@ namespace Echo.Tests.StatePersistence
 		public void Deserialise()
 		{
 			Database.UseOnceTo().Insert(Moon);
-			var state = Database.UseOnceTo().GetById<CelestialObjectState>(1L);
+			var state = Database.UseOnceTo().GetById<CelestialObjectState>(Moon.Id);
 			Assert.That(state, Is.Not.Null);
 
 			var moon = CelestialObject.Builder.For(state).Build(null, state).Materialise();

@@ -9,8 +9,8 @@ namespace Echo.Celestial
 			get { return CelestialObjectType.AsteriodBelt; }
 		}
 
-		public uint Richness { get; set; }
-		public uint AmountRemaining { get; set; }
+		public int Richness { get; set; }
+		public int AmountRemaining { get; set; }
 	}
 
 	public class Moon : CelestialObject

@@ -13,7 +13,7 @@ namespace Echo.JumpGates
 			{
 				var jumpGate = new JumpGate
 				{
-					Id = state.Id,
+					Id = state.ObjectId,
 					Name = state.Name,
 					Position = new Position(location, state.LocalCoordinates),
 				};

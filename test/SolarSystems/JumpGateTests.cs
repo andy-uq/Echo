@@ -42,7 +42,7 @@ namespace Echo.Tests.SolarSystems
 			var states = 
 					fields.Values
 					.Where(x => x.FieldType == typeof (JumpGate))
-					.Select((f, i) => new JumpGateState { Name = f.Name, Id = i + 1, ConnectsTo = -1 })
+					.Select((f, i) => new JumpGateState { Name = f.Name, ObjectId = i + 1, ConnectsTo = -1 })
 					.ToArray();
 
 			SetConnections(states.ToDictionary(s => s.Name));
@@ -83,7 +83,7 @@ namespace Echo.Tests.SolarSystems
 
 		private void SetConnections(IDictionary<string, JumpGateState> states)
 		{
-			Action<string, string> connect = (src, target) => { states["_"+src].ConnectsTo = states["_"+target].Id; };
+			Action<string, string> connect = (src, target) => { states["_"+src].ConnectsTo = states["_"+target].ObjectId; };
 			connect("a1", "b2");
 			connect("a2", "d5");
 			connect("b1", "d1");

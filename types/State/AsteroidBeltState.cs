@@ -2,7 +2,7 @@ namespace Echo.State
 {
 	public class AsteroidBeltState
 	{
-		public uint AmountRemaining { get; set; }
-		public uint Richness { get; set; }
+		public int AmountRemaining { get; set; }
+		public int Richness { get; set; }
 	}
 }

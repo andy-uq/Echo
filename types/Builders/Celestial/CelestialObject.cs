@@ -14,7 +14,7 @@ namespace Echo.Celestial
 			{
 				var builder = Build(state);
 
-				builder.Target.Id = state.Id;
+				builder.Target.Id = state.ObjectId;
 				builder.Target.Name = state.Name;
 				builder.Target.Position = new Position(target, state.LocalCoordinates);
 				builder.Target.Mass = state.Mass;
@@ -27,7 +27,7 @@ namespace Echo.Celestial
 			{
 				var state = new CelestialObjectState
 				{
-					Id = celestialObject.Id,
+					ObjectId = celestialObject.Id,
 					Name = celestialObject.Name,
 					LocalCoordinates = celestialObject.Position.LocalCoordinates,
 					Mass = celestialObject.Mass,
