@@ -33,11 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac.2.6.1.841\lib\NET40\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=2.6.2.859, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.2.6.2.859\lib\NET40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Configuration">
-      <HintPath>..\packages\Autofac.2.6.1.841\lib\NET40\Autofac.Configuration.dll</HintPath>
+    <Reference Include="Autofac.Configuration, Version=2.6.2.859, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.2.6.2.859\lib\NET40\Autofac.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
@@ -54,21 +56,24 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="PineCone, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PineCone, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PineCone.2.0.0\lib\net40\PineCone.dll</HintPath>
+      <HintPath>..\packages\PineCone.3.1.1\lib\net40\PineCone.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SisoDb, Version=13.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.12.0.0\lib\net40\SisoDb.dll</HintPath>
+      <HintPath>..\packages\SisoDb.13.0.3\lib\net40\SisoDb.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.Serialization, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SisoDb.Serialization, Version=13.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.12.0.0\lib\net40\SisoDb.Serialization.dll</HintPath>
+      <HintPath>..\packages\SisoDb.13.0.3\lib\net40\SisoDb.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.SqlCe4, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SisoDb.SqlCe4, Version=13.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.SqlCe4.12.0.0\lib\net40\SisoDb.SqlCe4.dll</HintPath>
+      <HintPath>..\packages\SisoDb.SqlCe4.13.0.3\lib\net40\SisoDb.SqlCe4.dll</HintPath>
+    </Reference>
+    <Reference Include="SisoDb.SqlServer">
+      <HintPath>..\packages\SisoDb.SqlCe4.13.0.3\lib\net40\SisoDb.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
