@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Echo.Exceptions;
 using Echo.State;
 using EnsureThat;
 
@@ -46,7 +47,11 @@ namespace Echo
 
 		public T Get<T>(ObjectReference objectReference) where T : class, IObject
 		{
-			return objectReference.Id == 0 ? null : GetById<T>(objectReference.Id);
+			T value;
+			if ( TryGetById(objectReference.Id, out value) )
+				return value;
+
+			throw new ItemNotFoundException(typeof(T).Name, objectReference);
 		}
 
 		public bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject
