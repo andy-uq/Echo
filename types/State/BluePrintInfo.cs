@@ -3,15 +3,23 @@ using Echo.Items;
 
 namespace Echo.State
 {
-	public class BluePrintInfo : IItemInfo
+	public sealed class BluePrintInfo : IObject, IItemInfo
 	{
-		public ItemCode Code { get; set; }
 		public string Name { get; set; }
+		public IEnumerable<ItemState> Materials { get; set; }
+		public SkillLevel[] BuildRequirements { get; set; }
 
-		public long Id
+		#region IItemInfo Members
+
+		public ItemCode Code { get; set; }
+
+		#endregion
+
+		#region IObject Members
+		
+		long IObject.Id
 		{
 			get { return Code.ToId(); }
-			set { }
 		}
 
 		ObjectType IObject.ObjectType
@@ -19,7 +27,6 @@ namespace Echo.State
 			get { return ObjectType.Info; }
 		}
 
-		public IEnumerable<ItemState> Materials { get; set; }
-		public SkillLevel[] BuildRequirements { get; set; }
+		#endregion
 	}
 }

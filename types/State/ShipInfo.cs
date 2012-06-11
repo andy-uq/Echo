@@ -12,6 +12,8 @@ namespace Echo.State
 		public SkillLevel[] PilotRequirements { get; set; }
 		public ItemCode BluePrint { get; set; }
 
+		#region IObject Members
+
 		public string Name { get; set; }
 
 		public ObjectType ObjectType
@@ -24,9 +26,15 @@ namespace Echo.State
 			get { return ObjectId; }
 		}
 
+		#endregion
+
+		#region IObjectState Members
+
 		public long ObjectId
 		{
 			get { return Code.ToId(); }
 		}
+
+		#endregion
 	}
 }

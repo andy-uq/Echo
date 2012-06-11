@@ -10,6 +10,17 @@ namespace Echo.Tests.StatePersistence
 	[TestFixture]
 	public class Moons : StateTest
 	{
+		class WrappedObjectState
+		{
+			public Guid Id { get; set; }
+			public State.CelestialObjectState Value { get; set; }
+
+			public WrappedObjectState(State.CelestialObjectState value)
+			{
+				Value = value;
+			}
+		}
+		
 		private CelestialObjectState Moon
 		{
 			get { return Universe.Moon; }
@@ -18,8 +29,8 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(Moon);
-			DumpObjects("CelestialObject");
+			Database.UseOnceTo().Insert(new WrappedObjectState(Moon));
+			DumpObjects("WrappedObject");
 		}
 
 		[Test]
@@ -37,8 +48,9 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Deserialise()
 		{
-			Database.UseOnceTo().Insert(Moon);
-			var state = Database.UseOnceTo().GetById<CelestialObjectState>(Moon.Id);
+			var wrapper = new WrappedObjectState(Moon);
+			Database.UseOnceTo().Insert(wrapper);
+			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapper.Id).Value;
 			Assert.That(state, Is.Not.Null);
 
 			var moon = CelestialObject.Builder.For(state).Build(null, state).Materialise();

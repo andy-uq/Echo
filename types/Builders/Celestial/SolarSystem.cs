@@ -79,7 +79,7 @@ namespace Echo.Celestial
 						let structure = resolver.GetById<Structure>(s.ObjectId)
 						select new
 						{
-							s.Id,
+							s.ObjectId,
 							s.Orbits,
 							s.LocalCoordinates,
 							Instance = structure,
@@ -113,7 +113,7 @@ namespace Echo.Celestial
 						let satellite = resolver.GetById<CelestialObject>(s.ObjectId)
 						select new
 						{
-							s.Id,
+							s.ObjectId,
 							s.Orbits,
 							s.LocalCoordinates,
 							Instance = satellite,

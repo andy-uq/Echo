@@ -8,12 +8,7 @@ namespace Echo.State
 		public Guid Id { get; set; }
 		public ItemCode Code { get; set; }
 
-		public string Name { get; set; }
-
-		public long ObjectId
-		{
-			get { return Code.ToId(); }
-		}
+		#region IObject Members
 
 		long IObject.Id
 		{
@@ -24,5 +19,18 @@ namespace Echo.State
 		{
 			get { return ObjectType.Info; }
 		}
+
+		#endregion
+
+		#region IObjectState Members
+
+		public string Name { get; set; }
+
+		public long ObjectId
+		{
+			get { return Code.ToId(); }
+		}
+
+		#endregion
 	}
 }

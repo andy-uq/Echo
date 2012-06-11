@@ -6,12 +6,6 @@ namespace Echo.State.Market
 	{
 		public AuctionState Auction { get; set; }
 
-		public Guid Id
-		{
-			get { return Auction.Id; }
-			set { Auction.Id = value; }
-		}
-
 		public long ObjectId
 		{
 			get { return Auction.ObjectId; }

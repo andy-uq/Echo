@@ -11,8 +11,19 @@ using SisoDb.Serialization;
 namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
-	public class SolarSystems : StateTest
+	public class SolarSystemStateTest : StateTest
 	{
+		public class WrappedObjectState
+		{
+			public Guid Id { get; set; }
+			public SolarSystemState Value { get; set; }
+
+			public WrappedObjectState(SolarSystemState value)
+			{
+				Value = value;
+			}
+		}
+		
 		private SolarSystemState SolarSystem
 		{
 			get { return Universe.SolarSystem; }
@@ -37,13 +48,12 @@ namespace Echo.Tests.StatePersistence
 		{
 			get { return Universe.Manufactory; }
 		}
-
-
+		
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(SolarSystem);
-			DumpObjects("SolarSystem");
+			Database.UseOnceTo().Insert(new WrappedObjectState(SolarSystem));
+			DumpObjects("WrappedObject");
 		}
 
 		[Test]
@@ -61,8 +71,9 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Deserialise()
 		{
-			Database.UseOnceTo().Insert(SolarSystem);
-			var state = Database.UseOnceTo().GetById<SolarSystemState>(SolarSystem.Id);
+			var wrapped = new WrappedObjectState(SolarSystem);
+			Database.UseOnceTo().Insert(wrapped);
+			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
 			Assert.That(state, Is.Not.Null);
 
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);

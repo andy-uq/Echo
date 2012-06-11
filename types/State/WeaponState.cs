@@ -1,8 +1,8 @@
 ﻿namespace Echo.State
 {
-	public class WeaponState
+	public class WeaponState : IObjectState
 	{
-		public long Id { get; set; }
+		public long ObjectId { get; set; }
 		public string Name { get; set; }
 	}
 }

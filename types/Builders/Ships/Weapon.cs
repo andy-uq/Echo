@@ -10,7 +10,7 @@ namespace Echo.Ships
 			{
 				return new WeaponState
 				{
-					Id = weapon.Id,
+					ObjectId = weapon.Id,
 					Name = weapon.Name,
 				};
 			}
@@ -24,7 +24,7 @@ namespace Echo.Ships
 
 				var weapon = new Weapon
 				{
-					Id = state.Id,
+					Id = state.ObjectId,
 					Name = state.Name,
 				};
 

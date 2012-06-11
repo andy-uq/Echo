@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
+    <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Math\PositionTests.cs" />
     <Compile Include="Math\UnitTests.cs" />
     <Compile Include="Ships\HardPointTests.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\SerialiseTests.cs" />
     <Compile Include="StatePersistence\ShipStateTest.cs" />
-    <Compile Include="StatePersistence\SolarSystems.cs" />
+    <Compile Include="StatePersistence\SolarSystemStateTest.cs" />
     <Compile Include="StatePersistence\TradingStations.cs" />
     <Compile Include="TestExtensions.cs" />
     <Compile Include="TestSettings.cs" />

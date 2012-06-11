@@ -9,6 +9,17 @@ namespace Echo.Tests.StatePersistence
 	[TestFixture]
 	public class Agents : StateTest
 	{
+		public class WrappedObjectState
+		{
+			public Guid Id { get; set; }
+			public AgentState Value { get; set; }
+
+			public WrappedObjectState(AgentState value)
+			{
+				Value = value;
+			}
+		}
+
 		public AgentState John
 		{
 			get { return Universe.John; }
@@ -18,8 +29,8 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(John);
-			DumpObjects("Agent");
+			Database.UseOnceTo().Insert(new WrappedObjectState(John));
+			DumpObjects("WrappedObject");
 		}
 
 		[Test]
@@ -38,8 +49,9 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Deserialise()
 		{
-			Database.UseOnceTo().Insert(John);
-			var state = Database.UseOnceTo().GetById<AgentState>(John.Id);
+			var wrapped = new WrappedObjectState(John);
+			Database.UseOnceTo().Insert(wrapped);
+			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
 			Assert.That(state, Is.Not.Null);
 
 			var agent = Agent.Builder.Build(null, state).Materialise();

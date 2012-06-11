@@ -9,6 +9,17 @@ namespace Echo.Tests.StatePersistence
 	[TestFixture]
 	public class TradingStations : StateTest
 	{
+		public class WrappedObjectState
+		{
+			public Guid Id { get; set; }
+			public StructureState Value { get; set; }
+
+			public WrappedObjectState(StructureState value)
+			{
+				Value = value;
+			}
+		}	
+	
 		private StructureState TradingStation
 		{
 			get { return Universe.TradingStation; }
@@ -17,8 +28,8 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(TradingStation);
-			DumpObjects("Structure");
+			Database.UseOnceTo().Insert(new WrappedObjectState(TradingStation));
+			DumpObjects("WrappedObject");
 		}
 
 		[Test]
@@ -36,8 +47,10 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Deserialise()
 		{
-			Database.UseOnceTo().Insert(TradingStation);
-			var state = Database.UseOnceTo().GetById<StructureState>(TradingStation.Id);
+			var wrapper = new WrappedObjectState(TradingStation);
+
+			Database.UseOnceTo().Insert(wrapper);
+			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapper.Id).Value;
 			Assert.That(state, Is.Not.Null);
 			Assert.That(state.TradingStation, Is.Not.Null);
 

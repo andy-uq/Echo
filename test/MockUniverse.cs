@@ -62,7 +62,7 @@ namespace Echo.Tests
 				CelestialObjectType = CelestialObjectType.AsteriodBelt,
 				Name = "Asteroid Belt",
 				Orbits = Earth.AsObjectReference(),
-				LocalCoordinates = new Vector(5.1, 0, 0),
+				LocalCoordinates = new Vector(5.5, 5.5, 0),
 				AsteroidBelt = new AsteroidBeltState
 				{
 					Richness = 500000,
@@ -112,7 +112,7 @@ namespace Echo.Tests
 						Position = HardPointPosition.Front, 
 						Orientation = HardPoint.CalculateOrientation(HardPointPosition.Front),
 						Speed = 0.5d, 
-						Weapon = new WeaponState { Id = Id(), Name = "Blaster" }
+						Weapon = new WeaponState { ObjectId = Id(), Name = "Blaster" }
 					},
 				},
 				Pilot = John,

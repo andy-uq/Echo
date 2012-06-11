@@ -10,7 +10,6 @@ namespace Echo.State
 {
 	public class AgentState : IObjectState
 	{
-		public Guid Id { get; set; }
 		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public IEnumerable<AgentStatisticState> Statistics { get; set; }		

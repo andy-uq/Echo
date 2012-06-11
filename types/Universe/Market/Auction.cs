@@ -37,10 +37,10 @@ namespace Echo.Market
 			}
 		}
 
-		public uint PricePerUnit { get; set; }
-		public uint BlockSize { get; set; }
-		public ulong Expires { get; set; }
-		public uint Range { get; set; }
+		public int PricePerUnit { get; set; }
+		public int BlockSize { get; set; }
+		public long Expires { get; set; }
+		public int Range { get; set; }
 
 		public uint Quantity
 		{
