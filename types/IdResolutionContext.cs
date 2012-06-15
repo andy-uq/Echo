@@ -9,7 +9,7 @@ namespace Echo
 {
 	public class IdResolutionContext : IIdResolver
 	{
-		private Dictionary<long, IObject> _lookup;
+		private readonly Dictionary<long, IObject> _lookup;
 
 		public IdResolutionContext(IEnumerable<IObject> collection)
 		{
@@ -32,7 +32,8 @@ namespace Echo
 
 		public T GetById<T>(long id) where T : class, IObject
 		{
-			return (T) _lookup[id];
+			Ensure.That(id, "id").IsGte(0L);
+			return (T)_lookup[id];
 		}
 
 		public bool TryGetById<T>(long id, out T value) where T : class, IObject
@@ -47,6 +48,8 @@ namespace Echo
 
 		public T Get<T>(ObjectReference objectReference) where T : class, IObject
 		{
+			Ensure.That(objectReference.Id, "objectReference.Id").IsGt(0);
+
 			T value;
 			if ( TryGetById(objectReference.Id, out value) )
 				return value;
@@ -57,6 +60,25 @@ namespace Echo
 		public bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject
 		{
 			return TryGetById(objectReference.Id, out value);
+		}
+
+		public T Get<T>(ObjectReference? objectReference) where T : class, IObject
+		{
+			if ( objectReference == null )
+				return null;
+
+			return Get<T>(objectReference.Value);
+		}
+
+		public bool TryGet<T>(ObjectReference? objectReference, out T value) where T : class, IObject
+		{
+			if ( objectReference == null )
+			{
+				value = null;
+				return false;
+			}
+			
+			return TryGet(objectReference.Value, out value);
 		}
 	}
 }

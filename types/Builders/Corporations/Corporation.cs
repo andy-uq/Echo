@@ -1,4 +1,6 @@
-﻿using Echo.Builder;
+﻿using System.Linq;
+using Echo.Agents;
+using Echo.Builder;
 using Echo.State;
 
 namespace Echo.Corporations
@@ -7,6 +9,16 @@ namespace Echo.Corporations
 	{
 		public static class Builder
 		{
+			public static CorporationState Save(Corporation corporation)
+			{
+				return new CorporationState
+				{
+					ObjectId = corporation.Id,
+					Name = corporation.Name,
+					Employees = corporation.Employees.Select(Agent.Builder.Save),
+				};
+			}
+
 			public static ObjectBuilder<Corporation> Build(CorporationState state)
 			{
 				var corporation = new Corporation
@@ -15,7 +27,14 @@ namespace Echo.Corporations
 					Name = state.Name,
 				};
 
-				return new ObjectBuilder<Corporation>(corporation);
+				var builder = new ObjectBuilder<Corporation>(corporation);
+
+				builder
+					.Dependents(state.Employees)
+					.Build(Agent.Builder.Build)
+					.Resolve((r, c, a) => corporation.Employees.Add(a));
+
+				return builder;
 			}
 		}
 	}

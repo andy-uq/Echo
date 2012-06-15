@@ -71,10 +71,16 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Deserialise()
 		{
+			var moonState = SolarSystem.Satellites.Single(x => x.ObjectId == Universe.Moon.ObjectId);
+			Assert.That(moonState.Orbits, Is.Not.Null);
+
 			var wrapped = new WrappedObjectState(SolarSystem);
 			Database.UseOnceTo().Insert(wrapped);
 			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
 			Assert.That(state, Is.Not.Null);
+
+			moonState = state.Satellites.Single(x => x.ObjectId == Universe.Moon.ObjectId);
+			Assert.That(moonState.Orbits, Is.Not.Null);
 
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);
 			builder.Dependent(new ShipInfo {Code = ItemCode.LightFrigate}).Build(x => new ObjectBuilder<ShipInfo>(x));
@@ -84,11 +90,11 @@ namespace Echo.Tests.StatePersistence
 			var earth = solarSystem.Satellites.OfType<Planet>().Single(x => x.Id == Earth.ObjectId);
 			Assert.That(earth.Sun, Is.EqualTo(solarSystem));
 
-			var asteroidBelt = solarSystem.Satellites.OfType<AsteroidBelt>().Single(x => x.Id == AsteroidBelt.ObjectId);
-			Assert.That(asteroidBelt.Position.Location, Is.EqualTo(earth));
-
 			var moon = solarSystem.Satellites.OfType<Moon>().Single(x => x.Id == Moon.ObjectId);
 			Assert.That(moon.Planet, Is.EqualTo(earth));
+
+			var asteroidBelt = solarSystem.Satellites.OfType<AsteroidBelt>().Single(x => x.Id == AsteroidBelt.ObjectId);
+			Assert.That(asteroidBelt.Position.Location, Is.EqualTo(earth));
 
 			var manufactory = solarSystem.Structures.Single(x => x.Id == Manufactory.ObjectId);
 			Assert.That(manufactory.Position.Location, Is.EqualTo(moon));

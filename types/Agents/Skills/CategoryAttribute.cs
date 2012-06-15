@@ -4,16 +4,11 @@ namespace Echo.Agents.Skills
 {
 	public class CategoryAttribute : Attribute
 	{
-		private readonly SkillCategory _category;
-
-		public SkillCategory Category
-		{
-			get { return _category; }
-		}
+		public SkillCategory Category { get; set; }
 
 		public CategoryAttribute(SkillCategory category)
 		{
-			_category = category;
+			Category = category;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Echo.Agents;
 using Echo.Items;
 using Echo.Market;
 using Echo.Ships;
@@ -19,7 +20,7 @@ namespace Echo.Corporations
 		public List<Item> Property { get; set; }
 		public List<Ship> Ships { get; set; }
 		public List<Structure> Structures { get; set; }
-		public List<Actor> Employees { get; set; }
+		public List<Agent> Employees { get; set; }
 		public List<BuyOrder> BuyOrders { get; set; }
 		public List<SellOrder> SellOrders { get; set; }
 		public List<Item> BluePrints { get; set; }

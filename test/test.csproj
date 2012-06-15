@@ -37,70 +37,56 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.2.6.2.859\lib\NET40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Configuration, Version=2.6.2.859, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Autofac.2.6.2.859\lib\NET40\Autofac.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="EnsureThat">
+    <Reference Include="EnsureThat, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ensure.That.0.7.0\lib\net40\EnsureThat.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NCore">
+    <Reference Include="NCore, Version=0.28.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NCore.0.28.0\lib\net40\NCore.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="PineCone, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PineCone.3.1.1\lib\net40\PineCone.dll</HintPath>
-    </Reference>
-    <Reference Include="SisoDb, Version=13.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="SisoDb">
       <HintPath>..\packages\SisoDb.13.0.3\lib\net40\SisoDb.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.Serialization, Version=13.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SisoDb.Serialization">
       <HintPath>..\packages\SisoDb.13.0.3\lib\net40\SisoDb.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.SqlCe4, Version=13.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SisoDb.SqlCe4">
       <HintPath>..\packages\SisoDb.SqlCe4.13.0.3\lib\net40\SisoDb.SqlCe4.dll</HintPath>
     </Reference>
     <Reference Include="SisoDb.SqlServer">
-      <HintPath>..\packages\SisoDb.SqlCe4.13.0.3\lib\net40\SisoDb.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="SisoDb.SqlServer, Version=14.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SisoDb-Provider\Source\Projects\SisoDb.SqlServer\bin\Debug\SisoDb.SqlServer.dll</HintPath>
+      <HintPath>..\packages\SisoDb.SqlCe4.13.0.3\lib\net40\SisoDb.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\SqlServerCompact.4.0.8482.1\lib\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
+    <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Math\PositionTests.cs" />
     <Compile Include="Math\UnitTests.cs" />
     <Compile Include="Ships\HardPointTests.cs" />
     <Compile Include="Ships\ShipStatisticTests.cs" />
     <Compile Include="Ships\ShipTests.cs" />
+    <Compile Include="Ships\UndockTask.cs" />
     <Compile Include="Skills\SkillTests.cs" />
+    <Compile Include="SolarSystems\JumpGateRegister.cs" />
     <Compile Include="SolarSystems\JumpGateTests.cs" />
     <Compile Include="StatePersistence\Agents.cs" />
     <Compile Include="StatePersistence\AsteroidBelts.cs" />

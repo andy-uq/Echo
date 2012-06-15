@@ -13,5 +13,6 @@
   <DefaultTestTimeout>60000</DefaultTestTimeout>
   <UseBuildConfiguration></UseBuildConfiguration>
   <ProxyProcessPath></ProxyProcessPath>
-  <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
+  <UseCPUArchitecture>x64</UseCPUArchitecture>
+  <HiddenWarnings>LongTestTimesWithoutParallelExecution</HiddenWarnings>
 </ProjectConfiguration>

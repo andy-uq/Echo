@@ -3,6 +3,7 @@ using Echo.Agents.Skills;
 using Echo.Ships;
 using Echo.State;
 using Echo.Statistics;
+using EnsureThat;
 
 namespace Echo.Agents
 {
@@ -28,7 +29,21 @@ namespace Echo.Agents
 
 		public bool CanUse(Ship ship)
 		{
-			return false;
+			Ensure.That(ship, "ship").IsNotNull();
+			Ensure.That(ship.ShipInfo, "ship.ShipInfo").IsNotNull();
+
+			var pilotRequirements = ship.ShipInfo.PilotRequirements;
+			foreach (var requirement in pilotRequirements)
+			{
+				SkillLevel skill;
+				if ( !Skills.TryGetValue(requirement.SkillCode, out skill) )
+					return false;
+
+				if ( skill.Level < requirement.Level )
+					return false;
+			}
+
+			return true;
 		}
 	}
 }

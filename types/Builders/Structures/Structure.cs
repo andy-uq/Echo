@@ -15,13 +15,14 @@ namespace Echo.Structures
 			public StructureState Save(Structure structure)
 			{
 				Ensure.That(structure, "structure").IsNotNull();
+				Ensure.That(structure.Position.Location, "structure.Position.Location").IsNotNull();
 
 				var state = new StructureState
 				{
 					ObjectId = structure.Id,
 					Name = structure.Name,
 					LocalCoordinates = structure.Position.LocalCoordinates,
-					Orbits = structure.Position.Location.AsObjectReference(),
+					Orbits = structure.Position.Location.ToObjectReference(),
 					StructureType = structure.StructureType,
 					BuyOrders = structure.BuyOrders.Select(BuyOrder.Builder.Save),
 					SellOrders = structure.SellOrders.Select(SellOrder.Builder.Save),

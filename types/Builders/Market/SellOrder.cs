@@ -40,8 +40,8 @@ namespace Echo.Market
 						Expires = auction.Expires,
 						PricePerUnit = auction.PricePerUnit,
 						Range = auction.Range,
-						Owner = auction.Owner.AsObjectReference(),
-						Trader = auction.Trader.AsObjectReference(),
+						Owner = auction.Owner.ToObjectReference(),
+						Trader = auction.Trader.ToObjectReference(),
 						Item = Items.Item.Builder.Save(auction.Item)
 					}
 				};

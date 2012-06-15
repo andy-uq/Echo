@@ -8,5 +8,7 @@ namespace Echo
 		bool TryGetById<T>(long id, out T value) where T : class, IObject;
 		T Get<T>(ObjectReference objectReference) where T : class, IObject;
 		bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject;
+		T Get<T>(ObjectReference? objectReference) where T : class, IObject;
+		bool TryGet<T>(ObjectReference? objectReference, out T value) where T : class, IObject;
 	}
 }

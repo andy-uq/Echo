@@ -36,10 +36,13 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var moon = CelestialObject.Builder.For(Moon).Build(null, Moon).Materialise();
+			var moon = CelestialObject.Builder.For(Moon).Build(new Planet { Id = Universe.Earth.ObjectId }, Moon).Materialise();
 			Assert.That(moon, Is.InstanceOf<Moon>());
 
 			var state = moon.Save();
+
+			Assert.That(state.Orbits, Is.Not.Null);
+			Assert.That(state.Orbits.Value.Id, Is.EqualTo(Universe.Earth.ObjectId));
 
 			var json = Database.Serializer.Serialize(state);
 			Console.WriteLine(json);

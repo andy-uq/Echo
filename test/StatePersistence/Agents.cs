@@ -36,7 +36,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var agent = Agent.Builder.Build(null, John).Materialise();
+			var agent = Agent.Builder.Build(John).Materialise();
 			Assert.That(agent, Is.InstanceOf<Agent>());
 			var state = agent.Save();
 
@@ -54,7 +54,7 @@ namespace Echo.Tests.StatePersistence
 			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
 			Assert.That(state, Is.Not.Null);
 
-			var agent = Agent.Builder.Build(null, state).Materialise();
+			var agent = Agent.Builder.Build(state).Materialise();
 			Assert.That(agent, Is.InstanceOf<Agent>());
 
 			Assert.That(agent.Statistics.Charisma.Value, Is.EqualTo(50));

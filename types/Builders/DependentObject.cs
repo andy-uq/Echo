@@ -35,9 +35,14 @@ namespace Echo
 			public Resolver<T, TDependentState, TObject> Build<TObject>(Func<TDependentState, ObjectBuilder<TObject>> build)
 				where TObject : IObject
 			{
-				var dependentObject = build(_state);
-				_target = dependentObject;
-				return new Resolver<T, TDependentState, TObject>(_parent, dependentObject);
+				if ( _state != null )
+				{
+					var dependentObject = build(_state);
+					_target = dependentObject;
+					return new Resolver<T, TDependentState, TObject>(_parent, dependentObject);
+				}
+
+				return new Resolver<T, TDependentState, TObject>();
 			}
 
 			public IObject Target

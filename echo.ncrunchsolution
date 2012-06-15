@@ -7,5 +7,12 @@
   <FrameworkUtilisationTypeForMSpec>UseStaticAnalysis</FrameworkUtilisationTypeForMSpec>
   <FrameworkUtilisationTypeForMSTest>UseStaticAnalysis</FrameworkUtilisationTypeForMSTest>
   <EngineModes>Run all tests automatically:BFRydWU=;Run all tests manually:BUZhbHNl;Run impacted tests automatically, others manually (experimental!):CklzSW1wYWN0ZWQ=;Run pinned tests automatically, others manually:CElzUGlubmVk</EngineModes>
-  <MetricsExclusions>D:\Users\andy\Documents\GitHub\Echo\types\types.csproj:D:\Users\andy\Documents\GitHub\Echo\types\Resharper\Annotations.cs</MetricsExclusions>
+  <MetricsExclusions>D:\Users\andy\Documents\GitHub\Echo\types\types.csproj:D:\Users\andy\Documents\GitHub\Echo\types\Resharper\Annotations.cs
+D:\Users\andy\Documents\GitHub\Echo\legacy\common\common.csproj
+D:\Users\andy\Documents\GitHub\Echo\legacy\core\core.csproj
+D:\Users\andy\Documents\GitHub\Echo\legacy\data\data.csproj
+D:\Users\andy\Documents\GitHub\Echo\legacy\echo\echo.csproj
+D:\Users\andy\Documents\GitHub\Echo\legacy\nunit\nunit.csproj
+D:\Users\andy\Documents\GitHub\Echo\legacy\orbView\orbView.csproj
+D:\Users\andy\Documents\GitHub\Echo\legacy\web\web.csproj</MetricsExclusions>
 </SolutionConfiguration>

@@ -42,5 +42,13 @@ namespace Echo.Tests.Skills
 
 			};
 		}
+
+		[Test]
+		public void GetSkillCategories()
+		{
+			var categories = SkillCode.SpaceshipCommand.GetSkillCategories();
+			Assert.That(categories, Is.Not.Empty);
+			Assert.That(categories, Is.EquivalentTo(new[] { SkillCategory.SpaceshipCommand }));
+		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Echo.Tests.Infrastructure;
 using NUnit.Framework;
 using SisoDb;
+using SisoDb.Serialization;
 using test;
 
 namespace Echo.Tests.StatePersistence
@@ -32,6 +33,7 @@ namespace Echo.Tests.StatePersistence
 			Universe = new MockUniverse();
 
 			_databaseHandle = fresh;
+			JsConfig.ThrowOnDeserializationError = true;
 		}
 
 		[TearDown]

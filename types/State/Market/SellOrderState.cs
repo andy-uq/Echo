@@ -6,12 +6,12 @@ namespace Echo.State.Market
 	{
 		public AuctionState Auction { get; set; }
 
-		public long ObjectId
+		long IObjectState.ObjectId
 		{
 			get { return Auction.ObjectId; }
 		}
 
-		public string Name
+		string IObjectState.Name
 		{
 			get { return Auction.Name; }
 		}

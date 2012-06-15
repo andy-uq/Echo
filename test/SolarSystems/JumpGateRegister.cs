@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Echo.Exceptions;
+using Echo.JumpGates;
 using Echo.State;
 
-namespace Echo.JumpGates
+namespace Echo.Tests.SolarSystems
 {
 	public class JumpGateRegister : IIdResolver
 	{
@@ -52,6 +53,16 @@ namespace Echo.JumpGates
 		}
 
 		public bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject
+		{
+			throw new NotImplementedException();
+		}
+
+		public T Get<T>(ObjectReference? objectReference) where T : class, IObject
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool TryGet<T>(ObjectReference? objectReference, out T value) where T : class, IObject
 		{
 			throw new NotImplementedException();
 		}

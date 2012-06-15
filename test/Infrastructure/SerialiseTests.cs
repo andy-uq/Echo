@@ -8,6 +8,7 @@ using SisoDb.Serialization;
 
 namespace Echo.Tests.Infrastructure
 {
+	[TestFixture]
 	public class SerialiseTests
 	{
 		private ISisoDbSerializer _serialiser;
@@ -22,6 +23,26 @@ namespace Echo.Tests.Infrastructure
 		public class B : A
 		{
 			public int Id { get; set; }
+		}
+
+		public class C
+		{
+			public D? Value { get; set; }
+		}
+
+		public struct D
+		{
+			public static D Parse(string value)
+			{
+				return new D { X = value };
+			}
+
+			public string X { get; set; }
+
+			public override string ToString()
+			{
+				return X;
+			}
 		}
 
 		[SetUp]
@@ -53,6 +74,22 @@ namespace Echo.Tests.Infrastructure
 		}
 
 		[Test]
+		public void CanSerialiseNullableStruct()
+		{
+			var item = new C { Value = new D { X = "Bob" } };
+			var json = _serialiser.Serialize(item);
+			Console.WriteLine(json);
+		}
+
+		[Test, Ignore("Cannot deserialise nullable struct")]
+		public void CanDeserialiseNullableStruct()
+		{
+			var item = new C { Value = new D() };
+			var json = _serialiser.Deserialize<C>("{\"Value\":\"Bob\"}");
+			Assert.That(json.Value, Is.Not.Null);
+		}
+
+		[Test]
 		public void CanSerialiseInheritedObject()
 		{
 			var item = new B() { Id = 10, Name = "B", Children = new List<A>() { new A() { Name = "Child A", }, new A{ Name = "Child B" }} };
@@ -60,7 +97,7 @@ namespace Echo.Tests.Infrastructure
 			Console.WriteLine(json);
 		}
 
-		[Test, Ignore("Service stack cannot deserialise polymorhphic objects")]
+		[Test, Ignore("Cannot deserialise polymorhphic objects")]
 		public void CanDeserialiseInheritedObject()
 		{
 			var item = new A() { Name = "B", Children = new List<A>() { new B() { Id = 10, Name = "Child B", }, new A { Name = "Child A" } } };

@@ -1,5 +1,6 @@
 ﻿using System;
 using Echo.Builders;
+using Echo.Celestial;
 using Echo.State;
 using Echo.Structures;
 using NUnit.Framework;
@@ -35,7 +36,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var structure = Structure.Builder.For(TradingStation).Build(null, TradingStation).Materialise();
+			var structure = Structure.Builder.For(TradingStation).Build(new Moon { Id = Universe.Moon.ObjectId }, TradingStation).Materialise();
 			var state = structure.Save();
 
 			Assert.That(state.TradingStation, Is.Not.Null);

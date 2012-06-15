@@ -17,7 +17,7 @@ namespace Echo.State
 		public ObjectReference Orbits { get; set; }
 		public ObjectReference Owner { get; set; }
 
-		public IEnumerable<ItemState> HangerItems { get; set; }
+		public IEnumerable<HangerItemState> HangerItems { get; set; }
 		public IEnumerable<BuyOrderState> BuyOrders { get; set; }
 		public IEnumerable<SellOrderState> SellOrders { get; set; }
 

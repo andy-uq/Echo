@@ -12,6 +12,7 @@ namespace Echo.State
 	{
 		public long ObjectId { get; set; }
 		public string Name { get; set; }
+		public ObjectReference? Location { get; set; }
 		public IEnumerable<AgentStatisticState> Statistics { get; set; }		
 		public IEnumerable<Implant> Implants { get; set; }
 		public IEnumerable<SkillLevel> Skills { get; set; }

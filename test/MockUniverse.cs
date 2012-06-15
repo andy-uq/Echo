@@ -61,8 +61,8 @@ namespace Echo.Tests
 				ObjectId = Id(),
 				CelestialObjectType = CelestialObjectType.AsteriodBelt,
 				Name = "Asteroid Belt",
-				Orbits = Earth.AsObjectReference(),
-				LocalCoordinates = new Vector(5.5, 5.5, 0),
+				Orbits = Earth.ToObjectReference(),
+				LocalCoordinates = new Vector(-5.5, 0, 0),
 				AsteroidBelt = new AsteroidBeltState
 				{
 					Richness = 500000,
@@ -74,7 +74,7 @@ namespace Echo.Tests
 				ObjectId = Id(),
 				CelestialObjectType = CelestialObjectType.Moon,
 				Name = "Moon",
-				Orbits = Earth.AsObjectReference(),
+				Orbits = Earth.ToObjectReference(),
 				Mass = 0.5d,
 				Size = 0.5d,
 				LocalCoordinates = new Vector(7.5, 0, 0)
@@ -83,7 +83,7 @@ namespace Echo.Tests
 			{
 				ObjectId = Id(),
 				Name = "MFC",
-				Orbits = Moon.AsObjectReference(),
+				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(0.5001, 0, 0),
 				Manufactory = new ManufactoryState() { Efficiency = 0.5d },
 			};
@@ -91,7 +91,7 @@ namespace Echo.Tests
 			{
 				ObjectId = Id(),
 				Name = "TS",
-				Orbits = Moon.AsObjectReference(),
+				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
 				TradingStation = new TradingStationState()
 				{

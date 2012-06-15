@@ -12,7 +12,7 @@ namespace Echo.State
 		public CelestialObjectType CelestialObjectType { get; set; }
 		public double Size { get; set; }
 		public double Mass { get; set; }
-		public ObjectReference Orbits { get; set; }
+		public ObjectReference? Orbits { get; set; }
 
 		public AsteroidBeltState AsteroidBelt { get; set; }
 	}

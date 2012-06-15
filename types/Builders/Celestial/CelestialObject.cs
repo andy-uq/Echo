@@ -30,6 +30,7 @@ namespace Echo.Celestial
 					ObjectId = celestialObject.Id,
 					Name = celestialObject.Name,
 					LocalCoordinates = celestialObject.Position.LocalCoordinates,
+					Orbits = celestialObject.Position.Location.AsObjectReference(),
 					Mass = celestialObject.Mass,
 					Size = celestialObject.Size
 				};
@@ -39,7 +40,6 @@ namespace Echo.Celestial
 
 			protected virtual CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
 			{
-				state.Orbits = celestialObject.AsObjectReference();
 				return state;
 			}
 

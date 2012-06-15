@@ -1,24 +1,41 @@
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using EnsureThat;
 
 namespace Echo.State
 {
 	public struct ObjectReference : IEquatable<ObjectReference>
 	{
-		private static Regex _regex = new Regex(@"\[x(?<Id>[a-f0-9]{16})\]\s(?<Name>.*)?");
+		private static readonly Regex _regex = new Regex(@"\[x(?<Id>[a-f0-9]{16})\](\s(?<Name>.*))?", RegexOptions.Compiled);
 
 		public long Id { get; private set; }
 		public string Name { get; private set; }
 
+		public ObjectReference(string value) : this()
+		{
+			if ( value != null )
+			{
+				var m = _regex.Match(value);
+				if ( m.Success )
+				{
+					Id = long.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier),
+					Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty
+					return;
+				}
+			}
+
+			throw new FormatException("Invalid object reference");
+		}
+
 		public ObjectReference(long id) : this()
 		{
+			Ensure.That(id, "id").IsGt(0);
 			Id = id;
 		}
 
-		public ObjectReference(long id, string name) : this()
+		public ObjectReference(long id, string name) : this(id)
 		{
-			Id = id;
 			Name = name;
 		}
 
@@ -45,20 +62,7 @@ namespace Echo.State
 
 		public static ObjectReference Parse(string value)
 		{
-			if ( value != null )
-			{
-				var m = _regex.Match(value);
-				if ( m.Success )
-				{
-					return new ObjectReference
-					{
-						Id = long.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier),
-						Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty
-					};
-				}
-			}
-
-			throw new FormatException("Invalid object reference");
+			return new ObjectReference(value);
 		}
 
 		public bool Equals(ObjectReference other)
