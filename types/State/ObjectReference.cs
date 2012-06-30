@@ -19,8 +19,8 @@ namespace Echo.State
 				var m = _regex.Match(value);
 				if ( m.Success )
 				{
-					Id = long.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier),
-					Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty
+					Id = long.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier);
+					Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty;
 					return;
 				}
 			}

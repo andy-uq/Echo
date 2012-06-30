@@ -88,7 +88,7 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void BuffArmour()
 		{
-			var armourPlating = new ArmourPlating(ShipStatistic.BallisticArmourStrength) { Value = 50 };
+			var armourPlating = new ArmourDelta(ShipStatistic.BallisticArmourStrength) { Value = 50 };
 			var ballistic = _shipStatistics.ArmourStrength(DamageType.Ballistic);
 			ballistic.Alter(armourPlating);
 

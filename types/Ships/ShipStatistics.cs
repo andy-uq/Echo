@@ -41,23 +41,8 @@ namespace Echo.Ships
 
 		public ShipStatisticValue ArmourStrength(DamageType damageType)
 		{
-			switch (damageType)
-			{
-				case DamageType.Ballistic:
-					return _stats[ShipStatistic.BallisticArmourStrength];
-
-				case DamageType.Energy:
-					return _stats[ShipStatistic.EnergyArmourStrength];
-
-				case DamageType.Kinetic:
-					return _stats[ShipStatistic.KineticArmourStrength];
-
-				case DamageType.Thermal:
-					return _stats[ShipStatistic.ThermalArmourStrength];
-
-				default:
-					throw new ArgumentOutOfRangeException("damageType");
-			}
+			var armourType = damageType.GetCorrespondingArmourStat();
+			return _stats[armourType];
 		}
 
 		public IEnumerator<ShipStatisticValue> GetEnumerator()

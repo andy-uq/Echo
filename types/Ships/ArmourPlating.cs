@@ -2,12 +2,13 @@
 
 namespace Echo.Ships
 {
-	public class ArmourPlating : IStatisticDelta<double>
+	public class ArmourDelta : IStatisticDelta<double>
 	{
+		public string Name { get; set; }
 		public ShipStatistic ArmourType { get; set; }
 		public double Value { get; set; }
 
-		public ArmourPlating(ShipStatistic armourType)
+		public ArmourDelta(ShipStatistic armourType)
 		{
 			ArmourType = armourType;
 		}

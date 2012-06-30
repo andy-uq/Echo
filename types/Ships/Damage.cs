@@ -16,5 +16,17 @@ namespace Echo.Ships
 		{
 			get { return -Value; }
 		}
+
+		public static Damage operator +(Damage lValue, Damage rValue)
+		{
+			if (lValue == null || rValue == null)
+				return lValue ?? rValue;
+
+			var damageType = lValue.DamageType;
+			if (rValue.DamageType != damageType)
+				damageType = DamageType.Combined;
+
+			return new Damage(damageType) { Value = lValue.Value + rValue.Value };
+		}
 	}
 }

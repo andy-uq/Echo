@@ -1,36 +1,5 @@
-﻿using Echo.Agents;
-using Echo.Ships;
-using Echo.Structures;
-
-namespace Echo
+﻿namespace Echo
 {
-	public class UndockShipTask : ShipTask
-	{
-		private readonly LocationServices _locationServices;
-
-		public UndockShipTask(LocationServices locationServices) : base(locationServices)
-		{
-			_locationServices = locationServices;
-		}
-
-		public TaskResult Execute(Ship ship, Agent pilot)
-		{
-			var structure = ship.Position.Location as Structure;
-			if ( structure == null )
-			{
-				return Failed(ErrorCode.NotDocked, new { ship });
-			}
-
-			if ( !pilot.CanUse(ship) )
-			{
-				return Failed(ErrorCode.MissingSkillRequirement, new { pilot, ship });
-			}
-
-			ship.Position = new Position(structure.Position.Location, _locationServices.GetExitPosition(structure));
-			return Success();
-		}
-	}
-
 	public class ShipTask
 	{
 		private readonly LocationServices _locationServices;
@@ -64,14 +33,5 @@ namespace Echo
 				ErrorParams = errorParams
 			};
 		}
-	}
-
-	public class TaskResult
-	{
-		public string Task { get; set; }
-
-		public bool Success { get; set; }
-		public string ErrorCode { get; set; }
-		public object ErrorParams { get; set; }
 	}
 }
