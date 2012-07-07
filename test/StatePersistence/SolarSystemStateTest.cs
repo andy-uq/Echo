@@ -61,6 +61,7 @@ namespace Echo.Tests.StatePersistence
 		{
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem);
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
+			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 
 			var solarSystem = builder.Materialise();
 			var state = Echo.Celestial.SolarSystem.Builder.Save(solarSystem);

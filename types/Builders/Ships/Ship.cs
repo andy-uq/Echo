@@ -39,7 +39,7 @@ namespace Echo.Ships
 				};
 
 				var builder = new ObjectBuilder<Ship>(ship)
-					.Resolve((resolver, target) => BuildHardPoints(ship, state.HardPoints))
+					.Resolve((resolver, target) => BuildHardPoints(resolver, ship, state.HardPoints))
 					.Resolve((resolver, target) => target.ShipInfo = resolver.GetById<ShipInfo>(state.Code.ToId()));
 
 				builder
@@ -50,12 +50,12 @@ namespace Echo.Ships
 				return builder;
 			}
 
-			private static void BuildHardPoints(Ship ship, IEnumerable<HardPointState> hardPoints)
+			private static void BuildHardPoints(IIdResolver resolver, Ship ship, IEnumerable<HardPointState> hardPoints)
 			{
 				if ( hardPoints == null )
 					return;
 				
-				ship._hardPoints.AddRange(hardPoints.Select(h => HardPoint.Builder.Build(ship, h)));
+				ship._hardPoints.AddRange(hardPoints.Select(h => HardPoint.Builder.Build(resolver, ship, h)));
 			}
 
 			private static ShipStatisticValue Build(ShipStatisticState x)

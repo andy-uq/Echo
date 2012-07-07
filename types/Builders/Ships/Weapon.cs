@@ -1,4 +1,6 @@
-﻿using Echo.State;
+﻿using Echo.Builder;
+using Echo.Items;
+using Echo.State;
 
 namespace Echo.Ships
 {
@@ -12,23 +14,23 @@ namespace Echo.Ships
 				{
 					ObjectId = weapon.Id,
 					Name = weapon.Name,
+					Code = weapon.WeaponInfo.Code,
 				};
 			}
 
-			public static Weapon Build(WeaponState state)
+			public static Weapon Build(IIdResolver resolver, WeaponState state)
 			{
 				if ( state == null )
 				{
 					return null;
 				}
 
-				var weapon = new Weapon
+				return new Weapon
 				{
 					Id = state.ObjectId,
 					Name = state.Name,
+					WeaponInfo = resolver.GetById<WeaponInfo>(state.Code.ToId()),
 				};
-
-				return weapon;
 			}
 		}
 	}

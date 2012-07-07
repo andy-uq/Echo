@@ -23,6 +23,10 @@ namespace Echo.Tests.StatePersistence
 				.Dependent(new ShipInfo { Code = state.Code })
 				.Build(info => new ObjectBuilder<ShipInfo>(info));
 
+			builder
+				.Dependent(Universe.Weapon)
+				.Build(x => new ObjectBuilder<WeaponInfo>(x));
+
 			return builder.Materialise();
 		}
 
@@ -61,12 +65,27 @@ namespace Echo.Tests.StatePersistence
 
 			var builder = SolarSystem.Builder.Build(null, Universe.SolarSystem);
 			builder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
-			
+			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+
 			var solarSystem = builder.Materialise();
 			var shipBuilder = Echo.Ships.Ship.Builder.Build(solarSystem, state);
 			shipBuilder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
+			shipBuilder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 			var ship = shipBuilder.Materialise();
 
+			CheckPosition(solarSystem, ship);
+			CheckWeaponState(ship);
+		}
+
+		private void CheckWeaponState(Ship ship)
+		{
+			Assert.That(ship.HardPoints, Is.Not.Empty);
+			var hp = ship.HardPoints.First();
+
+		}
+
+		private void CheckPosition(SolarSystem solarSystem, Ship ship)
+		{
 			Assert.That(ship.Position.LocalCoordinates, Is.EqualTo(Ship.LocalCoordinates));
 			Assert.That(ship.SolarSystem, Is.EqualTo(solarSystem));
 			Assert.That(ship.Position.GetSolarSystem(), Is.EqualTo(solarSystem));

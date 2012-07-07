@@ -33,7 +33,11 @@ namespace Echo
 		public T GetById<T>(long id) where T : class, IObject
 		{
 			Ensure.That(id, "id").IsGte(0L);
-			return (T)_lookup[id];
+			IObject value;
+			if ( _lookup.TryGetValue(id, out value) )
+				return (T)value;
+
+			throw new ItemNotFoundException(typeof(T).Name, id);
 		}
 
 		public bool TryGetById<T>(long id, out T value) where T : class, IObject

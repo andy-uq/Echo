@@ -3,7 +3,7 @@ using Echo.Items;
 
 namespace Echo.State
 {
-	public sealed class ItemInfo : IObjectState, IObject
+	public class ItemInfo : IObjectState, IObject
 	{
 		public Guid Id { get; set; }
 		public ItemCode Code { get; set; }

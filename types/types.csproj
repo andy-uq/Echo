@@ -84,6 +84,7 @@
     <Compile Include="State\Skill.cs" />
     <Compile Include="State\SkillInfo.cs" />
     <Compile Include="State\SkillTraining.cs" />
+    <Compile Include="State\WeaponInfo.cs" />
     <Compile Include="Statistics\IStatisticDelta.cs" />
     <Compile Include="Builders\Agents\Agent.cs" />
     <Compile Include="Builders\Builders.cs" />

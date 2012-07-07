@@ -85,6 +85,7 @@ namespace Echo.Ships
 		public HardPointPosition Position { get; private set; }
 		public Ship Ship { get; private set; }
 		public Weapon Weapon { get; private set; }
+		public double AttackCounter { get; set; }
 
 		/// <summary>Current position (in Degrees)</summary>
 		public double Inclination
@@ -140,6 +141,7 @@ namespace Echo.Ships
 		public void EquipWeapon(Weapon weapon)
 		{
 			Weapon = weapon;
+			Weapon.HardPoint = this;
 			Weapon.Position = new Position(Ship, Vector.Zero);
 		}
 

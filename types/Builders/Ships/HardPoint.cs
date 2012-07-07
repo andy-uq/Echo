@@ -1,4 +1,5 @@
-﻿using Echo.Builders;
+﻿using Echo.Builder;
+using Echo.Builders;
 using Echo.State;
 
 namespace Echo.Ships
@@ -18,13 +19,14 @@ namespace Echo.Ships
 				};
 			}
 
-			public static HardPoint Build(Ship ship, HardPointState state)
+			public static HardPoint Build(IIdResolver idResolver, Ship ship, HardPointState state)
 			{
 				return new HardPoint(ship, state.Position)
 				{
 					Orientation = state.Orientation,
 					Speed = state.Speed,
-					Weapon = Weapon.Builder.Build(state.Weapon)
+					AttackCounter = state.AttackCounter,
+					Weapon = Weapon.Builder.Build(idResolver, state.Weapon)
 				};
 			}
 		}

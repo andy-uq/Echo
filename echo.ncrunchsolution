@@ -14,5 +14,12 @@ D:\Users\andy\Documents\GitHub\Echo\legacy\data\data.csproj
 D:\Users\andy\Documents\GitHub\Echo\legacy\echo\echo.csproj
 D:\Users\andy\Documents\GitHub\Echo\legacy\nunit\nunit.csproj
 D:\Users\andy\Documents\GitHub\Echo\legacy\orbView\orbView.csproj
-D:\Users\andy\Documents\GitHub\Echo\legacy\web\web.csproj</MetricsExclusions>
+D:\Users\andy\Documents\GitHub\Echo\legacy\web\web.csproj
+C:\Users\Andy\Documents\GitHub\Echo\legacy\common\common.csproj
+C:\Users\Andy\Documents\GitHub\Echo\legacy\core\core.csproj
+C:\Users\Andy\Documents\GitHub\Echo\legacy\data\data.csproj
+C:\Users\Andy\Documents\GitHub\Echo\legacy\echo\echo.csproj
+C:\Users\Andy\Documents\GitHub\Echo\legacy\nunit\nunit.csproj
+C:\Users\Andy\Documents\GitHub\Echo\legacy\orbView\orbView.csproj
+C:\Users\Andy\Documents\GitHub\Echo\legacy\web\web.csproj</MetricsExclusions>
 </SolutionConfiguration>

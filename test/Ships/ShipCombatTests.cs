@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Echo.Ships;
+using Echo.State;
 using Echo.Statistics;
 using Moq;
 using NUnit.Framework;
@@ -14,6 +15,7 @@ namespace Echo.Tests.Ships
 		private Weapon _weapon;
 		private Mock<IEchoContext> _context;
 		private Mock<IRandom> _random;
+		private Ship _target;
 
 		[SetUp]
 		public void SetUp()
@@ -24,9 +26,9 @@ namespace Echo.Tests.Ships
 			_context.SetupGet(x => x.Random).Returns(_random.Object);
 
 			var ship = new Ship();
-			var target = new Ship {Statistics = new ShipStatistics(Stats())};
+			_target = new Ship {Statistics = new ShipStatistics(Stats())};
 			_weapon = new Weapon();
-			_combat = new AttackShipCombat(_context.Object) { Ship = ship, Target = target };
+			_combat = new AttackShipCombat(_context.Object) { Ship = ship, Target = _target };
 		}
 
 		private IEnumerable<ShipStatisticValue> Stats()
@@ -48,6 +50,8 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void Hit()
 		{
+			_weapon.WeaponInfo = new WeaponInfo { DamageType = DamageType.Energy, MinimumDamage = 50, MaximumDamage = 200 };
+
 			_random.Setup(x => x.GetNext()).Returns(0);
 			var result = _combat.Fire(_weapon);
 			Assert.That(result.Ship, Is.EqualTo(_combat.Ship));
@@ -58,8 +62,7 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void DamageRoll()
 		{
-			_weapon.MinimumDamage = 50;
-			_weapon.MaximumDamage = 100;
+			_weapon.WeaponInfo = new WeaponInfo { DamageType = DamageType.Energy, MinimumDamage = 50, MaximumDamage = 100 };
 
 			var rollIndex = 0;
 			var rolls = new[] {0d, 0.5d};
@@ -74,21 +77,22 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void ArmourDamaged()
 		{
-			_weapon.MinimumDamage = 50;
-			_weapon.MaximumDamage = 100;
+			_weapon.WeaponInfo = new WeaponInfo { DamageType = DamageType.Energy, MinimumDamage = 50, MaximumDamage = 100 };
 			
 			_random.Setup(x => x.GetNext()).Returns(0);
 			var result = _combat.Fire(_weapon);
 
 			Assert.That(result.ArmourDamage.Value, Is.GreaterThan(0));
 			Assert.That(result.HullDamage, Is.Null);
+
+			var hullIntegrity = _target.Statistics[ShipStatistic.HullIntegrity];
+			Assert.That(hullIntegrity.CurrentValue, Is.EqualTo(100d));
 		}
 
 		[Test]
 		public void HullDamaged()
 		{
-			_weapon.MinimumDamage = 50;
-			_weapon.MaximumDamage = 200;
+			_weapon.WeaponInfo = new WeaponInfo { DamageType = DamageType.Energy, MinimumDamage = 50, MaximumDamage = 200 };
 
 			var rollIndex = 0;
 			var rolls = new[] { 0d, 0.5d };
@@ -98,6 +102,27 @@ namespace Echo.Tests.Ships
 
 			Assert.That(result.ArmourDamage.Value, Is.GreaterThan(0));
 			Assert.That(result.HullDamage, Is.Not.Null);
+
+			var hullIntegrity = _target.Statistics[ShipStatistic.HullIntegrity];
+			Assert.That(hullIntegrity.CurrentValue, Is.LessThanOrEqualTo(100d));
+		}
+
+		[Test]
+		public void ShipDestroyed()
+		{
+			_weapon.WeaponInfo = new WeaponInfo { DamageType = DamageType.Energy, MinimumDamage = 50, MaximumDamage = 500 };
+
+			var rollIndex = 0;
+			var rolls = new[] { 0d, 0.5d };
+
+			_random.Setup(x => x.GetNext()).Returns(() => rolls[rollIndex++]);
+			var result = _combat.Fire(_weapon);
+
+			Assert.That(result.ArmourDamage.Value, Is.GreaterThan(0));
+			Assert.That(result.HullDamage, Is.Not.Null);
+
+			var hullIntegrity = _target.Statistics[ShipStatistic.HullIntegrity];
+			Assert.That(hullIntegrity.CurrentValue, Is.LessThanOrEqualTo(0d));
 		}
 	}
 }

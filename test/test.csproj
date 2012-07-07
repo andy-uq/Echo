@@ -48,35 +48,35 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="NCore, Version=0.28.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NCore.0.28.0\lib\net40\NCore.dll</HintPath>
+    <Reference Include="NCore, Version=0.30.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NCore.0.30.1\lib\net40\NCore.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="PineCone, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PineCone.3.1.1\lib\net40\PineCone.dll</HintPath>
+    <Reference Include="PineCone, Version=3.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PineCone.3.4.1\lib\net40\PineCone.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb">
-      <HintPath>..\packages\SisoDb.13.0.3\lib\net40\SisoDb.dll</HintPath>
+    <Reference Include="SisoDb, Version=14.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SisoDb.14.0.0\lib\net40\SisoDb.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.Serialization">
-      <HintPath>..\packages\SisoDb.13.0.3\lib\net40\SisoDb.Serialization.dll</HintPath>
+    <Reference Include="SisoDb.Serialization, Version=14.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SisoDb.14.0.0\lib\net40\SisoDb.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.SqlCe4">
-      <HintPath>..\packages\SisoDb.SqlCe4.13.0.3\lib\net40\SisoDb.SqlCe4.dll</HintPath>
+    <Reference Include="SisoDb.SqlCe4, Version=14.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SisoDb.SqlCe4.14.0.0\lib\net40\SisoDb.SqlCe4.dll</HintPath>
     </Reference>
-    <Reference Include="SisoDb.SqlServer">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.SqlCe4.13.0.3\lib\net40\SisoDb.SqlServer.dll</HintPath>
+    <Reference Include="SisoDb.SqlServer, Version=14.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SisoDb.SqlCe4.14.0.0\lib\net40\SisoDb.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\SqlServerCompact.4.0.8482.1\lib\System.Data.SqlServerCe.dll</HintPath>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8854.2\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +84,7 @@
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
+    <Compile Include="Items\WeaponTests.cs" />
     <Compile Include="Math\PositionTests.cs" />
     <Compile Include="Math\UnitTests.cs" />
     <Compile Include="Ships\HardPointTests.cs" />
@@ -136,10 +137,10 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-xcopy /s /y "$(SolutionDir)packages\SqlServerCompact.4.0.8482.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
-if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-xcopy /s /y "$(SolutionDir)packages\SqlServerCompact.4.0.8482.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8854.2\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8854.2\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

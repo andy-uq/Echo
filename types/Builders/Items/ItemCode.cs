@@ -6,5 +6,8 @@
 
 		[Category(ItemCategory.Ships)]
 		LightFrigate,
+
+		[Category(ItemCategory.ShipWeapons)]
+		MissileLauncher
 	}
 }

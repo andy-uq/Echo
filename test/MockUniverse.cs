@@ -29,6 +29,8 @@ namespace Echo.Tests
 		public StarClusterState StarCluster { get; set; }
 		public UniverseState Universe { get; set; }
 
+		public WeaponInfo Weapon { get; set; }
+
 		public MockUniverse()
 		{
 			var universeId = Id();
@@ -99,6 +101,17 @@ namespace Echo.Tests
 					SellOrders = new[] { new SellOrderState { Auction = new AuctionState { } }, }
 				},
 			};
+
+			Weapon = new WeaponInfo
+			{
+				Code = ItemCode.MissileLauncher,
+				DamageType = DamageType.Ballistic,
+				Name = "Uber Launcher of Awesomeness",
+				MinimumDamage = 50,
+				MaximumDamage = 100,
+				Speed = 1d,
+			};
+
 			Ship = new ShipState()
 			{
 				ObjectId = Id(),
@@ -112,7 +125,12 @@ namespace Echo.Tests
 						Position = HardPointPosition.Front, 
 						Orientation = HardPoint.CalculateOrientation(HardPointPosition.Front),
 						Speed = 0.5d, 
-						Weapon = new WeaponState { ObjectId = Id(), Name = "Blaster" }
+						Weapon = new WeaponState
+						{
+							ObjectId = Id(), 
+							Name = "Blaster",
+							Code = Weapon.Code,
+						}
 					},
 				},
 				Pilot = John,
@@ -147,6 +165,8 @@ namespace Echo.Tests
 			{
 				ObjectId = universeId,
 				StarClusters = new[] {StarCluster},
+				Items = new ItemInfo[0],
+				Weapons = new[] { Weapon },
 				Skills = new[] { SpaceshipCommand, },
 				Ships = new[]
 				{

@@ -3,9 +3,7 @@ using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Corporations;
-using Echo.Items;
 using Echo.State;
-using Echo;
 
 namespace Echo
 {
@@ -25,9 +23,7 @@ namespace Echo
 
 			public static ObjectBuilder<Universe> Build(UniverseState state)
 			{
-				var universe = new Universe
-				{
-				};
+				var universe = new Universe();
 
 				var builder = new ObjectBuilder<Universe>(universe);
 				
@@ -37,7 +33,7 @@ namespace Echo
 					.Resolve((resolver, target, dependent) => target.Corporations.Add(dependent));
 				
 				builder
-					.Dependents(state.Items)
+					.Dependents(state.Items.Concat(state.Weapons))
 					.Build(BuildInfo)
 					.Resolve((resolver, target, itemInfo) => target.Items.Add(itemInfo.Code, itemInfo));
 				

@@ -49,6 +49,7 @@ namespace Echo.Tests.StatePersistence
 			DumpObjects("StarCluster");
 			DumpObjects("Corporation");
 			DumpObjects("Item", isInfo:true);
+			DumpObjects("Weapon", isInfo:true);
 			DumpObjects("Skill", isInfo: true);
 		}
 
@@ -61,6 +62,7 @@ namespace Echo.Tests.StatePersistence
 				session.InsertMany(universe.StarClusters);
 				session.InsertMany(universe.Corporations);
 				session.InsertMany(universe.Items);
+				session.InsertMany(universe.Weapons);
 				session.InsertMany(universe.Skills);
 				session.InsertMany(universe.Ships);
 			}
@@ -78,6 +80,7 @@ namespace Echo.Tests.StatePersistence
 					StarClusters = session.Query<StarClusterState>().ToArray(),
 					Corporations = session.Query<CorporationState>().ToArray(),
 					Items = session.Query<ItemInfo>().ToArray(),
+					Weapons = session.Query<WeaponInfo>().ToArray(),
 					Skills = session.Query<SkillInfo>().ToArray(),
 					Ships = session.Query<ShipInfo>().ToArray()
 				};
