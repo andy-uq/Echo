@@ -1,7 +1,9 @@
 <ProjectConfiguration>
   <CopyReferencedAssembliesToWorkspace>false</CopyReferencedAssembliesToWorkspace>
   <ConsiderInconclusiveTestsAsPassing>false</ConsiderInconclusiveTestsAsPassing>
-  <AllowCodeContractChecking>false</AllowCodeContractChecking>
+  <PreloadReferencedAssemblies>false</PreloadReferencedAssemblies>
+  <AllowDynamicCodeContractChecking>true</AllowDynamicCodeContractChecking>
+  <AllowStaticCodeContractChecking>false</AllowStaticCodeContractChecking>
   <IgnoreThisComponentCompletely>false</IgnoreThisComponentCompletely>
   <RunPreBuildEvents>false</RunPreBuildEvents>
   <RunPostBuildEvents>false</RunPostBuildEvents>
@@ -14,28 +16,5 @@
   <UseBuildConfiguration></UseBuildConfiguration>
   <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>x64</UseCPUArchitecture>
-  <IgnoredTests>
-    <NamedTestSelector>
-      <TestName>Echo.Tests.StatePersistence.SolarSystemStateTest.Deserialise</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>Echo.Tests.StatePersistence.SolarSystemStateTest.Persist</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>Echo.Tests.StatePersistence.TradingStations.Deserialise</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>Echo.Tests.StatePersistence.TradingStations.Persist</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>Echo.Tests.StatePersistence.UniverseStateTest.Deserialise</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>Echo.Tests.StatePersistence.UniverseStateTest.LoadFromDb</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>Echo.Tests.StatePersistence.UniverseStateTest.Persist</TestName>
-    </NamedTestSelector>
-  </IgnoredTests>
   <HiddenWarnings>LongTestTimesWithoutParallelExecution</HiddenWarnings>
 </ProjectConfiguration>
