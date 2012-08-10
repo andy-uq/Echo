@@ -1,7 +1,10 @@
 ﻿using Autofac;
-using SisoDb;
-using SisoDb.SqlCe4;
+using Autofac.Core;
 using Echo.Mapping;
+using Newtonsoft.Json;
+using Raven.Client;
+using Raven.Client.Document;
+using Raven.Client.Embedded;
 
 namespace Echo.Data
 {
@@ -9,10 +12,23 @@ namespace Echo.Data
 	{
 		public void Build(ContainerBuilder containerBuilder)
 		{
-			var connectionInfo = new SqlCe4ConnectionInfo(ConnectionString.Get("siso"));
-			containerBuilder.RegisterInstance(connectionInfo).As<ISisoConnectionInfo>();
-			containerBuilder.RegisterType<SqlCe4ProviderFactory>().As<IDbProviderFactory>();
-			containerBuilder.RegisterType<SqlCe4Database>().As<ISisoDatabase>().SingleInstance();
+			containerBuilder.RegisterType<DocumentStore>()
+				.As<IDocumentStore>()
+				.OnActivated(InitialiseDocumentStore)
+				.SingleInstance();
+		}
+
+		private void InitialiseDocumentStore(IActivatedEventArgs<DocumentStore> obj)
+		{
+			obj.Instance.Url = "http://raven.local";
+			obj.Instance.DefaultDatabase = "Echo";
+			obj.Instance.Conventions.CustomizeJsonSerializer = ConfigureJsonSerialiser;
+			obj.Instance.Initialize();
+		}
+
+		private void ConfigureJsonSerialiser(JsonSerializer obj)
+		{
+			obj.TypeNameHandling = TypeNameHandling.None;
 		}
 	}
 }

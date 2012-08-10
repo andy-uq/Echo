@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.Data;
 using Echo.State;
 using NUnit.Framework;
 using Echo;
@@ -27,7 +28,7 @@ namespace Echo.Tests.StatePersistence
 		public void Serialise()
 		{
 			var universe = GetUniverse();
-			var json = Database.Serializer.Serialize(universe);
+			var json = Database.Conventions.CreateSerializer().Serialize(universe);
 			Console.WriteLine(json);
 		}
 
@@ -37,7 +38,7 @@ namespace Echo.Tests.StatePersistence
 			var universe = Echo.Universe.Builder.Build(GetUniverse()).Materialise();
 			var state = universe.Save();
 
-			var json = Database.Serializer.Serialize(state);
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
 		}
 		
@@ -57,14 +58,16 @@ namespace Echo.Tests.StatePersistence
 		{
 			var universe = GetUniverse();
 
-			using (var session = Database.BeginSession())
+			using (var session = Database.OpenSession())
 			{
-				session.InsertMany(universe.StarClusters);
-				session.InsertMany(universe.Corporations);
-				session.InsertMany(universe.Items);
-				session.InsertMany(universe.Weapons);
-				session.InsertMany(universe.Skills);
-				session.InsertMany(universe.Ships);
+				session.StoreMany(universe.StarClusters);
+				session.StoreMany(universe.Corporations);
+				session.StoreMany(universe.Items, "Item", x => x.Code);
+				session.StoreMany(universe.Weapons, "Weapon", x => x.Code);
+				session.StoreMany(universe.Skills, "Skill", x => x.Code);
+				session.StoreMany(universe.Ships, "Ship", x => x.Code);
+
+				session.SaveChanges();
 			}
 		}
 
@@ -73,7 +76,7 @@ namespace Echo.Tests.StatePersistence
 		{
 			SaveToDb();
 
-			using ( var session = Database.BeginSession() )
+			using ( var session = Database.OpenSession() )
 			{
 				var universe = new UniverseState
 				{
@@ -93,14 +96,27 @@ namespace Echo.Tests.StatePersistence
 		public void Deserialise()
 		{
 			var universe = GetUniverse();
-			Database.UseOnceTo().InsertMany(universe.StarClusters);
+			Assert.That(universe.StarClusters, Is.Not.Empty);
+			
+			using ( var session = Database.OpenSession() )
+			{
+				session.StoreMany(universe.StarClusters);
+				session.SaveChanges();
+			}
 
-			universe.StarClusters = Database.UseOnceTo().Query<StarClusterState>().ToList();
-			Check(universe);
+			using ( var session = Database.OpenSession() )
+			{
+				universe.StarClusters = session.Query<StarClusterState>().ToList();
+				Assert.That(universe.StarClusters, Is.Not.Empty);
+				
+				Check(universe);
+			}
 		}
 
 		private static void Check(UniverseState state)
 		{
+			Assert.That(state.StarClusters, Is.Not.Empty);
+
 			var starClusterState = state.StarClusters.First();
 			SolarSystemState solState = starClusterState.SolarSystems.First();
 			Assert.That(solState, Is.Not.Null);

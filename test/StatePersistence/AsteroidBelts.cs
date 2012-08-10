@@ -12,7 +12,7 @@ namespace Echo.Tests.StatePersistence
 	{
 		public class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public CelestialObjectState Value { get; set; }
 
 			public WrappedObjectState(CelestialObjectState value)
@@ -29,7 +29,12 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(AsteroidBelt));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(AsteroidBelt));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -42,7 +47,7 @@ namespace Echo.Tests.StatePersistence
 
 			Assert.That(state.AsteroidBelt, Is.Not.Null);
 
-			var json = Database.Serializer.Serialize(state);
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
 		}
 
@@ -50,16 +55,26 @@ namespace Echo.Tests.StatePersistence
 		public void Deserialise()
 		{
 			var wrapped = new WrappedObjectState(AsteroidBelt);
-			Database.UseOnceTo().Insert(wrapped);
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
+				session.SaveChanges();
+			}
 
-			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
-			Assert.That(state, Is.Not.Null);
+			DumpObjects("WrappedObject");
 
-			var celestialObject = CelestialObject.Builder.For(state).Build(null, state).Materialise();
-			Assert.That(celestialObject, Is.InstanceOf<AsteroidBelt>());
 
-			var asteroidBelt = (AsteroidBelt) celestialObject;
-			Assert.That(asteroidBelt.Richness, Is.EqualTo(AsteroidBelt.AsteroidBelt.Richness));
+			using ( var session = Database.OpenSession() )
+			{
+				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
+				Assert.That(state, Is.Not.Null);
+
+				var celestialObject = CelestialObject.Builder.For(state).Build(null, state).Materialise();
+				Assert.That(celestialObject, Is.InstanceOf<AsteroidBelt>());
+
+				var asteroidBelt = (AsteroidBelt) celestialObject;
+				Assert.That(asteroidBelt.Richness, Is.EqualTo(AsteroidBelt.AsteroidBelt.Richness));
+			}
 		}
 	}
 }

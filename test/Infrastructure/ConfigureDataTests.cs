@@ -2,8 +2,7 @@
 using Autofac;
 using Echo.Data;
 using NUnit.Framework;
-using SisoDb;
-using test;
+using Raven.Client;
 
 namespace Echo.Tests.Infrastructure
 {
@@ -19,47 +18,51 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void CanConfigureFromAppConfig()
 		{
-			var configuration = new Configure();
 			var configurationBuilder = new Autofac.ContainerBuilder();
 			
+			var configuration = new Configure();
 			configuration.Build(configurationBuilder);
-			var resolver = configurationBuilder.Build();
 
-			var dbA = resolver.Resolve<ISisoDatabase>();
-			var dbB = resolver.Resolve<ISisoDatabase>();
-
-			Assert.That(dbA, Is.SameAs(dbB));
-		}
-
-		[Test]
-		public void CanCreateDb()
-		{
-			using ( var fresh = new CreateFreshDatabase("empty") )
+			using ( var resolver = configurationBuilder.Build() )
 			{
-				var configurationBuilder = new Autofac.ContainerBuilder();
-
-				fresh.Create(configurationBuilder);
-				var resolver = configurationBuilder.Build();
-
-				var dbA = resolver.Resolve<ISisoDatabase>();
-				var dbB = resolver.Resolve<ISisoDatabase>();
+				var dbA = resolver.Resolve<IDocumentStore>();
+				var dbB = resolver.Resolve<IDocumentStore>();
 
 				Assert.That(dbA, Is.SameAs(dbB));
 			}
 		}
 
-		[Test, Ignore("Siso does not support nested structures (Causes infinite loop)")]
-		public void CanCreateNestedStructure()
+		[Test]
+		public void CanCreateDb()
 		{
-			using ( var fresh = new CreateFreshDatabase("db_for_a") )
+			using ( var fresh = new CreateFreshDatabase() )
 			{
 				var configurationBuilder = new Autofac.ContainerBuilder();
 
 				fresh.Create(configurationBuilder);
-				var resolver = configurationBuilder.Build();
+				using ( var resolver = configurationBuilder.Build() )
+				{
+					var dbA = resolver.Resolve<IDocumentStore>();
+					var dbB = resolver.Resolve<IDocumentStore>();
 
-				var dbA = resolver.Resolve<ISisoDatabase>();
-				dbA.UseOnceTo().Insert(new A() {Name = "Bob"});
+					Assert.That(dbA, Is.SameAs(dbB));
+				}
+			}
+		}
+
+		[Test]
+		public void CanCreateNestedStructure()
+		{
+			using ( var fresh = new CreateFreshDatabase() )
+			{
+				var configurationBuilder = new Autofac.ContainerBuilder();
+				fresh.Create(configurationBuilder);
+
+				using ( var resolver = configurationBuilder.Build() )
+				{
+					var dbA = resolver.Resolve<IDocumentStore>();
+					dbA.OpenSession().Store(new A() {Name = "Bob"});
+				}
 			}
 		}
 	}

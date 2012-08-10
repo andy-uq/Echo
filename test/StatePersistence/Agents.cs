@@ -11,7 +11,7 @@ namespace Echo.Tests.StatePersistence
 	{
 		public class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public AgentState Value { get; set; }
 
 			public WrappedObjectState(AgentState value)
@@ -29,7 +29,12 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(John));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(John));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -42,7 +47,7 @@ namespace Echo.Tests.StatePersistence
 
 			Assert.That(state.Statistics, Is.Not.Null);
 
-			var json = Database.Serializer.Serialize(state);
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
 		}
 
@@ -50,21 +55,31 @@ namespace Echo.Tests.StatePersistence
 		public void Deserialise()
 		{
 			var wrapped = new WrappedObjectState(John);
-			Database.UseOnceTo().Insert(wrapped);
-			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
-			Assert.That(state, Is.Not.Null);
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
+				session.SaveChanges();
+			}
 
-			var agent = Agent.Builder.Build(state).Materialise();
-			Assert.That(agent, Is.InstanceOf<Agent>());
+			DumpObjects("WrappedObject");
 
-			Assert.That(agent.Statistics.Charisma.Value, Is.EqualTo(50));
-			Assert.That(agent.Statistics.Memory.Value, Is.EqualTo(50));
-			Assert.That(agent.Statistics.Perception.Value, Is.EqualTo(50));
-			Assert.That(agent.Statistics.Intelligence.Value, Is.EqualTo(50));
-			Assert.That(agent.Statistics.Willpower.Value, Is.EqualTo(50));
+			using ( var session = Database.OpenSession() )
+			{
+				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
+				Assert.That(state, Is.Not.Null);
 
-			Assert.That(agent.Statistics.Intelligence.CurrentValue, Is.EqualTo(65));
-			Assert.That(agent.Statistics.Willpower.CurrentValue, Is.EqualTo(65));
+				var agent = Agent.Builder.Build(state).Materialise();
+				Assert.That(agent, Is.InstanceOf<Agent>());
+
+				Assert.That(agent.Statistics.Charisma.Value, Is.EqualTo(50));
+				Assert.That(agent.Statistics.Memory.Value, Is.EqualTo(50));
+				Assert.That(agent.Statistics.Perception.Value, Is.EqualTo(50));
+				Assert.That(agent.Statistics.Intelligence.Value, Is.EqualTo(50));
+				Assert.That(agent.Statistics.Willpower.Value, Is.EqualTo(50));
+
+				Assert.That(agent.Statistics.Intelligence.CurrentValue, Is.EqualTo(65));
+				Assert.That(agent.Statistics.Willpower.CurrentValue, Is.EqualTo(65));
+			}
 		}
 	}
 }

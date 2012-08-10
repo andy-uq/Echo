@@ -33,8 +33,13 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Serialise()
 		{
-			Database.UseOnceTo().Insert(Ship);
-			DumpObjects("Ship");
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(Ship);
+				session.SaveChanges();
+			}
+
+			DumpObjects("WrappedObject");
 		}
 
 		[Test]
@@ -47,34 +52,42 @@ namespace Echo.Tests.StatePersistence
 
 			Assert.That(state.Pilot, Is.Not.Null);
 
-			var json = Database.Serializer.Serialize(state);
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
 		}
 
 		[Test]
 		public void Deserialise()
 		{
-			Database.UseOnceTo().Insert(Ship);
-			var state = Database.UseOnceTo().GetById<ShipState>(Ship.Id);
-			Assert.That(state, Is.Not.Null);
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(Ship, string.Concat("Ship/", Ship.ObjectId));
+				session.SaveChanges();
+			}
 
-			Assert.That(state.Name, Is.EqualTo(Ship.Name));
-			Assert.That(state.LocalCoordinates, Is.EqualTo(Ship.LocalCoordinates));
-			Assert.That(state.HardPoints, Has.Some.Matches<HardPointState>(x => x.Position == HardPointPosition.Front));
-			Assert.That(state.HardPoints.First().Orientation, Is.EqualTo(HardPoint.CalculateOrientation(HardPointPosition.Front)));
+			using ( var session = Database.OpenSession() )
+			{
+				var state = session.Load<ShipState>(Ship.Id);
+				Assert.That(state, Is.Not.Null);
 
-			var builder = SolarSystem.Builder.Build(null, Universe.SolarSystem);
-			builder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
-			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+				Assert.That(state.Name, Is.EqualTo(Ship.Name));
+				Assert.That(state.LocalCoordinates, Is.EqualTo(Ship.LocalCoordinates));
+				Assert.That(state.HardPoints, Has.Some.Matches<HardPointState>(x => x.Position == HardPointPosition.Front));
+				Assert.That(state.HardPoints.First().Orientation, Is.EqualTo(HardPoint.CalculateOrientation(HardPointPosition.Front)));
 
-			var solarSystem = builder.Materialise();
-			var shipBuilder = Echo.Ships.Ship.Builder.Build(solarSystem, state);
-			shipBuilder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
-			shipBuilder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
-			var ship = shipBuilder.Materialise();
+				var builder = SolarSystem.Builder.Build(null, Universe.SolarSystem);
+				builder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
+				builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 
-			CheckPosition(solarSystem, ship);
-			CheckWeaponState(ship);
+				var solarSystem = builder.Materialise();
+				var shipBuilder = Echo.Ships.Ship.Builder.Build(solarSystem, state);
+				shipBuilder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
+				shipBuilder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+				var ship = shipBuilder.Materialise();
+
+				CheckPosition(solarSystem, ship);
+				CheckWeaponState(ship);
+			}
 		}
 
 		private void CheckWeaponState(Ship ship)

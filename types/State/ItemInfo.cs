@@ -5,7 +5,7 @@ namespace Echo.State
 {
 	public class ItemInfo : IObjectState, IObject
 	{
-		public Guid Id { get; set; }
+		public string Id { get; set; }
 		public ItemCode Code { get; set; }
 
 		#region IObject Members

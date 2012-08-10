@@ -13,7 +13,7 @@ namespace Echo.Tests.StatePersistence
 	{
 		public class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public StructureState Value { get; set; }
 
 			public WrappedObjectState(StructureState value)
@@ -30,7 +30,12 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(Manufactory));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(Manufactory));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -42,23 +47,31 @@ namespace Echo.Tests.StatePersistence
 
 			Assert.That(state.Manufactory, Is.Not.Null);
 
-			var json = Database.Serializer.Serialize(state);
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
 		}
 
 		[Test]
 		public void Deserialise()
 		{
-			var wrapper = new WrappedObjectState(Manufactory);
-			Database.UseOnceTo().Insert(wrapper);
-			
-			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapper.Id).Value;
-			Assert.That(state, Is.Not.Null);
-			Assert.That(state.Manufactory, Is.Not.Null);
-			Assert.That(state.TradingStation, Is.Null);
+			var wrapped = new WrappedObjectState(Manufactory);
 
-			var structure = Structure.Builder.For(Manufactory).Build(null, Manufactory).Materialise();
-			Assert.That(structure, Is.InstanceOf<Manufactory>());
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
+				session.SaveChanges();
+			}
+
+			using ( var session = Database.OpenSession() )
+			{
+				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
+				Assert.That(state, Is.Not.Null);
+				Assert.That(state.Manufactory, Is.Not.Null);
+				Assert.That(state.TradingStation, Is.Null);
+
+				var structure = Structure.Builder.For(Manufactory).Build(null, Manufactory).Materialise();
+				Assert.That(structure, Is.InstanceOf<Manufactory>());
+			}
 		}
 	}
 }

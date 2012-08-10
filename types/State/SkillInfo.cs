@@ -12,10 +12,10 @@ namespace Echo.State
 		public AgentStatistic SecondaryStat { get; set; }
 		public int TrainingMultiplier { get; set; }
 
+		public string Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public IEnumerable<SkillLevel> Prerequisites { get; set; }
-		public Guid Id { get; set; }
 
 		long IObject.Id
 		{

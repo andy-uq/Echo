@@ -2,46 +2,40 @@
 using System.IO;
 using Autofac;
 using NUnit.Framework;
-using SisoDb;
-using SisoDb.SqlCe4;
+using Raven.Client;
+using Raven.Client.Document;
+using Raven.Client.Embedded;
 using test;
 
 namespace Echo.Tests.Infrastructure
 {
 	public class CreateFreshDatabase : DisposableObject
 	{
-		public string TemplateName { get; private set; }
-		public string DbFilename { get; private set; }
-		public string ConnectionString { get; private set; }
+		private DocumentStore _database;
 
-		private SqlCe4Database _database;
-
-		public CreateFreshDatabase(string templateName)
+		public CreateFreshDatabase()
 		{
-			TemplateName = templateName;
 		}
 
 		public void Create(ContainerBuilder containerBuilder)
 		{
 			lock ( TestSettings.SyncObject )
 			{
-				DbFilename = TestSettings.UniqueFileName(string.Concat(TemplateName, ".sdf"));
-				ConnectionString = string.Format(@"data source={0}", DbFilename);
-				_database = new SqlCe4Database(new SqlCe4ConnectionInfo(ConnectionString), new SqlCe4ProviderFactory());
-				_database.EnsureNewDatabase();
+				_database = new EmbeddableDocumentStore { RunInMemory = true };
+				_database.Initialize();
 
-				Assert.That(File.Exists(DbFilename), Is.True);
-				Console.WriteLine("Using database {0}", DbFilename);
+				Console.WriteLine("Using in-memory database: {0}", _database.Url);
 			}
 
-			containerBuilder.RegisterInstance(_database).As<ISisoDatabase>();
+			containerBuilder.RegisterInstance(_database).As<IDocumentStore>();
 		}
 
 		protected override void DisposeManagedResources()
 		{
 			if (_database != null)
 			{
-				_database.DeleteIfExists();
+				_database.Dispose();
+				_database = null;
 			}
 		}
 	}

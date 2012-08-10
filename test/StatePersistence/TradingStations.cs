@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
@@ -12,7 +13,7 @@ namespace Echo.Tests.StatePersistence
 	{
 		public class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public StructureState Value { get; set; }
 
 			public WrappedObjectState(StructureState value)
@@ -29,7 +30,12 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(TradingStation));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(TradingStation));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -41,22 +47,37 @@ namespace Echo.Tests.StatePersistence
 
 			Assert.That(state.TradingStation, Is.Not.Null);
 
-			var json = Database.Serializer.Serialize(state);
-			Console.WriteLine(json);
+			var writer = new StringWriter();
+			var serialiser = Database.Conventions.CreateSerializer();
+
+			serialiser.Serialize(writer, state);
+			Console.WriteLine(writer.ToString());
 		}
 
 		[Test]
 		public void Deserialise()
 		{
-			var wrapper = new WrappedObjectState(TradingStation);
+			var wrapped = new WrappedObjectState(TradingStation);
 
-			Database.UseOnceTo().Insert(wrapper);
-			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapper.Id).Value;
-			Assert.That(state, Is.Not.Null);
-			Assert.That(state.TradingStation, Is.Not.Null);
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
+				session.SaveChanges();
 
-			var structure = Structure.Builder.For(state).Build(null, state).Materialise();
-			Assert.That(structure, Is.InstanceOf<TradingStation>());
+				Assert.That(wrapped.Id, Is.Not.EqualTo(Guid.Empty));
+			}
+
+			using ( var session = Database.OpenSession() )
+			{
+				var tmp = session.Load<WrappedObjectState>(wrapped.Id);
+				Assert.That(tmp, Is.Not.Null);
+
+				var state = tmp.Value;
+				Assert.That(state.TradingStation, Is.Not.Null);
+
+				var structure = Structure.Builder.For(state).Build(null, state).Materialise();
+				Assert.That(structure, Is.InstanceOf<TradingStation>());
+			}
 		}
 	}
 }
