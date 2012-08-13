@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit", "legacy\nunit\nunit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "orbView", "legacy\orbView\orbView.csproj", "{3A8895AC-FD6C-4D41-8EB5-CCDB7B142104}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webX", "legacy\web\web.csproj", "{E6813472-EB31-4521-9237-4E3AA3261C79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web", "legacy\web\web.csproj", "{E6813472-EB31-4521-9237-4E3AA3261C79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4603B68D-BD21-4DCD-B928-6C9017A10799}"
 	ProjectSection(SolutionItems) = preProject
