@@ -4,11 +4,12 @@ using Echo.Builder;
 using Echo.Celestial;
 using Echo.Items;
 using Echo.State;
+using Echo.Tests;
+using Echo.Tests.StatePersistence;
 using NUnit.Framework;
-using Echo;
 using SisoDb.Serialization;
 
-namespace Echo.Tests.StatePersistence
+namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
 	public class SolarSystemStateTest : StateTest
@@ -84,8 +85,9 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(moonState.Orbits, Is.Not.Null);
 
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);
-			builder.Dependent(new ShipInfo {Code = ItemCode.LightFrigate}).Build(x => new ObjectBuilder<ShipInfo>(x));
-
+			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
+			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+			
 			var solarSystem = builder.Materialise();
 
 			var earth = solarSystem.Satellites.OfType<Planet>().Single(x => x.Id == Earth.ObjectId);
@@ -94,11 +96,11 @@ namespace Echo.Tests.StatePersistence
 			var moon = solarSystem.Satellites.OfType<Moon>().Single(x => x.Id == Moon.ObjectId);
 			Assert.That(moon.Planet, Is.EqualTo(earth));
 
-			var asteroidBelt = solarSystem.Satellites.OfType<AsteroidBelt>().Single(x => x.Id == AsteroidBelt.ObjectId);
-			Assert.That(asteroidBelt.Position.Location, Is.EqualTo(earth));
-
 			var manufactory = solarSystem.Structures.Single(x => x.Id == Manufactory.ObjectId);
 			Assert.That(manufactory.Position.Location, Is.EqualTo(moon));
+
+			var asteroidBelt = solarSystem.Satellites.Single(x => x.Id == AsteroidBelt.ObjectId);
+			Assert.That(asteroidBelt.Position.Location, Is.EqualTo(earth));
 		}
 	}
 }

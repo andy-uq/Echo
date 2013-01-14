@@ -2,8 +2,8 @@
 using Echo.Agents;
 using Echo.Corporations;
 using Echo.Items;
-using Echo.Ships;
 using Echo.Structures;
+using EnsureThat;
 
 namespace Echo.Market
 {
@@ -24,7 +24,12 @@ namespace Echo.Market
 
 		public MarketPlace MarketPlace
 		{
-			get { return Location.Position.GetMarketPlace(); }
+			get
+			{
+				return Location == null 
+					? null 
+					: Location.Position.GetMarketPlace();
+			}
 		}
 
 		public Item Item
@@ -45,6 +50,13 @@ namespace Echo.Market
 		public uint Quantity
 		{
 			get { return Item.Quantity; }
+		}
+
+		public void List(MarketPlace marketPlace)
+		{
+			Ensure.That(() => marketPlace).IsNotNull();
+
+			marketPlace.Add(this);
 		}
 	}
 }

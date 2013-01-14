@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using SisoDb;
+using SisoDb.Configurations;
 using SisoDb.SqlCe4;
 using Echo.Mapping;
 

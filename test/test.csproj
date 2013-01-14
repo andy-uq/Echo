@@ -33,47 +33,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Autofac.Configuration, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
+    <Reference Include="EnsureThat">
+      <HintPath>..\packages\Ensure.That.0.9.0\lib\net40\EnsureThat.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="SisoDb, Version=14.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.14.3.1\lib\net40\SisoDb.dll</HintPath>
-    </Reference>
-    <Reference Include="SisoDb.Serialization, Version=14.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.14.3.1\lib\net40\SisoDb.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="SisoDb.SqlCe4, Version=14.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.SqlCe4.14.3.1\lib\net40\SisoDb.SqlCe4.dll</HintPath>
-    </Reference>
-    <Reference Include="SisoDb.SqlServer, Version=14.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SisoDb.SqlCe4.14.3.1\lib\net40\SisoDb.SqlServer.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8854.2\lib\net40\System.Data.SqlServerCe.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commerce\AuctionTests.cs" />
+    <Compile Include="Infrastructure\ContextTests.cs" />
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
+    <Compile Include="Infrastructure\EnsureThat.cs" />
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
@@ -88,39 +66,19 @@
     <Compile Include="Skills\SkillTests.cs" />
     <Compile Include="SolarSystems\JumpGateRegister.cs" />
     <Compile Include="SolarSystems\JumpGateTests.cs" />
-    <Compile Include="StatePersistence\Agents.cs" />
-    <Compile Include="StatePersistence\AsteroidBelts.cs" />
-    <Compile Include="StatePersistence\BuilderSystemTests.cs" />
-    <Compile Include="StatePersistence\Manufactories.cs" />
     <Compile Include="MockUniverse.cs" />
-    <Compile Include="StatePersistence\Moons.cs" />
-    <Compile Include="StatePersistence\Planets.cs" />
-    <Compile Include="Infrastructure\ConfigureDataTests.cs" />
-    <Compile Include="Infrastructure\CreateFreshDatabase.cs" />
-    <Compile Include="Infrastructure\DependencyInjectionInfrastructureTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\SerialiseTests.cs" />
-    <Compile Include="StatePersistence\ShipStateTest.cs" />
-    <Compile Include="StatePersistence\SolarSystemStateTest.cs" />
-    <Compile Include="StatePersistence\TradingStations.cs" />
     <Compile Include="TestExtensions.cs" />
     <Compile Include="TestSettings.cs" />
-    <Compile Include="StatePersistence\StateTest.cs" />
-    <Compile Include="StatePersistence\UniverseStateTest.cs" />
     <Compile Include="Math\VectorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\common\common.csproj">
       <Project>{D24CBE2E-F1AD-43CA-A58B-0329F9D96C19}</Project>
       <Name>common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\data\data.csproj">
-      <Project>{0897CB19-2CDF-478B-8265-FDAFEFB50928}</Project>
-      <Name>data</Name>
     </ProjectReference>
     <ProjectReference Include="..\types\types.csproj">
       <Project>{8B605E9C-167D-4A71-8B58-F1D3CB187E45}</Project>
@@ -130,10 +88,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8854.2\NativeBinaries\x86\*.*" "$(TargetDir)x86"
-    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8854.2\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

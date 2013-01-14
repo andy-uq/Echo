@@ -6,12 +6,12 @@ using NUnit.Framework;
 using SisoDb;
 using SisoDb.Serialization;
 
-namespace Echo.Tests.Infrastructure
+namespace Echo.Data.Tests
 {
 	[TestFixture]
 	public class SerialiseTests
 	{
-		private ISisoDbSerializer _serialiser;
+		private ISisoSerializer _serialiser;
 		private IDisposable _databaseHandle;
 
 		public class A

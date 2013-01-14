@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using Autofac;
-using Echo.Data;
+using Echo.Tests.Infrastructure;
 using NUnit.Framework;
 using SisoDb;
-using test;
 
-namespace Echo.Tests.Infrastructure
+namespace Echo.Data.Tests
 {
 	[TestFixture]
 	public class ConfigureDataTests

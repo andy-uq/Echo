@@ -6,7 +6,7 @@ namespace Echo
 	public class EchoContext : IEchoContext
 	{
 		private readonly ITypeMapper _typeMapper;
-		private IRandom _random;
+		private readonly IRandom _random;
 
 		public EchoContext(ITypeMapper typeMapper, IRandom random)
 		{

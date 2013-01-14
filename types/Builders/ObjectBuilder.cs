@@ -125,6 +125,16 @@ namespace Echo
 				return new DependentObject<T, TDependentState>(context, childState);
 			}
 
+			public static ObjectBuilder<T> Dependent<T, TDependentState>(this ObjectBuilder<T> context, TDependentState childState, Action<DependentObject<T, TDependentState>> func)
+				where T : IObject
+				where TDependentState : class, IObjectState
+			{
+				var dependent = new DependentObject<T, TDependentState>(context, childState);
+				func(dependent);
+				
+				return context;
+			}
+
 			public static IEnumerable<DependentObject<T, TDependentState>> Dependents<T, TDependentState>(this ObjectBuilder<T> context, IEnumerable<TDependentState> childStates)
 				where T : IObject 
 				where TDependentState : class, IObjectState

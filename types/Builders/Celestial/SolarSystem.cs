@@ -73,6 +73,11 @@ namespace Echo.Celestial
 
 			private static void BuildStructureOrbits(SolarSystemState state, IIdResolver resolver)
 			{
+				Ensure.That(resolver).IsNotNull();
+
+				if ( state.Structures == null )
+					return;
+
 				var query =
 					(
 						from s in state.Structures
@@ -88,19 +93,13 @@ namespace Echo.Celestial
 
 				foreach ( var structure in query )
 				{
-					CelestialObject parent;
-					if (resolver.TryGet(structure.Orbits, out parent))
-					{
-						parent.Structures.Add(structure.Instance);
-						structure.Instance.Position = new Position(parent, structure.LocalCoordinates);
+					var parent = GetParent(resolver, structure.Instance, structure.Orbits);
 
-						var orbitDistance = structure.LocalCoordinates.Magnitude;
-						CheckOrbitDistance(structure.Instance, parent, orbitDistance);
+					parent.Structures.Add(structure.Instance);
+					structure.Instance.Position = new Position(parent, structure.LocalCoordinates);
 
-						return;
-					}
-					
-					throw new InvalidOperationException(string.Format("{0} is not orbiting anything", structure.Instance.AsObjectReference()));
+					var orbitDistance = structure.LocalCoordinates.Magnitude;
+					CheckOrbitDistance(structure.Instance, parent, orbitDistance);
 				}
 			}
 
@@ -127,28 +126,36 @@ namespace Echo.Celestial
 
 				foreach (var satellite in query)
 				{
-					CelestialObject parent;
-					if (resolver.TryGet(satellite.Orbits, out parent))
-					{
-						parent.Satellites.Add(satellite.Instance);
-						satellite.Instance.Position = new Position(parent, satellite.LocalCoordinates);
+					var parent = GetParent(resolver, satellite.Instance, satellite.Orbits);
 
-						var orbitDistance = satellite.LocalCoordinates.Magnitude - satellite.Instance.Size;
-						CheckOrbitDistance(satellite.Instance, parent, orbitDistance);
-						return;
-					}
+					parent.Satellites.Add(satellite.Instance);
+					satellite.Instance.Position = new Position(parent, satellite.LocalCoordinates);
 
-					throw new InvalidOperationException(string.Format("{0} is not orbiting anything", satellite.Instance.AsObjectReference()));
+					var orbitDistance = satellite.LocalCoordinates.Magnitude - satellite.Instance.Size;
+					CheckOrbitDistance(satellite.Instance, parent, orbitDistance);
 				}
+			}
+
+			private static CelestialObject GetParent(IIdResolver resolver, IObject satellite, ObjectReference? orbits)
+			{
+				CelestialObject parent;
+				if (resolver.TryGet(orbits, out parent))
+				{
+					return parent;
+				}
+
+				throw new InvalidOperationException(string.Format("{0} is not orbiting anything", satellite.AsObjectReference()));
 			}
 
 			private static void CheckOrbitDistance(OrbitingObject @object, CelestialObject parent, double orbitDistance)
 			{
-				if (orbitDistance <= parent.Size)
+				if (orbitDistance > parent.Size)
 				{
-					throw new InvalidOperationException(
-						string.Format("{0} cannot orbit {1} as the orbit is decaying", @object.Name, parent.Name));
+					return;
 				}
+				
+				throw new InvalidOperationException(
+					string.Format("{0} cannot orbit {1} as the orbit is decaying", @object.Name, parent.Name));
 			}
 		}
 	}

@@ -13,17 +13,16 @@ namespace Echo
 			_autoMap = autoMap;
 		}
 
-		public TDestination Map<TSource, TDestination>(TSource value)
+		public TDestination Map<TDestination>(object value)
 		{
-			return _autoMap.Map<TSource, TDestination>(value);
+			return _autoMap.Map<TDestination>(value);
 		}
 
 		public object Map(object value, Type destinationType)
 		{
-			if (value == null)
-				return null;
-
-			return _autoMap.Map(value, value.GetType(), destinationType);
+			return value == null 
+				? null 
+				: _autoMap.Map(value, value.GetType(), destinationType);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 using Echo.Celestial;
 using Echo.Market;
 
-namespace Echo.Ships
+namespace Echo
 {
 	public static class PositionExtensions
 	{

@@ -4,7 +4,7 @@ namespace Echo.Mapping
 {
 	public interface ITypeMapper
 	{
-		TDestination Map<TSource, TDestination>(TSource value);
+		TDestination Map<TDestination>(object value);
 		object Map(object value, Type destinationType);
 	}
 }

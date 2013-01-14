@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Echo.Mapping;
 
-namespace Echo.Tests.Infrastructure
+namespace Echo.Data.Tests
 {
 	[TestFixture]
 	public class DependencyInjectionInfrastructureTests
@@ -11,6 +11,7 @@ namespace Echo.Tests.Infrastructure
 		interface IFooBar : IFoo {}
 		class A : IFoo {}
 		class B : IFooBar {}
+
 		class DemandA : IDemandBuilder
 		{
 			public void Build(ContainerBuilder containerBuilder)

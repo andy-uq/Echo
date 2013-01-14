@@ -5,6 +5,11 @@ namespace Echo.Market
 {
 	public class MarketPlace : IObject
 	{
+		public MarketPlace()
+		{
+			Auctions = new List<Auction>();
+		}
+
 		public ObjectType ObjectType
 		{
 			get { return ObjectType.MarketPlace; }
@@ -17,5 +22,10 @@ namespace Echo.Market
 		public List<Auction> Auctions { get; set; }
 
 		public ulong AuctionLength { get; set; }
+
+		public void Add(Auction auction)
+		{
+			Auctions.Add(auction);
+		}
 	}
 }

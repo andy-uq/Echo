@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlServerCe;
 using System.Linq;
+using Echo.Data.Tests;
 using Echo.Tests.Infrastructure;
 using NUnit.Framework;
 using SisoDb;

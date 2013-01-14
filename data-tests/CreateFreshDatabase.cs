@@ -6,7 +6,7 @@ using SisoDb;
 using SisoDb.SqlCe4;
 using test;
 
-namespace Echo.Tests.Infrastructure
+namespace Echo.Data.Tests
 {
 	public class CreateFreshDatabase : DisposableObject
 	{
