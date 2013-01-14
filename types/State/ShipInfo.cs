@@ -6,7 +6,7 @@ namespace Echo.State
 {
 	public class ShipInfo : IObject, IObjectState
 	{
-		public Guid Id { get; set; }
+		public string Id { get; set; }
 		public ItemCode Code { get; set; }
 		public ShipClass ShipClass { get; set; }
 		public SkillLevel[] PilotRequirements { get; set; }

@@ -1,6 +1,7 @@
 using System;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.Data.Tests;
 using Echo.State;
 using NUnit.Framework;
 using Echo;
@@ -12,7 +13,7 @@ namespace Echo.Tests.StatePersistence
 	{
 		class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public State.CelestialObjectState Value { get; set; }
 
 			public WrappedObjectState(State.CelestialObjectState value)
@@ -29,7 +30,12 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(Moon));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(Moon));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -44,20 +50,28 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(state.Orbits, Is.Not.Null);
 			Assert.That(state.Orbits.Value.Id, Is.EqualTo(Universe.Earth.ObjectId));
 
-			var json = Database.Serializer.Serialize(state);
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
 		}
 
 		[Test]
 		public void Deserialise()
 		{
-			var wrapper = new WrappedObjectState(Moon);
-			Database.UseOnceTo().Insert(wrapper);
-			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapper.Id).Value;
-			Assert.That(state, Is.Not.Null);
+			var wrapped = new WrappedObjectState(Moon);
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
+				session.SaveChanges();
+			}
 
-			var moon = CelestialObject.Builder.For(state).Build(null, state).Materialise();
-			Assert.That(moon, Is.InstanceOf<Moon>());
+			using ( var session = Database.OpenSession() )
+			{
+				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
+				Assert.That(state, Is.Not.Null);
+
+				var moon = CelestialObject.Builder.For(state).Build(null, state).Materialise();
+				Assert.That(moon, Is.InstanceOf<Moon>());
+			}
 		}
 	}
 }

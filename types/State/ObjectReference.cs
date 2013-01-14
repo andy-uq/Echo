@@ -5,9 +5,10 @@ using EnsureThat;
 
 namespace Echo.State
 {
+	[Serializable]
 	public struct ObjectReference : IEquatable<ObjectReference>
 	{
-		private static readonly Regex _regex = new Regex(@"\[x(?<Id>[a-f0-9]{16})\](\s(?<Name>.*))?", RegexOptions.Compiled);
+		private static readonly Regex _regex = new Regex(@"\[x(?<Id>[a-f0-9]{4,16})\](\s(?<Name>.*))?", RegexOptions.Compiled);
 
 		public long Id { get; private set; }
 		public string Name { get; private set; }
@@ -84,7 +85,7 @@ namespace Echo.State
 
 		public override string ToString()
 		{
-			return string.Format("[x{0:x16}] {1}", Id, Name).Trim();
+			return string.Format("[x{0:x4}] {1}", Id, Name).Trim();
 		}
 	}
 }

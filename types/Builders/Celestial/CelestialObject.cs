@@ -29,6 +29,7 @@ namespace Echo.Celestial
 				{
 					ObjectId = celestialObject.Id,
 					Name = celestialObject.Name,
+					CelestialObjectType = celestialObject.CelestialObjectType,
 					LocalCoordinates = celestialObject.Position.LocalCoordinates,
 					Orbits = celestialObject.Position.Location.AsObjectReference(),
 					Mass = celestialObject.Mass,
@@ -71,6 +72,9 @@ namespace Echo.Celestial
 				if (celestialObject is AsteroidBelt)
 					return new AsteroidBeltBuilder();
 				
+				if (celestialObject is Planet)
+					return new PlanetBuilder();
+
 				return new Builder();
 			}
 
@@ -83,6 +87,17 @@ namespace Echo.Celestial
 
 					default:
 						return new Builder();
+				}
+			}
+
+			private class PlanetBuilder : Builder
+			{
+				protected override CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
+				{
+					var obj = base.Save(celestialObject, state);
+					obj.Orbits = null;
+
+					return obj;
 				}
 			}
 

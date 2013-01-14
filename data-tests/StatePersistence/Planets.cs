@@ -1,6 +1,7 @@
 using System;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.Data.Tests;
 using Echo.State;
 using NUnit.Framework;
 using Echo;
@@ -12,7 +13,7 @@ namespace Echo.Tests.StatePersistence
 	{
 		class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public State.CelestialObjectState Value { get; set; }
 
 			public WrappedObjectState(State.CelestialObjectState value)
@@ -29,7 +30,12 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(Earth));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(Earth));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -41,7 +47,7 @@ namespace Echo.Tests.StatePersistence
 
 			var state = planet.Save();
 
-			var json = Database.Serializer.Serialize(state);
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
 		}
 
@@ -49,12 +55,20 @@ namespace Echo.Tests.StatePersistence
 		public void Deserialise()
 		{
 			var wrapped = new WrappedObjectState(Earth);
-			Database.UseOnceTo().Insert(wrapped);
-			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
-			Assert.That(state, Is.Not.Null);
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
+				session.SaveChanges();
+			}
 
-			var earth = CelestialObject.Builder.For(state).Build(null, state).Materialise();
-			Assert.That(earth, Is.InstanceOf<Planet>());
+			using ( var session = Database.OpenSession() )
+			{
+				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
+				Assert.That(state, Is.Not.Null);
+
+				var earth = CelestialObject.Builder.For(state).Build(null, state).Materialise();
+				Assert.That(earth, Is.InstanceOf<Planet>());
+			}
 		}
 	}
 }

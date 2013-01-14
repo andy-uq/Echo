@@ -5,7 +5,6 @@ using Echo.Items;
 using Echo.State;
 using Echo.Tests.StatePersistence;
 using NUnit.Framework;
-using SisoDb.Serialization;
 
 namespace Echo.Data.Tests.StatePersistence
 {
@@ -31,7 +30,12 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(Item));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(Item));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -44,7 +48,8 @@ namespace Echo.Data.Tests.StatePersistence
 			Assert.That(item.ObjectType, Is.EqualTo(ObjectType.Item));
 
 			var state = Echo.Items.Item.Builder.Save(item);
-			Console.WriteLine(state.SerializeAndFormat());
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
+			Console.WriteLine(json);
 		}
 
 		[Test]

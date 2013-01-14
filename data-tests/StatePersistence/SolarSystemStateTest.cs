@@ -7,7 +7,6 @@ using Echo.State;
 using Echo.Tests;
 using Echo.Tests.StatePersistence;
 using NUnit.Framework;
-using SisoDb.Serialization;
 
 namespace Echo.Data.Tests.StatePersistence
 {
@@ -16,7 +15,7 @@ namespace Echo.Data.Tests.StatePersistence
 	{
 		public class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public SolarSystemState Value { get; set; }
 
 			public WrappedObjectState(SolarSystemState value)
@@ -53,7 +52,12 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Persist()
 		{
-			Database.UseOnceTo().Insert(new WrappedObjectState(SolarSystem));
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(new WrappedObjectState(SolarSystem));
+				session.SaveChanges();
+			}
+
 			DumpObjects("WrappedObject");
 		}
 
@@ -65,34 +69,60 @@ namespace Echo.Data.Tests.StatePersistence
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 
 			var solarSystem = builder.Materialise();
+			Check(solarSystem);
+
 			var state = Echo.Celestial.SolarSystem.Builder.Save(solarSystem);
 
-			Console.WriteLine(state.SerializeAndFormat());
+			var json = Database.Conventions.CreateSerializer().Serialize(state);
+			Console.WriteLine(json);
+
+			Check(state);
 		}
 
 		[Test]
 		public void Deserialise()
 		{
-			var moonState = SolarSystem.Satellites.Single(x => x.ObjectId == Universe.Moon.ObjectId);
-			Assert.That(moonState.Orbits, Is.Not.Null);
-
 			var wrapped = new WrappedObjectState(SolarSystem);
-			Database.UseOnceTo().Insert(wrapped);
-			var state = Database.UseOnceTo().GetById<WrappedObjectState>(wrapped.Id).Value;
-			Assert.That(state, Is.Not.Null);
+			using ( var session = Database.OpenSession() )
+			{
+				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
+				session.SaveChanges();
+			}
 
-			moonState = state.Satellites.Single(x => x.ObjectId == Universe.Moon.ObjectId);
-			Assert.That(moonState.Orbits, Is.Not.Null);
+			using ( var session = Database.OpenSession() )
+			{
+				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
+				Assert.That(state, Is.Not.Null);
 
+				var asteroidBeltState = state.Satellites.Single(x => x.ObjectId == Universe.AsteroidBelt.ObjectId);
+				Assert.That(asteroidBeltState.Orbits, Is.Not.Null);
+
+				var moonState = state.Satellites.Single(x => x.ObjectId == Universe.Moon.ObjectId);
+				Assert.That(moonState.Orbits, Is.Not.Null);
+
+				Check(state);
+			}
+		}
+
+		private void Check(SolarSystemState state)
+		{
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 			
 			var solarSystem = builder.Materialise();
+			Check(solarSystem);
+		}
 
+		private void Check(SolarSystem solarSystem)
+		{
+			Assert.That(solarSystem.Satellites, Is.Not.Empty);
+
+			Assert.That(solarSystem.Satellites.OfType<Planet>(), Is.Not.Empty);
 			var earth = solarSystem.Satellites.OfType<Planet>().Single(x => x.Id == Earth.ObjectId);
 			Assert.That(earth.Sun, Is.EqualTo(solarSystem));
 
+			Assert.That(solarSystem.Satellites.OfType<Moon>(), Is.Not.Empty);
 			var moon = solarSystem.Satellites.OfType<Moon>().Single(x => x.Id == Moon.ObjectId);
 			Assert.That(moon.Planet, Is.EqualTo(earth));
 

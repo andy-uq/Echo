@@ -37,7 +37,15 @@ namespace Echo
 			if ( _lookup.TryGetValue(id, out value) )
 				return (T)value;
 
-			throw new ItemNotFoundException(typeof(T).Name, id);
+			throw AddLookup(new ItemNotFoundException(typeof (T).Name, id));
+		}
+
+		private ItemNotFoundException AddLookup(ItemNotFoundException itemNotFoundException)
+		{
+			foreach ( var item in _lookup.Values )
+				itemNotFoundException.Data[item.Id] = item.AsObjectReference();
+
+			return itemNotFoundException;
 		}
 
 		public bool TryGetById<T>(long id, out T value) where T : class, IObject

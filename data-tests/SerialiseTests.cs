@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Autofac;
 using NUnit.Framework;
-using SisoDb;
-using SisoDb.Serialization;
+using Raven.Client;
+using Raven.Imports.Newtonsoft.Json;
 
 namespace Echo.Data.Tests
 {
 	[TestFixture]
 	public class SerialiseTests
 	{
-		private ISisoSerializer _serialiser;
 		private IDisposable _databaseHandle;
+		private JsonSerializer _serialiser;
 
 		public class A
 		{
@@ -48,13 +49,13 @@ namespace Echo.Data.Tests
 		[SetUp]
 		public void SetUp()
 		{
-			var fresh = new CreateFreshDatabase("serialise-tests");
+			var fresh = new CreateFreshDatabase();
 			var configurationBuilder = new Autofac.ContainerBuilder();
 
 			fresh.Create(configurationBuilder);
 			var resolver = configurationBuilder.Build();
 
-			_serialiser = resolver.Resolve<ISisoDatabase>().Serializer;
+			_serialiser = resolver.Resolve<IDocumentStore>().Conventions.CreateSerializer();
 			_databaseHandle = fresh;
 		}
 
@@ -69,7 +70,8 @@ namespace Echo.Data.Tests
 		public void CanSerialiseNestedObject()
 		{
 			var item = new A() {Name = "A", Children = new List<A>() { new A() { Name = "Child A", }, new A{ Name = "Child B" }} };
-			var json = _serialiser.Serialize(item);
+			var json = new StringWriter();
+			_serialiser.Serialize(json, item);
 			Console.WriteLine(json);
 		}
 
@@ -77,33 +79,41 @@ namespace Echo.Data.Tests
 		public void CanSerialiseNullableStruct()
 		{
 			var item = new C { Value = new D { X = "Bob" } };
-			var json = _serialiser.Serialize(item);
+			var json = new StringWriter();
+			_serialiser.Serialize(json, item);
 			Console.WriteLine(json);
 		}
 
-		[Test, Ignore("Cannot deserialise nullable struct")]
+		[Test]
 		public void CanDeserialiseNullableStruct()
 		{
-			var item = new C { Value = new D() };
-			var json = _serialiser.Deserialize<C>("{\"Value\":\"Bob\"}");
-			Assert.That(json.Value, Is.Not.Null);
+			var reader = new JsonTextReader(new StringReader("{\"Value\":{\"X\":\"Bob\"}}"));
+			var i2 = _serialiser.Deserialize<C>(reader);
+
+			Assert.That(i2, Is.Not.Null);
+			Assert.That(i2.Value, Is.Not.Null);
+			Assert.That(((D)i2.Value).X, Is.EqualTo("Bob"));
 		}
 
 		[Test]
 		public void CanSerialiseInheritedObject()
 		{
 			var item = new B() { Id = 10, Name = "B", Children = new List<A>() { new A() { Name = "Child A", }, new A{ Name = "Child B" }} };
-			var json = _serialiser.Serialize(item);
+			var json = new StringWriter();
+			_serialiser.Serialize(json, item);
 			Console.WriteLine(json);
 		}
 
-		[Test, Ignore("Cannot deserialise polymorhphic objects")]
+		[Test]
 		public void CanDeserialiseInheritedObject()
 		{
 			var item = new A() { Name = "B", Children = new List<A>() { new B() { Id = 10, Name = "Child B", }, new A { Name = "Child A" } } };
-			var json = _serialiser.Serialize(item);
+			var json = new StringWriter();
+			_serialiser.Serialize(json, item);
 
-			var b = _serialiser.Deserialize<A>(json);
+			var reader = new JsonTextReader(new StringReader(json.ToString()));
+			var b = _serialiser.Deserialize<A>(reader);
+
 			Assert.That(b.Children.First(), Is.InstanceOf<B>());
 			Assert.That(((B)b.Children.First()).Id, Is.EqualTo(10));
 		}

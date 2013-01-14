@@ -7,7 +7,7 @@ namespace Echo.State
 {
 	public class ShipState : IObjectState
 	{
-		public Guid Id { get; set; }
+		public string Id { get; set; }
 		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public ItemCode Code { get; set; }
