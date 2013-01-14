@@ -1,4 +1,6 @@
-﻿using Echo.Items;
+﻿using Echo.Corporations;
+using Echo.Items;
+using Echo.State;
 using NUnit.Framework;
 
 namespace Echo.Tests.Items
@@ -13,6 +15,5 @@ namespace Echo.Tests.Items
 			Assert.That(categories, Is.Not.Empty);
 			Assert.That(categories, Is.EquivalentTo(new[] { ItemCategory.Ships }));
 		}
-	 
 	}
 }

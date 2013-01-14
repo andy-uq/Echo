@@ -89,6 +89,7 @@
     <Compile Include="StatePersistence\Agents.cs" />
     <Compile Include="StatePersistence\AsteroidBelts.cs" />
     <Compile Include="StatePersistence\BuilderSystemTests.cs" />
+    <Compile Include="StatePersistence\ItemStateTest.cs" />
     <Compile Include="StatePersistence\Manufactories.cs" />
     <Compile Include="StatePersistence\Moons.cs" />
     <Compile Include="StatePersistence\Planets.cs" />

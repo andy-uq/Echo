@@ -29,6 +29,7 @@ namespace Echo.Tests
 		public StarClusterState StarCluster { get; set; }
 		public UniverseState Universe { get; set; }
 
+		public ItemInfo Item { get; set; }
 		public WeaponInfo Weapon { get; set; }
 
 		public MockUniverse()

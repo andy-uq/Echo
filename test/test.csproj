@@ -53,6 +53,7 @@
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
     <Compile Include="Infrastructure\EnsureThat.cs" />
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
+    <Compile Include="Infrastructure\IdResolution.cs" />
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Items\WeaponTests.cs" />
