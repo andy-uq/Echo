@@ -1,8 +1,8 @@
 ﻿namespace Echo
 {
-	public class ShipTask
+	public abstract class ShipTask
 	{
-		private readonly LocationServices _locationServices;
+		private readonly ILocationServices _locationServices;
 
 		public enum ErrorCode
 		{
@@ -11,27 +11,27 @@
 			MissingSkillRequirement
 		}
 
-		public ShipTask(LocationServices locationServices)
+		public ILocationServices LocationServices
+		{
+			get { return _locationServices; }
+		}
+
+		protected ShipTask(ILocationServices locationServices)
 		{
 			_locationServices = locationServices;
 		}
+	}
 
-		protected TaskResult Success()
+	public abstract class ShipTask<TTaskResult> : ShipTask 
+		where TTaskResult : TaskResult, ITaskResult, new()
+	{
+		protected ShipTask(ILocationServices locationServices) : base(locationServices)
 		{
-			return new TaskResult
-			{
-				Success = true
-			};
 		}
 
-		protected TaskResult Failed(ErrorCode errorCode, object errorParams)
+		protected TTaskResult Success()
 		{
-			return new TaskResult
-			{
-				Success = false,
-				ErrorCode = errorCode.ToString(),
-				ErrorParams = errorParams
-			};
+			return new TTaskResult { Success = true };
 		}
 	}
 }

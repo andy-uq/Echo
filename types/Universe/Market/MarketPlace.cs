@@ -25,6 +25,7 @@ namespace Echo.Market
 
 		public void Add(Auction auction)
 		{
+			auction.Expires = (long )AuctionLength;
 			Auctions.Add(auction);
 		}
 	}

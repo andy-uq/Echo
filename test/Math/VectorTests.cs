@@ -20,6 +20,7 @@ namespace Echo.Tests.Math
 		[Test]
 		public void Parse()
 		{
+			Assert.That(Vector.Parse("(1,2)"), Is.EqualTo(new Vector(1, 2, 0)));
 			Assert.That(Vector.Parse("(1.2345,2.3456,3.4567)"), Is.EqualTo(new Vector(1.2345, 2.3456, 3.4567)));
 			Assert.That(Vector.Parse("(1.2345, 2.3456, 3.4567)"), Is.EqualTo(new Vector(1.2345, 2.3456, 3.4567)));
 			Assert.That(Vector.Parse("(1, 0, 0)"), Is.EqualTo(new Vector(1, 0, 0)));
@@ -32,6 +33,7 @@ namespace Echo.Tests.Math
 		[Test]
 		public void Parse2()
 		{
+			Assert.That(Vector.Parse("{1,2}"), Is.EqualTo(new Vector(1, 2, 0)));
 			Assert.That(Vector.Parse("{1.2345,2.3456,3.4567}"), Is.EqualTo(new Vector(1.2345, 2.3456, 3.4567)));
 			Assert.That(Vector.Parse("{1.2345, 2.3456, 3.4567}"), Is.EqualTo(new Vector(1.2345, 2.3456, 3.4567)));
 			Assert.That(Vector.Parse("{1, 0, 0}"), Is.EqualTo(new Vector(1, 0, 0)));
@@ -41,6 +43,7 @@ namespace Echo.Tests.Math
 		[Test]
 		public void Parse3()
 		{
+			Assert.That(Vector.Parse("1,2"), Is.EqualTo(new Vector(1, 2, 0)));
 			Assert.That(Vector.Parse("1.0000, 0.0000, 0.0000"), Is.EqualTo(new Vector(1, 0, 0)));
 			Assert.That(Vector.Parse("1.0000,0.0000,0.0000"), Is.EqualTo(new Vector(1, 0, 0)));
 			Assert.That(Vector.Parse("1, 0, 0"), Is.EqualTo(new Vector(1, 0, 0)));

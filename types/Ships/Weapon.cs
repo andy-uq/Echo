@@ -6,7 +6,7 @@ namespace Echo.Ships
 	{
 		public ObjectType ObjectType
 		{
-			get { return ObjectType.Item; }
+			get { return ObjectType.Weapon; }
 		}
 
 		public long Id { get; private set; }

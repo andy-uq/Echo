@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commerce\AuctionTests.cs" />
+    <Compile Include="Commerce\Corporation.cs" />
     <Compile Include="Infrastructure\ContextTests.cs" />
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
     <Compile Include="Infrastructure\EnsureThat.cs" />
@@ -73,7 +74,9 @@
     <Compile Include="Math\VectorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\common\common.csproj">

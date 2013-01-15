@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 
 namespace Echo
@@ -10,16 +11,31 @@ namespace Echo
 		private const double TOLERANCE = 0.0001;
 		public static readonly Vector Zero = new Vector(0, 0, 0);
 
+		private const string NUMBER_PATTERN = @"-?\d+(\.\d+)?";
+		private const string VECTOR_PATTERN = @"\s*
+												(?<x>" + NUMBER_PATTERN + @")
+												,\s*(?<y>" + NUMBER_PATTERN + @")
+												(,\s*(?<z>" + NUMBER_PATTERN + @"))?
+											   \s*";
+
 		private static readonly Regex _parseVector =
 			new Regex(
 				@"^
 										(
-											(\(\s*(?<x>-?\d+(\.\d+)?),\s*(?<y>-?\d+(\.\d+)?),\s*(?<z>-?\d+(\.\d+)?)\s*\))
-											|(\{\s*(?<x>-?\d+(\.\d+)?),\s*(?<y>-?\d+(\.\d+)?),\s*(?<z>-?\d+(\.\d+)?)\s*\})
-											|((?<x>-?\d+(\.\d+)?),\s*(?<y>-?\d+(\.\d+)?),\s*(?<z>-?\d+(\.\d+)?))
+											" + Delimited("(", ")") + @"
+											|" + Delimited("{", "}") + @"
+											|" + VECTOR_PATTERN + @"
 										)
 									$",
 				RegexOptions.IgnorePatternWhitespace);
+
+		private static string Delimited(string left, string right)
+		{
+			left = left == null ? "" : Regex.Escape(left);
+			right = right == null ? "" : Regex.Escape(right);
+
+			return string.Format(@"({0}{1}{2})", left, VECTOR_PATTERN, right);
+		}
 
 		public Vector(double x, double y, double z)
 			: this()
@@ -114,7 +130,7 @@ namespace Echo
 			{
 				double x = double.Parse(m.Groups["x"].Value);
 				double y = double.Parse(m.Groups["y"].Value);
-				double z = double.Parse(m.Groups["z"].Value);
+				double z = m.Groups["z"].Success ? double.Parse(m.Groups["z"].Value) : 0d;
 				return new Vector(x, y, z);
 			}
 
@@ -136,7 +152,7 @@ namespace Echo
 			return !left.Equals(right);
 		}
 
-		[Pure]
+		[System.Diagnostics.Contracts.Pure]
 		public Vector ToUnitVector()
 		{
 			double magnitude = Magnitude;

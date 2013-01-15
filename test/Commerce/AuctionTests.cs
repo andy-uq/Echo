@@ -14,13 +14,17 @@ namespace Echo.Tests.Commerce
 		private StarCluster _sc;
 		private SolarSystem _sol;
 		private TradingStation _tradingStation;
+		private MarketPlace _marketPlace;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_sc = new StarCluster { MarketPlace = new MarketPlace() };
+			_marketPlace = new MarketPlace();
+			_sc = new StarCluster { MarketPlace = _marketPlace };
 			_sol = new SolarSystem { Position = new Position(_sc, Vector.Zero) };
 			_tradingStation = new TradingStation { Position = new Position(_sol, Vector.Zero) };
+
+			Assert.That(_marketPlace.ObjectType, Is.EqualTo(ObjectType.MarketPlace));
 		}
 
 		[Test]
@@ -67,6 +71,7 @@ namespace Echo.Tests.Commerce
 			a.List(_sc.MarketPlace);
 
 			Assert.That(_sc.MarketPlace.Auctions, Contains.Item(a));
+			Assert.That(a.Expires, Is.EqualTo(_sc.MarketPlace.AuctionLength));
 		}
 	}
 }

@@ -29,8 +29,8 @@ namespace Echo.Agents
 
 		public bool CanUse(Ship ship)
 		{
-			Ensure.That(ship, "ship").IsNotNull();
-			Ensure.That(ship.ShipInfo, "ship.ShipInfo").IsNotNull();
+			Ensure.That(() => ship).IsNotNull();
+			Ensure.That(() => ship.ShipInfo).IsNotNull();
 
 			var pilotRequirements = ship.ShipInfo.PilotRequirements;
 			foreach (var requirement in pilotRequirements)

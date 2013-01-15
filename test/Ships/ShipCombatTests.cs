@@ -75,6 +75,22 @@ namespace Echo.Tests.Ships
 		}
 
 		[Test]
+		public void Damage()
+		{
+			_weapon.WeaponInfo = new WeaponInfo { DamageType = DamageType.Energy, MinimumDamage = 50, MaximumDamage = 150 };
+
+			var rollIndex = 0;
+			var rolls = new[] { 0d, 1d };
+
+			_random.Setup(x => x.GetNext()).Returns(() => rolls[rollIndex++]);
+			var r1 = _combat.Fire(_weapon);
+
+			Assert.That(r1.TotalDamage.DamageType, Is.EqualTo(DamageType.Energy));
+
+			Assert.That(r1.TotalDamage.Value, Is.EqualTo(150d));
+		}
+
+		[Test]
 		public void ArmourDamaged()
 		{
 			_weapon.WeaponInfo = new WeaponInfo { DamageType = DamageType.Energy, MinimumDamage = 50, MaximumDamage = 100 };

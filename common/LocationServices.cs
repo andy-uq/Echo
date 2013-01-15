@@ -3,7 +3,7 @@ using Echo.Structures;
 
 namespace Echo
 {
-	public class LocationServices
+	public class LocationServices : ILocationServices
 	{
 		private readonly IRandom _random;
 
@@ -21,5 +21,10 @@ namespace Echo
 			Func<double, double, double> translate = (x1, xD) => (x1 + 5d*(xD - 0.5d));
 			return new Vector(translate(origin.X, xDelta), translate(origin.Y, yDelta), origin.Z);
 		}
+	}
+
+	public interface ILocationServices
+	{
+		Vector GetExitPosition(ILocation location);
 	}
 }

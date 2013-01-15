@@ -11,6 +11,7 @@
 		Ship,
 		Info,
 		Item,
+		Weapon,
 		Agent,
 		Corporation,
 		MarketPlace,

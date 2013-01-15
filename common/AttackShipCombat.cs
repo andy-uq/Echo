@@ -23,8 +23,10 @@ namespace Echo
 
 		public WeaponAttackResult Fire(Weapon weapon)
 		{
-			if (!DidHit(weapon)) 
+			if (!DidHit(weapon))
+			{
 				return Miss(weapon);
+			}
 
 			var damage = CalculateDamage(weapon);
 			var armour = Target.Statistics.ArmourStrength(weapon.WeaponInfo.DamageType);

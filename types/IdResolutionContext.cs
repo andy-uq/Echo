@@ -66,7 +66,7 @@ namespace Echo
 			if ( TryGetById(objectReference.Id, out value) )
 				return value;
 
-			throw new ItemNotFoundException(typeof(T).Name, objectReference);
+			throw AddLookup(new ItemNotFoundException(typeof(T).Name, objectReference));
 		}
 
 		public bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject

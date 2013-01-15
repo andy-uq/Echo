@@ -16,6 +16,13 @@ namespace Echo.Tests.Items
 		}
 
 		[Test]
+		public void ObjectTypeIsWeapon()
+		{
+			var weapon = new Weapon();
+			Assert.That(weapon.ObjectType, Is.EqualTo(ObjectType.Weapon));
+		}
+
+		[Test]
 		public void DamagePerSecondCalculations()
 		{
 			Assert.That(_w1.DamagePerSecond, Is.EqualTo(50d));

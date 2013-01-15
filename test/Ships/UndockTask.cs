@@ -4,6 +4,7 @@ using Echo.Celestial;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
+using Moq;
 using NUnit.Framework;
 using SkillLevel = Echo.State.SkillLevel;
 
@@ -12,17 +13,26 @@ namespace Echo.Tests.Ships
 	[TestFixture]
 	public class UndockTaskTests
 	{
+		private UndockShipTask _task;
+		
+		[SetUp]
+		public void SetUp()
+		{
+			var mock = new Moq.Mock<ILocationServices>();
+			mock.Setup(x => x.GetExitPosition(It.IsAny<ILocation>())).Returns<ILocation>(l => l.Position.LocalCoordinates);
+			
+			_task = new UndockShipTask(mock.Object);
+		}
+
 		[Test]
 		public void CantUndockWhenNotDocked()
 		{
 			var ship = new Ship();
 			var pilot = new Agent();
 
-			var random = new Moq.Mock<IRandom>();
-			var task = new UndockShipTask(new LocationServices(random.Object));
-			var result = task.Execute(ship, pilot);
+			var result = _task.Execute(ship, pilot);
 			Assert.That(result.Success, Is.False);
-			Assert.That(System.Enum.Parse(typeof(ShipTask.ErrorCode), result.ErrorCode), Is.EqualTo(ShipTask.ErrorCode.NotDocked));
+			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.NotDocked));
 		}
 
 		[Test]
@@ -32,25 +42,32 @@ namespace Echo.Tests.Ships
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
 			var pilot = new Agent();
 
-			var random = new Moq.Mock<IRandom>();
-			var task = new UndockShipTask(new LocationServices(random.Object));
-			var result = task.Execute(ship, pilot);
-			Assert.That(System.Enum.Parse(typeof(ShipTask.ErrorCode), result.ErrorCode), Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
+			var result = _task.Execute(ship, pilot);
+			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
+		}
+
+		[Test]
+		public void CantUndockWithoutShipSkillLevel()
+		{
+			var structure = new Manufactory();
+			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
+			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.SkillLevel { Level = 1 } } } };
+
+			var result = _task.Execute(ship, pilot);
+			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
 		}
 
 		[Test]
 		public void CanUndockWithShipSkill()
 		{
 			var solarSystem = new SolarSystem();
-			var structure = new Manufactory { Position = new Position(solarSystem, Vector.Zero) };
+			var structure = new Manufactory { Position = new Position(solarSystem, Vector.Parse("0,1,0")) };
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
-			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.SkillLevel { Level = 1 }  } }};
+			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.SkillLevel { Level = 5 }  } }};
 
-			var random = new Moq.Mock<IRandom>();
-			var task = new UndockShipTask(new LocationServices(random.Object));
-			var result = task.Execute(ship, pilot);
-
-			Assert.That(result.Success, Is.True, result.ErrorCode);
+			var result = _task.Execute(ship, pilot);
+			Assert.That(result.Success, Is.True, result.ErrorCode.ToString());
+			Assert.That(ship.Position.LocalCoordinates, Is.EqualTo(structure.Position.LocalCoordinates));
 			Assert.That(ship.Position.Location, Is.EqualTo(solarSystem));
 		}
 
@@ -60,7 +77,7 @@ namespace Echo.Tests.Ships
 			{
 				PilotRequirements = new[]
 				{
-					new SkillLevel { Level = 1, SkillCode = SkillCode.SpaceshipCommand }
+					new SkillLevel { Level = 5, SkillCode = SkillCode.SpaceshipCommand }
 				}
 			};
 		}
