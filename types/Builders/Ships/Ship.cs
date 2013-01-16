@@ -21,6 +21,7 @@ namespace Echo.Ships
 					ObjectId = ship.Id,
 					Name = ship.Name,
 					Code = ship.ShipInfo.Code,
+					Heading = ship.Heading,
 					LocalCoordinates = ship.Position.LocalCoordinates,
 		 			Statistics = ship.Statistics.Select(Save),
 					HardPoints = ship.HardPoints.Save(),
@@ -34,13 +35,14 @@ namespace Echo.Ships
 				{
 					Id = state.ObjectId,
 					Name = state.Name,
+					Heading = state.Heading,
 					Position = new Position(location, state.LocalCoordinates),
 					Statistics = new ShipStatistics(state.Statistics.Select(Build)),
 				};
 
 				var builder = new ObjectBuilder<Ship>(ship)
 					.Resolve((resolver, target) => BuildHardPoints(resolver, ship, state.HardPoints))
-					.Resolve((resolver, target) => target.ShipInfo = resolver.GetById<ShipInfo>(state.Code.ToId()));
+					.Resolve((resolver, target) => target.ShipInfo = resolver.Get<ShipInfo>(state.Code.ToObjectReference()));
 
 				builder
 					.Dependent(state.Pilot)

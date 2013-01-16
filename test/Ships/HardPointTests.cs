@@ -1,4 +1,5 @@
-﻿using Echo.Ships;
+﻿using System;
+using Echo.Ships;
 using NUnit.Framework;
 
 namespace Echo.Tests.Ships
@@ -20,6 +21,30 @@ namespace Echo.Tests.Ships
 			public bool Front { get; set; }
 			public bool Rear { get; set; }
 			public bool LeftTop { get; set; }
+		}
+
+		[TestCase(HardPointPosition.Left, "0,1", "-1,0")]
+		[TestCase(HardPointPosition.Left, "1,0", "0,1")]
+		[TestCase(HardPointPosition.Left, "0,-1", "1,0")]
+		[TestCase(HardPointPosition.Left, "-1,0", "0,-1")]
+
+		[TestCase(HardPointPosition.Right, "0,1", "1,0")]
+		[TestCase(HardPointPosition.Right, "1,0", "0,-1")]
+		[TestCase(HardPointPosition.Right, "0,-1", "-1,0")]
+		[TestCase(HardPointPosition.Right, "-1,0", "0,1")]
+		public void RotateHardPointToHeading(HardPointPosition hardPointPosition, string heading, string expected)
+		{
+			var hp = HardPoint.CalculateOrientation(hardPointPosition);
+
+			var headingVector = Vector.Parse(heading);
+			var upVector = new Vector(0, 1);
+
+			var rightVector = (headingVector * upVector);
+			
+			var rotate = Vector.Angle(upVector, headingVector);
+			var newHp = rightVector.Z >= 0d ? hp.RotateZ(-rotate) : hp.RotateZ(rotate);
+			
+			Assert.That(newHp, Is.EqualTo(Vector.Parse(expected)));
 		}
 
 		[Test]

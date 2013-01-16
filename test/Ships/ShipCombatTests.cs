@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Echo.Builder;
+using Echo.Items;
 using Echo.Ships;
 using Echo.State;
 using Echo.Statistics;
@@ -11,11 +15,12 @@ namespace Echo.Tests.Ships
 	[TestFixture]
 	public class ShipCombatTests
 	{
-		private AttackShipCombat _combat;
+		private Func<ShipState, IIdResolver, AttackShipCombat> _combatFactory;
 		private Weapon _weapon;
 		private Mock<IEchoContext> _context;
 		private Mock<IRandom> _random;
 		private Ship _target;
+		private AttackShipCombat _combat;
 
 		[SetUp]
 		public void SetUp()
@@ -25,10 +30,12 @@ namespace Echo.Tests.Ships
 
 			_context.SetupGet(x => x.Random).Returns(_random.Object);
 
-			var ship = new Ship();
+			Func<ShipState, ObjectBuilder<Ship>> ship = state => Ship.Builder.Build(null, state);
 			_target = new Ship {Statistics = new ShipStatistics(Stats())};
 			_weapon = new Weapon();
-			_combat = new AttackShipCombat(_context.Object) { Ship = ship, Target = _target };
+			
+			_combatFactory = (state, idResolver) => new AttackShipCombat(_context.Object) { Ship = ship(state).Build(idResolver), Target = _target };
+			_combat = _combatFactory(new ShipState(ItemCode.LightFrigate), new IdResolutionContext(new[] { new ShipInfo() { Code = ItemCode.LightFrigate } }));
 		}
 
 		private IEnumerable<ShipStatisticValue> Stats()
@@ -57,6 +64,42 @@ namespace Echo.Tests.Ships
 			Assert.That(result.Ship, Is.EqualTo(_combat.Ship));
 			Assert.That(result.Target, Is.EqualTo(_combat.Target));
 			Assert.That(result.Hit, Is.True);
+		}
+
+		[Test]
+		public void FireAll()
+		{
+			var items = new IObject[] { new ShipInfo { Code = ItemCode.LightFrigate }, new WeaponInfo { Code = ItemCode.MissileLauncher, MinimumDamage = 100, MaximumDamage = 100 }, };
+
+			var ship = new ShipState(ItemCode.LightFrigate)
+			{
+				LocalCoordinates = Vector.Parse("0,-1"),
+				Heading = Vector.Parse("0,-1"),
+				HardPoints = new[]
+				{
+					new HardPointState { Weapon = new WeaponState {Code = ItemCode.MissileLauncher}, Position = HardPointPosition.Front },
+					new HardPointState { Weapon = new WeaponState {Code = ItemCode.MissileLauncher}, Position = HardPointPosition.Rear },
+					new HardPointState { Weapon = new WeaponState {Code = ItemCode.MissileLauncher}, Position = HardPointPosition.Top },
+				}
+			};
+
+			_combat = _combatFactory(ship, new IdResolutionContext(items));
+			
+			Assert.That(_combat.Ship.HardPoints, Is.Not.Empty);
+
+			_random.Setup(x => x.GetNext()).Returns(0);
+
+			var result =
+				_combat.Ship.HardPoints
+				.Where(hp => hp.Weapon != null)
+				.Where(hp => hp.InRange(_combat.Target))
+				.Select(x => _combat.Fire(x.Weapon))
+				.ToArray();
+
+			Assert.That(result, Is.Not.Empty);
+
+			var dmg = result.Aggregate((Damage )null, (current, value) => current + value.TotalDamage);
+			Assert.That(dmg.Value, Is.Not.EqualTo(0d));
 		}
 
 		[Test]

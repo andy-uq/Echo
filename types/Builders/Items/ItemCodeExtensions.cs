@@ -17,6 +17,11 @@ namespace Echo.Items
 			return ITEM_ID_MASK | (long)code;
 		}
 
+		public static ObjectReference ToObjectReference(this ItemCode code)
+		{
+			return new ObjectReference(ToId(code), code.ToString());
+		}
+
 		public static IEnumerable<ItemCategory> GetItemCategories(this ItemCode itemCode)
 		{
 			var type = typeof (ItemCode);

@@ -1,4 +1,5 @@
 ﻿using System;
+using Echo.Ships;
 using NUnit.Framework;
 using Echo;
 
@@ -110,6 +111,14 @@ namespace Echo.Tests.Math
 		{
 			var a = new Vector(5, 12, 0);
 			Assert.That((Vector.Zero - a).Magnitude, Is.EqualTo(13));
+		}
+
+		[TestCase("1,0,0", "0,1,0", 1.5707963267948966d)]
+		[TestCase("1,0,0", "1,0,0", 0)]
+		[TestCase("1,0,0", "-1,0,0", 3.141592653589793d)]
+		public void Rotate(string a, string b, double angle)
+		{
+			Assert.That(Vector.Angle(Vector.Parse(a), Vector.Parse(b)), Is.EqualTo(angle));
 		}
 
 		[Test]

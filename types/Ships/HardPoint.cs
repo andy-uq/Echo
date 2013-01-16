@@ -36,6 +36,24 @@ namespace Echo.Ships
 			return origin;
 		}
 
+		/// <summary>Calculate the absolute orientation of the hard point (relative to the ship heading)</summary>
+		/// <param name="orientation"> </param>
+		/// <returns></returns>
+		private Vector GetAbsoluteOrientation(Vector orientation)
+		{
+			if (Ship.Heading == Vector.Zero)
+				return orientation;
+
+			var upVector = new Vector(0, 1);
+
+			var rightVector = (Ship.Heading * upVector);
+
+			var rotate = Vector.Angle(upVector, Ship.Heading);
+			return rightVector.Z < 0d 
+				? orientation.RotateZ(rotate) 
+				: orientation.RotateZ(-rotate);
+		}
+
 		public static void CalculateHardPoint(HardPointPosition position, out Vector origin, out double radiansOfMovement)
 		{
 			switch ( position )
@@ -147,11 +165,13 @@ namespace Echo.Ships
 
 		public bool AimAt(ILocation target)
 		{
+			var orientation = GetAbsoluteOrientation(Orientation);
+
 			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
 			targetPosition = targetPosition.ToUnitVector();
-
+			
 			double extent = Vector.Angle(_origin, targetPosition);
-			double angleToMove = Vector.Angle(Orientation, targetPosition);
+			double angleToMove = Vector.Angle(orientation, targetPosition);
 
 			if ( extent - (_radiansOfMovement / 2) > Units.Tolerance )
 			{
@@ -166,8 +186,8 @@ namespace Echo.Ships
 			if ( angleToMove - (_radiansOfMovement * Speed) > Units.Tolerance )
 			{
 				angleToMove = _radiansOfMovement * Speed;
-				Vector counter = Orientation.RotateZ(angleToMove);
-				Vector clock = Orientation.RotateZ(angleToMove*-1d);
+				Vector counter = orientation.RotateZ(angleToMove);
+				Vector clock = orientation.RotateZ(angleToMove*-1d);
 
 				Orientation = (counter - targetPosition).Magnitude < (clock - targetPosition).Magnitude ? counter : clock;
 				return false;
@@ -195,7 +215,9 @@ namespace Echo.Ships
 
 			targetPosition = targetPosition.ToUnitVector();
 
-			double extent = Vector.Angle(_origin, targetPosition);
+			var orientation = GetAbsoluteOrientation(Origin);
+
+			double extent = Vector.Angle(orientation, targetPosition);
 			return (extent - (_radiansOfMovement / 2) < Units.Tolerance);
 		}
 
@@ -207,14 +229,19 @@ namespace Echo.Ships
 		public bool CanTrack(ILocation target)
 		{
 			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
+			if (targetPosition == Vector.Zero)
+				throw new ArgumentException("Target is co-incident", "target");
+
 			targetPosition = targetPosition.ToUnitVector();
 
-			double extent = Math.Acos(_origin.DotProduct(targetPosition));
-			double angleToMove = Vector.Angle(Orientation, targetPosition);
+			var orientation = GetAbsoluteOrientation(Origin);
+			double extent = Math.Acos(orientation.DotProduct(targetPosition));
 
 			if ( extent - (_radiansOfMovement / 2) > Units.Tolerance )
 				return false;
 
+			orientation = GetAbsoluteOrientation(Orientation);
+			double angleToMove = Vector.Angle(orientation, targetPosition);
 			if ( angleToMove - (_radiansOfMovement * Speed) > Units.Tolerance )
 				return false;
 

@@ -18,6 +18,7 @@ namespace Echo.Ships
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public Position Position { get; set; }
+		public Vector Heading { get; set; }
 		public ShipStatistics Statistics { get; set; }
 		public ShipInfo ShipInfo { get; set; }
 

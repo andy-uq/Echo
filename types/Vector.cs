@@ -37,7 +37,7 @@ namespace Echo
 			return string.Format(@"({0}{1}{2})", left, VECTOR_PATTERN, right);
 		}
 
-		public Vector(double x, double y, double z)
+		public Vector(double x, double y, double z = 0d)
 			: this()
 		{
 			X = x;
@@ -53,7 +53,7 @@ namespace Echo
 		{
 			get
 			{
-				double raw = Math.Sqrt(X*X + Y*Y + Z*Z);
+				double raw = Math.Sqrt(DotProduct(this, this));
 				return Math.Round(raw, 4);
 			}
 		}
