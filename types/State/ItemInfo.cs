@@ -1,5 +1,6 @@
 ﻿using System;
 using Echo.Items;
+using Echo.Statistics;
 
 namespace Echo.State
 {
@@ -7,6 +8,15 @@ namespace Echo.State
 	{
 		public string Id { get; set; }
 		public ItemCode Code { get; set; }
+
+		public ItemInfo()
+		{
+		}
+
+		public ItemInfo(ItemCode code)
+		{
+			Code = code;
+		}
 
 		#region IObject Members
 
@@ -32,5 +42,11 @@ namespace Echo.State
 		}
 
 		#endregion
+	}
+
+	public class ShieldInfo
+	{
+		public ShipStatistic Statistic { get; set; }
+		public double RepairPerTick { get; set; }
 	}
 }

@@ -4,25 +4,7 @@ using Echo.Structures;
 
 namespace Echo
 {
-	public class UndockShipTaskResult : TaskResult, ITaskResult
-	{
-		string ITaskResult.ErrorCode
-		{
-			get { return ErrorCode.ToString(); }
-		}
-
-		object ITaskResult.ErrorParams
-		{
-			get { return new {Ship, Pilot}; }
-		}
-
-		public Ship Ship { get; set; }
-		public Agent Pilot { get; set; }
-
-		public ShipTask.ErrorCode ErrorCode { get; set; }
-	}
-
-	public class UndockShipTask : ShipTask<UndockShipTaskResult>
+	public class UndockShipTask : ShipTask<UndockShipResult>
 	{
 		private readonly ILocationServices _locationServices;
 
@@ -31,7 +13,7 @@ namespace Echo
 			_locationServices = locationServices;
 		}
 
-		public UndockShipTaskResult Execute(Ship ship, Agent pilot)
+		public UndockShipResult Execute(Ship ship, Agent pilot)
 		{
 			var structure = ship.Position.Location as Structure;
 			if ( structure == null )
@@ -48,9 +30,9 @@ namespace Echo
 			return Success();
 		}
 
-		private UndockShipTaskResult Failed(ErrorCode errorCode, Ship ship, Agent pilot = null)
+		private UndockShipResult Failed(ErrorCode errorCode, Ship ship, Agent pilot = null)
 		{
-			return new UndockShipTaskResult
+			return new UndockShipResult
 			{
 				ErrorCode = errorCode,
 				Ship = ship,

@@ -1,5 +1,4 @@
 ﻿using System;
-using Echo.Structures;
 
 namespace Echo
 {

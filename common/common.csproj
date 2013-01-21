@@ -53,16 +53,19 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArmourRepair.cs" />
     <Compile Include="AttackShipCombat.cs" />
     <Compile Include="AutofacResolver.cs" />
     <Compile Include="AutoMapTypeMapper.cs" />
     <Compile Include="EchoContext.cs" />
     <Compile Include="JumpCountTable.cs" />
+    <Compile Include="MiningTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipTask.cs" />
     <Compile Include="LocationServices.cs" />
     <Compile Include="TaskResult.cs" />
     <Compile Include="UndockShipTask.cs" />
+    <Compile Include="UndockShipResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

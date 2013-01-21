@@ -1,4 +1,5 @@
-﻿using Echo.State;
+﻿using Echo.Items;
+using Echo.State;
 
 namespace Echo.Ships
 {
@@ -10,7 +11,8 @@ namespace Echo.Ships
 		}
 
 		public long Id { get; private set; }
-		public string Name { get; private set; }
+		public string Name { get { return WeaponInfo.Name; } }
+
 		public Position Position { get; set; }
 
 		public HardPoint HardPoint { get; set; }

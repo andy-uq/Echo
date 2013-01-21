@@ -22,7 +22,7 @@ namespace Echo.Statistics
 
 	public static class Math
 	{
-		public static Math<int> Int
+		public static Math<int> Int32
 		{
 			get
 			{

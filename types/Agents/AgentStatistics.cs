@@ -10,11 +10,6 @@ namespace Echo.Agents
 	public class AgentStatistics : IEnumerable<AgentStatisticValue>
 	{
 		private readonly Dictionary<AgentStatistic, AgentStatisticValue> _stats;
-
-		static AgentStatistics()
-		{
-			AgentStatisticValue.InitMath(Statistics.Math.Int);
-		}
 		
 		public AgentStatistics(IEnumerable<AgentStatisticValue> initialStats = null)
 		{

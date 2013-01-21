@@ -3,6 +3,7 @@ using Echo.Celestial;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.Market;
+using Echo.State;
 using Echo.Structures;
 using NUnit.Framework;
 
@@ -40,7 +41,7 @@ namespace Echo.Tests.Commerce
 		[Test]
 		public void OwnerIsSet()
 		{
-			var item = new Item() {Owner = new Corporation(), Quantity = 10 };
+			var item = new Item(new ItemInfo(ItemCode.Veldnium)) {Owner = new Corporation(), Quantity = 10 };
 			var a = new Auction { Item = item };
 
 			Assert.That(a.Owner, Is.EqualTo(item.Owner));
@@ -49,7 +50,7 @@ namespace Echo.Tests.Commerce
 		[Test]
 		public void AuctionQuantity()
 		{
-			var item = new Item() { Quantity = 10 };
+			var item = new Item(new ItemInfo(ItemCode.Veldnium)) { Owner = new Corporation(), Quantity = 10 };
 			var a = new Auction { Item = item };
 
 			Assert.That(a.Quantity, Is.EqualTo(item.Quantity));

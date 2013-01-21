@@ -6,14 +6,14 @@ namespace Echo
 {
 	public class AttackShipCombat
 	{
-		private readonly IEchoContext _context;
+		private readonly IRandom _random;
 
 		public Ship Ship { get; set; }
 		public Ship Target { get; set; }
 
-		public AttackShipCombat(IEchoContext context)
+		public AttackShipCombat(IRandom random)
 		{
-			_context = context;
+			_random = random;
 		}
 
 		public double ChanceToHit(Weapon weapon)
@@ -48,7 +48,7 @@ namespace Echo
 
 		public Damage CalculateDamage(Weapon weapon)
 		{
-			var roll = _context.Random.GetNext();
+			var roll = Roll();
 			var range = weapon.WeaponInfo.MaximumDamage - weapon.WeaponInfo.MinimumDamage;
 			var value = weapon.WeaponInfo.MinimumDamage + (range * roll);
 
@@ -57,7 +57,7 @@ namespace Echo
 
 		private bool DidHit(Weapon weapon)
 		{
-			var roll = _context.Random.GetNext();
+			var roll = Roll();
 			return (roll < ChanceToHit(weapon));
 		}
 
@@ -83,6 +83,11 @@ namespace Echo
 				ArmourDamage = armourDamage,
 				HullDamage = hullDamage
 			};
+		}
+
+		private double Roll()
+		{
+			return _random.GetNext();
 		}
 	}
 }

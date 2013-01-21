@@ -65,9 +65,12 @@
     <Compile Include="Builders\Items\ItemCode.cs" />
     <Compile Include="Builders\Items\ItemCodeExtensions.cs" />
     <Compile Include="Builders\Ships\ShipClass.cs" />
+    <Compile Include="IdResolver.cs" />
     <Compile Include="IIdResolver.cs" />
     <Compile Include="Builders\ObjectBuilderT.cs" />
+    <Compile Include="IItemFactory.cs" />
     <Compile Include="IRandom.cs" />
+    <Compile Include="Builders\Items\Packing\WeaponPacker.cs" />
     <Compile Include="Ships\ArmourPlating.cs" />
     <Compile Include="Ships\Damage.cs" />
     <Compile Include="State\BluePrintInfo.cs" />

@@ -11,11 +11,6 @@ namespace Echo.Ships
 	{
 		private readonly Dictionary<ShipStatistic, ShipStatisticValue> _stats;
 
-		static ShipStatistics()
-		{
-			ShipStatisticValue.InitMath(Statistics.Math.Double);
-		}
-
 		public ShipStatistics(IEnumerable<ShipStatisticValue> initialStats = null)
 		{
 			_stats = new Dictionary<ShipStatistic, ShipStatisticValue>();

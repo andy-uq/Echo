@@ -2,6 +2,14 @@
 using Echo.Items;
 using Echo.State;
 
+namespace Echo
+{
+	public interface IIdGenerator
+	{
+		long NextId();
+	}
+}
+
 namespace Echo.Ships
 {
 	partial class Weapon
@@ -25,11 +33,22 @@ namespace Echo.Ships
 					return null;
 				}
 
+				var weaponInfo = resolver.GetById<WeaponInfo>(state.Code.ToId());
+				return Build(state.ObjectId, weaponInfo);
+			}
+			
+			public static Weapon Build(IIdGenerator idGenerator, WeaponInfo weaponInfo)
+			{
+				var id = idGenerator.NextId();
+				return Build(id, weaponInfo);
+			}
+
+			private static Weapon Build(long id, WeaponInfo weaponInfo)
+			{
 				return new Weapon
 				{
-					Id = state.ObjectId,
-					Name = state.Name,
-					WeaponInfo = resolver.GetById<WeaponInfo>(state.Code.ToId()),
+					Id = id,
+					WeaponInfo = weaponInfo,
 				};
 			}
 		}

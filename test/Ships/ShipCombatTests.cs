@@ -17,7 +17,6 @@ namespace Echo.Tests.Ships
 	{
 		private Func<ShipState, IIdResolver, AttackShipCombat> _combatFactory;
 		private Weapon _weapon;
-		private Mock<IEchoContext> _context;
 		private Mock<IRandom> _random;
 		private Ship _target;
 		private AttackShipCombat _combat;
@@ -26,15 +25,12 @@ namespace Echo.Tests.Ships
 		public void SetUp()
 		{
 			_random = new Mock<IRandom>(MockBehavior.Strict);
-			_context = new Moq.Mock<IEchoContext>(MockBehavior.Strict);
-
-			_context.SetupGet(x => x.Random).Returns(_random.Object);
 
 			Func<ShipState, ObjectBuilder<Ship>> ship = state => Ship.Builder.Build(null, state);
 			_target = new Ship {Statistics = new ShipStatistics(Stats())};
 			_weapon = new Weapon();
 			
-			_combatFactory = (state, idResolver) => new AttackShipCombat(_context.Object) { Ship = ship(state).Build(idResolver), Target = _target };
+			_combatFactory = (state, idResolver) => new AttackShipCombat(_random.Object) { Ship = ship(state).Build(idResolver), Target = _target };
 			_combat = _combatFactory(new ShipState(ItemCode.LightFrigate), new IdResolutionContext(new[] { new ShipInfo() { Code = ItemCode.LightFrigate } }));
 		}
 

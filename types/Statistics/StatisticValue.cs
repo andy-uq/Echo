@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Echo.Statistics
 {
@@ -10,9 +11,16 @@ namespace Echo.Statistics
 
 		private static Math<TValue> Math { get; set; }
 
-		public static void InitMath(Math<TValue> math)
+		static StatisticValue()
 		{
-			Math = math;
+			var type = typeof (Math);
+			var member = type.GetProperty(typeof (TValue).Name, BindingFlags.Public | BindingFlags.Static);
+			if (member == null)
+			{
+				throw new InvalidOperationException("Cannot find Math module for type " + typeof(TValue).Name);
+			}
+
+			Math = (Math<TValue>) member.GetValue(null, null);
 		}
 
 		public StatisticValue(T stat, TValue value) : this(stat, value, Enumerable.Empty<IStatisticDelta<TValue>>())

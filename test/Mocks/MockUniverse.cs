@@ -9,13 +9,13 @@ using Echo.State;
 using Echo;
 using Echo.State.Market;
 using Echo.Statistics;
+using Echo.Tests.Mocks;
 
 namespace Echo.Tests
 {
 	public class MockUniverse
 	{
-		private long _nextId = 1;
-
+		private readonly IIdGenerator _idGenerator;
 		public SkillInfo SpaceshipCommand { get; set; }
 		public ShipState Ship { get; set; }
 		public AgentState John { get; set; }
@@ -32,8 +32,9 @@ namespace Echo.Tests
 		public ItemInfo Item { get; set; }
 		public WeaponInfo Weapon { get; set; }
 
-		public MockUniverse()
+		public MockUniverse(IIdGenerator idGenerator = null)
 		{
+			_idGenerator = idGenerator ?? new IdGenerator();
 			var universeId = Id();
 
 			John = new AgentState
@@ -186,7 +187,7 @@ namespace Echo.Tests
 
 		private long Id()
 		{
-			return ++_nextId;
+			return _idGenerator.NextId();
 		}
 	}
 }

@@ -11,6 +11,7 @@
 		ShipEquipment,
 		ShipModifications,
 		ShipWeapons,
+		ShipShields,
 
 		Starbases,
 

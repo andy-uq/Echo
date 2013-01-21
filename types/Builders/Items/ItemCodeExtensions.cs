@@ -39,8 +39,8 @@ namespace Echo.Items
 		{
 			itemCode = ItemCode.Invalid;
 
-			var isSkillCode = (id & ITEM_ID_MASK) != 0L;
-			if ( isSkillCode )
+			var isItemCode = (id & ITEM_ID_MASK) != 0L;
+			if ( isItemCode )
 			{
 				int value = (int)(id ^ ITEM_ID_MASK);
 				if ( Enum.IsDefined(typeof(ItemCode), value) )

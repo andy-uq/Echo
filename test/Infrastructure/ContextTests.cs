@@ -8,10 +8,11 @@ namespace Echo.Tests.Infrastructure
 	{
 		private ITypeMapper _typeMapper;
 		private IRandom _random;
+		private IIdGenerator _idGenerator;
 
 		public EchoContext Create()
 		{
-			return new EchoContext(_typeMapper, _random);
+			return new EchoContext(_typeMapper, _random, _idGenerator);
 		}
 
 		[Test]
@@ -19,11 +20,13 @@ namespace Echo.Tests.Infrastructure
 		{
 			_typeMapper = new Moq.Mock<ITypeMapper>().Object;
 			_random = new Moq.Mock<IRandom>().Object;
+			_idGenerator = new Moq.Mock<IIdGenerator>().Object;
 
 			var context = Create();
 
 			Assert.That(context.TypeMapper, Is.Not.Null);
 			Assert.That(context.Random, Is.Not.Null);
+			Assert.That(context.IdGenerator, Is.Not.Null);
 		}
 	}
 }

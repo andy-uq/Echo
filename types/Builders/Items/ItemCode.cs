@@ -8,6 +8,15 @@
 		LightFrigate,
 
 		[Category(ItemCategory.ShipWeapons)]
-		MissileLauncher
+		MissileLauncher,
+
+		[Category(ItemCategory.ShipWeapons)]
+		MiningLaser,
+
+		[Category(ItemCategory.ShipShields)]
+		EnergyShield,
+
+		[Category(ItemCategory.Ores)]
+		Veldnium
 	}
 }
