@@ -33,6 +33,11 @@ namespace Echo.Tests.Ships
 			var result = _task.Execute(ship, pilot);
 			Assert.That(result.Success, Is.False);
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.NotDocked));
+
+			ITaskResult taskResult = result;
+			Assert.That(taskResult.ErrorCode, Is.EqualTo("NotDocked"));
+			Assert.That(taskResult.ErrorParams, Has.Property("Ship").EqualTo(ship));
+			Assert.That(taskResult.ErrorParams, Has.Property("Pilot").Null);
 		}
 
 		[Test]

@@ -23,14 +23,23 @@ namespace Echo.Tests.Ships
 						new StatisticValue<ShipStatistic, double>(
 							ShipStatistic.EnergyArmourStrength,
 							value: 100d
-							)
+							),
+						new StatisticValue<ShipStatistic, double>(
+							ShipStatistic.BallisticArmourStrength,
+							value: 100d
+							),
 					})
 			};
 		}
 
-		private void DamageShip(double delta)
+		private void DamageShip(double delta, DamageType damageType = DamageType.Energy)
 		{
-			_ship.Statistics.ArmourStrength(DamageType.Energy).Alter(new Damage(DamageType.Energy) { Value = delta });
+			var armour = _ship.Statistics.ArmourStrength(damageType);
+			
+			delta = System.Math.Min(delta, armour.CurrentValue);
+			
+			var damage = new Damage(damageType) {Value = delta};
+			armour.Alter(damage);
 		}
 
 		[Test]
@@ -46,9 +55,21 @@ namespace Echo.Tests.Ships
 		}
 
 		[Test]
+		public void ShieldRepairsCorrectDamage()
+		{
+			DamageShip(10d, DamageType.Ballistic);
+
+			var repair = new ArmourRepair();
+			repair.Repair(_ship, _shieldInfo);
+
+			Assert.That(_ship.Statistics[ShipStatistic.EnergyArmourStrength].CurrentValue, Is.EqualTo(100d));
+			Assert.That(_ship.Statistics[ShipStatistic.BallisticArmourStrength].CurrentValue, Is.EqualTo(90d));
+		}
+
+		[Test]
 		public void LargeDamage()
 		{
-			DamageShip(10d);
+			DamageShip(10d, DamageType.Energy);
 
 			var repair = new ArmourRepair();
 			repair.Repair(_ship, _shieldInfo);
@@ -59,7 +80,7 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void ShieldRepair()
 		{
-			DamageShip(5d);
+			DamageShip(5d, DamageType.Energy);
 
 			var repair = new ArmourRepair();
 			repair.Repair(_ship, _shieldInfo);

@@ -6,11 +6,8 @@ namespace Echo
 {
 	public class UndockShipTask : ShipTask<UndockShipResult>
 	{
-		private readonly ILocationServices _locationServices;
-
-		public UndockShipTask(ILocationServices locationServices) : base(locationServices)
+		public UndockShipTask(ILocationServices locationServices)
 		{
-			_locationServices = locationServices;
 		}
 
 		public UndockShipResult Execute(Ship ship, Agent pilot)
@@ -26,7 +23,7 @@ namespace Echo
 				return Failed(ErrorCode.MissingSkillRequirement, ship, pilot);
 			}
 
-			ship.Position = new Position(structure.Position.Location, _locationServices.GetExitPosition(structure));
+			ship.Position = new Position(structure.Position.Location, LocationServices.GetExitPosition(structure));
 			return Success();
 		}
 

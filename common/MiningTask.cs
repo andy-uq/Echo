@@ -10,10 +10,6 @@ namespace Echo
 {
 	public class MiningTask : ShipTask<MiningResult>
 	{
-		public MiningTask(ILocationServices locationServices) : base(locationServices)
-		{
-		}
-
 		public MiningResult Mine(Ship ship, AsteroidBelt asteroidBelt)
 		{
 			int quantity = 0;

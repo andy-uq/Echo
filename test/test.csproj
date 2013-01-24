@@ -54,6 +54,7 @@
     <Compile Include="Infrastructure\EnsureThat.cs" />
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
     <Compile Include="Infrastructure\IdResolution.cs" />
+    <Compile Include="Infrastructure\LocationServicesTest.cs" />
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Items\ItemFactoryTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
