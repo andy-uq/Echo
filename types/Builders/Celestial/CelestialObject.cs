@@ -121,6 +121,7 @@ namespace Echo.Celestial
 				{
 					return new ObjectBuilder<CelestialObject>(new AsteroidBelt
 					{
+						Ore = state.AsteroidBelt.Ore,
 						Richness = state.AsteroidBelt.Richness,
 						AmountRemaining = state.AsteroidBelt.AmountRemaining
 					});

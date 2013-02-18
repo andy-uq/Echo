@@ -18,20 +18,25 @@ namespace Echo.Items.Packing
 			get { return typeof(Weapon); }
 		}
 
-		public IObject Unpack(Item item)
+		public PackerResult Unpack(Item item)
 		{
 			var weaponInfo = (WeaponInfo) item.ItemInfo;
-			return Weapon.Builder.Build(_idGenerator, weaponInfo);
+			var weapon = Weapon.Builder.Build(_idGenerator, weaponInfo);
+			
+			return new PackerResult(weapon);
 		}
 
 		public bool CanPack<T>(T item) where T : IObject
 		{
-			return false;
+			return item is Weapon;
 		}
 
 		public Item Pack(IObject item)
 		{
-			throw new NotImplementedException();
+			var weapon = item as Weapon;
+			return weapon == null 
+				? null 
+				: new Item(weapon.WeaponInfo);
 		}
 	}
 }

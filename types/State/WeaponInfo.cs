@@ -1,4 +1,7 @@
-﻿namespace Echo.State
+﻿using System;
+using Echo.Items;
+
+namespace Echo.State
 {
 	public class WeaponInfo : ItemInfo
 	{
@@ -13,6 +16,18 @@
 			{
 				var averageDmg = (MaximumDamage - MinimumDamage) / 2 + MinimumDamage;
 				return averageDmg*Speed;
+			}
+		}
+
+		public bool IsMiningLaser()
+		{
+			switch (Code)
+			{
+				case ItemCode.MiningLaser:
+					return true;
+
+				default:
+					return false;
 			}
 		}
 	}

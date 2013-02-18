@@ -10,21 +10,36 @@ namespace Echo
 {
 	public class MiningTask : ShipTask<MiningResult>
 	{
+		private readonly IItemFactory _itemFactory;
+
+		public MiningTask(IItemFactory itemFactory)
+		{
+			_itemFactory = itemFactory;
+		}
+
 		public MiningResult Mine(Ship ship, AsteroidBelt asteroidBelt)
 		{
-			int quantity = 0;
+			uint quantity = 0;
 
-			var hardPoints = GetMiningHardPoints(ship.HardPoints);
+			var hardPoints = GetMiningHardPoints(ship.HardPoints).Where(hp => hp.AimAt(asteroidBelt));
 			foreach (var hardPoint in hardPoints)
 			{
+				quantity += 1;
 			}
-			
-			return Success();
+
+			quantity = asteroidBelt.Reduce(quantity);
+			var ore = _itemFactory.Build(asteroidBelt.Ore, quantity);
+
+			return Success(() => new MiningResult { Ore = ore });
 		}
 
 		private IEnumerable<HardPoint> GetMiningHardPoints(IEnumerable<HardPoint> hardPoints)
 		{
-			return Enumerable.Empty<HardPoint>();
+			foreach (var hp in hardPoints)
+			{
+				if ( hp.Weapon.WeaponInfo.IsMiningLaser() )
+					yield return hp;
+			}
 		}
 	}
 

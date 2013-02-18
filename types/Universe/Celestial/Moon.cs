@@ -1,4 +1,6 @@
-﻿using Echo;
+﻿using System;
+using Echo;
+using Echo.Items;
 
 namespace Echo.Celestial
 {
@@ -9,8 +11,17 @@ namespace Echo.Celestial
 			get { return CelestialObjectType.AsteriodBelt; }
 		}
 
+		public ItemCode Ore { get; set; }
 		public int Richness { get; set; }
-		public int AmountRemaining { get; set; }
+		public uint AmountRemaining { get; set; }
+
+		public uint Reduce(uint quantity)
+		{
+			var remaining = Math.Min(AmountRemaining, quantity);
+			AmountRemaining -= remaining;
+
+			return remaining;
+		}
 	}
 
 	public class Moon : CelestialObject
