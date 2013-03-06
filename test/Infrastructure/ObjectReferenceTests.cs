@@ -28,6 +28,8 @@ namespace Echo.Tests.Infrastructure
 			Assert.That(ObjectReference.TryParse("[x0001] X", out objRef), Is.True);
 			Assert.That(objRef.Id, Is.EqualTo(1));
 			Assert.That(objRef.Name, Is.EqualTo("X"));
+
+			Assert.That(ObjectReference.TryParse("Not an object reference", out objRef), Is.False);
 		}
 
 		[Test]
@@ -73,6 +75,21 @@ namespace Echo.Tests.Infrastructure
 			Assert.IsNotNull(objRef);
 			Assert.That(objRef.Id, Is.EqualTo(1));
 			Assert.That(objRef.Name, Is.EqualTo("X"));
+		}
+
+		[Test]
+		public void ObjectEquality()
+		{
+			var o1 = new ObjectReference(10, "Bob");
+			var o2 = new ObjectReference(10, "Fred");
+			var o3 = new ObjectReference(10);
+			var o4 = new ObjectReference(11);
+
+			Assert.That(o1, Is.EqualTo(o2).And.EqualTo(o3));
+			Assert.That(o1.GetHashCode(), Is.EqualTo(o2.GetHashCode()).And.EqualTo(o3.GetHashCode()));
+			Assert.That(o1.Equals(o3), Is.True);
+			Assert.That(o1.Equals(o4), Is.False);
+			Assert.That(o1.Equals("not an object"), Is.False);
 		}
 	}
 }

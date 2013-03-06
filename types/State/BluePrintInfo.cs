@@ -1,32 +1,28 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Echo.Items;
 
 namespace Echo.State
 {
-	public sealed class BluePrintInfo : IObject, IItemInfo
+	public sealed class BluePrintInfo : ItemInfo
 	{
-		public string Name { get; set; }
+		public BluePrintInfo(ItemCode code) : base(code)
+		{
+			if (!code.GetItemCategories().Any(c => c == ItemCategory.Blueprints))
+				throw new ArgumentException("Cannot create a blueprint from this itemCode");
+
+			Materials = Enumerable.Empty<ItemState>();
+			BuildRequirements = new SkillLevel[0];
+		}
+
+		public BluePrintInfo()
+		{
+			Materials = Enumerable.Empty<ItemState>();
+			BuildRequirements = new SkillLevel[0];
+		}
+
 		public IEnumerable<ItemState> Materials { get; set; }
 		public SkillLevel[] BuildRequirements { get; set; }
-
-		#region IItemInfo Members
-
-		public ItemCode Code { get; set; }
-
-		#endregion
-
-		#region IObject Members
-		
-		long IObject.Id
-		{
-			get { return Code.ToId(); }
-		}
-
-		ObjectType IObject.ObjectType
-		{
-			get { return ObjectType.Info; }
-		}
-
-		#endregion
 	}
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using Echo.Items;
+﻿using Echo.Items;
 using Echo.Statistics;
 
 namespace Echo.State
 {
-	public class ItemInfo : IObjectState, IObject
+	public class ItemInfo : IObjectState, IItemInfo
 	{
-		public string Id { get; set; }
-		public ItemCode Code { get; set; }
-
 		public ItemInfo()
 		{
 		}
@@ -18,7 +14,10 @@ namespace Echo.State
 			Code = code;
 		}
 
-		#region IObject Members
+		#region IItemInfo Members
+
+		public string Id { get; set; }
+		public ItemCode Code { get; set; }
 
 		long IObject.Id
 		{

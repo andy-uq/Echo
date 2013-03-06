@@ -66,10 +66,12 @@
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
     <Compile Include="Infrastructure\EnsureThat.cs" />
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
+    <Compile Include="Infrastructure\ExceptionTests.cs" />
     <Compile Include="Infrastructure\IdResolution.cs" />
     <Compile Include="Infrastructure\LocationServicesTest.cs" />
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Infrastructure\ObjectTests.cs" />
+    <Compile Include="Items\BluePrintTests.cs" />
     <Compile Include="Items\ItemFactoryTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Items\WeaponTests.cs" />

@@ -11,6 +11,7 @@
 		MissileLauncher,
 
 		[Category(ItemCategory.ShipWeapons)]
+		[Category(ItemCategory.Blueprints)]
 		MiningLaser,
 
 		[Category(ItemCategory.ShipShields)]

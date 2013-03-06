@@ -2,6 +2,7 @@
 
 namespace Echo.Items
 {
+	[AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
 	public class CategoryAttribute : Attribute
 	{
 		public ItemCategory Category { get; set; }

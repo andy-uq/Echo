@@ -17,13 +17,6 @@ namespace Echo.Ships
 			get { return -Value; }
 		}
 
-		public static explicit operator double(Damage damage)
-		{
-			return damage == null 
-				? 0 
-				: damage.Value;
-		}
-
 		public static Damage operator +(Damage lValue, Damage rValue)
 		{
 			if (lValue == null || rValue == null)

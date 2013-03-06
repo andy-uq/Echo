@@ -1,4 +1,5 @@
 ﻿using Echo.Items;
+using Echo.State;
 using NUnit.Framework;
 
 namespace Echo.Tests.Items
@@ -25,6 +26,15 @@ namespace Echo.Tests.Items
 			var categories = ItemCode.LightFrigate.GetItemCategories();
 			Assert.That(categories, Is.Not.Empty);
 			Assert.That(categories, Is.EquivalentTo(new[] { ItemCategory.Ships }));
+		}
+
+		[Test]
+		public void ItemNameIsItemInfoName()
+		{
+			var itemInfo = new ItemInfo {Name = "Name of item"};
+			var item = new Item(itemInfo);
+
+			Assert.That(item.Name, Is.EqualTo(itemInfo.Name));
 		}
 	}
 }
