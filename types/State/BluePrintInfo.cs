@@ -27,10 +27,16 @@ namespace Echo.State
 
 		public bool HasMaterials(IEnumerable<ItemState> items)
 		{
-			foreach (var item in Materials)
-			{
-				
-			}
+			var itemLookup = items.ToLookup(i => i.Code);
+			return
+				(
+					from neededItem in Materials
+					select new
+					{
+						required = neededItem.Quantity,
+						count = itemLookup[neededItem.Code].Sum(item => item.Quantity)
+					}
+				).All(i => i.required <= i.count);
 		}
 	}
 }

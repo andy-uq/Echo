@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Echo.Agents;
 using Echo.Agents.Skills;
 using Echo.Items;
@@ -59,7 +60,11 @@ namespace Echo.Tests.Items
 				Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, }
 			};
 
-			Assert.That(bp.HasMaterials(), Is.True);
+			Assert.That(bp.HasMaterials(new ItemState[0]), Is.False);
+			Assert.That(bp.HasMaterials(bp.Materials), Is.True);
+			Assert.That(bp.HasMaterials(new[] { new ItemState() { Code = ItemCode.LightFrigate, Quantity = 1 } }), Is.False);
+			Assert.That(bp.HasMaterials(new[] { new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 } }), Is.False);
+			Assert.That(bp.HasMaterials(new[] { new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 }, new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 } }), Is.True);
 		}
 	}
 }
