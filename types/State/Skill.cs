@@ -1,4 +1,6 @@
-﻿using Echo.Agents.Skills;
+﻿using System;
+using System.Collections.Generic;
+using Echo.Agents.Skills;
 
 namespace Echo.State
 {

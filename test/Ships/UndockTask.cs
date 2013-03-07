@@ -56,7 +56,7 @@ namespace Echo.Tests.Ships
 		{
 			var structure = new Manufactory();
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
-			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.SkillLevel { Level = 1 } } } };
+			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.Skills.SkillLevel { Level = 1 } } } };
 
 			var result = _task.Execute(ship, pilot);
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
@@ -68,7 +68,7 @@ namespace Echo.Tests.Ships
 			var solarSystem = new SolarSystem();
 			var structure = new Manufactory { Position = new Position(solarSystem, Vector.Parse("0,1,0")) };
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
-			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.SkillLevel { Level = 5 }  } }};
+			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.Skills.SkillLevel { Level = 5 }  } }};
 
 			var result = _task.Execute(ship, pilot);
 			Assert.That(result.Success, Is.True, result.ErrorCode.ToString());

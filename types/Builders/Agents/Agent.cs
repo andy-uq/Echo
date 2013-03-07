@@ -6,7 +6,7 @@ using AgentStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.Agent
 
 namespace Echo.Agents
 {
-	partial class Agent : IObject
+	partial class Agent
 	{
 		public static class Builder
 		{

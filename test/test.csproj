@@ -79,6 +79,7 @@
     <Compile Include="Math\UnitTests.cs" />
     <Compile Include="Mocks\IdGenerator.cs" />
     <Compile Include="Mocks\LocationService.cs" />
+    <Compile Include="Mocks\TestSkills.cs" />
     <Compile Include="Ships\HardPointTests.cs" />
     <Compile Include="Ships\MiningTests.cs" />
     <Compile Include="Ships\ShipCombatTests.cs" />

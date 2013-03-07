@@ -24,5 +24,13 @@ namespace Echo.State
 
 		public IEnumerable<ItemState> Materials { get; set; }
 		public SkillLevel[] BuildRequirements { get; set; }
+
+		public bool HasMaterials(IEnumerable<ItemState> items)
+		{
+			foreach (var item in Materials)
+			{
+				
+			}
+		}
 	}
 }

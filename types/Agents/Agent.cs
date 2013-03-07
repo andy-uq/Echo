@@ -4,6 +4,7 @@ using Echo.Ships;
 using Echo.State;
 using Echo.Statistics;
 using EnsureThat;
+using SkillLevel = Echo.Agents.Skills.SkillLevel;
 
 namespace Echo.Agents
 {
@@ -30,10 +31,24 @@ namespace Echo.Agents
 		public bool CanUse(Ship ship)
 		{
 			Ensure.That(() => ship).IsNotNull();
-			Ensure.That(() => ship.ShipInfo).IsNotNull();
+			return CanUse(ship.ShipInfo);
+		}
 
-			var pilotRequirements = ship.ShipInfo.PilotRequirements;
-			foreach (var requirement in pilotRequirements)
+		private bool CanUse(ShipInfo shipInfo)
+		{
+			Ensure.That(() => shipInfo).IsNotNull();
+			return CanUse(shipInfo.PilotRequirements);
+		}
+
+		public bool CanUse(BluePrintInfo bluePrint)
+		{
+			Ensure.That(() => bluePrint).IsNotNull();
+			return CanUse(bluePrint.BuildRequirements);
+		}
+
+		private bool CanUse(IEnumerable<State.SkillLevel> requirements)
+		{
+			foreach ( var requirement in requirements )
 			{
 				SkillLevel skill;
 				if ( !Skills.TryGetValue(requirement.SkillCode, out skill) )

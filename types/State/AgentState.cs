@@ -10,6 +10,14 @@ namespace Echo.State
 {
 	public class AgentState : IObjectState
 	{
+		public AgentState()
+		{
+			Statistics = Enumerable.Empty<AgentStatisticState>();
+			Implants = Enumerable.Empty<Implant>();
+			Skills = Enumerable.Empty<SkillLevel>();
+			Training = Enumerable.Empty<SkillTraining>();
+		}
+
 		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public ObjectReference? Location { get; set; }

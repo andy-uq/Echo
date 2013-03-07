@@ -32,6 +32,11 @@ namespace Echo
 			get { return _lookup.Values.ToArray(); }
 		}
 
+		public static IIdResolver Empty
+		{
+			get { return new IdResolutionContext(Enumerable.Empty<IObject>()); }
+		}
+
 		protected override bool LookupValue<T>(long id, out IObject value)
 		{
 			return _lookup.TryGetValue(id, out value);
