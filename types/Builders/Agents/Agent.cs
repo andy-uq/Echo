@@ -1,8 +1,11 @@
 ﻿using System.Linq;
+using Echo.Agents.Skills;
 using Echo.Builder;
 using Echo.State;
 
 using AgentStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.AgentStatistic, int>;
+using AgentSkillLevel = Echo.Agents.Skills.SkillLevel;
+using SkillLevel = Echo.State.SkillLevel;
 
 namespace Echo.Agents
 {
@@ -17,11 +20,12 @@ namespace Echo.Agents
 					Id = state.ObjectId,
 					Name = state.Name,
 					Statistics = new AgentStatistics(state.Statistics.Select(Build)),
-					Implants = (state.Implants ?? Enumerable.Empty<Implant>()).ToDictionary(x => x.Stat)
+					Implants = state.Implants.ToDictionary(x => x.Stat),
 				};
 
 				return new ObjectBuilder<Agent>(agent)
 					.Resolve((r, a) => a.Location = r.Get<ILocation>(state.Location))
+					.Resolve((r, a) => a.Skills = state.Skills.Select(skill => Build(r, skill)).ToDictionary(s => s.Skill.Code))
 					.Resolve(ApplyStatDeltas);
 			}
 
@@ -32,6 +36,7 @@ namespace Echo.Agents
 					ObjectId = agent.Id,
 					Name = agent.Name,
 					Statistics = agent.Statistics.Select(Save),
+					Skills = agent.Skills.Values.Select(Save),
 					Location = agent.Location.AsObjectReference()
 				};
 			}
@@ -51,9 +56,19 @@ namespace Echo.Agents
 				return new AgentStatisticValue(x.Statistic, x.Value);
 			}
 
+			private static AgentSkillLevel Build(IIdResolver resolver, SkillLevel x)
+			{
+				return new AgentSkillLevel { Skill = resolver.GetById<SkillInfo>(x.SkillCode.ToId()), Level = x.Level };
+			}
+
 			private static AgentStatisticState Save(AgentStatisticValue x)
 			{
 				return new AgentStatisticState {Statistic = x.Stat, CurrentValue = x.CurrentValue, Value = x.Value,};
+			}
+
+			private static SkillLevel Save(AgentSkillLevel x)
+			{
+				return new SkillLevel {SkillCode = x.Skill.Code, Level = x.Level};
 			}
 		}
 	}

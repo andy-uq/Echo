@@ -16,6 +16,7 @@
 		Corporation,
 		MarketPlace,
 		Auction,
-		JumpGate
+		JumpGate,
+		Skill
 	}
 }

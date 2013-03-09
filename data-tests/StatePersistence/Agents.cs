@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Echo.Agents;
+using Echo.Agents.Skills;
 using Echo.Builders;
-using Echo.Data.Tests;
 using Echo.State;
+using Echo.Tests;
+using Echo.Tests.Mocks;
+using Echo.Tests.StatePersistence;
 using NUnit.Framework;
+using SkillLevel = Echo.State.SkillLevel;
 
-namespace Echo.Tests.StatePersistence
+namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
 	public class Agents : StateTest
@@ -40,9 +46,28 @@ namespace Echo.Tests.StatePersistence
 		}
 
 		[Test]
+		public void Skills()
+		{
+			Assert.That(John.Skills, Is.Not.Empty);
+
+			var skill = John.Skills.SingleOrDefault(x => x.SkillCode == SkillCode.SpaceshipCommand);
+			Assert.NotNull(skill);
+			Assert.That(skill.Level, Is.EqualTo(5));
+
+			var builder = Agent.Builder.Build(John);
+			builder.RegisterTestSkills();
+
+			var agent = builder.Materialise();
+			Assert.That(agent.Skills, Is.Not.Empty);
+		}
+
+		[Test]
 		public void Save()
 		{
-			var agent = Agent.Builder.Build(John).Materialise();
+			var builder = Agent.Builder.Build(John);
+			builder.RegisterTestSkills();
+
+			var agent = builder.Materialise();
 			Assert.That(agent, Is.InstanceOf<Agent>());
 			var state = agent.Save();
 
@@ -69,7 +94,10 @@ namespace Echo.Tests.StatePersistence
 				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
 				Assert.That(state, Is.Not.Null);
 
-				var agent = Agent.Builder.Build(state).Materialise();
+				var builder = Agent.Builder.Build(state);
+				builder.RegisterTestSkills();
+
+				var agent = builder.Materialise();
 				Assert.That(agent, Is.InstanceOf<Agent>());
 
 				Assert.That(agent.Statistics.Charisma.Value, Is.EqualTo(50));

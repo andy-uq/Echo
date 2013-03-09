@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Echo.Celestial;
 using Echo.Ships;
+using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
 using Echo;

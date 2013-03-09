@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
 using Echo.Agents.Skills;
 using Echo.Items;
 using Echo.Ships;
 using Echo.State;
-using Echo;
 using Echo.State.Market;
 using Echo.Statistics;
-using Echo.Tests.Mocks;
+using SkillLevel = Echo.State.SkillLevel;
 
-namespace Echo.Tests
+namespace Echo.Tests.Mocks
 {
 	public class MockUniverse
 	{
@@ -31,6 +29,7 @@ namespace Echo.Tests
 
 		public ItemInfo Item { get; set; }
 		public WeaponInfo Weapon { get; set; }
+		public BluePrintInfo BluePrint { get; set; }
 
 		public MockUniverse(IIdGenerator idGenerator = null)
 		{
@@ -42,7 +41,8 @@ namespace Echo.Tests
 				ObjectId = Id(),
 				Name = "John",
 				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
-				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower, }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 })
+				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower, }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 }),
+				Skills = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5, } }
 			};
 
 			MSCorp = new CorporationState
@@ -182,6 +182,12 @@ namespace Echo.Tests
 						}
 					}
 				}
+			};
+
+			BluePrint = new BluePrintInfo(ItemCode.MiningLaser)
+			{
+				BuildRequirements = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5 }, },
+				Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, }
 			};
 		}
 

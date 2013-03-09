@@ -3,6 +3,7 @@ using System.Linq;
 using Echo.Data;
 using Echo.Data.Tests;
 using Echo.Tests.Infrastructure;
+using Echo.Tests.Mocks;
 using NUnit.Framework;
 using Raven.Client;
 using test;

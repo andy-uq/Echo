@@ -59,6 +59,7 @@
     <Compile Include="AutoMapTypeMapper.cs" />
     <Compile Include="EchoContext.cs" />
     <Compile Include="JumpCountTable.cs" />
+    <Compile Include="ManufacturingTask.cs" />
     <Compile Include="MiningTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipTask.cs" />

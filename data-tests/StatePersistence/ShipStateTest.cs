@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Echo.Builder;
-using Echo.Builders;
 using Echo.Celestial;
-using Echo.Data.Tests;
-using Echo.Items;
 using Echo.Ships;
 using Echo.State;
+using Echo.Tests;
+using Echo.Tests.Mocks;
+using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
-namespace Echo.Tests.StatePersistence
+namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
 	public class ShipStateTest : StateTest
@@ -27,6 +26,8 @@ namespace Echo.Tests.StatePersistence
 			builder
 				.Dependent(Universe.Weapon)
 				.Build(x => new ObjectBuilder<WeaponInfo>(x));
+
+			builder.RegisterTestSkills();
 
 			return builder.Materialise();
 		}
@@ -79,11 +80,14 @@ namespace Echo.Tests.StatePersistence
 				var builder = SolarSystem.Builder.Build(null, Universe.SolarSystem);
 				builder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
 				builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+				builder.RegisterTestSkills();
 
 				var solarSystem = builder.Materialise();
 				var shipBuilder = Echo.Ships.Ship.Builder.Build(solarSystem, state);
 				shipBuilder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
 				shipBuilder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+				shipBuilder.RegisterTestSkills();
+
 				var ship = shipBuilder.Materialise();
 
 				CheckPosition(solarSystem, ship);

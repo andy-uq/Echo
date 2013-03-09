@@ -53,7 +53,6 @@
     <Compile Include="Agents\AgentStatistics.cs" />
     <Compile Include="Agents\Implant.cs" />
     <Compile Include="Agents\Skills\CategoryAttribute.cs" />
-    <Compile Include="Agents\Skills\Skill.cs" />
     <Compile Include="Agents\Skills\SkillCodeExtensions.cs" />
     <Compile Include="Agents\Skills\SkillLevel.cs" />
     <Compile Include="Agents\Skills\SkillCategories.cs" />

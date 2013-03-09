@@ -1,7 +1,9 @@
 ﻿using Echo.Agents;
 using Echo.Agents.Skills;
+using Echo.State;
 using Echo.Statistics;
 using NUnit.Framework;
+using SkillLevel = Echo.State.SkillLevel;
 
 namespace Echo.Tests.Skills
 {
@@ -31,7 +33,7 @@ namespace Echo.Tests.Skills
 		[Test]
 		public void SpaceshipCommand()
 		{
-			var s = new Skill
+			var s = new SkillInfo
 			{
 				Code = SkillCode.SpaceshipCommand,
 				Name = "Spaceship Command",

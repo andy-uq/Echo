@@ -5,6 +5,7 @@ using Echo.Celestial;
 using Echo.Items;
 using Echo.State;
 using Echo.Tests;
+using Echo.Tests.Mocks;
 using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
@@ -67,6 +68,7 @@ namespace Echo.Data.Tests.StatePersistence
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem);
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+			builder.RegisterTestSkills();
 
 			var solarSystem = builder.Materialise();
 			Check(solarSystem);
@@ -109,7 +111,8 @@ namespace Echo.Data.Tests.StatePersistence
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
-			
+			builder.RegisterTestSkills();
+
 			var solarSystem = builder.Materialise();
 			Check(solarSystem);
 		}
