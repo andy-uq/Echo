@@ -30,10 +30,7 @@ namespace Echo.Tests.Items
 		[SetUp]
 		public void BuildAgent()
 		{
-			var builder = Agent.Builder.Build(_universe.John);
-			builder.RegisterTestSkills();
-
-			_agent = builder.Materialise();
+			_agent = _universe.John.StandUp();
 		}
 
 		[Test]

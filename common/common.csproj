@@ -63,6 +63,8 @@
     <Compile Include="Tasks\Ships\Mining\MineAsteroidParameters.cs" />
     <Compile Include="Tasks\Ships\Mining\MiningResult.cs" />
     <Compile Include="Tasks\Ships\Undocking\UndockShipParameters.cs" />
+    <Compile Include="Tasks\Structure\ManufacturingParameters.cs" />
+    <Compile Include="Tasks\Structure\ManufacturingResult.cs" />
     <Compile Include="Tasks\Structure\ManufacturingTask.cs" />
     <Compile Include="Tasks\Ships\Mining\MiningTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

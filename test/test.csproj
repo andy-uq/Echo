@@ -77,6 +77,7 @@
     <Compile Include="Items\WeaponTests.cs" />
     <Compile Include="Math\PositionTests.cs" />
     <Compile Include="Math\UnitTests.cs" />
+    <Compile Include="Mocks\AgentTestExtensions.cs" />
     <Compile Include="Mocks\IdGenerator.cs" />
     <Compile Include="Mocks\LocationService.cs" />
     <Compile Include="Mocks\TestSkills.cs" />
