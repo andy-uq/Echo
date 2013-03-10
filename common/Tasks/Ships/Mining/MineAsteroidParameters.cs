@@ -5,8 +5,8 @@ namespace Echo.Tasks.Ships.Mining
 {
 	public class MineAsteroidParameters : ITaskParameters
 	{
-		private readonly Ship _ship;
 		private readonly AsteroidBelt _asteroidBelt;
+		private readonly Ship _ship;
 
 		public MineAsteroidParameters(Ship ship, AsteroidBelt asteroidBelt)
 		{

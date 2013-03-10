@@ -45,7 +45,7 @@ namespace Echo.Tests.Ships
 		}
 
 		[Test]
-		public void CreateShip()
+		public void CanMineAsteroid()
 		{
 			var veldnium = new ItemInfo(ItemCode.Veldnium);
 			var itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);

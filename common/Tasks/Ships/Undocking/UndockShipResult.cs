@@ -1,10 +1,17 @@
 using Echo.Agents;
-using Echo.Tasks.Ships;
+using Echo.Ships;
 
 namespace Echo.Tasks.Ships.Undocking
 {
 	public class UndockShipResult : TaskResult, ITaskResult
 	{
+		public Ship Ship { get; set; }
+		public Agent Pilot { get; set; }
+
+		public ShipTask.ErrorCode ErrorCode { get; set; }
+
+		#region ITaskResult Members
+
 		string ITaskResult.ErrorCode
 		{
 			get { return ErrorCode.ToString(); }
@@ -12,12 +19,9 @@ namespace Echo.Tasks.Ships.Undocking
 
 		object ITaskResult.ErrorParams
 		{
-			get { return new { Ship, Pilot }; }
+			get { return new {Ship, Pilot}; }
 		}
 
-		public Echo.Ships.Ship Ship { get; set; }
-		public Agent Pilot { get; set; }
-
-		public ShipTask.ErrorCode ErrorCode { get; set; }
+		#endregion
 	}
 }

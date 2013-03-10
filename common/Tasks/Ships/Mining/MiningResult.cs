@@ -5,6 +5,13 @@ namespace Echo.Tasks.Ships.Mining
 {
 	public class MiningResult : TaskResult, ITaskResult
 	{
+		public ShipTask.ErrorCode ErrorCode { get; set; }
+		public Ship Ship { get; set; }
+
+		public Item Ore { get; set; }
+
+		#region ITaskResult Members
+
 		string ITaskResult.ErrorCode
 		{
 			get { return ErrorCode.ToString(); }
@@ -15,9 +22,6 @@ namespace Echo.Tasks.Ships.Mining
 			get { return Ship; }
 		}
 
-		public MiningTask.ErrorCode ErrorCode { get; set; }
-		public Ship Ship { get; set; }
-
-		public Item Ore { get; set; }
+		#endregion
 	}
 }

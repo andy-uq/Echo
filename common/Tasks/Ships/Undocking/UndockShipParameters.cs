@@ -1,19 +1,20 @@
 using Echo.Agents;
+using Echo.Ships;
 
 namespace Echo.Tasks.Ships.Undocking
 {
 	public class UndockShipParameters : ITaskParameters
 	{
-		private readonly Echo.Ships.Ship _ship;
 		private readonly Agent _pilot;
+		private readonly Ship _ship;
 
-		public UndockShipParameters(Echo.Ships.Ship ship, Agent pilot)
+		public UndockShipParameters(Ship ship, Agent pilot)
 		{
 			_ship = ship;
 			_pilot = pilot;
 		}
 
-		public Echo.Ships.Ship Ship
+		public Ship Ship
 		{
 			get { return _ship; }
 		}

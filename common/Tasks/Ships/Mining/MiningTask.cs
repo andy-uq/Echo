@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Echo.Items;
 using Echo.Ships;
-using Echo.Tasks.Ships;
 
 namespace Echo.Tasks.Ships.Mining
 {
@@ -18,25 +18,24 @@ namespace Echo.Tasks.Ships.Mining
 		{
 			uint quantity = 0;
 
-			var hardPoints = GetMiningHardPoints(mineAsteroidParameters.Ship.HardPoints).Where(hp => hp.AimAt(mineAsteroidParameters.AsteroidBelt));
-			foreach (var hardPoint in hardPoints)
+			IEnumerable<HardPoint> hardPoints =
+				GetMiningHardPoints(mineAsteroidParameters.Ship.HardPoints).Where(
+					hp => hp.AimAt(mineAsteroidParameters.AsteroidBelt));
+
+			foreach (HardPoint hardPoint in hardPoints)
 			{
 				quantity += 1;
 			}
 
 			quantity = mineAsteroidParameters.AsteroidBelt.Reduce(quantity);
-			var ore = _itemFactory.Build(mineAsteroidParameters.AsteroidBelt.Ore, quantity);
+			Item ore = _itemFactory.Build(mineAsteroidParameters.AsteroidBelt.Ore, quantity);
 
-			return Success(() => new MiningResult { Ore = ore });
+			return Success(() => new MiningResult {Ore = ore});
 		}
 
 		private IEnumerable<HardPoint> GetMiningHardPoints(IEnumerable<HardPoint> hardPoints)
 		{
-			foreach (var hp in hardPoints)
-			{
-				if ( hp.Weapon.WeaponInfo.IsMiningLaser() )
-					yield return hp;
-			}
+			return hardPoints.Where(hp => hp.Weapon.WeaponInfo.IsMiningLaser());
 		}
 	}
 }

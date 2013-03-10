@@ -4,6 +4,8 @@ namespace Echo.Tasks.Ships
 {
 	public abstract class ShipTask : ITask
 	{
+		#region ErrorCode enum
+
 		public enum ErrorCode
 		{
 			Success,
@@ -11,7 +13,13 @@ namespace Echo.Tasks.Ships
 			MissingSkillRequirement
 		}
 
+		#endregion
+
+		#region ITask Members
+
 		public abstract ITaskResult Execute(ITaskParameters taskParameters);
+
+		#endregion
 	}
 
 	public abstract class ShipTask<TParameters, TResult> : ShipTask
@@ -27,14 +35,14 @@ namespace Echo.Tasks.Ships
 
 		protected TResult Success(Func<TResult> taskResult = null)
 		{
-			if ( taskResult == null )
+			if (taskResult == null)
 			{
 				return new TResult {Success = true};
 			}
 
-			var result = taskResult();
+			TResult result = taskResult();
 			result.Success = true;
-			
+
 			return result;
 		}
 	}
