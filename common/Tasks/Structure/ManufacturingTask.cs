@@ -1,40 +1,18 @@
-﻿using EnsureThat;
+﻿using Echo.Items;
+using EnsureThat;
 
 namespace Echo.Tasks.Structure
 {
 	public class ManufacturingTask : ITask
 	{
-		public ITaskResult Execute(ITaskParameters taskParameters)
+		private readonly IItemFactory _itemFactory;
+
+		public ManufacturingTask(IItemFactory itemFactory)
 		{
-			var parameters = (ManufacturingParameters)taskParameters;
-			return Manufacture(parameters);
+			_itemFactory = itemFactory;
 		}
 
-		public ManufacturingResult Manufacture(ManufacturingParameters parameters)
-		{
-			Ensure.That(() => parameters).IsNotNull();
-
-			if ( parameters.BluePrint == null )
-				return Failed(ErrorCode.MissingBluePrint);
-
-			if ( parameters.Agent == null )
-				return Failed(ErrorCode.MissingAgent);
-
-			if (!parameters.Agent.CanUse(parameters.BluePrint))
-				return Failed(ErrorCode.MissingSkillRequirement);
-
-			return Success();
-		}
-
-		private ManufacturingResult Success()
-		{
-			return new ManufacturingResult();
-		}
-
-		private ManufacturingResult Failed(ErrorCode errorCode)
-		{
-			return new ManufacturingResult(errorCode);
-		}
+		#region ErrorCode enum
 
 		public enum ErrorCode
 		{
@@ -42,6 +20,45 @@ namespace Echo.Tasks.Structure
 			MissingBluePrint,
 			MissingAgent,
 			MissingSkillRequirement,
+		}
+
+		#endregion
+
+		#region ITask Members
+
+		public ITaskResult Execute(ITaskParameters taskParameters)
+		{
+			var parameters = (ManufacturingParameters) taskParameters;
+			return Manufacture(parameters);
+		}
+
+		#endregion
+
+		public ManufacturingResult Manufacture(ManufacturingParameters parameters)
+		{
+			Ensure.That(() => parameters).IsNotNull();
+
+			if (parameters.BluePrint == null)
+				return Failed(ErrorCode.MissingBluePrint);
+
+			if (parameters.Agent == null)
+				return Failed(ErrorCode.MissingAgent);
+
+			if (!parameters.Agent.CanUse(parameters.BluePrint))
+				return Failed(ErrorCode.MissingSkillRequirement);
+
+			var item = parameters.BluePrint.Build(_itemFactory);
+			return Success(item);
+		}
+
+		private ManufacturingResult Success(Item item)
+		{
+			return new ManufacturingResult { Item = item };
+		}
+
+		private ManufacturingResult Failed(ErrorCode errorCode)
+		{
+			return new ManufacturingResult(errorCode);
 		}
 	}
 }

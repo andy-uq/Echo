@@ -1,3 +1,5 @@
+using Echo.Items;
+
 namespace Echo.Tasks.Structure
 {
 	public class ManufacturingResult : TaskResult, ITaskResult
@@ -28,6 +30,8 @@ namespace Echo.Tasks.Structure
 		{
 			get { return _errorParams; }
 		}
+
+		public Item Item { get; set; }
 
 		#endregion
 	}

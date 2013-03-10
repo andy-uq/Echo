@@ -24,6 +24,7 @@ namespace Echo.State
 
 		public IEnumerable<ItemState> Materials { get; set; }
 		public SkillLevel[] BuildRequirements { get; set; }
+		public uint TargetQuantity { get; set; }
 
 		public bool HasMaterials(IEnumerable<ItemState> items)
 		{
@@ -37,6 +38,11 @@ namespace Echo.State
 						count = itemLookup[neededItem.Code].Sum(item => item.Quantity)
 					}
 				).All(i => i.required <= i.count);
+		}
+
+		public Item Build(IItemFactory itemFactory)
+		{
+			return itemFactory.Build(Code, TargetQuantity);
 		}
 	}
 }

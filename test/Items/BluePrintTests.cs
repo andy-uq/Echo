@@ -5,8 +5,8 @@ using Echo.Agents.Skills;
 using Echo.Items;
 using Echo.State;
 using Echo.Tests.Mocks;
+using Moq;
 using NUnit.Framework;
-using SkillLevel = Echo.State.SkillLevel;
 using AgentSkillLevel = Echo.Agents.Skills.SkillLevel;
 
 namespace Echo.Tests.Items
@@ -15,22 +15,15 @@ namespace Echo.Tests.Items
 	public class BluePrintTests
 	{
 		private readonly MockUniverse _universe = new MockUniverse();
-		private Agent _agent;
 
 		private Agent Agent
 		{
-			get { return _agent; }
+			get { return _universe.John.StandUp(); }
 		}
 
 		private BluePrintInfo BluePrint
 		{
 			get { return _universe.BluePrint; }
-		}
-
-		[SetUp]
-		public void BuildAgent()
-		{
-			_agent = _universe.John.StandUp();
 		}
 
 		[Test]
@@ -72,6 +65,17 @@ namespace Echo.Tests.Items
 			Assert.That(BluePrint.HasMaterials(new[] { new ItemState() { Code = ItemCode.LightFrigate, Quantity = 1 } }), Is.False);
 			Assert.That(BluePrint.HasMaterials(new[] { new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 } }), Is.False);
 			Assert.That(BluePrint.HasMaterials(new[] { new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 }, new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 } }), Is.True);
+		}
+
+		[Test]
+		public void CanBuild()
+		{
+			var itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
+			itemFactory.Setup(f => f.Build(_universe.BluePrint.Code, 1)).Returns(new Item(new ItemInfo(_universe.BluePrint.Code)));
+
+			var item = BluePrint.Build(itemFactory.Object);
+			Assert.That(item.ItemInfo.Code, Is.EqualTo(_universe.BluePrint.Code));
+			Assert.That(item.Quantity, Is.EqualTo(_universe.BluePrint.TargetQuantity));
 		}
 	}
 }

@@ -187,7 +187,8 @@ namespace Echo.Tests.Mocks
 			BluePrint = new BluePrintInfo(ItemCode.MiningLaser)
 			{
 				BuildRequirements = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5 }, },
-				Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, }
+				Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, },
+				TargetQuantity = 1,
 			};
 		}
 
