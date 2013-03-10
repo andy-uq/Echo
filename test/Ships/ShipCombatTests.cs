@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Echo.Builder;
+using Echo.Combat;
 using Echo.Items;
 using Echo.Ships;
 using Echo.State;

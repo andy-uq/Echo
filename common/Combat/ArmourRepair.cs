@@ -2,7 +2,7 @@
 using Echo.Ships;
 using Echo.State;
 
-namespace Echo
+namespace Echo.Combat
 {
 	public class ArmourRepair
 	{

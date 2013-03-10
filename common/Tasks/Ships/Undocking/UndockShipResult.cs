@@ -1,7 +1,7 @@
 using Echo.Agents;
-using Echo.Ships;
+using Echo.Tasks.Ships;
 
-namespace Echo
+namespace Echo.Tasks.Ships.Undocking
 {
 	public class UndockShipResult : TaskResult, ITaskResult
 	{
@@ -15,7 +15,7 @@ namespace Echo
 			get { return new { Ship, Pilot }; }
 		}
 
-		public Ship Ship { get; set; }
+		public Echo.Ships.Ship Ship { get; set; }
 		public Agent Pilot { get; set; }
 
 		public ShipTask.ErrorCode ErrorCode { get; set; }

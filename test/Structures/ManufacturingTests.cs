@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Echo.Tasks.Structure;
+using NUnit.Framework;
 
 namespace Echo.Tests.Structures
 {
@@ -9,7 +10,7 @@ namespace Echo.Tests.Structures
 		public void CreateTask()
 		{
 			var manufacturing = new ManufacturingTask();
-
+			
 		}
 	}
 }

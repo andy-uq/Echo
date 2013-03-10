@@ -4,6 +4,8 @@ using Echo.Celestial;
 using Echo.Items;
 using Echo.Ships;
 using Echo.State;
+using Echo.Tasks.Ships;
+using Echo.Tasks.Ships.Mining;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
@@ -50,7 +52,7 @@ namespace Echo.Tests.Ships
 			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>())).Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
 
 			var mining = new MiningTask(itemFactory.Object) { };
-			var result = mining.Mine(_ship, _asteroidBelt);
+			var result = mining.Execute(new MineAsteroidParameters(_ship, _asteroidBelt));
 
 			Assert.That(result.Success, Is.True);
 			Assert.That(result.Ore.Quantity, Is.EqualTo(1));

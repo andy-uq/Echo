@@ -4,6 +4,8 @@ using Echo.Celestial;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
+using Echo.Tasks.Ships.Undocking;
+using Echo.Tasks.Ships;
 using Moq;
 using NUnit.Framework;
 using SkillLevel = Echo.State.SkillLevel;
@@ -30,7 +32,7 @@ namespace Echo.Tests.Ships
 			var ship = new Ship();
 			var pilot = new Agent();
 
-			var result = _task.Execute(ship, pilot);
+			var result = _task.Execute(new UndockShipParameters(ship, pilot));
 			Assert.That(result.Success, Is.False);
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.NotDocked));
 
@@ -47,7 +49,7 @@ namespace Echo.Tests.Ships
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
 			var pilot = new Agent();
 
-			var result = _task.Execute(ship, pilot);
+			var result = _task.Execute(new UndockShipParameters(ship, pilot));
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
 		}
 
@@ -58,7 +60,7 @@ namespace Echo.Tests.Ships
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
 			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.Skills.SkillLevel { Level = 1 } } } };
 
-			var result = _task.Execute(ship, pilot);
+			var result = _task.Execute(new UndockShipParameters(ship, pilot));
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
 		}
 
@@ -70,7 +72,7 @@ namespace Echo.Tests.Ships
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
 			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.Skills.SkillLevel { Level = 5 }  } }};
 
-			var result = _task.Execute(ship, pilot);
+			var result = _task.Execute(new UndockShipParameters(ship, pilot));
 			Assert.That(result.Success, Is.True, result.ErrorCode.ToString());
 			Assert.That(ship.Position.LocalCoordinates, Is.EqualTo(structure.Position.LocalCoordinates));
 			Assert.That(ship.Position.Location, Is.EqualTo(solarSystem));

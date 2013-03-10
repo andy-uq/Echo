@@ -1,4 +1,5 @@
-﻿using Echo.Ships;
+﻿using Echo.Combat;
+using Echo.Ships;
 using Echo.State;
 using Echo.Statistics;
 using NUnit.Framework;

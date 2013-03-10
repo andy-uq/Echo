@@ -1,8 +1,7 @@
-﻿using System;
-using Echo.Ships;
+﻿using Echo.Ships;
 using Echo.Statistics;
 
-namespace Echo
+namespace Echo.Combat
 {
 	public class AttackShipCombat
 	{

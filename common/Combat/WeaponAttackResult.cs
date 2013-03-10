@@ -1,23 +1,7 @@
-using System;
 using Echo.Ships;
 
-namespace Echo
+namespace Echo.Combat
 {
-	public abstract class TaskResult
-	{
-		public string Task { get; set; }
-		public bool Success { get; set; }
-	}
-
-	public interface ITaskResult
-	{
-		string Task { get; }
-
-		bool Success { get; }
-		string ErrorCode { get; }
-		object ErrorParams { get; }
-	}
-
 	public class WeaponAttackResult
 	{
 		public Ship Ship { get; set; }
