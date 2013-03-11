@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Echo.Corporations;
 using Echo.State;
 
 namespace Echo.Items
 {
 	public class ItemCollection : ICollection<Item>
 	{
+		private readonly ItemCollection _parent;
+		private readonly Corporation _owner;
+		private readonly ILocation _location;
+
 		private readonly Dictionary<ItemCode, Item> _storage;
 		private readonly List<ItemCollection> _subCollections;
 
@@ -20,6 +25,7 @@ namespace Echo.Items
 		{
 			if (parent != null)
 			{
+				_parent = parent;
 				parent._subCollections.Add(this);
 			}
 		}
@@ -29,6 +35,32 @@ namespace Echo.Items
 			foreach (var item in initialContents)
 			{
 				Add(item);
+			}
+		}
+
+		public Corporation Owner
+		{
+			get
+			{
+				if (_owner != null)
+					return _owner;
+
+				return _parent == null
+				       	? null
+				       	: _parent._owner;
+			}
+		}
+
+		public ILocation Location
+		{
+			get
+			{
+				if (_location != null)
+					return _location;
+
+				return _parent == null
+				       	? null
+				       	: _parent._location;
 			}
 		}
 
@@ -132,11 +164,17 @@ namespace Echo.Items
 					select new
 					{
 						required = neededItem.Quantity,
-						count = _storage[neededItem.Code].Quantity
+						count = GetQuantity(neededItem.Code)
 					}
 				).All(i => i.required <= i.count);
 
 			return hasItems || _subCollections.Any(x => x.Contains(items));
+		}
+
+		private uint GetQuantity(ItemCode code)
+		{
+			Item item;
+			return _storage.TryGetValue(code, out item) ? item.Quantity : 0;
 		}
 	}
 }

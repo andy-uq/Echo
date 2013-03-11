@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Commerce\AuctionTests.cs" />
     <Compile Include="Commerce\Corporation.cs" />
+    <Compile Include="Corporations\CorporationTests.cs" />
     <Compile Include="Infrastructure\ContextTests.cs" />
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
     <Compile Include="Infrastructure\EnsureThat.cs" />
@@ -72,8 +73,6 @@
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Infrastructure\ObjectTests.cs" />
     <Compile Include="Items\BluePrintTests.cs" />
-    <Compile Include="Items\BasicItemCollectionTests.cs" />
-    <Compile Include="Items\ItemCollectionTests.cs" />
     <Compile Include="Items\ItemFactoryTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Items\WeaponTests.cs" />

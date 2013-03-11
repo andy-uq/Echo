@@ -9,6 +9,12 @@ namespace Echo.Corporations
 {
 	public partial class Corporation : IObject
 	{
+		public Corporation()
+		{
+			Property = new ItemCollection();
+			Structures = new List<Structure>();
+		}
+
 		public ObjectType ObjectType
 		{
 			get { return ObjectType.Corporation; }
@@ -17,7 +23,7 @@ namespace Echo.Corporations
 		public long Id { get; set; }
 		public string Name { get; set; }
 		
-		public List<Item> Property { get; set; }
+		public ItemCollection Property { get; set; }
 		public List<Ship> Ships { get; set; }
 		public List<Structure> Structures { get; set; }
 		public List<Agent> Employees { get; set; }
@@ -25,5 +31,6 @@ namespace Echo.Corporations
 		public List<SellOrder> SellOrders { get; set; }
 		public List<Item> BluePrints { get; set; }
 		public List<Item> Assets { get; set; }
+
 	}
 }

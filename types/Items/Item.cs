@@ -27,5 +27,7 @@ namespace Echo.Items
 		
 		public uint Quantity { get; set; }
 		public Corporation Owner { get; set; }
+
+		public ILocation Location { get; set; }
 	}
 }
