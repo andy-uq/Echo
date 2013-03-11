@@ -1,11 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Echo.Builder;
+using Echo.Items;
+using Echo.State;
 
 namespace Echo.Tests
 {
 	public static class TestExtensions
 	{
+		public static IEnumerable<Item> Build(this IEnumerable<ItemState> items)
+		{
+			var resolver = IdResolutionContext.Empty;
+			return items.Select(i => Item.Builder.Build(i, resolver));
+		}
+
+
 		public static T Materialise<T>(this ObjectBuilder<T> build) where T : IObject
 		{
 			var collection = build.FlattenObjectTree();

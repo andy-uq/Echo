@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Echo.State;
 
 namespace Echo.Items
 {
@@ -17,7 +18,18 @@ namespace Echo.Items
 
 		public ItemCollection(ItemCollection parent) : this()
 		{
-			parent._subCollections.Add(this);
+			if (parent != null)
+			{
+				parent._subCollections.Add(this);
+			}
+		}
+
+		public ItemCollection(IEnumerable<Item> initialContents) : this(parent: null)
+		{
+			foreach (var item in initialContents)
+			{
+				Add(item);
+			}
 		}
 
 		private IEnumerable<Item> Items
@@ -110,6 +122,21 @@ namespace Echo.Items
 		public long	ItemCount
 		{
 			get { return Items.Sum(i => i.Quantity); }
+		}
+
+		public bool Contains(ICollection<ItemState> items)
+		{
+			var hasItems =
+				(
+					from neededItem in items
+					select new
+					{
+						required = neededItem.Quantity,
+						count = _storage[neededItem.Code].Quantity
+					}
+				).All(i => i.required <= i.count);
+
+			return hasItems || _subCollections.Any(x => x.Contains(items));
 		}
 	}
 }

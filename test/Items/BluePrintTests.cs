@@ -60,11 +60,22 @@ namespace Echo.Tests.Items
 		[Test]
 		public void HaveMaterials()
 		{
-			Assert.That(BluePrint.HasMaterials(new ItemState[0]), Is.False);
-			Assert.That(BluePrint.HasMaterials(BluePrint.Materials), Is.True);
-			Assert.That(BluePrint.HasMaterials(new[] { new ItemState() { Code = ItemCode.LightFrigate, Quantity = 1 } }), Is.False);
-			Assert.That(BluePrint.HasMaterials(new[] { new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 } }), Is.False);
-			Assert.That(BluePrint.HasMaterials(new[] { new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 }, new ItemState() { Code = ItemCode.Veldnium, Quantity = 5 } }), Is.True);
+			Assert.That(BluePrint.HasMaterials(new ItemCollection()), Is.False);
+
+			var itemCollection = new ItemCollection(BluePrint.Materials.Build());
+			Assert.That(BluePrint.HasMaterials(itemCollection), Is.True);
+
+			var c1 = new[] {new ItemState() {Code = ItemCode.LightFrigate, Quantity = 1}};
+			itemCollection = new ItemCollection(c1.Build());
+			Assert.That(BluePrint.HasMaterials(itemCollection), Is.False);
+
+			var c2 = new[] {new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}};
+			itemCollection = new ItemCollection(c2.Build());
+			Assert.That(BluePrint.HasMaterials(itemCollection), Is.False);
+
+			var c3 = new[] {new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}, new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}};
+			itemCollection = new ItemCollection(c3.Build());
+			Assert.That(BluePrint.HasMaterials(itemCollection), Is.True);
 		}
 
 		[Test]

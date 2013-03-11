@@ -26,18 +26,9 @@ namespace Echo.State
 		public SkillLevel[] BuildRequirements { get; set; }
 		public uint TargetQuantity { get; set; }
 
-		public bool HasMaterials(IEnumerable<ItemState> items)
+		public bool HasMaterials(ItemCollection items)
 		{
-			var itemLookup = items.ToLookup(i => i.Code);
-			return
-				(
-					from neededItem in Materials
-					select new
-					{
-						required = neededItem.Quantity,
-						count = itemLookup[neededItem.Code].Sum(item => item.Quantity)
-					}
-				).All(i => i.required <= i.count);
+			return items.Contains(Materials.ToArray());
 		}
 
 		public Item Build(IItemFactory itemFactory)
