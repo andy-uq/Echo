@@ -71,6 +71,7 @@
     <Compile Include="IRandom.cs" />
     <Compile Include="Builders\Items\Packing\WeaponPacker.cs" />
     <Compile Include="ItemPacker.cs" />
+    <Compile Include="Items\ItemCollection.cs" />
     <Compile Include="Ships\ArmourPlating.cs" />
     <Compile Include="Ships\Damage.cs" />
     <Compile Include="State\BluePrintInfo.cs" />
