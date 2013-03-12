@@ -42,7 +42,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var asteroidBelt = CelestialObject.Builder.For(AsteroidBelt).Build(null, AsteroidBelt).Materialise();
+			var asteroidBelt = CelestialObject.Builder.For(AsteroidBelt).Build(null).Materialise();
 			Assert.That(asteroidBelt, Is.InstanceOf<AsteroidBelt>());
 			var state = asteroidBelt.Save();
 
@@ -70,7 +70,7 @@ namespace Echo.Tests.StatePersistence
 				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
 				Assert.That(state, Is.Not.Null);
 
-				var celestialObject = CelestialObject.Builder.For(state).Build(null, state).Materialise();
+				var celestialObject = CelestialObject.Builder.For(state).Build(null).Materialise();
 				Assert.That(celestialObject, Is.InstanceOf<AsteroidBelt>());
 
 				var asteroidBelt = (AsteroidBelt) celestialObject;

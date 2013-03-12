@@ -10,22 +10,32 @@ namespace Echo.Celestial
 
 		public class Builder
 		{
-			public ObjectBuilder<CelestialObject> Build(ILocation target, CelestialObjectState state)
-			{
-				var builder = Build(state);
+			protected CelestialObjectState State { get; set; }
 
-				builder.Target.Id = state.ObjectId;
-				builder.Target.Name = state.Name;
-				builder.Target.Position = new Position(target, state.LocalCoordinates);
-				builder.Target.Mass = state.Mass;
-				builder.Target.Size = state.Size;
+			protected Builder()
+			{}
+
+			protected Builder(CelestialObjectState state)
+			{
+				State = state;
+			}
+
+			public ObjectBuilder<CelestialObject> Build(ILocation target)
+			{
+				var builder = Build();
+
+				builder.Target.Id = State.ObjectId;
+				builder.Target.Name = State.Name;
+				builder.Target.Position = new Position(target, State.LocalCoordinates);
+				builder.Target.Mass = State.Mass;
+				builder.Target.Size = State.Size;
 
 				return builder;
 			}
 
 			public CelestialObjectState Save(CelestialObject celestialObject)
 			{
-				var state = new CelestialObjectState
+				State = new CelestialObjectState
 				{
 					ObjectId = celestialObject.Id,
 					Name = celestialObject.Name,
@@ -36,19 +46,19 @@ namespace Echo.Celestial
 					Size = celestialObject.Size
 				};
 
-				return Save(celestialObject, state);
+				return SaveCelestialObject(celestialObject);
 			}
 
-			protected virtual CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
+			protected virtual CelestialObjectState SaveCelestialObject(CelestialObject celestialObject)
 			{
-				return state;
+				return State;
 			}
 
-			protected virtual ObjectBuilder<CelestialObject> Build(CelestialObjectState state)
+			protected virtual ObjectBuilder<CelestialObject> Build()
 			{
 				CelestialObject celestialObject;
 
-				switch (state.CelestialObjectType)
+				switch (State.CelestialObjectType)
 				{
 					case CelestialObjectType.Planet:
 						celestialObject = new Planet();
@@ -83,21 +93,21 @@ namespace Echo.Celestial
 				switch (state.CelestialObjectType)
 				{
 					case CelestialObjectType.AsteriodBelt:
-						return new AsteroidBeltBuilder();
+						return new AsteroidBeltBuilder(state);
 
 					default:
-						return new Builder();
+						return new Builder(state);
 				}
 			}
 
 			private class PlanetBuilder : Builder
 			{
-				protected override CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
+				protected override CelestialObjectState SaveCelestialObject(CelestialObject celestialObject)
 				{
-					var obj = base.Save(celestialObject, state);
-					obj.Orbits = null;
+					var state = base.SaveCelestialObject(celestialObject);
+					state.Orbits = null;
 
-					return obj;
+					return state;
 				}
 			}
 
@@ -105,9 +115,19 @@ namespace Echo.Celestial
 
 			private class AsteroidBeltBuilder : Builder
 			{
-				protected override CelestialObjectState Save(CelestialObject celestialObject, CelestialObjectState state)
+				public AsteroidBeltBuilder(CelestialObjectState state) : base(state)
+				{	
+				}
+
+				public AsteroidBeltBuilder()
+				{
+				}
+
+				protected override CelestialObjectState SaveCelestialObject(CelestialObject celestialObject)
 				{
 					var asteroidBelt = (AsteroidBelt) celestialObject;
+
+					var state = base.SaveCelestialObject(asteroidBelt);					
 					state.AsteroidBelt = new AsteroidBeltState
 					{
 						AmountRemaining = asteroidBelt.AmountRemaining,
@@ -117,13 +137,13 @@ namespace Echo.Celestial
 					return state;
 				}
 
-				protected override ObjectBuilder<CelestialObject> Build(CelestialObjectState state)
+				protected override ObjectBuilder<CelestialObject> Build()
 				{
 					return new ObjectBuilder<CelestialObject>(new AsteroidBelt
 					{
-						Ore = state.AsteroidBelt.Ore,
-						Richness = state.AsteroidBelt.Richness,
-						AmountRemaining = state.AsteroidBelt.AmountRemaining
+						Ore = State.AsteroidBelt.Ore,
+						Richness = State.AsteroidBelt.Richness,
+						AmountRemaining = State.AsteroidBelt.AmountRemaining
 					});
 				}
 			}

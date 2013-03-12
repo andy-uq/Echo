@@ -42,7 +42,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var moon = CelestialObject.Builder.For(Moon).Build(new Planet { Id = Universe.Earth.ObjectId }, Moon).Materialise();
+			var moon = CelestialObject.Builder.For(Moon).Build(new Planet { Id = Universe.Earth.ObjectId }).Materialise();
 			Assert.That(moon, Is.InstanceOf<Moon>());
 
 			var state = moon.Save();
@@ -69,7 +69,7 @@ namespace Echo.Tests.StatePersistence
 				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
 				Assert.That(state, Is.Not.Null);
 
-				var moon = CelestialObject.Builder.For(state).Build(null, state).Materialise();
+				var moon = CelestialObject.Builder.For(state).Build(null).Materialise();
 				Assert.That(moon, Is.InstanceOf<Moon>());
 			}
 		}

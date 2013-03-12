@@ -54,7 +54,7 @@ namespace Echo.Celestial
 
 				builder
 					.Dependents(state.Satellites)
-					.Build((target, dependent) => CelestialObject.Builder.For(dependent).Build(solarSystem, dependent))
+					.Build((target, dependent) => CelestialObject.Builder.For(dependent).Build(solarSystem))
 					.Resolve((resolver, target, dependent) => target.Satellites.Add(dependent));
 
 				builder
