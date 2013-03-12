@@ -9,7 +9,6 @@ namespace Echo
 	{
 		public abstract class ObjectBuilder
 		{
-			private readonly IObject _target;
 			private readonly HashSet<IBuilderContext> _dependents = new HashSet<IBuilderContext>(new ResolutionContextComparer());
 
 			private class ResolutionContextComparer : IEqualityComparer<IBuilderContext>
@@ -23,11 +22,6 @@ namespace Echo
 				{
 					return obj.Target.Id.GetHashCode();
 				}
-			}
-
-			protected ObjectBuilder(IObject target)
-			{
-				_target = target;
 			}
 
 			public IEnumerable<IBuilderContext> DependentObjects

@@ -2,8 +2,10 @@ using System;
 using System.Linq;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.Corporations;
 using Echo.Data;
 using Echo.Data.Tests;
+using Echo.Data.Tests.StatePersistence;
 using Echo.State;
 using NUnit.Framework;
 using Echo;
@@ -126,7 +128,9 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(earthState, Is.Not.Null);
 			Assert.That(earthState, Is.InstanceOf<CelestialObjectState>());
 
-			var universe = Echo.Universe.Builder.Build(state).Materialise();
+			var builder = Echo.Universe.Builder.Build(state);
+
+			var universe = builder.Materialise();
 			Assert.That(universe.StarClusters, Is.Not.Empty);
 
 			var starCluster = universe.StarClusters.First();

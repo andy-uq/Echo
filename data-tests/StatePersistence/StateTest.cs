@@ -1,14 +1,8 @@
-﻿using System;
-using System.Linq;
-using Echo.Data;
-using Echo.Data.Tests;
-using Echo.Tests.Infrastructure;
-using Echo.Tests.Mocks;
+﻿using Echo.Tests.Mocks;
 using NUnit.Framework;
 using Raven.Client;
-using test;
 
-namespace Echo.Tests.StatePersistence
+namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
 	public class StateTest

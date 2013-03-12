@@ -18,7 +18,7 @@ namespace Echo.Tests
 
 		public static T Materialise<T>(this ObjectBuilder<T> build) where T : IObject
 		{
-			var collection = build.FlattenObjectTree();
+			var collection = new HashSet<IObject>(build.FlattenObjectTree(), new ObjectEqualityComparer());
 			var idResolver = new IdResolutionContext(collection);
 
 			return build.Build(idResolver);

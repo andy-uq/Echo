@@ -58,7 +58,7 @@ namespace Echo.Agents
 
 			private static AgentSkillLevel Build(IIdResolver resolver, SkillLevel x)
 			{
-				return new AgentSkillLevel { Skill = resolver.GetById<SkillInfo>(x.SkillCode.ToId()), Level = x.Level };
+				return new AgentSkillLevel { Skill = resolver.Get<SkillInfo>(x.SkillCode.ToObjectReference()), Level = x.Level };
 			}
 
 			private static AgentStatisticState Save(AgentStatisticValue x)

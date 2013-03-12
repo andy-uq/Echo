@@ -1,4 +1,5 @@
 using System;
+using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Corporations;
@@ -45,7 +46,14 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var structure = Structure.Builder.For(Manufactory).Build(new Moon { Id = Universe.Moon.ObjectId }).Materialise();
+			var builder = Structure.Builder.For(Manufactory)
+				.Build(new Moon {Id = Universe.Moon.ObjectId});
+
+			builder.Add(Corporation.Builder.Build(Universe.MSCorp));
+			
+			builder.RegisterTestSkills();
+
+			var structure = builder.Materialise();
 			var state = structure.Save();
 
 			Assert.That(state.Manufactory, Is.Not.Null);

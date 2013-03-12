@@ -34,6 +34,7 @@ namespace Echo.Structures
 					ObjectId = structure.Id,
 					Name = structure.Name,
 					LocalCoordinates = structure.Position.LocalCoordinates,
+					Owner = structure.Owner.ToObjectReference(),
 					Orbits = structure.Position.Location.ToObjectReference(),
 					StructureType = structure.StructureType,
 					BuyOrders = structure.BuyOrders.Select(BuyOrder.Builder.Save),

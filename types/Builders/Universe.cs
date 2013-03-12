@@ -18,6 +18,7 @@ namespace Echo
 					ObjectId = universe.Id,
 					Name = universe.Name,
 					StarClusters = universe.StarClusters.Save(),
+					Corporations = universe.Corporations.Save(),
 				};
 			}
 

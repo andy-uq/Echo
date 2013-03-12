@@ -1,4 +1,5 @@
 ﻿using Echo.Builder;
+using Echo.Corporations;
 using Echo.Items;
 using Echo.State;
 using Echo.Structures;
@@ -29,7 +30,11 @@ namespace Echo.Tests.Structures
 			_itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
 			_itemFactory.Setup(f => f.Build(_universe.BluePrint.Code, 1)).Returns(new Item(new ItemInfo(_universe.BluePrint.Code)));
 
-			_manufactory = Echo.Structures.Manufactory.Builder.For(_universe.Manufactory).Build(null).Materialise(IdResolver.Empty);
+			var builder = Echo.Structures.Manufactory.Builder.For(_universe.Manufactory).Build(null);
+			builder.Add(Corporation.Builder.Build(_universe.MSCorp));
+			builder.RegisterTestSkills();
+
+			_manufactory = builder.Materialise();
 		}
 
 		private ManufacturingTask CreateManufacturingTask()

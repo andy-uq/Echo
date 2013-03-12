@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Echo;
 using Echo.State;
 using EnsureThat;
@@ -9,6 +10,29 @@ namespace Echo
 		ObjectType ObjectType { get; }
 		long Id { get; }
 		string Name { get; }
+	}
+
+	public class ObjectEqualityComparer
+		: IEqualityComparer<IObject>
+	{
+		public bool Equals(IObject x, IObject y)
+		{
+			if ( x == null && y == null )
+				return true;
+
+			if ( x == null || y == null )
+				return false;
+
+			return (x.Id == y.Id);
+		}
+
+		public int GetHashCode(IObject obj)
+		{
+			if ( obj == null )
+				return 0;
+
+			return obj.Id.GetHashCode();
+		}
 	}
 
 	public static class ObjectExtensions

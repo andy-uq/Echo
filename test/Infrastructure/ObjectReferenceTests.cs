@@ -33,6 +33,25 @@ namespace Echo.Tests.Infrastructure
 		}
 
 		[Test]
+		public void ObjectEquality()
+		{
+			var comparer = new ObjectEqualityComparer();
+			var m1 = new Mock<IObject>(MockBehavior.Strict);
+			m1.SetupGet(o => o.Id).Returns(1L);
+
+			var m2 = new Mock<IObject>(MockBehavior.Strict);
+			m2.SetupGet(o => o.Id).Returns(2L);
+
+			Assert.That(comparer.GetHashCode(null), Is.EqualTo(0));
+			Assert.That(comparer.GetHashCode(m1.Object), Is.EqualTo(1L));
+
+			Assert.That(comparer.Equals(null, null), Is.True);
+			Assert.That(comparer.Equals(m1.Object, null), Is.False);
+			Assert.That(comparer.Equals(m1.Object, m2.Object), Is.False);
+			Assert.That(comparer.Equals(m1.Object, m1.Object), Is.True);
+		}
+
+		[Test]
 		public void IObjectAsObjectReference()
 		{
 			IObject o = null;
@@ -78,7 +97,7 @@ namespace Echo.Tests.Infrastructure
 		}
 
 		[Test]
-		public void ObjectEquality()
+		public void ObjectReferenceEquality()
 		{
 			var o1 = new ObjectReference(10, "Bob");
 			var o2 = new ObjectReference(10, "Fred");

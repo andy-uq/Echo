@@ -2,6 +2,7 @@
 using System.Linq;
 using Echo.Builder;
 using Echo.Celestial;
+using Echo.Corporations;
 using Echo.Ships;
 using Echo.State;
 using Echo.Tests;
@@ -80,6 +81,7 @@ namespace Echo.Data.Tests.StatePersistence
 				var builder = SolarSystem.Builder.Build(null, Universe.SolarSystem);
 				builder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
 				builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+				builder.Dependent(Universe.MSCorp).Build(Corporation.Builder.Build);
 				builder.RegisterTestSkills();
 
 				var solarSystem = builder.Materialise();

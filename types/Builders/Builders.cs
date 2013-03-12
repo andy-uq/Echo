@@ -78,6 +78,11 @@ namespace Echo
 				return starClusters.Select(StarCluster.Builder.Save);
 			}
 
+			public static IEnumerable<CorporationState> Save(this IEnumerable<Corporation> corporations)
+			{
+				return corporations.Select(Corporation.Builder.Save);
+			}
+
 			public static IEnumerable<HardPointState> Save(this IEnumerable<HardPoint> hardPoints)
 			{
 				return hardPoints.Select(HardPoint.Builder.Save);

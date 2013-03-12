@@ -2,9 +2,11 @@
 using System.IO;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.Corporations;
 using Echo.State;
 using Echo.Structures;
 using Echo.Tests;
+using Echo.Tests.Mocks;
 using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
@@ -44,7 +46,11 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var structure = Structure.Builder.For(TradingStation).Build(new Moon { Id = Universe.Moon.ObjectId }).Materialise();
+			var builder = Structure.Builder.For(TradingStation).Build(new Moon {Id = Universe.Moon.ObjectId});
+			builder.Add(Corporation.Builder.Build(Universe.MSCorp));
+			builder.RegisterTestSkills();
+
+			var structure = builder.Materialise();
 			var state = structure.Save();
 
 			Assert.That(state.TradingStation, Is.Not.Null);
@@ -77,7 +83,11 @@ namespace Echo.Data.Tests.StatePersistence
 				var state = tmp.Value;
 				Assert.That(state.TradingStation, Is.Not.Null);
 
-				var structure = Structure.Builder.For(state).Build(null).Materialise();
+				var builder = Structure.Builder.For(state).Build(null);
+				builder.Add(Corporation.Builder.Build(Universe.MSCorp));
+				builder.RegisterTestSkills();
+				
+				var structure = builder.Materialise();
 				Assert.That(structure, Is.InstanceOf<TradingStation>());
 			}
 		}

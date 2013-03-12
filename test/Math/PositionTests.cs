@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Echo.Celestial;
+using Echo.Corporations;
 using Echo.Ships;
 using Echo.Tests.Mocks;
 using Moq;
@@ -53,8 +54,11 @@ namespace Echo.Tests.Math
 		{
 			var s = new MockUniverse();
 			Assert.That(s.Universe.StarClusters, Is.Not.Empty);
-			
-			var u = Universe.Builder.Build(s.Universe).Materialise();
+
+			var builder = Universe.Builder.Build(s.Universe);
+			builder.Add(Corporation.Builder.Build(s.MSCorp));
+
+			var u = builder.Materialise();
 
 			Assert.That(u.StarClusters, Is.Not.Empty);
 			Assert.That(u.SolarSystems(), Is.Not.Empty);

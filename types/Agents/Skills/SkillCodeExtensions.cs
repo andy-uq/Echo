@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Echo.State;
 
 namespace Echo.Agents.Skills
 {
@@ -11,6 +12,11 @@ namespace Echo.Agents.Skills
 		public static long ToId(this SkillCode code)
 		{
 			return SKILL_ID_MASK | (long) code;
+		}
+
+		public static ObjectReference ToObjectReference(this SkillCode code)
+		{
+			return new ObjectReference(code.ToId(), code.ToString());
 		}
 
 		public static IEnumerable<SkillCategory> GetSkillCategories(this SkillCode skillCode)

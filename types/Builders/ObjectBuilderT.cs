@@ -13,7 +13,6 @@ namespace Echo
 			public T Target { get; private set; }
 
 			public ObjectBuilder(T target)
-				: base(target)
 			{
 				Target = target;
 				_resolveActions = new List<ResolveHandler<T>>();

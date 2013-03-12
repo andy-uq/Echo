@@ -2,6 +2,7 @@ using System;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Data.Tests;
+using Echo.Data.Tests.StatePersistence;
 using Echo.State;
 using NUnit.Framework;
 using Echo;
