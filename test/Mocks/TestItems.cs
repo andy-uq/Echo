@@ -37,10 +37,14 @@ namespace Echo.Tests.Mocks
 					Name = "Mining Laser",
 				};
 
-				yield return new ItemInfo
+				yield return new WeaponInfo
 				{
 					Code = ItemCode.MissileLauncher,
 					Name = "Missile Launcher",
+					DamageType = DamageType.Ballistic,
+					MaximumDamage = 100,
+					MinimumDamage = 50,
+					Speed = 1d
 				};
 
 				yield return new ItemInfo
@@ -54,6 +58,11 @@ namespace Echo.Tests.Mocks
 		public static ItemInfo For(ItemCode itemCode)
 		{
 			return _Items[itemCode];
+		}
+
+		public static T For<T>(ItemCode itemCode) where T : ItemInfo
+		{
+			return (T) For(itemCode);
 		}
 
 		public static IIdResolver RegisterTestItems(this IIdResolver resolver)

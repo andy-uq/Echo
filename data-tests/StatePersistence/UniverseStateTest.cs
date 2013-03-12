@@ -61,6 +61,14 @@ namespace Echo.Tests.StatePersistence
 		{
 			var universe = GetUniverse();
 
+			Assert.That(universe.StarClusters, Is.Not.Empty);
+			Assert.That(universe.Corporations, Is.Not.Empty);
+			Assert.That(universe.Items, Is.Not.Empty);
+			Assert.That(universe.Weapons, Is.Not.Empty);
+			Assert.That(universe.Skills, Is.Not.Empty);
+			Assert.That(universe.Ships, Is.Not.Empty);
+
+
 			using (var session = Database.OpenSession())
 			{
 				session.StoreMany(universe.StarClusters);
@@ -90,6 +98,13 @@ namespace Echo.Tests.StatePersistence
 					Skills = session.Query<SkillInfo>().ToArray(),
 					Ships = session.Query<ShipInfo>().ToArray()
 				};
+
+				Assert.That(universe.StarClusters, Is.Not.Empty);
+				Assert.That(universe.Corporations, Is.Not.Empty);
+				Assert.That(universe.Items, Is.Not.Empty);
+				Assert.That(universe.Weapons, Is.Not.Empty);
+				Assert.That(universe.Skills, Is.Not.Empty);
+				Assert.That(universe.Ships, Is.Not.Empty);
 
 				Check(universe);
 			}

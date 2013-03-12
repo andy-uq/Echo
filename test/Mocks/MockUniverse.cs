@@ -36,6 +36,10 @@ namespace Echo.Tests.Mocks
 			_idGenerator = idGenerator ?? new IdGenerator();
 			var universeId = Id();
 
+			SpaceshipCommand = TestSkills.For(SkillCode.SpaceshipCommand);
+			Weapon = TestItems.For<WeaponInfo>(ItemCode.MissileLauncher);
+			Item = TestItems.For(ItemCode.Veldnium);
+
 			John = new AgentState
 			{
 				ObjectId = Id(),
@@ -106,16 +110,6 @@ namespace Echo.Tests.Mocks
 				},
 			};
 
-			Weapon = new WeaponInfo
-			{
-				Code = ItemCode.MissileLauncher,
-				DamageType = DamageType.Ballistic,
-				Name = "Uber Launcher of Awesomeness",
-				MinimumDamage = 50,
-				MaximumDamage = 100,
-				Speed = 1d,
-			};
-
 			Ship = new ShipState()
 			{
 				ObjectId = Id(),
@@ -155,23 +149,14 @@ namespace Echo.Tests.Mocks
 				SolarSystems = new[] { SolarSystem },
 			};
 
-			SpaceshipCommand = new SkillInfo
-			{
-				Code = SkillCode.SpaceshipCommand,
-				Name = "Spaceship Command",
-				PrimaryStat = AgentStatistic.Perception,
-				SecondaryStat = AgentStatistic.Willpower,
-				TrainingMultiplier = 1,
-				Prerequisites = new State.SkillLevel[0],
-			};
-
 			Universe = new UniverseState
 			{
 				ObjectId = universeId,
 				StarClusters = new[] {StarCluster},
-				Items = new ItemInfo[0],
 				Weapons = new[] { Weapon },
-				Skills = new[] { SpaceshipCommand, },
+				Skills = TestSkills.Skills,
+				Corporations = new[] { MSCorp },
+				Items = TestItems.Items,
 				Ships = new[]
 				{
 					new ShipInfo
