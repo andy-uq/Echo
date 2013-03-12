@@ -23,7 +23,7 @@ namespace Echo.Agents
 
 		public long Id { get; private set; }
 		public string Name { get; private set; }
-		public ILocation Location { get; private set; }
+		public ILocation Location { get; set; }
 		public AgentStatistics Statistics { get; set; }
 		public Dictionary<AgentStatistic, Implant> Implants { get; set; }
 		public Dictionary<SkillCode, SkillLevel> Skills { get; set; }

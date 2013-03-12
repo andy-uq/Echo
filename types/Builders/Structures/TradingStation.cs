@@ -7,7 +7,17 @@ namespace Echo.Structures
 	{
 		public new class Builder : Structure.Builder
 		{
-			protected override ObjectBuilder<Structure> BuildStructure(ILocation location, StructureState state)
+			public Builder()
+			{
+			}
+
+			public Builder(StructureState state)
+				: base(state)
+			{
+			}
+
+
+			protected override ObjectBuilder<Structure> BuildStructure(ILocation location)
 			{
 				var structure = new TradingStation
 				{
@@ -16,14 +26,14 @@ namespace Echo.Structures
 				return new ObjectBuilder<Structure>(structure);
 			}
 
-			protected override StructureState SaveStructure(Structure structure, StructureState state)
+			protected override StructureState SaveStructure(Structure structure)
 			{
 				var tradingStation = (TradingStation)structure;
-				state.TradingStation = new TradingStationState
+				State.TradingStation = new TradingStationState
 				{
 				};
 
-				return state;
+				return State;
 			}
 		}
 	}

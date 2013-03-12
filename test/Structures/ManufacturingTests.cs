@@ -1,7 +1,7 @@
-﻿using Echo.Agents;
-using Echo.Agents.Skills;
+﻿using Echo.Builder;
 using Echo.Items;
 using Echo.State;
+using Echo.Structures;
 using Echo.Tasks.Structure;
 using Echo.Tests.Mocks;
 using Moq;
@@ -14,12 +14,20 @@ namespace Echo.Tests.Structures
 	{
 		private readonly MockUniverse _universe = new MockUniverse();
 		private Mock<IItemFactory> _itemFactory;
+		private Structure _manufactory;
+
+		public Structure Manufactory
+		{
+			get { return _manufactory; }
+		}
 
 		[SetUp]
 		public void CreateItemFactory()
 		{
 			_itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
 			_itemFactory.Setup(f => f.Build(_universe.BluePrint.Code, 1)).Returns(new Item(new ItemInfo(_universe.BluePrint.Code)));
+
+			_manufactory = Echo.Structures.Manufactory.Builder.For(_universe.Manufactory).Build(null).Materialise(IdResolver.Empty);
 		}
 
 		private ManufacturingTask CreateManufacturingTask()
@@ -83,13 +91,30 @@ namespace Echo.Tests.Structures
 		}
 
 		[Test]
+		public void RequireAgentAtManufactory()
+		{
+			var agent = _universe.John.StandUp();
+			agent.Skills.Clear();
+
+			var manufacturing = CreateManufacturingTask();
+			var parameters = new ManufacturingParameters
+			{
+				BluePrint = _universe.BluePrint,
+				Agent = agent,
+			};
+
+			var result = manufacturing.Manufacture(parameters);
+			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.MissingAgent));
+		}
+
+		[Test]
 		public void CreateItem()
 		{
 			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
-				Agent = _universe.John.StandUp(),
+				Agent = _universe.John.StandUp(Manufactory),
 			};
 
 			var result = manufacturing.Manufacture(parameters);

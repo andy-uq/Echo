@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Echo.Exceptions;
 using Echo.JumpGates;
 using Echo.State;
@@ -19,6 +20,11 @@ namespace Echo.Tests.SolarSystems
 		{
 			foreach (var x in jumpGates)
 				Register(x);
+		}
+
+		public IEnumerable<IObject> Values
+		{
+			get { return _registry.Values.ToArray(); }
 		}
 
 		public T GetById<T>(long id) where T : class, IObject

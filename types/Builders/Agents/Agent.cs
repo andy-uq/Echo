@@ -20,7 +20,7 @@ namespace Echo.Agents
 					Id = state.ObjectId,
 					Name = state.Name,
 					Statistics = new AgentStatistics(state.Statistics.Select(Build)),
-					Implants = state.Implants.ToDictionary(x => x.Stat),
+					Implants = state.Implants.ToDictionary(x => x.Stat)
 				};
 
 				return new ObjectBuilder<Agent>(agent)

@@ -12,12 +12,23 @@ namespace Echo.Structures
 	{
 		public abstract class Builder
 		{
+			protected StructureState State { get; set; }
+
+			protected Builder(StructureState state)
+			{
+				State = state;
+			}
+
+			protected Builder()
+			{
+			}
+
 			public StructureState Save(Structure structure)
 			{
 				Ensure.That(structure, "structure").IsNotNull();
 				Ensure.That(structure.Position.Location, "structure.Position.Location").IsNotNull();
 
-				var state = new StructureState
+				State = new StructureState
 				{
 					ObjectId = structure.Id,
 					Name = structure.Name,
@@ -28,31 +39,31 @@ namespace Echo.Structures
 					SellOrders = structure.SellOrders.Select(SellOrder.Builder.Save),
 				};
 
-				return SaveStructure(structure, state);
+				return SaveStructure(structure);
 			}
 
-			public ObjectBuilder<Structure> Build(ILocation location, StructureState state)
+			public ObjectBuilder<Structure> Build(ILocation location)
 			{
-				var builder = BuildStructure(location, state);
-				builder.Target.Id = state.ObjectId;
-				builder.Target.Name = state.Name;
-				builder.Target.Position = new Position(location, state.LocalCoordinates);
+				var builder = BuildStructure(location);
+				builder.Target.Id = State.ObjectId;
+				builder.Target.Name = State.Name;
+				builder.Target.Position = new Position(location, State.LocalCoordinates);
 
 				builder
-					.Dependents(state.BuyOrders)
+					.Dependents(State.BuyOrders)
 					.Build(x => BuyOrder.Builder.Build(builder.Target, x))
 					.Resolve((resolver, target, buyOrder) => target.BuyOrders.Add(buyOrder));
 				
 				builder
-					.Dependents(state.SellOrders)
+					.Dependents(State.SellOrders)
 					.Build(x => SellOrder.Builder.Build(builder.Target, x))
 					.Resolve((resolver, target, buyOrder) => target.SellOrders.Add(buyOrder));
 
 				return builder;
 			}
 
-			protected abstract ObjectBuilder<Structure> BuildStructure(ILocation location, StructureState state);
-			protected abstract StructureState SaveStructure(Structure structure, StructureState state);
+			protected abstract ObjectBuilder<Structure> BuildStructure(ILocation location);
+			protected abstract StructureState SaveStructure(Structure structure);
 
 			public static Builder For(Structure structure)
 			{
@@ -68,10 +79,10 @@ namespace Echo.Structures
 			public static Builder For(StructureState state)
 			{
 				if (state.Manufactory != null)
-					return new Manufactory.Builder();
+					return new Manufactory.Builder(state);
 
 				if (state.TradingStation != null)
-					return new TradingStation.Builder();
+					return new TradingStation.Builder(state);
 
 				throw new InvalidOperationException("Cannot determine builder for Structure");
 			}

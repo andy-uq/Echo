@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Echo.Exceptions;
 using Echo.State;
 using EnsureThat;
@@ -15,7 +16,7 @@ namespace Echo
 			return itemNotFoundException;
 		}
 
-		protected abstract IEnumerable<IObject> Values { get; }
+		public abstract IEnumerable<IObject> Values { get; }
 
 		protected abstract bool LookupValue<T>(long id, out IObject value) where T : class, IObject;
 
@@ -72,6 +73,46 @@ namespace Echo
 			}
 			
 			return TryGet(objectReference.Value, out value);
+		}
+
+		public static IIdResolver Empty
+		{
+			get { return new IdResolutionContext(Enumerable.Empty<IObject>()); }
+		}
+	}
+
+	public static class IdResolverExtensions
+	{
+		public static IIdResolver Combine(this IIdResolver left, IIdResolver right)
+		{
+			return new CompositeIdResolver(left, right);
+		}
+	}
+
+	public class CompositeIdResolver : IdResolver
+	{
+		private readonly IIdResolver[] _resolvers;
+
+		public CompositeIdResolver(params IIdResolver[] resolvers)
+		{
+			_resolvers = resolvers;
+		}
+
+		public override IEnumerable<IObject> Values
+		{
+			get { return _resolvers.SelectMany(x => x.Values); }
+		}
+
+		protected override bool LookupValue<T>(long id, out IObject value)
+		{
+			foreach (var child in _resolvers)
+			{
+				if ( child.TryGetById(id, out value) )
+					return true;
+			}
+
+			value = null;
+			return false;
 		}
 	}
 }

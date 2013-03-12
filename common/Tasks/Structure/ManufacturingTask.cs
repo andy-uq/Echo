@@ -1,4 +1,5 @@
 ﻿using Echo.Items;
+using Echo.Structures;
 using EnsureThat;
 
 namespace Echo.Tasks.Structure
@@ -46,6 +47,10 @@ namespace Echo.Tasks.Structure
 
 			if (!parameters.Agent.CanUse(parameters.BluePrint))
 				return Failed(ErrorCode.MissingSkillRequirement);
+
+			var location = parameters.Agent.Location as Manufactory;
+			if ( location == null )
+				return Failed(ErrorCode.MissingAgent);
 
 			var item = parameters.BluePrint.Build(_itemFactory);
 			return Success(item);

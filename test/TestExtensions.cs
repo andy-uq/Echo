@@ -3,6 +3,7 @@ using System.Linq;
 using Echo.Builder;
 using Echo.Items;
 using Echo.State;
+using Echo.Tests.Mocks;
 
 namespace Echo.Tests
 {
@@ -10,7 +11,7 @@ namespace Echo.Tests
 	{
 		public static IEnumerable<Item> Build(this IEnumerable<ItemState> items)
 		{
-			var resolver = IdResolutionContext.Empty;
+			var resolver = IdResolver.Empty.RegisterTestItems();
 			return items.Select(i => Item.Builder.Build(i, resolver));
 		}
 

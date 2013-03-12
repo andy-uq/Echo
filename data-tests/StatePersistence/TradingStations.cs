@@ -42,7 +42,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var structure = Structure.Builder.For(TradingStation).Build(new Moon { Id = Universe.Moon.ObjectId }, TradingStation).Materialise();
+			var structure = Structure.Builder.For(TradingStation).Build(new Moon { Id = Universe.Moon.ObjectId }).Materialise();
 			var state = structure.Save();
 
 			Assert.That(state.TradingStation, Is.Not.Null);
@@ -75,7 +75,7 @@ namespace Echo.Tests.StatePersistence
 				var state = tmp.Value;
 				Assert.That(state.TradingStation, Is.Not.Null);
 
-				var structure = Structure.Builder.For(state).Build(null, state).Materialise();
+				var structure = Structure.Builder.For(state).Build(null).Materialise();
 				Assert.That(structure, Is.InstanceOf<TradingStation>());
 			}
 		}

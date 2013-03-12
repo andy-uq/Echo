@@ -81,6 +81,7 @@
     <Compile Include="Mocks\AgentTestExtensions.cs" />
     <Compile Include="Mocks\IdGenerator.cs" />
     <Compile Include="Mocks\LocationService.cs" />
+    <Compile Include="Mocks\TestItems.cs" />
     <Compile Include="Mocks\TestSkills.cs" />
     <Compile Include="Ships\HardPointTests.cs" />
     <Compile Include="Ships\MiningTests.cs" />

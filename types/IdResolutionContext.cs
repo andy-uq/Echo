@@ -27,14 +27,9 @@ namespace Echo
 			_lookup = collection.Where(x => x.Id != 0).ToDictionary(x => x.Id);
 		}
 
-		protected override IEnumerable<IObject> Values
+		public override IEnumerable<IObject> Values
 		{
 			get { return _lookup.Values.ToArray(); }
-		}
-
-		public static IIdResolver Empty
-		{
-			get { return new IdResolutionContext(Enumerable.Empty<IObject>()); }
 		}
 
 		protected override bool LookupValue<T>(long id, out IObject value)

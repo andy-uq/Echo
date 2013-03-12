@@ -59,7 +59,7 @@ namespace Echo.Celestial
 
 				builder
 					.Dependents(state.Structures)
-					.Build((target, dependent) => Structure.Builder.For(dependent).Build(solarSystem, dependent))
+					.Build((target, dependent) => Structure.Builder.For(dependent).Build(solarSystem))
 					.Resolve((resolver, target, dependent) => target.Structures.Add(dependent));
 
 				return builder;
