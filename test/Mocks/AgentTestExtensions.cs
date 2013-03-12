@@ -7,13 +7,16 @@ namespace Echo.Tests.Mocks
 	{
 		public static Agent StandUp(this AgentState state, ILocation initialLocation = null)
 		{
+			var idResolver = IdResolver.Empty;
+
 			if (initialLocation != null)
+			{
 				state.Location = initialLocation.AsObjectReference();
+				idResolver = new IdResolutionContext(new[] { initialLocation });
+			}
 
 			var builder = Agent.Builder.Build(state);
-			builder.RegisterTestSkills();
-
-			return builder.Materialise();
+			return builder.Materialise(idResolver.RegisterTestSkills());
 		}
 	}
 }

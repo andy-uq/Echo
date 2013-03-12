@@ -40,6 +40,11 @@ namespace Echo.Tests.Mocks
 			return _skills[skillCode];
 		}
 
+		public static IIdResolver RegisterTestSkills(this IIdResolver idResolver)
+		{
+			return idResolver.Combine(new IdResolutionContext(Skills));
+		}
+
 		public static void RegisterTestSkills(this ObjectBuilder builder)
 		{
 			foreach ( var skill in Skills.Select(x => new SkillBuilderContext(x)) )

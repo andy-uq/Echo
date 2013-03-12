@@ -12,7 +12,7 @@ namespace Echo.Tests.Structures
 	[TestFixture]
 	public class ManufacturingTests
 	{
-		private readonly MockUniverse _universe = new MockUniverse();
+		private MockUniverse _universe;
 		private Mock<IItemFactory> _itemFactory;
 		private Structure _manufactory;
 
@@ -24,6 +24,8 @@ namespace Echo.Tests.Structures
 		[SetUp]
 		public void CreateItemFactory()
 		{
+			_universe = new MockUniverse();
+
 			_itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
 			_itemFactory.Setup(f => f.Build(_universe.BluePrint.Code, 1)).Returns(new Item(new ItemInfo(_universe.BluePrint.Code)));
 
@@ -94,7 +96,6 @@ namespace Echo.Tests.Structures
 		public void RequireAgentAtManufactory()
 		{
 			var agent = _universe.John.StandUp();
-			agent.Skills.Clear();
 
 			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
