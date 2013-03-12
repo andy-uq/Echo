@@ -89,6 +89,7 @@ namespace Echo.Tests.Mocks
 				Name = "MFC",
 				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(0.5001, 0, 0),
+				Owner = MSCorp.ToObjectReference(),
 				Manufactory = new ManufactoryState() { Efficiency = 0.5d },
 			};
 			TradingStation = new StructureState()
@@ -97,6 +98,7 @@ namespace Echo.Tests.Mocks
 				Name = "TS",
 				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
+				Owner = MSCorp.ToObjectReference(),
 				TradingStation = new TradingStationState()
 				{
 					BuyOrders = new[] { new BuyOrderState { Auction = new AuctionState {} }, },

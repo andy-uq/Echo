@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Echo.Builder;
+using Echo.Corporations;
 using Echo.Market;
 using Echo.State;
 using Echo;
@@ -49,6 +50,9 @@ namespace Echo.Structures
 				builder.Target.Name = State.Name;
 				builder.Target.Position = new Position(location, State.LocalCoordinates);
 
+				builder.Resolve((resolver, target) => target.Owner = resolver.Get<Corporation>(State.Owner));
+				builder.Resolve(LoadHangarItems);
+				
 				builder
 					.Dependents(State.BuyOrders)
 					.Build(x => BuyOrder.Builder.Build(builder.Target, x))
@@ -60,6 +64,12 @@ namespace Echo.Structures
 					.Resolve((resolver, target, buyOrder) => target.SellOrders.Add(buyOrder));
 
 				return builder;
+			}
+
+			private void LoadHangarItems(IIdResolver idresolver, Structure target)
+			{
+				if (target.Owner == null)
+					throw new InvalidOperationException("Cannot load hangar items without owner");
 			}
 
 			protected abstract ObjectBuilder<Structure> BuildStructure(ILocation location);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
 using Echo.Agents.Skills;
@@ -9,7 +8,6 @@ using Echo.Tests;
 using Echo.Tests.Mocks;
 using Echo.Tests.StatePersistence;
 using NUnit.Framework;
-using SkillLevel = Echo.State.SkillLevel;
 
 namespace Echo.Data.Tests.StatePersistence
 {
@@ -31,7 +29,6 @@ namespace Echo.Data.Tests.StatePersistence
 		{
 			get { return Universe.John; }
 		}
-
 
 		[Test]
 		public void Persist()

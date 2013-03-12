@@ -4,9 +4,11 @@ using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
 using Echo.Structures;
+using Echo.Tests;
+using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
-namespace Echo.Tests.StatePersistence
+namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
 	public class TradingStations : StateTest

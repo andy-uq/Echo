@@ -111,6 +111,7 @@ namespace Echo.Data.Tests.StatePersistence
 			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
+			builder.Dependent(Universe.MSCorp).Build(x => new ObjectBuilder<CorporationState>(x));
 			builder.RegisterTestSkills();
 
 			var solarSystem = builder.Materialise();

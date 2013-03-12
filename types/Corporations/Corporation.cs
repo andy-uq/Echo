@@ -3,6 +3,7 @@ using Echo.Agents;
 using Echo.Items;
 using Echo.Market;
 using Echo.Ships;
+using Echo.State;
 using Echo.Structures;
 
 namespace Echo.Corporations
@@ -11,8 +12,10 @@ namespace Echo.Corporations
 	{
 		public Corporation()
 		{
+			Employees = new List<Agent>();
 			Property = new ItemCollection();
 			Structures = new List<Structure>();
+			Hangars = new Dictionary<ObjectReference, ItemCollection>();
 		}
 
 		public ObjectType ObjectType
@@ -32,5 +35,6 @@ namespace Echo.Corporations
 		public List<Item> BluePrints { get; set; }
 		public List<Item> Assets { get; set; }
 
+		public Dictionary<ObjectReference, ItemCollection> Hangars { get; set; }
 	}
 }

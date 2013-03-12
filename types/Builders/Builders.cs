@@ -2,6 +2,7 @@
 using System.Linq;
 using Echo.Agents;
 using Echo.Celestial;
+using Echo.Corporations;
 using Echo.Items;
 using Echo.Market;
 using Echo.Ships;
@@ -34,6 +35,14 @@ namespace Echo
 					return null;
 
 				return Agent.Builder.Save(agent);
+			}
+	
+			public static CorporationState Save(this Corporation corporation)
+			{
+				if ( corporation == null )
+					return null;
+
+				return Corporation.Builder.Save(corporation);
 			}
 
 			public static WeaponState Save(this Weapon weapon)

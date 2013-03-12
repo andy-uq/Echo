@@ -1,9 +1,7 @@
 using System;
 using Echo.Builders;
-using Echo.Celestial;
 using Echo.Corporations;
 using Echo.State;
-using Echo.Structures;
 using Echo.Tests;
 using Echo.Tests.Mocks;
 using Echo.Tests.StatePersistence;
@@ -12,22 +10,22 @@ using NUnit.Framework;
 namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
-	public class Manufactories : StateTest
+	public class Corporations : StateTest
 	{
 		public class WrappedObjectState
 		{
 			public string Id { get; set; }
-			public StructureState Value { get; set; }
+			public CorporationState Value { get; set; }
 
-			public WrappedObjectState(StructureState value)
+			public WrappedObjectState(CorporationState value)
 			{
 				Value = value;
 			}
 		}
-		
-		private StructureState Manufactory
+
+		public CorporationState MSCorp
 		{
-			get { return Universe.Manufactory; }
+			get { return Universe.MSCorp; }
 		}
 
 		[Test]
@@ -35,7 +33,7 @@ namespace Echo.Data.Tests.StatePersistence
 		{
 			using ( var session = Database.OpenSession() )
 			{
-				session.Store(new WrappedObjectState(Manufactory));
+				session.Store(new WrappedObjectState(MSCorp));
 				session.SaveChanges();
 			}
 
@@ -45,10 +43,12 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var structure = Structure.Builder.For(Manufactory).Build(new Moon { Id = Universe.Moon.ObjectId }).Materialise();
-			var state = structure.Save();
+			var builder = Corporation.Builder.Build(MSCorp);
+			builder.RegisterTestSkills();
 
-			Assert.That(state.Manufactory, Is.Not.Null);
+			var corp = builder.Materialise();
+			Assert.That(corp, Is.InstanceOf<Corporation>());
+			var state = corp.Save();
 
 			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
@@ -57,31 +57,27 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Deserialise()
 		{
-			var wrapped = new WrappedObjectState(Manufactory);
-
+			var wrapped = new WrappedObjectState(MSCorp);
 			using ( var session = Database.OpenSession() )
 			{
 				session.Store(wrapped, string.Concat(wrapped.Value.GetType().Name, "/", wrapped.Value.ObjectId));
 				session.SaveChanges();
 			}
 
+			DumpObjects("WrappedObject");
+
 			using ( var session = Database.OpenSession() )
 			{
 				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
 				Assert.That(state, Is.Not.Null);
-				Assert.That(state.Manufactory, Is.Not.Null);
-				Assert.That(state.TradingStation, Is.Null);
-				
-				var builder = Structure.Builder.For(Manufactory).Build(location: null);
-				builder.Add(Corporation.Builder.Build(Universe.MSCorp));
+
+				var builder = Corporation.Builder.Build(state);
 				builder.RegisterTestSkills();
 
-				var structure = builder.Materialise();
-
-				Assert.That(structure, Is.InstanceOf<Manufactory>());
-				Assert.That(structure.Owner, Is.Not.Null);
-				Assert.That(structure.Owner.Id, Is.EqualTo(Universe.MSCorp.ObjectId));
+				var corporation = builder.Materialise();
+				Assert.That(corporation, Is.InstanceOf<Corporation>());
 			}
 		}
+
 	}
 }
