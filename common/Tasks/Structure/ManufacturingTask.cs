@@ -21,6 +21,7 @@ namespace Echo.Tasks.Structure
 			MissingBluePrint,
 			MissingAgent,
 			MissingSkillRequirement,
+			MissingMaterials
 		}
 
 		#endregion
@@ -51,6 +52,10 @@ namespace Echo.Tasks.Structure
 			var location = parameters.Agent.Location as Manufactory;
 			if ( location == null )
 				return Failed(ErrorCode.MissingAgent);
+
+			var property = parameters.Agent.Corporation.GetProperty(location);
+			if ( !parameters.BluePrint.HasMaterials(property) )
+				return Failed(ErrorCode.MissingMaterials);
 
 			var item = parameters.BluePrint.Build(_itemFactory);
 			return Success(item);

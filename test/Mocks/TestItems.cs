@@ -74,5 +74,10 @@ namespace Echo.Tests.Mocks
 		{
 			return resolver.Combine(new IdResolutionContext(Items));
 		}
+
+		public static Item Item(ItemCode itemCode, uint quantity = 1)
+		{
+			return new Item(For(itemCode), quantity);
+		}
 	}
 }

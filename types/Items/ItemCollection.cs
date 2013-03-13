@@ -165,6 +165,11 @@ namespace Echo.Items
 			get { return Items.Sum(i => i.Quantity); }
 		}
 
+		public bool IsEmpty
+		{
+			get { return _storage.Count == 0; }
+		}
+
 		public bool Contains(ICollection<ItemState> items)
 		{
 			var hasItems =

@@ -74,6 +74,8 @@ namespace Echo.Data.Tests.StatePersistence
 				
 				var corporation = builder.Materialise();
 				Assert.That(corporation, Is.InstanceOf<Corporation>());
+
+				Assert.That(corporation.Employees, Has.All.Property("Corporation").EqualTo(corporation));
 			}
 		}
 

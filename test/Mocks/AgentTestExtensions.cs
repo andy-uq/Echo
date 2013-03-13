@@ -1,11 +1,12 @@
 using Echo.Agents;
+using Echo.Corporations;
 using Echo.State;
 
 namespace Echo.Tests.Mocks
 {
 	static internal class AgentTestExtensions
 	{
-		public static Agent StandUp(this AgentState state, ILocation initialLocation = null)
+		public static Agent StandUp(this AgentState state, Corporation corporation = null, ILocation initialLocation = null)
 		{
 			var idResolver = IdResolver.Empty;
 
@@ -15,7 +16,9 @@ namespace Echo.Tests.Mocks
 				idResolver = new IdResolutionContext(new[] { initialLocation });
 			}
 
-			var builder = Agent.Builder.Build(state);
+			var builder = Agent.Builder.Build(state)
+				.Resolve((r, a) => a.Corporation = corporation);
+			
 			return builder.Materialise(idResolver.RegisterTestSkills());
 		}
 	}

@@ -39,7 +39,7 @@ namespace Echo.Structures
 					Owner = structure.Owner.ToObjectReference(),
 					Orbits = structure.Position.Location.ToObjectReference(),
 					StructureType = structure.StructureType,
-					HangerItems = structure.Hangar.Select(SaveHangarItems),
+					HangerItems = structure.Hangar.Where(x => !x.Value.IsEmpty).Select(SaveHangarItems),
 					BuyOrders = structure.BuyOrders.Select(BuyOrder.Builder.Save),
 					SellOrders = structure.SellOrders.Select(SellOrder.Builder.Save),
 				};

@@ -86,7 +86,11 @@ namespace Echo.Data.Tests.StatePersistence
 				builder.Add(Corporation.Builder.Build(Universe.MSCorp));
 				
 				var structure = builder.Materialise();
+				
 				Assert.That(structure, Is.InstanceOf<TradingStation>());
+				Assert.That(structure.Hangar, Is.Not.Empty);
+				Assert.That(structure.Owner, Is.Not.Null);
+				Assert.That(structure.Owner.Property, Is.Not.Empty);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Echo.Agents.Skills;
+using Echo.Corporations;
 using Echo.Ships;
 using Echo.State;
 using Echo.Statistics;
@@ -23,6 +24,7 @@ namespace Echo.Agents
 
 		public long Id { get; private set; }
 		public string Name { get; private set; }
+		public Corporation Corporation { get; set; }
 		public ILocation Location { get; set; }
 		public AgentStatistics Statistics { get; set; }
 		public Dictionary<AgentStatistic, Implant> Implants { get; set; }

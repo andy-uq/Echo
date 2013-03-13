@@ -113,13 +113,34 @@ namespace Echo.Tests.Structures
 		}
 
 		[Test]
-		public void CreateItem()
+		public void RequireItemsAtManufactory()
 		{
+			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
+			var agent = _universe.John.StandUp(corporation, initialLocation:Manufactory);
+
 			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
-				Agent = _universe.John.StandUp(Manufactory),
+				Agent = agent,
+			};
+
+			var result = manufacturing.Manufacture(parameters);
+			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.MissingMaterials));
+		}
+
+		[Test]
+		public void CreateItem()
+		{
+			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
+			var property = corporation.GetProperty(Manufactory);
+			property.Add(TestItems.Item(ItemCode.Veldnium, quantity:10));
+			
+			var manufacturing = CreateManufacturingTask();
+			var parameters = new ManufacturingParameters
+			{
+				BluePrint = _universe.BluePrint,
+				Agent = _universe.John.StandUp(corporation, initialLocation:Manufactory),
 			};
 
 			var result = manufacturing.Manufacture(parameters);

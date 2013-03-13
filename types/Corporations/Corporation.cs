@@ -33,8 +33,19 @@ namespace Echo.Corporations
 		public List<BuyOrder> BuyOrders { get; set; }
 		public List<SellOrder> SellOrders { get; set; }
 		public List<Item> BluePrints { get; set; }
-		public List<Item> Assets { get; set; }
 
 		public Dictionary<ObjectReference, ItemCollection> Hangars { get; set; }
+
+		public ItemCollection GetProperty(Structure structure)
+		{
+			ItemCollection property;
+			if (!structure.Hangar.TryGetValue(this, out property))
+			{
+				property = new ItemCollection();
+				structure.Hangar[this] = property;
+			}
+
+			return property;
+		}
 	}
 }

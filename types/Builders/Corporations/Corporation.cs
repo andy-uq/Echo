@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Echo.Agents;
 using Echo.Builder;
 using Echo.State;
@@ -32,9 +33,17 @@ namespace Echo.Corporations
 				builder
 					.Dependents(state.Employees)
 					.Build(Agent.Builder.Build)
-					.Resolve((r, c, a) => corporation.Employees.Add(a));
+					.Resolve((resolver, target, agent) => AddEmployee(target, agent));
 
 				return builder;
+			}
+
+			private static Agent AddEmployee(Corporation target, Agent agent)
+			{
+				target.Employees.Add(agent);
+				agent.Corporation = target;
+
+				return agent;
 			}
 		}
 	}
