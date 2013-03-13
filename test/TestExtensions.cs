@@ -14,12 +14,11 @@ namespace Echo.Tests
 			var resolver = IdResolver.Empty.RegisterTestItems();
 			return items.Select(i => Item.Builder.Build(i, resolver));
 		}
-
-
+		
 		public static T Materialise<T>(this ObjectBuilder<T> build) where T : IObject
 		{
 			var collection = new HashSet<IObject>(build.FlattenObjectTree(), new ObjectEqualityComparer());
-			var idResolver = new IdResolutionContext(collection);
+			var idResolver = new IdResolutionContext(collection).RegisterTestItems().RegisterTestSkills();
 
 			return build.Build(idResolver);
 		}

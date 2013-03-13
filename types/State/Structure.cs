@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Echo.Items;
-using Echo.Market;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Echo.State.Market;
 using Echo.Structures;
-using Echo;
 
 namespace Echo.State
 {
 	public class StructureState : IObjectState
 	{
+		public StructureState()
+		{
+			HangerItems = Enumerable.Empty<HangarItemState>();
+			BuyOrders = Enumerable.Empty<BuyOrderState>();
+			SellOrders = Enumerable.Empty<SellOrderState>();
+		}
+
 		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
@@ -17,7 +21,7 @@ namespace Echo.State
 		public ObjectReference Orbits { get; set; }
 		public ObjectReference Owner { get; set; }
 
-		public IEnumerable<HangerItemState> HangerItems { get; set; }
+		public IEnumerable<HangarItemState> HangerItems { get; set; }
 		public IEnumerable<BuyOrderState> BuyOrders { get; set; }
 		public IEnumerable<SellOrderState> SellOrders { get; set; }
 

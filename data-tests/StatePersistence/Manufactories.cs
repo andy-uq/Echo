@@ -50,8 +50,6 @@ namespace Echo.Data.Tests.StatePersistence
 				.Build(new Moon {Id = Universe.Moon.ObjectId});
 
 			builder.Add(Corporation.Builder.Build(Universe.MSCorp));
-			
-			builder.RegisterTestSkills();
 
 			var structure = builder.Materialise();
 			var state = structure.Save();
@@ -82,7 +80,6 @@ namespace Echo.Data.Tests.StatePersistence
 				
 				var builder = Structure.Builder.For(Manufactory).Build(location: null);
 				builder.Add(Corporation.Builder.Build(Universe.MSCorp));
-				builder.RegisterTestSkills();
 
 				var structure = builder.Materialise();
 

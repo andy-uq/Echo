@@ -75,7 +75,7 @@
     <Compile Include="Ships\ArmourPlating.cs" />
     <Compile Include="Ships\Damage.cs" />
     <Compile Include="State\BluePrintInfo.cs" />
-    <Compile Include="State\HangerItemState.cs" />
+    <Compile Include="State\HangarItemState.cs" />
     <Compile Include="State\IItemInfo.cs" />
     <Compile Include="State\ItemInfo.cs" />
     <Compile Include="State\ObjectReference.cs" />

@@ -30,7 +30,16 @@ namespace Echo.Items
 			}
 		}
 
-		public ItemCollection(IEnumerable<Item> initialContents) : this(parent: null)
+		public ItemCollection(IEnumerable<Item> initialContents)
+			: this(parent: null)
+		{
+			foreach (var item in initialContents)
+			{
+				Add(item);
+			}
+		}
+		public ItemCollection(ItemCollection parent, IEnumerable<Item> initialContents)
+			: this(parent)
 		{
 			foreach (var item in initialContents)
 			{

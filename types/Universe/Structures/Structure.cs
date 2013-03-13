@@ -2,6 +2,7 @@
 using Echo.Celestial;
 using Echo;
 using Echo.Corporations;
+using Echo.Items;
 using Echo.Market;
 
 namespace Echo.Structures
@@ -19,10 +20,13 @@ namespace Echo.Structures
 		public List<SellOrder> SellOrders { get; private set; }
 		public List<BuyOrder> BuyOrders { get; private set; }
 
+		public Dictionary<Corporation, ItemCollection> Hangar { get; private set; }
+
 		protected Structure()
 		{
 			SellOrders = new List<SellOrder>();
 			BuyOrders = new List<BuyOrder>();
+			Hangar = new Dictionary<Corporation, ItemCollection>();
 		}
 	}
 }

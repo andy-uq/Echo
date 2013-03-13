@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Embedded;
+using Raven.Imports.Newtonsoft.Json;
 using test;
 
 namespace Echo.Data.Tests
@@ -21,13 +22,19 @@ namespace Echo.Data.Tests
 		{
 			lock ( TestSettings.SyncObject )
 			{
-				_database = new EmbeddableDocumentStore { RunInMemory = true };
+				_database = new EmbeddableDocumentStore { RunInMemory = true, Conventions = { CustomizeJsonSerializer = CustomizeJsonSerializer } };
 				_database.Initialize();
 
 				Console.WriteLine("Using in-memory database: {0}", _database.Url);
 			}
 
 			containerBuilder.RegisterInstance(_database).As<IDocumentStore>();
+		}
+
+		private void CustomizeJsonSerializer(JsonSerializer obj)
+		{
+			obj.Formatting = Formatting.Indented;
+			obj.TypeNameHandling = TypeNameHandling.None;
 		}
 
 		protected override void DisposeManagedResources()

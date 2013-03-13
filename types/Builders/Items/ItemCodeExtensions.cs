@@ -32,7 +32,7 @@ namespace Echo.Items
 
 		public static ItemInfo GetItemInfo(this ItemCode itemCode, IIdResolver resolver)
 		{
-			return resolver.GetById<ItemInfo>(ToId(itemCode));
+			return resolver.Get<ItemInfo>(itemCode.ToObjectReference());
 		}
 
 		public static bool TryParse(this long id, out ItemCode itemCode)

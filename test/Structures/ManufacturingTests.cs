@@ -32,8 +32,7 @@ namespace Echo.Tests.Structures
 
 			var builder = Echo.Structures.Manufactory.Builder.For(_universe.Manufactory).Build(null);
 			builder.Add(Corporation.Builder.Build(_universe.MSCorp));
-			builder.RegisterTestSkills();
-
+			
 			_manufactory = builder.Materialise();
 		}
 

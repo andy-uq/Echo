@@ -104,7 +104,7 @@ namespace Echo.Data.Tests
 			Console.WriteLine(json);
 		}
 
-		[Test]
+		[Test, Ignore("Type information required")]
 		public void CanDeserialiseInheritedObject()
 		{
 			var item = new A() { Name = "B", Children = new List<A>() { new B() { Id = 10, Name = "Child B", }, new A { Name = "Child A" } } };

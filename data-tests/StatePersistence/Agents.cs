@@ -52,8 +52,7 @@ namespace Echo.Data.Tests.StatePersistence
 			Assert.That(skill.Level, Is.EqualTo(5));
 
 			var builder = Agent.Builder.Build(John);
-			builder.RegisterTestSkills();
-
+			
 			var agent = builder.Materialise();
 			Assert.That(agent.Skills, Is.Not.Empty);
 		}
@@ -62,8 +61,7 @@ namespace Echo.Data.Tests.StatePersistence
 		public void Save()
 		{
 			var builder = Agent.Builder.Build(John);
-			builder.RegisterTestSkills();
-
+			
 			var agent = builder.Materialise();
 			Assert.That(agent, Is.InstanceOf<Agent>());
 			var state = agent.Save();
@@ -92,8 +90,7 @@ namespace Echo.Data.Tests.StatePersistence
 				Assert.That(state, Is.Not.Null);
 
 				var builder = Agent.Builder.Build(state);
-				builder.RegisterTestSkills();
-
+				
 				var agent = builder.Materialise();
 				Assert.That(agent, Is.InstanceOf<Agent>());
 

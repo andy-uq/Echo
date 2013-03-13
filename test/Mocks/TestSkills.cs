@@ -44,36 +44,5 @@ namespace Echo.Tests.Mocks
 		{
 			return idResolver.Combine(new IdResolutionContext(Skills));
 		}
-
-		public static void RegisterTestSkills(this ObjectBuilder builder)
-		{
-			foreach ( var skill in Skills.Select(x => new SkillBuilderContext(x)) )
-				builder.Add(skill);
-		}
-
-		private class SkillBuilderContext : IBuilderContext
-		{
-			private readonly SkillInfo _skill;
-
-			public SkillBuilderContext(SkillInfo skill)
-			{
-				_skill = skill;
-			}
-
-			public IObject Target
-			{
-				get { return _skill; }
-			}
-
-			public IEnumerable<IBuilderContext> DependentObjects
-			{
-				get { return Enumerable.Empty<IBuilderContext>(); }
-			}
-
-			public IObject Build(IIdResolver idResolver)
-			{
-				return _skill;
-			}
-		}
 	}
 }

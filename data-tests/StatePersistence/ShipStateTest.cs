@@ -28,8 +28,6 @@ namespace Echo.Data.Tests.StatePersistence
 				.Dependent(Universe.Weapon)
 				.Build(x => new ObjectBuilder<WeaponInfo>(x));
 
-			builder.RegisterTestSkills();
-
 			return builder.Materialise();
 		}
 
@@ -82,13 +80,11 @@ namespace Echo.Data.Tests.StatePersistence
 				builder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
 				builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 				builder.Dependent(Universe.MSCorp).Build(Corporation.Builder.Build);
-				builder.RegisterTestSkills();
 
 				var solarSystem = builder.Materialise();
 				var shipBuilder = Echo.Ships.Ship.Builder.Build(solarSystem, state);
 				shipBuilder.Dependent(new ShipInfo {Code = Ship.Code}).Build(x => new ObjectBuilder<ShipInfo>(x));
 				shipBuilder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
-				shipBuilder.RegisterTestSkills();
 
 				var ship = shipBuilder.Materialise();
 

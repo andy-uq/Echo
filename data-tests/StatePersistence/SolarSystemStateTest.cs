@@ -70,7 +70,6 @@ namespace Echo.Data.Tests.StatePersistence
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 			builder.Dependent(Universe.MSCorp).Build(Corporation.Builder.Build);
-			builder.RegisterTestSkills();
 
 			var solarSystem = builder.Materialise();
 			Check(solarSystem);
@@ -114,7 +113,6 @@ namespace Echo.Data.Tests.StatePersistence
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 			builder.Dependent(Universe.MSCorp).Build(Corporation.Builder.Build);
-			builder.RegisterTestSkills();
 
 			var solarSystem = builder.Materialise();
 			Check(solarSystem);

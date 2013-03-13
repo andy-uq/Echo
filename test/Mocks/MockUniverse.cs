@@ -103,6 +103,7 @@ namespace Echo.Tests.Mocks
 				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
 				Owner = MSCorp.ToObjectReference(),
+				HangerItems = new[] { new HangarItemState { Owner = MSCorp.ToObjectReference(), Items = new[] { ItemCode.MissileLauncher.ToItemState(quantity:10) }  }, },
 				TradingStation = new TradingStationState()
 				{
 					BuyOrders = new[] { new BuyOrderState { Auction = new AuctionState {} }, },

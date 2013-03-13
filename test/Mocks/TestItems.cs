@@ -55,6 +55,11 @@ namespace Echo.Tests.Mocks
 			}
 		}
 
+		public static ItemState ToItemState(this ItemCode itemCode, uint quantity=1)
+		{
+			return new ItemState {Code = itemCode, Quantity = quantity};
+		}
+
 		public static ItemInfo For(ItemCode itemCode)
 		{
 			return _Items[itemCode];

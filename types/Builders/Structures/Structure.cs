@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo.Builder;
 using Echo.Corporations;
+using Echo.Items;
 using Echo.Market;
 using Echo.State;
 using Echo;
@@ -37,6 +39,7 @@ namespace Echo.Structures
 					Owner = structure.Owner.ToObjectReference(),
 					Orbits = structure.Position.Location.ToObjectReference(),
 					StructureType = structure.StructureType,
+					HangerItems = structure.Hangar.Select(SaveHangarItems),
 					BuyOrders = structure.BuyOrders.Select(BuyOrder.Builder.Save),
 					SellOrders = structure.SellOrders.Select(SellOrder.Builder.Save),
 				};
@@ -52,7 +55,7 @@ namespace Echo.Structures
 				builder.Target.Position = new Position(location, State.LocalCoordinates);
 
 				builder.Resolve((resolver, target) => target.Owner = resolver.Get<Corporation>(State.Owner));
-				builder.Resolve(LoadHangarItems);
+				builder.Resolve((resolver, target) => LoadHangarItems(resolver, target, State.HangerItems));
 				
 				builder
 					.Dependents(State.BuyOrders)
@@ -67,10 +70,33 @@ namespace Echo.Structures
 				return builder;
 			}
 
-			private void LoadHangarItems(IIdResolver idresolver, Structure target)
+			private HangarItemState SaveHangarItems(KeyValuePair<Corporation, ItemCollection> hangarItems)
+			{
+				return new HangarItemState
+				{
+					Owner = hangarItems.Key.ToObjectReference(), 
+					Items = hangarItems.Value.Select(ToItemState)
+				};
+			}
+
+			private ItemState ToItemState(Item item)
+			{
+				return new ItemState {Code = item.ItemInfo.Code, Quantity = item.Quantity};
+			}
+
+			private void LoadHangarItems(IIdResolver idresolver, Structure target, IEnumerable<HangarItemState> hangerItems)
 			{
 				if (target.Owner == null)
 					throw new InvalidOperationException("Cannot load hangar items without owner");
+
+				foreach (var hangar in hangerItems)
+				{
+					var corporation = idresolver.Get<Corporation>(hangar.Owner);
+					var items = hangar.Items.Select(i => Item.Builder.Build(i, idresolver));
+					var itemCollection = new ItemCollection(corporation.Property, items);
+					
+					target.Hangar.Add(corporation, itemCollection);
+				}
 			}
 
 			protected abstract ObjectBuilder<Structure> BuildStructure(ILocation location);

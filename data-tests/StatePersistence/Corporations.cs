@@ -44,8 +44,7 @@ namespace Echo.Data.Tests.StatePersistence
 		public void Save()
 		{
 			var builder = Corporation.Builder.Build(MSCorp);
-			builder.RegisterTestSkills();
-
+			
 			var corp = builder.Materialise();
 			Assert.That(corp, Is.InstanceOf<Corporation>());
 			var state = corp.Save();
@@ -72,8 +71,7 @@ namespace Echo.Data.Tests.StatePersistence
 				Assert.That(state, Is.Not.Null);
 
 				var builder = Corporation.Builder.Build(state);
-				builder.RegisterTestSkills();
-
+				
 				var corporation = builder.Materialise();
 				Assert.That(corporation, Is.InstanceOf<Corporation>());
 			}
