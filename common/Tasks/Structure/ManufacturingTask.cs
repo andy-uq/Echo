@@ -1,4 +1,6 @@
-﻿using Echo.Items;
+﻿using Echo.Agents;
+using Echo.Items;
+using Echo.State;
 using Echo.Structures;
 using EnsureThat;
 
@@ -40,25 +42,33 @@ namespace Echo.Tasks.Structure
 		{
 			Ensure.That(() => parameters).IsNotNull();
 
-			if (parameters.BluePrint == null)
+			var bluePrintInfo = parameters.BluePrint;
+			var agent = parameters.Agent;
+
+			return Manufacture(bluePrintInfo, agent);
+		}
+
+		public ManufacturingResult Manufacture(BluePrintInfo bluePrintInfo, Agent agent)
+		{
+			if (bluePrintInfo == null)
 				return Failed(ErrorCode.MissingBluePrint);
 
-			if (parameters.Agent == null)
+			if (agent == null)
 				return Failed(ErrorCode.MissingAgent);
 
-			if (!parameters.Agent.CanUse(parameters.BluePrint))
+			if (!agent.CanUse(bluePrintInfo))
 				return Failed(ErrorCode.MissingSkillRequirement);
 
-			var location = parameters.Agent.Location as Manufactory;
-			if ( location == null )
+			var location = agent.Location as Manufactory;
+			if (location == null)
 				return Failed(ErrorCode.MissingAgent);
 
-			var property = parameters.Agent.Corporation.GetProperty(location);
-			if ( !parameters.BluePrint.HasMaterials(property) )
+			var property = agent.Corporation.GetProperty(location);
+			if (!bluePrintInfo.HasMaterials(property))
 				return Failed(ErrorCode.MissingMaterials);
 
-			var item = parameters.BluePrint.Build(_itemFactory);
-			property.Remove(parameters.BluePrint.Materials);
+			var item = bluePrintInfo.Build(_itemFactory);
+			property.Remove(bluePrintInfo.Materials);
 
 			return Success(item);
 		}

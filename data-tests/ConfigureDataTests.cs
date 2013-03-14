@@ -62,7 +62,10 @@ namespace Echo.Data.Tests
 				using ( var resolver = configurationBuilder.Build() )
 				{
 					var dbA = resolver.Resolve<IDocumentStore>();
-					dbA.OpenSession().Store(new A() {Name = "Bob"});
+					using (var session = dbA.OpenSession())
+					{
+						session.Store(new A() {Name = "Bob"});
+					}
 				}
 			}
 		}

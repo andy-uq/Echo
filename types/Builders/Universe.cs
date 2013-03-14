@@ -19,6 +19,10 @@ namespace Echo
 					Name = universe.Name,
 					StarClusters = universe.StarClusters.Save(),
 					Corporations = universe.Corporations.Save(),
+					Items = universe.Items.Values.ToArray(),
+					Weapons = universe.Weapons.Values.ToArray(),
+					Ships = universe.Ships.Values.ToArray(),
+					BluePrints = universe.BluePrints.Values.ToArray(),
 				};
 			}
 
@@ -34,9 +38,19 @@ namespace Echo
 					.Resolve((resolver, target, dependent) => target.Corporations.Add(dependent));
 				
 				builder
-					.Dependents(state.Items.Concat(state.Weapons))
+					.Dependents(state.Items)
 					.Build(BuildInfo)
 					.Resolve((resolver, target, itemInfo) => target.Items.Add(itemInfo.Code, itemInfo));
+				
+				builder
+					.Dependents(state.Weapons)
+					.Build(BuildInfo)
+					.Resolve((resolver, target, itemInfo) => target.Weapons.Add(itemInfo.Code, itemInfo));
+				
+				builder
+					.Dependents(state.BluePrints)
+					.Build(BuildInfo)
+					.Resolve((resolver, target, itemInfo) => target.BluePrints.Add(itemInfo.Code, itemInfo));
 				
 				builder
 					.Dependents(state.Ships)

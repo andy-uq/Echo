@@ -42,7 +42,7 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var idResolver = new IdResolutionContext(new[] { Universe.Weapon });
+			var idResolver = new IdResolutionContext(new[] { Universe.Item });
 			var item = Echo.Items.Item.Builder.Build(Item, idResolver);
 
 			Assert.That(item.ObjectType, Is.EqualTo(ObjectType.Item));

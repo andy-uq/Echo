@@ -13,7 +13,7 @@ namespace Echo.Tests.Infrastructure
 		[Test,ExpectedException(typeof(ItemNotFoundException))]
 		public void IdResolutionFail()
 		{
-			var itemInfo = TestItems.For(ItemCode.MissileLauncher);
+			var itemInfo = TestItems.Item(ItemCode.MissileLauncher);
 
 			var idResolution = new IdResolutionContext(new[] { itemInfo, });
 			var objRef = new ObjectReference(1L);
@@ -23,7 +23,7 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void IdResolutionGet()
 		{
-			var itemInfo = TestItems.For(ItemCode.MissileLauncher);
+			var itemInfo = TestItems.Item(ItemCode.MissileLauncher);
 
 			var idResolution = new IdResolutionContext(new[] { itemInfo, });
 			var objRef = new ObjectReference(itemInfo.ObjectId);
@@ -33,8 +33,8 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void IdResolutionCombine()
 		{
-			var i1 = TestItems.For(ItemCode.MissileLauncher);
-			var i2 = TestItems.For(ItemCode.EnergyShield);
+			var i1 = TestItems.Item(ItemCode.MissileLauncher);
+			var i2 = TestItems.Item(ItemCode.EnergyShield);
 
 			var idResolution = new IdResolutionContext(new[] { i1, }).Combine(new IdResolutionContext(new[] { i2, }));
 			

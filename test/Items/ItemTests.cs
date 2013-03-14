@@ -8,16 +8,36 @@ namespace Echo.Tests.Items
 	public class ItemTests
 	{
 		[Test]
-		public void ParseItemCode()
+		public void ParseBoxedItemCode()
 		{
 			ItemCode itemCode;
 
 			const long badId = 1L;
 			Assert.That(badId.TryParse(out itemCode), Is.False);
 
-			const long goodId = (long)ItemCode.LightFrigate ^ ItemCodeExtensions.ITEM_ID_MASK;
+			const long goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.GENERIC_ITEM_ID_MASK;
 			Assert.That(goodId.TryParse(out itemCode), Is.True);
-			Assert.That(itemCode, Is.EqualTo(ItemCode.LightFrigate));
+			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
+		}
+
+		[Test]
+		public void ParseWeaponItemCode()
+		{
+			ItemCode itemCode;
+			
+			const long goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.WEAPON_ID_MASK;
+			Assert.That(goodId.TryParse(out itemCode), Is.True);
+			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
+		}
+
+		[Test]
+		public void ParseBluePrintItemCode()
+		{
+			ItemCode itemCode;
+			
+			const long goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.BLUEPRINT_ID_MASK;
+			Assert.That(goodId.TryParse(out itemCode), Is.True);
+			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
 		}
 		
 		[Test]
@@ -25,7 +45,7 @@ namespace Echo.Tests.Items
 		{
 			var categories = ItemCode.LightFrigate.GetItemCategories();
 			Assert.That(categories, Is.Not.Empty);
-			Assert.That(categories, Is.EquivalentTo(new[] { ItemCategory.Ships }));
+			Assert.That(categories, Is.EquivalentTo(new[] { ItemType.Ships }));
 		}
 
 		[Test]

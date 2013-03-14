@@ -134,7 +134,7 @@ namespace Echo.Tests.Structures
 		public void CreateItem()
 		{
 			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
-			var materials = TestItems.Item(ItemCode.Veldnium, quantity: 20);
+			var materials = TestItems.BuildItem(ItemCode.Veldnium, quantity: 20);
 	
 			var property = corporation.GetProperty(Manufactory);
 			property.Add(materials);

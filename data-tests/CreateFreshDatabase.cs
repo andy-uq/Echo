@@ -14,10 +14,6 @@ namespace Echo.Data.Tests
 	{
 		private DocumentStore _database;
 
-		public CreateFreshDatabase()
-		{
-		}
-
 		public void Create(ContainerBuilder containerBuilder)
 		{
 			lock ( TestSettings.SyncObject )

@@ -18,6 +18,7 @@ namespace Echo.State
 
 		public string Id { get; set; }
 		public ItemCode Code { get; set; }
+		public virtual ItemType Type { get; set; }
 
 		long IObject.Id
 		{
@@ -35,9 +36,9 @@ namespace Echo.State
 
 		public string Name { get; set; }
 
-		public long ObjectId
+		public virtual long ObjectId
 		{
-			get { return Code.ToId(); }
+			get { return Code.ToId(type: Type); }
 		}
 
 		#endregion

@@ -30,5 +30,16 @@ namespace Echo.State
 					return false;
 			}
 		}
+
+		public override ItemType Type
+		{
+			get { return ItemType.ShipWeapons; }
+			set {  }
+		}
+
+		public override long ObjectId
+		{
+			get { return Code.ToId(ItemType.ShipWeapons); }
+		}
 	}
 }

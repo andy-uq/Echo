@@ -25,7 +25,7 @@ namespace Echo.Tests.Items
 		public void BuildWeapon()
 		{
 			var weaponPacker = new WeaponPacker(new IdGenerator());
-			var itemFactory = new ItemFactory(new IdResolutionContext(new[] { new WeaponInfo { Code = ItemCode.MissileLauncher }, }));
+			var itemFactory = new ItemFactory(new IdResolutionContext(new[] { TestItems.Item(ItemCode.MissileLauncher), }));
 			var itemPacker = new ItemPacker(new[] { weaponPacker });
 			var weaponInBox = itemFactory.Build(ItemCode.MissileLauncher, 10);
 

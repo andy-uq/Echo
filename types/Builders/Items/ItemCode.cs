@@ -4,20 +4,21 @@
 	{
 		Invalid,
 
-		[Category(ItemCategory.Ships)]
+		[Category(ItemType.Ships)]
 		LightFrigate,
 
-		[Category(ItemCategory.ShipWeapons)]
+		[Category(ItemType.ShipWeapons)]
+		[Category(ItemType.Blueprints)]
 		MissileLauncher,
 
-		[Category(ItemCategory.ShipWeapons)]
-		[Category(ItemCategory.Blueprints)]
+		[Category(ItemType.ShipWeapons)]
+		[Category(ItemType.Blueprints)]
 		MiningLaser,
 
-		[Category(ItemCategory.ShipShields)]
+		[Category(ItemType.ShipShields)]
 		EnergyShield,
 
-		[Category(ItemCategory.Ores)]
+		[Category(ItemType.Ores)]
 		Veldnium
 	}
 }

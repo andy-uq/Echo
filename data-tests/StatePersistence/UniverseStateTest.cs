@@ -2,13 +2,11 @@ using System;
 using System.Linq;
 using Echo.Builders;
 using Echo.Celestial;
-using Echo.Corporations;
 using Echo.Data;
 using Echo.Data.Tests;
 using Echo.Data.Tests.StatePersistence;
 using Echo.State;
 using NUnit.Framework;
-using Echo;
 
 namespace Echo.Tests.StatePersistence
 {
@@ -77,6 +75,7 @@ namespace Echo.Tests.StatePersistence
 				session.StoreMany(universe.Weapons, "Weapon", x => x.Code);
 				session.StoreMany(universe.Skills, "Skill", x => x.Code);
 				session.StoreMany(universe.Ships, "Ship", x => x.Code);
+				session.StoreMany(universe.BluePrints, "BluePrints", x => x.Code);
 
 				session.SaveChanges();
 			}
@@ -96,7 +95,8 @@ namespace Echo.Tests.StatePersistence
 					Items = session.Query<ItemInfo>().ToArray(),
 					Weapons = session.Query<WeaponInfo>().ToArray(),
 					Skills = session.Query<SkillInfo>().ToArray(),
-					Ships = session.Query<ShipInfo>().ToArray()
+					Ships = session.Query<ShipInfo>().ToArray(),
+					BluePrints = session.Query<BluePrintInfo>().ToArray()
 				};
 
 				Assert.That(universe.StarClusters, Is.Not.Empty);
@@ -105,6 +105,7 @@ namespace Echo.Tests.StatePersistence
 				Assert.That(universe.Weapons, Is.Not.Empty);
 				Assert.That(universe.Skills, Is.Not.Empty);
 				Assert.That(universe.Ships, Is.Not.Empty);
+				Assert.That(universe.BluePrints, Is.Not.Empty);
 
 				Check(universe);
 			}

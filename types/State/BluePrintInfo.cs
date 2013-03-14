@@ -9,7 +9,7 @@ namespace Echo.State
 	{
 		public BluePrintInfo(ItemCode code) : base(code)
 		{
-			if (!code.GetItemCategories().Any(c => c == ItemCategory.Blueprints))
+			if (!code.GetItemCategories().Any(c => c == ItemType.Blueprints))
 				throw new ArgumentException("Cannot create a blueprint from this itemCode");
 
 			Materials = Enumerable.Empty<ItemState>();
@@ -34,6 +34,17 @@ namespace Echo.State
 		public Item Build(IItemFactory itemFactory)
 		{
 			return itemFactory.Build(Code, TargetQuantity);
+		}
+
+		public override ItemType Type
+		{
+			get { return ItemType.Blueprints; }
+			set {  }
+		}
+
+		public override long ObjectId
+		{
+			get { return Code.ToId(ItemType.Blueprints); }
 		}
 	}
 }

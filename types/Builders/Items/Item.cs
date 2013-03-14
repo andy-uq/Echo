@@ -11,6 +11,7 @@ namespace Echo.Items
 				return new ItemState
 				{
 					Id = item.Id,
+					Type = item.ItemInfo.Type,
 					Code = item.ItemInfo.Code,
 					Quantity = item.Quantity,
 				};
@@ -18,7 +19,7 @@ namespace Echo.Items
 
 			public static Item Build(ItemState state, IIdResolver resolver)
 			{
-				var itemInfo = state.Code.GetItemInfo(resolver);
+				var itemInfo = resolver.Get<ItemInfo>(state.Code.ToObjectReference(state.Type));
 				var item = new Item
 				{
 					Id = state.Id,

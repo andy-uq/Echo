@@ -59,7 +59,7 @@
     <Compile Include="Agents\Skills\SkillCode.cs" />
     <Compile Include="Builders\DependentObject.cs" />
     <Compile Include="Builders\IBuilderContext.cs" />
-    <Compile Include="Builders\Items\ItemCategory.cs" />
+    <Compile Include="Builders\Items\ItemType.cs" />
     <Compile Include="Builders\Items\CategoryAttribute.cs" />
     <Compile Include="Builders\Items\ItemCode.cs" />
     <Compile Include="Builders\Items\ItemCodeExtensions.cs" />

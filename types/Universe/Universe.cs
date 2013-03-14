@@ -29,6 +29,8 @@ namespace Echo
 			StarClusters = new List<StarCluster>();
 			Corporations = new List<Corporation>();
 			Items = new Dictionary<ItemCode, ItemInfo>();
+			Weapons = new Dictionary<ItemCode, WeaponInfo>();
+			BluePrints = new Dictionary<ItemCode, BluePrintInfo>();
 			Skills = new Dictionary<SkillCode, SkillInfo>();
 			Ships = new Dictionary<ItemCode, ShipInfo>();
 		}
@@ -56,8 +58,10 @@ namespace Echo
 		public List<StarCluster> StarClusters { get; private set; }
 		public List<Corporation> Corporations { get; private set; }
 		public Dictionary<ItemCode, ItemInfo> Items { get; private set; }
-		public Dictionary<SkillCode, SkillInfo> Skills { get; private set; }
+		public Dictionary<ItemCode, WeaponInfo> Weapons { get; private set; }
+		public Dictionary<ItemCode, BluePrintInfo> BluePrints { get; private set; }
 		public Dictionary<ItemCode, ShipInfo> Ships { get; private set; }
+		public Dictionary<SkillCode, SkillInfo> Skills { get; private set; }
 
 		public Position Position
 		{

@@ -14,6 +14,7 @@ namespace Echo.State
 		public IEnumerable<ItemInfo> Items { get; set; }
 		public IEnumerable<WeaponInfo> Weapons { get; set; }
 		public IEnumerable<ShipInfo> Ships { get; set; }
+		public IEnumerable<BluePrintInfo> BluePrints { get; set; }
 
 		public UniverseState()
 		{
@@ -23,6 +24,7 @@ namespace Echo.State
 			Items = Enumerable.Empty<ItemInfo>();
 			Weapons = Enumerable.Empty<WeaponInfo>();
 			Ships = Enumerable.Empty<ShipInfo>();
+			BluePrints = Enumerable.Empty<BluePrintInfo>();
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace Echo.Items
 {
-	public enum ItemCategory
+	public enum ItemType
 	{
 		Unknown,
 		Ammunition,

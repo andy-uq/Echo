@@ -42,7 +42,7 @@ namespace Echo.Ships
 
 				var builder = new ObjectBuilder<Ship>(ship)
 					.Resolve((resolver, target) => BuildHardPoints(resolver, ship, state.HardPoints))
-					.Resolve((resolver, target) => target.ShipInfo = resolver.Get<ShipInfo>(state.Code.ToObjectReference()));
+					.Resolve((resolver, target) => target.ShipInfo = resolver.Get<ShipInfo>(state.Code.ToObjectReference(ItemType.Ships)));
 
 				builder
 					.Dependent(state.Pilot)

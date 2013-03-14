@@ -5,11 +5,11 @@ namespace Echo.Items
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
 	public class CategoryAttribute : Attribute
 	{
-		public ItemCategory Category { get; set; }
+		public ItemType Type { get; set; }
 
-		public CategoryAttribute(ItemCategory category)
+		public CategoryAttribute(ItemType type)
 		{
-			Category = category;
+			Type = type;
 		}
 	}
 }

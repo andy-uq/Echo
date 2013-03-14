@@ -37,8 +37,9 @@ namespace Echo.Tests.Mocks
 			var universeId = Id();
 
 			SpaceshipCommand = TestSkills.For(SkillCode.SpaceshipCommand);
-			Weapon = TestItems.For<WeaponInfo>(ItemCode.MissileLauncher);
-			Item = TestItems.For(ItemCode.Veldnium);
+			BluePrint = TestItems.BluePrint(ItemCode.MissileLauncher);
+			Weapon = TestItems.Weapon(ItemCode.MissileLauncher);
+			Item = TestItems.Item(ItemCode.Veldnium);
 
 			John = new AgentState
 			{
@@ -158,6 +159,7 @@ namespace Echo.Tests.Mocks
 				Skills = TestSkills.Skills,
 				Corporations = new[] { MSCorp },
 				Items = TestItems.Items,
+				BluePrints = TestItems.BluePrints,
 				Ships = new[]
 				{
 					new ShipInfo
