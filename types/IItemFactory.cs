@@ -7,6 +7,7 @@ namespace Echo
 	public interface IItemFactory
 	{
 		Item Build(ItemCode itemCode, uint quantity);
+		T ToItemInfo<T>(ItemType itemType, ItemCode itemCode) where T : ItemInfo;
 	}
 
 	public class ItemFactory : IItemFactory
@@ -24,6 +25,12 @@ namespace Echo
 		{
 			var item = new ItemState {Code = itemCode, Quantity = quantity};
 			return Item.Builder.Build(item, _resolver);
+		}
+
+		public T ToItemInfo<T>(ItemType itemType, ItemCode itemCode) where T : ItemInfo
+		{
+			var objRef = itemType.ToObjectReference(itemCode);
+			return _resolver.Get<T>(objRef);
 		}
 
 		#endregion

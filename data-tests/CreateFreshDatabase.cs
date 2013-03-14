@@ -18,7 +18,7 @@ namespace Echo.Data.Tests
 		{
 			lock ( TestSettings.SyncObject )
 			{
-				_database = new EmbeddableDocumentStore { RunInMemory = true, Conventions = { CustomizeJsonSerializer = CustomizeJsonSerializer } };
+				_database = new EmbeddableDocumentStore { RunInMemory = true, Conventions = { CustomizeJsonSerializer = CustomizeJsonSerializer }, };
 				_database.Initialize();
 
 				Console.WriteLine("Using in-memory database: {0}", _database.Url);

@@ -24,7 +24,7 @@ namespace Echo.Data.Tests.StatePersistence
 
 		public ItemState Item
 		{
-			get { return new ItemState {Code = ItemCode.MissileLauncher, Quantity = 10}; }
+			get { return new ItemState {Code = Universe.Item.Code, Quantity = 10}; }
 		}
 
 		[Test]

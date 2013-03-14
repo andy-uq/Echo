@@ -41,10 +41,5 @@ namespace Echo.State
 			get { return ItemType.Blueprints; }
 			set {  }
 		}
-
-		public override long ObjectId
-		{
-			get { return Code.ToId(ItemType.Blueprints); }
-		}
 	}
 }

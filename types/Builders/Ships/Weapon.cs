@@ -33,7 +33,7 @@ namespace Echo.Ships
 					return null;
 				}
 
-				var weaponInfo = resolver.GetById<WeaponInfo>(state.Code.ToId(ItemType.ShipWeapons));
+				var weaponInfo = resolver.GetById<WeaponInfo>(ItemType.ShipWeapons.ToId(state.Code));
 				return Build(state.ObjectId, weaponInfo);
 			}
 			

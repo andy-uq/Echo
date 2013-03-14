@@ -21,7 +21,7 @@ namespace Echo.Items
 			{ ItemType.Ships, SHIP_ID_MASK },
 		};
 
-		public static long ToId(this ItemCode code, ItemType type)
+		public static long ToId(this ItemType type, ItemCode code)
 		{
 			if (code == ItemCode.Invalid)
 				throw new InvalidOperationException("Cannot generate an Id for an Invalid item");
@@ -33,9 +33,9 @@ namespace Echo.Items
 			return mask | (long)code;
 		}
 
-		public static ObjectReference ToObjectReference(this ItemCode code, ItemType type)
+		public static ObjectReference ToObjectReference(this ItemType type, ItemCode code)
 		{
-			return new ObjectReference(ToId(code, type), code.ToString());
+			return new ObjectReference(ToId(type, code), code.ToString());
 		}
 
 		public static IEnumerable<ItemType> GetItemCategories(this ItemCode itemCode)
@@ -53,10 +53,10 @@ namespace Echo.Items
 			var isItemCode = (id & ITEM_ID_MASK) != 0L;
 			if ( isItemCode )
 			{
-				var value = (int)(id ^ ITEM_ID_MASK);
-				if ( Enum.IsDefined(typeof(ItemCode), value) )
+				var value = (int) (id & ~ITEM_ID_MASK);
+				if (Enum.IsDefined(typeof (ItemCode), value))
 				{
-					itemCode = (ItemCode)(id ^ ITEM_ID_MASK);
+					itemCode = (ItemCode) value;
 					return (itemCode != ItemCode.Invalid);
 				}
 			}

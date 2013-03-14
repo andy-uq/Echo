@@ -36,10 +36,5 @@ namespace Echo.State
 			get { return ItemType.ShipWeapons; }
 			set {  }
 		}
-
-		public override long ObjectId
-		{
-			get { return Code.ToId(ItemType.ShipWeapons); }
-		}
 	}
 }

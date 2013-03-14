@@ -19,7 +19,9 @@ namespace Echo.Items
 
 			public static Item Build(ItemState state, IIdResolver resolver)
 			{
-				var itemInfo = resolver.Get<ItemInfo>(state.Code.ToObjectReference(state.Type));
+				var objRef = state.Type.ToObjectReference(state.Code);
+				var itemInfo = resolver.Get<ItemInfo>(objRef);
+
 				var item = new Item
 				{
 					Id = state.Id,

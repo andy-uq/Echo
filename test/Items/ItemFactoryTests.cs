@@ -24,11 +24,11 @@ namespace Echo.Tests.Items
 		[Test]
 		public void BuildWeapon()
 		{
-			var weaponPacker = new WeaponPacker(new IdGenerator());
-			var itemFactory = new ItemFactory(new IdResolutionContext(new[] { TestItems.Item(ItemCode.MissileLauncher), }));
+			var itemFactory = new ItemFactory(new IdResolutionContext(new[] { TestItems.Item(ItemCode.MissileLauncher), TestItems.Weapon(ItemCode.MissileLauncher) }));
+			var weaponPacker = new WeaponPacker(new IdGenerator(), itemFactory);
 			var itemPacker = new ItemPacker(new[] { weaponPacker });
-			var weaponInBox = itemFactory.Build(ItemCode.MissileLauncher, 10);
 
+			var weaponInBox = itemFactory.Build(ItemCode.MissileLauncher, 10);
 			var weapon = itemPacker.Unpack<Weapon>(weaponInBox);
 
 			Assert.That(weapon, Is.Not.Null);
@@ -40,7 +40,8 @@ namespace Echo.Tests.Items
 		[Test]
 		public void PackWeaponInBox()
 		{
-			var weaponPacker = new WeaponPacker(new IdGenerator());
+			var itemFactory = new ItemFactory(new IdResolutionContext(new[] { TestItems.Item(ItemCode.MissileLauncher), }));
+			var weaponPacker = new WeaponPacker(new IdGenerator(), itemFactory);
 			var itemPacker = new ItemPacker(new[] { weaponPacker });
 			var weapon = new Weapon() { WeaponInfo = new WeaponInfo { Code = ItemCode.MissileLauncher} };
 

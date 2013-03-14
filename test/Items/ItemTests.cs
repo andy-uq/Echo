@@ -49,6 +49,12 @@ namespace Echo.Tests.Items
 		}
 
 		[Test]
+		public void GetItemInfo()
+		{
+		}
+
+
+		[Test]
 		public void ItemNameIsItemInfoName()
 		{
 			var itemInfo = new ItemInfo {Name = "Name of item"};

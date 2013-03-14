@@ -36,9 +36,9 @@ namespace Echo.State
 
 		public string Name { get; set; }
 
-		public virtual long ObjectId
+		public long ObjectId
 		{
-			get { return Code.ToId(type: Type); }
+			get { return Type.ToId(Code); }
 		}
 
 		#endregion

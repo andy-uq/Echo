@@ -7,10 +7,12 @@ namespace Echo.Items.Packing
 	public class WeaponPacker : IItemPacker
 	{
 		private readonly IIdGenerator _idGenerator;
+		private readonly IItemFactory _itemFactory;
 
-		public WeaponPacker(IIdGenerator idGenerator)
+		public WeaponPacker(IIdGenerator idGenerator, IItemFactory itemFactory)
 		{
 			_idGenerator = idGenerator;
+			_itemFactory = itemFactory;
 		}
 
 		public Type Type
@@ -20,7 +22,7 @@ namespace Echo.Items.Packing
 
 		public PackerResult Unpack(Item item)
 		{
-			var weaponInfo = (WeaponInfo) item.ItemInfo;
+			var weaponInfo = _itemFactory.ToItemInfo<WeaponInfo>(ItemType.ShipWeapons, item.ItemInfo.Code);
 			var weapon = Weapon.Builder.Build(_idGenerator, weaponInfo);
 			
 			return new PackerResult(weapon);

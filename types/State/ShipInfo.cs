@@ -1,4 +1,5 @@
-﻿using Echo.Ships;
+﻿using Echo.Items;
+using Echo.Ships;
 
 namespace Echo.State
 {
@@ -6,5 +7,11 @@ namespace Echo.State
 	{
 		public ShipClass ShipClass { get; set; }
 		public SkillLevel[] PilotRequirements { get; set; }
+		
+		public override ItemType Type
+		{
+			get { return ItemType.Ships; }
+			set {  }
+		}
 	}
 }
