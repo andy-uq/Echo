@@ -58,6 +58,8 @@ namespace Echo.Tasks.Structure
 				return Failed(ErrorCode.MissingMaterials);
 
 			var item = parameters.BluePrint.Build(_itemFactory);
+			property.Remove(parameters.BluePrint.Materials);
+
 			return Success(item);
 		}
 

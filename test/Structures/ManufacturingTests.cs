@@ -1,4 +1,5 @@
-﻿using Echo.Builder;
+﻿using System.Linq;
+using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.State;
@@ -133,8 +134,10 @@ namespace Echo.Tests.Structures
 		public void CreateItem()
 		{
 			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
+			var materials = TestItems.Item(ItemCode.Veldnium, quantity: 20);
+	
 			var property = corporation.GetProperty(Manufactory);
-			property.Add(TestItems.Item(ItemCode.Veldnium, quantity:10));
+			property.Add(materials);
 			
 			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
@@ -147,6 +150,8 @@ namespace Echo.Tests.Structures
 			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.Success));
 			Assert.That(result.Item.ItemInfo.Code, Is.EqualTo(_universe.BluePrint.Code));
 			Assert.That(result.Item.Quantity, Is.EqualTo(_universe.BluePrint.TargetQuantity));
+
+			Assert.That(materials.Quantity, Is.EqualTo(10));
 		}
 	}
 }

@@ -127,27 +127,43 @@ namespace Echo.Items
 
 		public bool Remove(Item item)
 		{
+			var itemCode = item.ItemInfo.Code;
+			var quantity = item.Quantity;
+
+			return Remove(itemCode, quantity);
+		}
+
+		private bool Remove(ItemCode itemCode, uint quantity)
+		{
 			Item currentItem;
-			if (_storage.TryGetValue(item.ItemInfo.Code, out currentItem))
+			if (_storage.TryGetValue(itemCode, out currentItem))
 			{
-				if (currentItem.Quantity < item.Quantity)
+				if (currentItem.Quantity < quantity)
 				{
 					return false;
 				}
 
-				if (currentItem.Quantity == item.Quantity)
+				if (currentItem.Quantity == quantity)
 				{
-					_storage.Remove(item.ItemInfo.Code);
+					_storage.Remove(itemCode);
 				}
 				else
 				{
-					currentItem.Quantity -= item.Quantity;
+					currentItem.Quantity -= quantity;
 				}
 
 				return true;
 			}
 
 			return false;
+		}
+
+		public void Remove(IEnumerable<ItemState> materials)
+		{
+			foreach (var item in materials.GroupBy(m => m.Code, (key, g) => new { key, quantity = (uint )g.Sum(m => m.Quantity) }))
+			{
+				Remove(item.key, item.quantity);
+			}
 		}
 
 		public int Count
