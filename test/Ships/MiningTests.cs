@@ -52,7 +52,8 @@ namespace Echo.Tests.Ships
 			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>())).Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
 
 			var mining = new MiningTask(itemFactory.Object) { };
-			var result = mining.Execute(new MineAsteroidParameters(_ship, _asteroidBelt));
+			mining.SetParameters(new MineAsteroidParameters(_ship, _asteroidBelt));
+			var result = (MiningResult )mining.Execute();
 
 			Assert.That(result.Success, Is.True);
 			Assert.That(result.Ore.Quantity, Is.EqualTo(1));

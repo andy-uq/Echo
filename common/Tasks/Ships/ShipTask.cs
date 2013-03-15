@@ -17,7 +17,8 @@ namespace Echo.Tasks.Ships
 
 		#region ITask Members
 
-		public abstract ITaskResult Execute(ITaskParameters taskParameters);
+		public abstract ITaskResult SetParameters(ITaskParameters taskParameters);
+		public abstract ITaskResult Execute();
 
 		#endregion
 	}
@@ -26,12 +27,12 @@ namespace Echo.Tasks.Ships
 		where TParameters : ITaskParameters
 		where TResult : TaskResult, ITaskResult, new()
 	{
-		public override ITaskResult Execute(ITaskParameters taskParameters)
+		public override ITaskResult SetParameters(ITaskParameters taskParameters)
 		{
-			return Execute((TParameters) taskParameters);
+			return SetParameters((TParameters) taskParameters);
 		}
 
-		public abstract TResult Execute(TParameters parameters);
+		protected abstract TResult SetParameters(TParameters parameters);
 
 		protected TResult Success(Func<TResult> taskResult = null)
 		{

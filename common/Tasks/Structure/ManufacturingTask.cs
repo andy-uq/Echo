@@ -8,13 +8,6 @@ namespace Echo.Tasks.Structure
 {
 	public class ManufacturingTask : ITask
 	{
-		private readonly IItemFactory _itemFactory;
-
-		public ManufacturingTask(IItemFactory itemFactory)
-		{
-			_itemFactory = itemFactory;
-		}
-
 		#region ErrorCode enum
 
 		public enum ErrorCode
@@ -28,54 +21,85 @@ namespace Echo.Tasks.Structure
 
 		#endregion
 
-		#region ITask Members
+		private readonly IItemFactory _itemFactory;
 
-		public ITaskResult Execute(ITaskParameters taskParameters)
+		public BluePrintInfo BluePrint { get; private set; }
+		public Agent Agent { get; private set; }
+
+		private ItemCollection Property
 		{
-			var parameters = (ManufacturingParameters) taskParameters;
-			return Manufacture(parameters);
+			get
+			{
+				if (Agent == null || Agent.Corporation == null)
+					return new ItemCollection();
+
+				return Agent.Corporation.GetProperty(Location);
+			}
 		}
 
-		#endregion
-
-		public ManufacturingResult Manufacture(ManufacturingParameters parameters)
+		private Manufactory Location
 		{
-			Ensure.That(() => parameters).IsNotNull();
-
-			var bluePrintInfo = parameters.BluePrint;
-			var agent = parameters.Agent;
-
-			return Manufacture(bluePrintInfo, agent);
+			get { return Agent.Location as Manufactory; }
 		}
 
-		public ManufacturingResult Manufacture(BluePrintInfo bluePrintInfo, Agent agent)
+		public ManufacturingTask(IItemFactory itemFactory)
 		{
-			if (bluePrintInfo == null)
+			_itemFactory = itemFactory;
+		}
+
+		ITaskResult ITask.Execute()
+		{
+			return Manufacture();
+		}
+
+		public ManufacturingResult Manufacture()
+		{
+			var result = ValidateParameters();
+			if (result.Success)
+			{
+				Property.Remove(BluePrint.Materials);
+				var item = BluePrint.Build(_itemFactory);
+
+				return Success(item);
+			}
+
+			return result;
+		}
+
+		public ITaskResult SetParameters(ITaskParameters taskParameters)
+		{
+			Ensure.That(() => taskParameters).IsNotNull();
+
+			var parameters = (ManufacturingParameters)taskParameters;
+			BluePrint = parameters.BluePrint;
+			Agent = parameters.Agent;
+
+			return ValidateParameters();
+		}
+
+		private ManufacturingResult ValidateParameters()
+		{
+			if (BluePrint == null)
 				return Failed(ErrorCode.MissingBluePrint);
 
-			if (agent == null)
+			if (Agent == null)
 				return Failed(ErrorCode.MissingAgent);
 
-			if (!agent.CanUse(bluePrintInfo))
+			if (!Agent.CanUse(BluePrint))
 				return Failed(ErrorCode.MissingSkillRequirement);
 
-			var location = agent.Location as Manufactory;
-			if (location == null)
+			if (Location == null)
 				return Failed(ErrorCode.MissingAgent);
 
-			var property = agent.Corporation.GetProperty(location);
-			if (!bluePrintInfo.HasMaterials(property))
+			if (!BluePrint.HasMaterials(Property))
 				return Failed(ErrorCode.MissingMaterials);
 
-			var item = bluePrintInfo.Build(_itemFactory);
-			property.Remove(bluePrintInfo.Materials);
-
-			return Success(item);
+			return Success();
 		}
 
-		private ManufacturingResult Success(Item item)
+		private ManufacturingResult Success(Item item = null)
 		{
-			return new ManufacturingResult { Item = item };
+			return new ManufacturingResult { Success = true, Item = item };
 		}
 
 		private ManufacturingResult Failed(ErrorCode errorCode)

@@ -58,7 +58,6 @@
     <Compile Include="AutofacResolver.cs" />
     <Compile Include="AutoMapTypeMapper.cs" />
     <Compile Include="EchoContext.cs" />
-    <Compile Include="Tasks\ITaskResult.cs" />
     <Compile Include="JumpCountTable.cs" />
     <Compile Include="Tasks\Ships\Mining\MineAsteroidParameters.cs" />
     <Compile Include="Tasks\Ships\Mining\MiningResult.cs" />
@@ -70,9 +69,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\Ships\ShipTask.cs" />
     <Compile Include="LocationServices.cs" />
-    <Compile Include="Tasks\ITask.cs" />
-    <Compile Include="Tasks\ITaskParameters.cs" />
-    <Compile Include="Tasks\TaskResult.cs" />
     <Compile Include="Tasks\Ships\Undocking\UndockShipTask.cs" />
     <Compile Include="Tasks\Ships\Undocking\UndockShipResult.cs" />
     <Compile Include="Combat\WeaponAttackResult.cs" />

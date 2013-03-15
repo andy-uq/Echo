@@ -127,6 +127,11 @@
     <Compile Include="Statistics\StructureStatistic.cs" />
     <Compile Include="Statistics\StatisticValue.cs" />
     <Compile Include="Statistics\WeaponStatistic.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\ITaskParameters.cs" />
+    <Compile Include="Tasks\ITaskResult.cs" />
+    <Compile Include="Tasks\TaskQueue.cs" />
+    <Compile Include="Tasks\TaskResult.cs" />
     <Compile Include="Units.cs" />
     <Compile Include="Corporations\Corporation.cs" />
     <Compile Include="Items\Item.cs" />

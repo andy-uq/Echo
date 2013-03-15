@@ -12,21 +12,45 @@ namespace Echo.Tasks.Ships.Undocking
 			_locationServices = locationServices;
 		}
 
-		public override UndockShipResult Execute(UndockShipParameters undockShipParameters)
+		private Ship Ship { get; set; }
+		private Agent Pilot { get; set; }
+		private Structures.Structure Structure { get; set; }
+
+		protected override UndockShipResult SetParameters(UndockShipParameters parameters)
 		{
-			var structure = undockShipParameters.Ship.Position.Location as Structures.Structure;
-			if (structure == null)
+			Pilot = parameters.Pilot;
+			Ship = parameters.Ship;
+			Structure = Ship.Position.Location as Structures.Structure;
+
+			return ValidateParameters();
+		}
+
+		public override ITaskResult Execute()
+		{
+			var result = ValidateParameters();
+			if ( result.Success )
 			{
-				return Failed(ErrorCode.NotDocked, undockShipParameters.Ship);
+				var exitPosition = _locationServices.GetExitPosition(Structure);
+				Ship.Position = new Position(Structure.Position.Location, exitPosition);
 			}
 
-			if (!undockShipParameters.Pilot.CanUse(undockShipParameters.Ship))
+			return result;
+		}
+		
+		private UndockShipResult ValidateParameters()
+		{
+			if ( Structure == null )
 			{
-				return Failed(ErrorCode.MissingSkillRequirement, undockShipParameters.Ship, undockShipParameters.Pilot);
+				{
+					return Failed(ErrorCode.NotDocked, Ship);
+				}
 			}
 
-			undockShipParameters.Ship.Position = new Position(structure.Position.Location,
-			                                                  _locationServices.GetExitPosition(structure));
+			if ( !Pilot.CanUse(Ship) )
+			{
+				return Failed(ErrorCode.MissingSkillRequirement, Ship, Pilot);
+			}
+
 			return Success();
 		}
 

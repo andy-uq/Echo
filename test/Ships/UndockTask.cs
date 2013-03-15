@@ -32,7 +32,9 @@ namespace Echo.Tests.Ships
 			var ship = new Ship();
 			var pilot = new Agent();
 
-			var result = _task.Execute(new UndockShipParameters(ship, pilot));
+			_task.SetParameters(new UndockShipParameters(ship, pilot));
+
+			var result = (UndockShipResult )_task.Execute();
 			Assert.That(result.Success, Is.False);
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.NotDocked));
 
@@ -49,7 +51,8 @@ namespace Echo.Tests.Ships
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
 			var pilot = new Agent();
 
-			var result = _task.Execute(new UndockShipParameters(ship, pilot));
+			_task.SetParameters(new UndockShipParameters(ship, pilot));
+			var result = (UndockShipResult)_task.Execute();
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
 		}
 
@@ -60,7 +63,8 @@ namespace Echo.Tests.Ships
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
 			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.Skills.SkillLevel { Level = 1 } } } };
 
-			var result = _task.Execute(new UndockShipParameters(ship, pilot));
+			_task.SetParameters(new UndockShipParameters(ship, pilot));
+			var result = (UndockShipResult)_task.Execute();
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
 		}
 
@@ -72,8 +76,10 @@ namespace Echo.Tests.Ships
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
 			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Agents.Skills.SkillLevel { Level = 5 }  } }};
 
-			var result = _task.Execute(new UndockShipParameters(ship, pilot));
-			Assert.That(result.Success, Is.True, result.ErrorCode.ToString());
+			_task.SetParameters(new UndockShipParameters(ship, pilot));
+			
+			var result = _task.Execute();
+			Assert.That(result.Success, Is.True, result.ErrorCode);
 			Assert.That(ship.Position.LocalCoordinates, Is.EqualTo(structure.Position.LocalCoordinates));
 			Assert.That(ship.Position.Location, Is.EqualTo(solarSystem));
 		}

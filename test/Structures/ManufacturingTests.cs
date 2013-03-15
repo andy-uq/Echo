@@ -37,46 +37,47 @@ namespace Echo.Tests.Structures
 			_manufactory = builder.Materialise();
 		}
 
-		private ManufacturingTask CreateManufacturingTask()
+		private ManufacturingTask CreateManufacturingTask(ManufacturingParameters parameters)
 		{
 			var manufacturing = new ManufacturingTask(_itemFactory.Object);
+			manufacturing.SetParameters(parameters);
+
 			return manufacturing;
 		}
 
 		[Test]
 		public void CreateTask()
 		{
-			var manufacturing = CreateManufacturingTask();
-			var parameters = new ManufacturingParameters();
-
-			var result = manufacturing.Manufacture(parameters);
+			var manufacturing = CreateManufacturingTask(new ManufacturingParameters());
+			
+			var result = manufacturing.Manufacture();
 			Assert.That(result, Is.InstanceOf<ManufacturingResult>());
 		}
 
 		[Test]
 		public void RequireBlueprint()
 		{
-			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = null
 			};
 
-			var result = manufacturing.Manufacture(parameters);
+			var manufacturing = CreateManufacturingTask(parameters);
+			var result = manufacturing.Manufacture();
 			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.MissingBluePrint));
 		}
 
 		[Test]
 		public void RequireAgent()
 		{
-			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
 				Agent = null,
 			};
 
-			var result = manufacturing.Manufacture(parameters);
+			var manufacturing = CreateManufacturingTask(parameters);
+			var result = manufacturing.Manufacture();
 			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.MissingAgent));
 		}
 
@@ -86,14 +87,14 @@ namespace Echo.Tests.Structures
 			var agent = _universe.John.StandUp();
 			agent.Skills.Clear();
 
-			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
 				Agent = agent,
 			};
-
-			var result = manufacturing.Manufacture(parameters);
+			
+			var manufacturing = CreateManufacturingTask(parameters);
+			var result = manufacturing.Manufacture();
 			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.MissingSkillRequirement));
 		}
 
@@ -102,14 +103,14 @@ namespace Echo.Tests.Structures
 		{
 			var agent = _universe.John.StandUp();
 
-			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
 				Agent = agent,
 			};
 
-			var result = manufacturing.Manufacture(parameters);
+			var manufacturing = CreateManufacturingTask(parameters);
+			var result = manufacturing.Manufacture();
 			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.MissingAgent));
 		}
 
@@ -119,14 +120,14 @@ namespace Echo.Tests.Structures
 			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
 			var agent = _universe.John.StandUp(corporation, initialLocation:Manufactory);
 
-			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
 				Agent = agent,
 			};
 
-			var result = manufacturing.Manufacture(parameters);
+			var manufacturing = CreateManufacturingTask(parameters);
+			var result = manufacturing.Manufacture();
 			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.MissingMaterials));
 		}
 
@@ -139,15 +140,17 @@ namespace Echo.Tests.Structures
 			var property = corporation.GetProperty(Manufactory);
 			property.Add(materials);
 			
-			var manufacturing = CreateManufacturingTask();
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
 				Agent = _universe.John.StandUp(corporation, initialLocation:Manufactory),
 			};
+			
+			var manufacturing = CreateManufacturingTask(parameters);
+			var result = manufacturing.Manufacture();
 
-			var result = manufacturing.Manufacture(parameters);
 			Assert.That(result.ErrorCode, Is.EqualTo(ManufacturingTask.ErrorCode.Success));
+			Assert.That(result.Item, Is.Not.Null);
 			Assert.That(result.Item.ItemInfo.Code, Is.EqualTo(_universe.BluePrint.Code));
 			Assert.That(result.Item.Quantity, Is.EqualTo(_universe.BluePrint.TargetQuantity));
 
