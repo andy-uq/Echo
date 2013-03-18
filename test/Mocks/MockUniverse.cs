@@ -30,6 +30,7 @@ namespace Echo.Tests.Mocks
 		public ItemInfo Item { get; set; }
 		public WeaponInfo Weapon { get; set; }
 		public BluePrintInfo BluePrint { get; set; }
+		public BluePrintInfo ShipBluePrint { get; set; }
 
 		public MockUniverse(IIdGenerator idGenerator = null)
 		{
@@ -38,6 +39,7 @@ namespace Echo.Tests.Mocks
 
 			SpaceshipCommand = TestSkills.For(SkillCode.SpaceshipCommand);
 			BluePrint = TestItems.BluePrint(ItemCode.MissileLauncher);
+			ShipBluePrint = TestItems.BluePrint(ItemCode.LightFrigate);
 			Weapon = TestItems.Weapon(ItemCode.MissileLauncher);
 			Item = TestItems.Item(ItemCode.Veldnium);
 
@@ -172,13 +174,6 @@ namespace Echo.Tests.Mocks
 						}
 					}
 				}
-			};
-
-			BluePrint = new BluePrintInfo(ItemCode.MiningLaser)
-			{
-				BuildRequirements = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5 }, },
-				Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, },
-				TargetQuantity = 1,
 			};
 		}
 

@@ -6,10 +6,10 @@ namespace Echo.Tasks.Structure
 	{
 		private readonly object _errorParams;
 
-		public ManufacturingResult(ManufacturingTask.ErrorCode errorCode)
+		public ManufacturingResult(ManufacturingTask.StatusCode statusCode)
 		{
-			Success = (errorCode == ManufacturingTask.ErrorCode.Success);
-			ErrorCode = errorCode;
+			Success = (statusCode == ManufacturingTask.StatusCode.Success);
+			StatusCode = statusCode;
 			_errorParams = null;
 		}
 
@@ -17,13 +17,13 @@ namespace Echo.Tasks.Structure
 		{
 		}
 
-		public ManufacturingTask.ErrorCode ErrorCode { get; private set; }
+		public ManufacturingTask.StatusCode StatusCode { get; private set; }
 
 		#region ITaskResult Members
 
-		string ITaskResult.ErrorCode
+		string ITaskResult.StatusCode
 		{
-			get { return ErrorCode.ToString(); }
+			get { return StatusCode.ToString(); }
 		}
 
 		object ITaskResult.ErrorParams

@@ -1,13 +1,13 @@
-namespace Echo
+namespace Echo.Tasks
 {
 	public interface ITaskResult
 	{
-		uint TicksRemaining { get; }
+		uint TimeRemaining { get; }
 		
 		string Task { get; }
 
 		bool Success { get; }
-		string ErrorCode { get; }
+		string StatusCode { get; }
 		object ErrorParams { get; }
 	}
 }

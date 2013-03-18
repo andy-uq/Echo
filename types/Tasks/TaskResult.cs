@@ -4,6 +4,6 @@ namespace Echo.Tasks
 	{
 		public string Task { get; set; }
 		public bool Success { get; set; }
-		public uint TicksRemaining { get; set; }
+		public uint TimeRemaining { get; set; }
 	}
 }

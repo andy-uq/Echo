@@ -1,4 +1,5 @@
 using Echo.Tasks;
+using Moq;
 using NUnit.Framework;
 
 namespace Echo.Tests.TaskQueues
@@ -18,9 +19,13 @@ namespace Echo.Tests.TaskQueues
 		}
 
 		[Test]
-		public void Tick()
+		public void TickTaskWithNoRemainingTime()
 		{
-			var mock = new Moq.Mock<ITask>();
+			var result = new Moq.Mock<ITaskResult>(MockBehavior.Strict);
+			var mock = new Moq.Mock<ITask>(MockBehavior.Strict);
+
+			mock.Setup(x => x.Execute()).Returns(result.Object);
+			result.SetupGet(f => f.TimeRemaining).Returns(0);
 
 			var queue = new TaskQueue();
 			queue.Add(mock.Object);
@@ -28,8 +33,21 @@ namespace Echo.Tests.TaskQueues
 			int count = queue.Tick();
 			Assert.That(count, Is.EqualTo(1));
 			Assert.That(queue.Count, Is.EqualTo(0));
+		}
 
+		[Test]
+		public void TickTaskWithRemainingTime()
+		{
+			var result = new Moq.Mock<ITaskResult>(MockBehavior.Strict);
+			var mock = new Moq.Mock<ITask>(MockBehavior.Strict);
+
+			mock.Setup(x => x.Execute()).Returns(result.Object);
+			result.SetupGet(f => f.TimeRemaining).Returns(1);
+
+			var queue = new TaskQueue();
 			queue.Add(mock.Object);
+			
+			var count = queue.Tick();
 			Assert.That(count, Is.EqualTo(0));
 			Assert.That(queue.Count, Is.EqualTo(1));
 		}

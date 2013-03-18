@@ -45,7 +45,7 @@ namespace Echo.Tests.Items
 		{
 			var categories = ItemCode.LightFrigate.GetItemCategories();
 			Assert.That(categories, Is.Not.Empty);
-			Assert.That(categories, Is.EquivalentTo(new[] { ItemType.Ships }));
+			Assert.That(categories, Is.EquivalentTo(new[] { ItemType.Ships, ItemType.Blueprints,  }));
 		}
 
 		[Test]

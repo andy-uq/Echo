@@ -14,17 +14,20 @@ namespace Echo.State
 
 			Materials = Enumerable.Empty<ItemState>();
 			BuildRequirements = new SkillLevel[0];
+			BuildLength = 1;
 		}
 
 		public BluePrintInfo()
 		{
 			Materials = Enumerable.Empty<ItemState>();
 			BuildRequirements = new SkillLevel[0];
+			BuildLength = 1;
 		}
 
 		public IEnumerable<ItemState> Materials { get; set; }
 		public SkillLevel[] BuildRequirements { get; set; }
 		public uint TargetQuantity { get; set; }
+		public uint BuildLength { get; set; }
 
 		public bool HasMaterials(ItemCollection items)
 		{

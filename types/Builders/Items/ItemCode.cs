@@ -5,6 +5,7 @@
 		Invalid,
 
 		[Category(ItemType.Ships)]
+		[Category(ItemType.Blueprints)]
 		LightFrigate,
 
 		[Category(ItemType.ShipWeapons)]

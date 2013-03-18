@@ -20,12 +20,20 @@ namespace Echo.Tasks
 		public int Tick()
 		{
 			var requeue = new List<ITask>(_queue.Count);
-
+			var count = 0;
 			try
 			{
 				foreach ( var task in _queue )
 				{
-					task.Execute();
+					var result = task.Execute();
+					if (result.TimeRemaining == 0)
+					{
+						count++;
+					}
+					else
+					{
+						requeue.Add(task);
+					}
 				}
 			}
 			finally
@@ -33,7 +41,7 @@ namespace Echo.Tasks
 				_queue = requeue;
 			}
 
-			return 1;
+			return count;
 		}
 	}
 }

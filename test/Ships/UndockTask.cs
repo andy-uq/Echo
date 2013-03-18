@@ -4,6 +4,7 @@ using Echo.Celestial;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
+using Echo.Tasks;
 using Echo.Tasks.Ships.Undocking;
 using Echo.Tasks.Ships;
 using Moq;
@@ -39,7 +40,7 @@ namespace Echo.Tests.Ships
 			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.NotDocked));
 
 			ITaskResult taskResult = result;
-			Assert.That(taskResult.ErrorCode, Is.EqualTo("NotDocked"));
+			Assert.That(taskResult.StatusCode, Is.EqualTo("NotDocked"));
 			Assert.That(taskResult.ErrorParams, Has.Property("Ship").EqualTo(ship));
 			Assert.That(taskResult.ErrorParams, Has.Property("Pilot").Null);
 		}
@@ -79,7 +80,7 @@ namespace Echo.Tests.Ships
 			_task.SetParameters(new UndockShipParameters(ship, pilot));
 			
 			var result = _task.Execute();
-			Assert.That(result.Success, Is.True, result.ErrorCode);
+			Assert.That(result.Success, Is.True, result.StatusCode);
 			Assert.That(ship.Position.LocalCoordinates, Is.EqualTo(structure.Position.LocalCoordinates));
 			Assert.That(ship.Position.Location, Is.EqualTo(solarSystem));
 		}

@@ -82,11 +82,11 @@ namespace Echo.Tests.Items
 		public void CanBuild()
 		{
 			var itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
-			itemFactory.Setup(f => f.Build(_universe.BluePrint.Code, 1)).Returns(new Item(new ItemInfo(_universe.BluePrint.Code)));
+			var expected = TestItems.BuildItem(_universe.BluePrint.Code, _universe.BluePrint.TargetQuantity);
+			itemFactory.Setup(f => f.Build(_universe.BluePrint.Code, _universe.BluePrint.TargetQuantity)).Returns(expected);
 
 			var item = BluePrint.Build(itemFactory.Object);
-			Assert.That(item.ItemInfo.Code, Is.EqualTo(_universe.BluePrint.Code));
-			Assert.That(item.Quantity, Is.EqualTo(_universe.BluePrint.TargetQuantity));
+			Assert.That(item, Is.SameAs(expected));
 		}
 	}
 }

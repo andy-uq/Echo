@@ -81,7 +81,21 @@ namespace Echo.Tests.Mocks
 				{
 					BuildRequirements = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5 }, },
 					Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, },
+					TargetQuantity = 2,
+				};
+
+				yield return new BluePrintInfo(ItemCode.LightFrigate)
+				{
+					BuildRequirements = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5 }, },
+					Materials = new[]
+					{
+						new ItemState { Code = ItemCode.Veldnium, Quantity = 1000 },
+						new ItemState { Code = ItemCode.MissileLauncher, Quantity = 10 },
+						new ItemState { Code = ItemCode.MiningLaser, Quantity = 2 },
+						new ItemState { Code = ItemCode.EnergyShield, Quantity = 4 },
+					},
 					TargetQuantity = 1,
+					BuildLength = 5,
 				};
 			}
 		}

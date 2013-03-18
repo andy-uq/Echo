@@ -4,7 +4,7 @@ namespace Echo.Tasks.Ships
 {
 	public abstract class ShipTask : ITask
 	{
-		#region ErrorCode enum
+		#region StatusCode enum
 
 		public enum ErrorCode
 		{

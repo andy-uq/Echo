@@ -12,7 +12,7 @@ namespace Echo.Tasks.Ships.Mining
 
 		#region ITaskResult Members
 
-		string ITaskResult.ErrorCode
+		string ITaskResult.StatusCode
 		{
 			get { return ErrorCode.ToString(); }
 		}
