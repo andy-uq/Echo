@@ -18,15 +18,15 @@ namespace site
 			//    clientId: "",
 			//    clientSecret: "");
 
-			//OAuthWebSecurity.RegisterTwitterClient(
-			//    consumerKey: "",
-			//    consumerSecret: "");
+			OAuthWebSecurity.RegisterTwitterClient(
+				consumerKey: "3juYiueihG4UsOBv64mdQ",
+				consumerSecret: "axTX5kSJUS0fwqV4NZyrTPbpMpCwzyezzdgG4bygA");
 
 			//OAuthWebSecurity.RegisterFacebookClient(
 			//    appId: "",
 			//    appSecret: "");
 
-			//OAuthWebSecurity.RegisterGoogleClient();
+			OAuthWebSecurity.RegisterGoogleClient();
 		}
 	}
 }
