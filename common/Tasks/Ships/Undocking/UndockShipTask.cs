@@ -42,23 +42,23 @@ namespace Echo.Tasks.Ships.Undocking
 			if ( Structure == null )
 			{
 				{
-					return Failed(ErrorCode.NotDocked, Ship);
+					return Failed(StatusCode.NotDocked, Ship);
 				}
 			}
 
 			if ( !Pilot.CanUse(Ship) )
 			{
-				return Failed(ErrorCode.MissingSkillRequirement, Ship, Pilot);
+				return Failed(StatusCode.MissingSkillRequirement, Ship, Pilot);
 			}
 
 			return Success();
 		}
 
-		private UndockShipResult Failed(ErrorCode errorCode, Ship ship, Agent pilot = null)
+		private UndockShipResult Failed(StatusCode statusCode, Ship ship, Agent pilot = null)
 		{
 			return new UndockShipResult
 			{
-				ErrorCode = errorCode,
+				StatusCode = statusCode,
 				Ship = ship,
 				Pilot = pilot,
 			};

@@ -37,7 +37,7 @@ namespace Echo.Tests.Ships
 
 			var result = (UndockShipResult )_task.Execute();
 			Assert.That(result.Success, Is.False);
-			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.NotDocked));
+			Assert.That(result.StatusCode, Is.EqualTo(ShipTask.StatusCode.NotDocked));
 
 			ITaskResult taskResult = result;
 			Assert.That(taskResult.StatusCode, Is.EqualTo("NotDocked"));
@@ -54,7 +54,7 @@ namespace Echo.Tests.Ships
 
 			_task.SetParameters(new UndockShipParameters(ship, pilot));
 			var result = (UndockShipResult)_task.Execute();
-			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
+			Assert.That(result.StatusCode, Is.EqualTo(ShipTask.StatusCode.MissingSkillRequirement));
 		}
 
 		[Test]
@@ -66,7 +66,7 @@ namespace Echo.Tests.Ships
 
 			_task.SetParameters(new UndockShipParameters(ship, pilot));
 			var result = (UndockShipResult)_task.Execute();
-			Assert.That(result.ErrorCode, Is.EqualTo(ShipTask.ErrorCode.MissingSkillRequirement));
+			Assert.That(result.StatusCode, Is.EqualTo(ShipTask.StatusCode.MissingSkillRequirement));
 		}
 
 		[Test]

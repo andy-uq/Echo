@@ -8,13 +8,13 @@ namespace Echo.Tasks.Ships.Undocking
 		public Ship Ship { get; set; }
 		public Agent Pilot { get; set; }
 
-		public ShipTask.ErrorCode ErrorCode { get; set; }
+		public ShipTask.StatusCode StatusCode { get; set; }
 
 		#region ITaskResult Members
 
 		string ITaskResult.StatusCode
 		{
-			get { return ErrorCode.ToString(); }
+			get { return StatusCode.ToString(); }
 		}
 
 		object ITaskResult.ErrorParams

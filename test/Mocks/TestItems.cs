@@ -70,6 +70,16 @@ namespace Echo.Tests.Mocks
 					MinimumDamage = 50,
 					Speed = 1d
 				};
+
+				yield return new WeaponInfo
+				{
+					Code = ItemCode.MiningLaser,
+					Name = "Mining Laster",
+					DamageType = DamageType.Thermal,
+					MaximumDamage = 1,
+					MinimumDamage = 5,
+					Speed = 0.75d
+				};
 			}
 		}
 

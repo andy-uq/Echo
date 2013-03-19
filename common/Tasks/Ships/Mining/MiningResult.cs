@@ -5,7 +5,7 @@ namespace Echo.Tasks.Ships.Mining
 {
 	public class MiningResult : TaskResult, ITaskResult
 	{
-		public ShipTask.ErrorCode ErrorCode { get; set; }
+		public ShipTask.StatusCode StatusCode { get; set; }
 		public Ship Ship { get; set; }
 
 		public Item Ore { get; set; }
@@ -14,7 +14,7 @@ namespace Echo.Tasks.Ships.Mining
 
 		string ITaskResult.StatusCode
 		{
-			get { return ErrorCode.ToString(); }
+			get { return StatusCode.ToString(); }
 		}
 
 		object ITaskResult.ErrorParams

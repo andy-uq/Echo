@@ -6,11 +6,12 @@ namespace Echo.Tasks.Ships
 	{
 		#region StatusCode enum
 
-		public enum ErrorCode
+		public enum StatusCode
 		{
 			Success,
 			NotDocked,
-			MissingSkillRequirement
+			MissingSkillRequirement,
+			Pending
 		}
 
 		#endregion

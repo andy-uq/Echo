@@ -17,14 +17,16 @@ namespace Echo.Tests.Ships
 	{
 		private Ship _ship;
 		private SolarSystem _solarSystem;
-		private AsteroidBelt _asteroidBelt;
+		private AsteroidBelt _asteroid;
+		private AsteroidBelt _difficultAsteroid;
 
 		[SetUp]
 		public void SetUp()
 		{
 			_solarSystem = new SolarSystem();
-			_asteroidBelt = new AsteroidBelt { Ore = ItemCode.Veldnium, Richness = 500, AmountRemaining = 1000, Position = new Position(_solarSystem, Vector.Parse("1,0")) };
-			_solarSystem.Satellites.Add(_asteroidBelt);
+			_asteroid = new AsteroidBelt { Ore = ItemCode.Veldnium, Difficulty = 1, Richness = 500, AmountRemaining = 1000, Position = new Position(_solarSystem, Vector.Parse("1,0")) };
+			_difficultAsteroid = new AsteroidBelt { Ore = ItemCode.Veldnium, Difficulty = 2, Richness = 500, AmountRemaining = 1000, Position = new Position(_solarSystem, Vector.Parse("1,0")) };
+			_solarSystem.Satellites.Add(_asteroid);
 
 			var shipInfo = new ShipState(ItemCode.LightFrigate)
 			{
@@ -37,8 +39,8 @@ namespace Echo.Tests.Ships
 
 			var builder = Ship.Builder.Build(_solarSystem, shipInfo);
 			var frigate = new ShipInfo { Code = ItemCode.LightFrigate };
-			var missileLauncher = new WeaponInfo { Code = ItemCode.MissileLauncher, DamageType = DamageType.Thermal, MinimumDamage = 10, MaximumDamage = 100, Speed = 1d };
-			var miningLaser = new WeaponInfo { Code = ItemCode.MiningLaser, DamageType = DamageType.Energy, MinimumDamage = 5, MaximumDamage = 5, Speed = 1d };
+			var missileLauncher = TestItems.Weapon(ItemCode.MissileLauncher);
+			var miningLaser = TestItems.Weapon(ItemCode.MiningLaser);
 
 			IIdResolver resolver = new IdResolutionContext(new IObject[] { missileLauncher, miningLaser, frigate });
 			_ship = builder.Build(resolver);
@@ -52,12 +54,48 @@ namespace Echo.Tests.Ships
 			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>())).Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
 
 			var mining = new MiningTask(itemFactory.Object) { };
-			mining.SetParameters(new MineAsteroidParameters(_ship, _asteroidBelt));
+			mining.SetParameters(new MineAsteroidParameters(_ship, _asteroid));
 			var result = (MiningResult )mining.Execute();
 
 			Assert.That(result.Success, Is.True);
-			Assert.That(result.Ore.Quantity, Is.EqualTo(1));
-			Assert.That(_asteroidBelt.AmountRemaining, Is.EqualTo(999));
+			Assert.That(result.StatusCode, Is.EqualTo(ShipTask.StatusCode.Success));
+			Assert.That(result.Ore.Quantity, Is.EqualTo(2));
+			Assert.That(_asteroid.AmountRemaining, Is.EqualTo(998));
+		}
+
+		[Test]
+		public void CanMakeAsteroidSmaller()
+		{
+			_asteroid.Reduce(100);
+			Assert.That(_asteroid.AmountRemaining, Is.EqualTo(900));
+
+			var amount = _asteroid.Reduce(1000);
+			Assert.That(amount, Is.EqualTo(900));
+			Assert.That(_asteroid.AmountRemaining, Is.EqualTo(0));
+		}
+
+		[Test]
+		public void AsteroidHasDifficulty()
+		{
+			var veldnium = new ItemInfo(ItemCode.Veldnium);
+			var itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
+			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>())).Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
+
+			var mining = new MiningTask(itemFactory.Object) { };
+			mining.SetParameters(new MineAsteroidParameters(_ship, _difficultAsteroid));
+			
+			var result = mining.Mine();
+			Assert.That(result.Success, Is.True);
+			Assert.That(result.StatusCode, Is.EqualTo(ShipTask.StatusCode.Pending));
+			Assert.That(_difficultAsteroid.AmountRemaining, Is.EqualTo(1000));
+
+			result = mining.Mine();
+
+			Assert.That(result.Success, Is.True);
+			Assert.That(result.StatusCode, Is.EqualTo(ShipTask.StatusCode.Success));
+
+			Assert.That(result.Ore.Quantity, Is.EqualTo(2));
+			Assert.That(_difficultAsteroid.AmountRemaining, Is.EqualTo(998));
 		}
 	}
 }

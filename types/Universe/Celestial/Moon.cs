@@ -14,6 +14,7 @@ namespace Echo.Celestial
 		public ItemCode Ore { get; set; }
 		public int Richness { get; set; }
 		public uint AmountRemaining { get; set; }
+		public uint Difficulty { get; set; }
 
 		public uint Reduce(uint quantity)
 		{
