@@ -3,7 +3,7 @@ using Echo.Ships;
 
 namespace Echo.Tasks.Ships.Mining
 {
-	public class MiningResult : TaskResult, ITaskResult
+	public sealed class MiningResult : TaskResult, ITaskResult
 	{
 		public ShipTask.StatusCode StatusCode { get; set; }
 		public Ship Ship { get; set; }

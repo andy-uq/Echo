@@ -11,6 +11,7 @@ namespace Echo.Statistics
 
 		private static Math<TValue> Math { get; set; }
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
 		static StatisticValue()
 		{
 			var type = typeof (Math);

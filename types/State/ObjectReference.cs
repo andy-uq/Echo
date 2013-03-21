@@ -66,16 +66,25 @@ namespace Echo.State
 			return new ObjectReference(value);
 		}
 
+		public static bool operator ==(ObjectReference left, ObjectReference right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(ObjectReference left, ObjectReference right)
+		{
+			return !left.Equals(right);
+		}
+
 		public bool Equals(ObjectReference other)
 		{
-			return other.Id == Id;
+			return Id == other.Id;
 		}
 
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			if (obj.GetType() != typeof (ObjectReference)) return false;
-			return Equals((ObjectReference) obj);
+			return obj is ObjectReference && Equals((ObjectReference) obj);
 		}
 
 		public override int GetHashCode()

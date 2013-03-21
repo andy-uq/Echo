@@ -2,7 +2,7 @@ using Echo.Items;
 
 namespace Echo.Tasks.Structure
 {
-	public class ManufacturingResult : TaskResult, ITaskResult
+	public sealed class ManufacturingResult : TaskResult, ITaskResult
 	{
 		private readonly object _errorParams;
 

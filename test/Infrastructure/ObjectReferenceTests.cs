@@ -108,6 +108,8 @@ namespace Echo.Tests.Infrastructure
 			Assert.That(o1.GetHashCode(), Is.EqualTo(o2.GetHashCode()).And.EqualTo(o3.GetHashCode()));
 			Assert.That(o1.Equals(o3), Is.True);
 			Assert.That(o1.Equals(o4), Is.False);
+			Assert.That(o1 == o3, Is.True);
+			Assert.That(o1 != o4, Is.True);
 			Assert.That(o1.Equals("not an object"), Is.False);
 		}
 	}

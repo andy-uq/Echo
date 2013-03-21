@@ -17,6 +17,7 @@
 		MarketPlace,
 		Auction,
 		JumpGate,
-		Skill
+		Skill,
+		BluePrint
 	}
 }
