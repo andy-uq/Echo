@@ -44,5 +44,13 @@ namespace Echo.State
 			get { return ItemType.Blueprints; }
 			set {  }
 		}
+
+		public override ObjectType ObjectType
+		{
+			get
+			{
+				return ObjectType.BluePrint;
+			}
+		}
 	}
 }

@@ -13,5 +13,10 @@ namespace Echo.State
 			get { return ItemType.Ships; }
 			set {  }
 		}
+
+		public override ObjectType ObjectType
+		{
+			get { return ObjectType.Ship; }
+		}
 	}
 }

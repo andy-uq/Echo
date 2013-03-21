@@ -64,7 +64,7 @@ namespace Echo.Tasks.Structure
 			_itemFactory = itemFactory;
 		}
 
-		ITaskResult ITask.Execute()
+		public ITaskResult Execute()
 		{
 			return Manufacture();
 		}

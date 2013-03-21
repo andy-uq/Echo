@@ -25,7 +25,7 @@ namespace Echo.State
 			get { return ObjectId; }
 		}
 
-		ObjectType IObject.ObjectType
+		public virtual ObjectType ObjectType
 		{
 			get { return ObjectType.Info; }
 		}

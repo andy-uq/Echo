@@ -29,7 +29,7 @@ namespace Echo.State
 
 		ObjectType IObject.ObjectType
 		{
-			get { return ObjectType.Info; }
+			get { return ObjectType.Skill; }
 		}
 	}
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace Echo.State.Market
 {
-	public class BuyOrderState : IObjectState
+	public sealed class BuyOrderState : IObjectState
 	{
 		public AuctionState Auction { get; set; }
 

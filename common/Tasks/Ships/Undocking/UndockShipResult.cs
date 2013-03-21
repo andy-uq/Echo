@@ -3,7 +3,7 @@ using Echo.Ships;
 
 namespace Echo.Tasks.Ships.Undocking
 {
-	public class UndockShipResult : TaskResult, ITaskResult
+	public sealed class UndockShipResult : TaskResult, ITaskResult
 	{
 		public Ship Ship { get; set; }
 		public Agent Pilot { get; set; }
