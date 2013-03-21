@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
-using site.Models;
+using Echo.Web.Models;
 
-namespace site
+namespace Echo.Web
 {
 	public static class AuthConfig
 	{

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace site
+namespace Echo.Web
 {
 	public class FilterConfig
 	{

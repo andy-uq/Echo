@@ -6,12 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
+using Echo.Web.Filters;
+using Echo.Web.Models;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using site.Filters;
-using site.Models;
 
-namespace site.Controllers
+namespace Echo.Web.Controllers
 {
 	[Authorize]
 	[InitializeSimpleMembership]

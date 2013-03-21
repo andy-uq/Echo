@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 
-namespace site.Models
+namespace Echo.Web.Models
 {
 	public class UsersContext : DbContext
 	{
@@ -22,7 +22,7 @@ namespace site.Models
 	public class UserProfile
 	{
 		[Key]
-		[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int UserId { get; set; }
 		public string UserName { get; set; }
 	}
