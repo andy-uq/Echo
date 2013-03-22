@@ -1,0 +1,35 @@
+﻿@using Echo.State
+@using site.code
+@model Echo.Web.Areas.Admin.Models.StarClusterIndex
+
+@{
+	ViewBag.Title = "title";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Star Clusters</h2>
+<table>
+	<thead>
+		<tr>
+			<td>Name</td>
+			<td>Coordinates</td>
+			<td>Size</td>
+            <td></td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (StarClusterState cluster in Model.StarClusters)
+		{
+			<tr>
+				<td>@cluster.Name</td>
+				<td>@cluster.LocalCoordinates</td>
+				<td>@cluster.Size()</td>
+				<td>@Html.ActionLink("view", "View")</td>
+			</tr>
+		}
+	</tbody>
+	<tfoot>
+		@Html.EditorFor(x => x.NewStarCluster)
+	</tfoot>
+</table>
+

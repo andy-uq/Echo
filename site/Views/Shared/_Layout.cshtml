@@ -33,12 +33,17 @@
 	}
 
     <section class="content">
-        <section class="main">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
-        </section>
+		<section class="main">
+			@if(IsSectionDefined("featured"))
+			{
+				<section class="featured">
+					@RenderSection("featured", required: false)
+				</section>
+			}
+			<section class="content-wrapper main-content clear-fix">
+				@RenderBody()
+			</section>
+		</section>
     </section>
 
     <footer>

@@ -386,7 +386,7 @@ div.submit
 	clear: both;
 }
 
-.info
+.info, .featured
 {
 	background-image: url(/Images/info.png);
 	min-height: 100px;
