@@ -1,10 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Echo.State
 {
 	public class SolarSystemState : IObjectState
 	{
+		public SolarSystemState()
+		{
+			Satellites = Enumerable.Empty<CelestialObjectState>();
+			Structures = Enumerable.Empty<StructureState>();
+			Ships = Enumerable.Empty<ShipState>();
+			JumpGates = Enumerable.Empty<JumpGateState>();
+		}
+
 		public long ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
