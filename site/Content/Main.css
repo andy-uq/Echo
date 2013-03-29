@@ -6,7 +6,7 @@
 
 body
 {
-	font-family: "Transponder AOE" , "Trebuchet MS" , sans-serif;
+	font-family: "Trebuchet MS" , sans-serif;
 	font-size: 14pt;
 	color: #21b60c;
 	margin: 0px;
@@ -62,7 +62,7 @@ tr>td
 thead
 {
 	text-align: left;
-	color: Black;
+	color: #26d30e;
 	background-color: #173a12;
 }
 

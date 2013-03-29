@@ -3,7 +3,7 @@
 @model Echo.Web.Areas.Admin.Models.StarClusterIndex
 
 @{
-	ViewBag.Title = "title";
+	ViewBag.Title = "Star Clusters";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,19 +17,20 @@
             <td></td>
 		</tr>
 	</thead>
-	<tbody>
-		@foreach (StarClusterState cluster in Model.StarClusters)
-		{
+	<tbody data-bind="foreach: data">
 			<tr>
-				<td>@cluster.Name</td>
-				<td>@cluster.LocalCoordinates</td>
-				<td>@cluster.Size()</td>
-				<td>@Html.ActionLink("view", "View")</td>
+				<td data-bind="text: name"></td>
+				<td data-bind="text: localCoordinates"></td>
+				<td data-bind="text: size()"></td>
+				<td></td>
 			</tr>
-		}
 	</tbody>
-	<tfoot>
+	<tfoot data-bind="with:newStarCluster">
 		@Html.EditorFor(x => x.NewStarCluster)
 	</tfoot>
 </table>
 
+<script type="text/javascript" src="/scripts/_references.js"></script>
+<script type="text/javascript" src="/scripts/knockout-2.1.0.debug.js"></script>
+<script type="text/javascript" src="/scripts/knockout-postbox.min.js"></script>
+<script type="text/javascript" src="/scripts/StarClusters.min.js"></script>

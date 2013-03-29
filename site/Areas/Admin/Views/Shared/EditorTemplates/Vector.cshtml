@@ -1,6 +1,6 @@
 ﻿@model Echo.Vector
 
 <div class="vector">
-	@Html.TextBoxFor(x => x.X)
-	@Html.TextBoxFor(x => x.Y)
+	@Html.TextBoxFor(x => x.X, new { data_bind = "value:x" })
+	@Html.TextBoxFor(x => x.Y, new { data_bind = "value:y" })
 </div>

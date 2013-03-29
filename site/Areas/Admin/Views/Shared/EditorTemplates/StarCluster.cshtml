@@ -1,9 +1,9 @@
 ﻿@model Echo.Web.Areas.Admin.Models.StarCluster
 
 <tr>
-	<td>@Html.TextBoxFor(x => x.Name)</td>
-	<td>@Html.EditorFor(x => x.LocalCoordinates)</td>
+	<td>@Html.TextBoxFor(x => x.Name, new { data_bind = "value: name" })</td>
+	<td data-bind="with:localCoordinates">@Html.EditorFor(x => x.LocalCoordinates)</td>
 	<td></td>
-	<td><button>add</button></td>
+	<td><button data-bind="click:add">add</button></td>
 </tr>
 

@@ -195,6 +195,17 @@
     <Content Include="App_Data\aspnet-site-20130321_log.ldf">
       <DependentUpon>aspnet-site-20130321.mdf</DependentUpon>
     </Content>
+    <Content Include="Scripts\knockout-postbox.d.ts" />
+    <Content Include="Scripts\knockout-postbox.js" />
+    <Content Include="Scripts\knockout-postbox.min.js" />
+    <Content Include="Scripts\knockout.d.ts" />
+    <Content Include="Scripts\StarClusters.js">
+      <DependentUpon>StarClusters.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\StarClusters.min.js">
+      <DependentUpon>StarClusters.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\StarClusters.ts" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

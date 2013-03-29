@@ -27,6 +27,8 @@ namespace Echo.Web.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				_backingStore.Add(new StarClusterState { LocalCoordinates = newStarCluster.LocalCoordinates, Name = newStarCluster.Name });
+
 				return RedirectToAction("Index");
 			}
 
@@ -43,5 +45,6 @@ namespace Echo.Web.Areas.Admin.Controllers
 	public interface IBackingStore<T>
 	{
 		IEnumerable<T> GetAll();
+		void Add(T value);
 	}
 }

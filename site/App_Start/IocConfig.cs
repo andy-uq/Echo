@@ -15,7 +15,7 @@ namespace Echo.Web
 		{
 			var containerBuilder = new ContainerBuilder();
 			containerBuilder
-				.RegisterInstance(new MemoryBackingStore<StarClusterState>(new StarClusterState() { Name = "bOB"}))
+				.RegisterInstance(new MemoryBackingStore<StarClusterState>(new StarClusterState() { Id = "StarClusters/1", Name = "bOB"}))
 				.As<IBackingStore<StarClusterState>>();
 			containerBuilder.RegisterControllers(typeof(MvcApplication).Assembly);
     
@@ -46,6 +46,11 @@ namespace Echo.Web
 		public IEnumerable<T> GetAll()
 		{
 			return _data;
+		}
+
+		public void Add(T value)
+		{
+			_data.Add(value);
 		}
 	}
 }
