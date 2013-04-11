@@ -213,6 +213,7 @@
     <Compile Include="Areas\Admin\Controllers\StarClusterController.cs" />
     <Compile Include="Areas\Admin\Models\StarClusterIndex.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AssetHandler.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -227,11 +228,42 @@
     <Content Include="App_Data\aspnet-site-20130321_log.ldf">
       <DependentUpon>aspnet-site-20130321.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\StarCluster\StarClusterIndexViewModel.min.js">
+      <DependentUpon>StarClusterIndexViewModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\StarCluster\StarClusterViewModel.min.js">
+      <DependentUpon>StarClusterViewModel.ts</DependentUpon>
+    </Content>
+    <Content Include="README.txt" />
+    <Content Include="Scripts\Vector.js">
+      <DependentUpon>Vector.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Vector.min.js">
+      <DependentUpon>Vector.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ViewModels\VectorViewModel.js.map">
+      <DependentUpon>VectorViewModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\StarClusters.js.map">
+      <DependentUpon>StarClusters.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Vector.js.map">
+      <DependentUpon>Vector.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="Areas\Admin\Views\StarCluster\StarClusterIndexViewModel.ts" />
+    <Content Include="Areas\Admin\Views\StarCluster\StarClusterIndexViewModel.js">
+      <DependentUpon>StarClusterIndexViewModel.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="Areas\Admin\Views\StarCluster\StarClusterViewModel.ts" />
+    <Content Include="Areas\Admin\Views\StarCluster\StarClusterViewModel.js">
+      <DependentUpon>StarClusterViewModel.ts</DependentUpon>
+    </Content>
     <Content Include="Content\js\ss-validation.js" />
-    <Content Include="Scripts\knockout-postbox.d.ts" />
+    <TypeScriptCompile Include="Scripts\Vector.ts" />
+    <Content Include="Scripts\TypeDef\knockout-postbox.d.ts" />
     <Content Include="Scripts\knockout-postbox.js" />
     <Content Include="Scripts\knockout-postbox.min.js" />
-    <Content Include="Scripts\knockout.d.ts" />
+    <Content Include="Scripts\TypeDef\knockout.d.ts" />
     <Content Include="Scripts\StarClusters.js">
       <DependentUpon>StarClusters.ts</DependentUpon>
     </Content>
@@ -301,6 +333,12 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\StarCluster.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Vector.cshtml" />
+    <Content Include="Areas\Admin\Views\StarCluster\StarClusterViewModel.js.map">
+      <DependentUpon>StarClusterViewModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\StarCluster\StarClusterIndexViewModel.js.map">
+      <DependentUpon>StarClusterIndexViewModel.ts</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\alert.png" />
     <Content Include="Images\bg-gradient.png" />
@@ -326,6 +364,13 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <TypeScriptCompile Include="Scripts\ViewModels\VectorViewModel.ts" />
+    <Content Include="Scripts\ViewModels\VectorViewModel.js">
+      <DependentUpon>VectorViewModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ViewModels\VectorViewModel.min.js">
+      <DependentUpon>VectorViewModel.ts</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

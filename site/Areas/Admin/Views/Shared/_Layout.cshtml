@@ -1,7 +1,10 @@
 ﻿@{
-    ViewBag.Title = "_Layout";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Administration</h2>
 @RenderBody()
+
+@section Scripts {
+    @RenderSection("Scripts", required:false)
+}

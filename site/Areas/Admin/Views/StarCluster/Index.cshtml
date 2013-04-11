@@ -8,6 +8,10 @@
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+	td span { width: 100%;float: left; }
+</style>
+
 <h2>Star Clusters</h2>
 <table>
 	<thead>
@@ -18,17 +22,31 @@
             <td></td>
 		</tr>
 	</thead>
-	<tbody data-bind="foreach: data">
+	<tbody  style="display:none" data-bind="foreach: data, visible: true">
 		<tr>
-			<td data-bind="text: name, click: $root.edit"></td>
-			<td data-bind="text: localCoordinates"></td>
+			<td>
+				<span data-bind="text: name, click: beginRename, visible: isEditing() != 'name'"></span>
+				<div data-bind="visible: isEditing() == 'name'">
+					<input type="text" data-bind="value: name" />
+					<button class="ok" data-bind="click: rename">OK</button>
+					<button class="cancel" data-bind="click: cancel">Cancel</button>
+				</div>
+			</td>
+			<td>
+				<span data-bind="text: localCoordinates(), click: beginEditCoords, visible: isEditing() != 'coords'"></span>
+				<div data-bind="visible: isEditing() == 'coords'">
+					<div class="vector" data-bind="with:localCoordinates">
+	                    <input type="text" data-bind="value: x" />
+	                    <input type="text" data-bind="value: y" />
+                    </div>
+					<button class="ok" data-bind="click: editCoords">OK</button>
+					<button class="cancel" data-bind="click: cancel">Cancel</button>
+				</div>
+			</td>
 			<td data-bind="text: size()"></td>
-			<td><button data-bind="click: $root.remove">X</button></td>
+			<td><button data-bind="click: $root.remove, visible:!isEditing()">X</button></td>
 		</tr>
 	</tbody>
-	<tfoot data-bind="with:editStarCluster, visible:editStarCluster != null">
-		@Html.EditorFor(x => x.NewStarCluster)
-	</tfoot>
 	<tfoot data-bind="with:newStarCluster, visible:newStarCluster != null">
 		@Html.EditorFor(x => x.NewStarCluster)
 	</tfoot>
@@ -38,9 +56,15 @@
     var starClusters = @Model.StarClusters.ToJson()
 </script>
 
-<script type="text/javascript" src="/scripts/_references.js"></script>
-<script type="text/javascript" src="/scripts/jquery-1.7.1.js"></script>
-<script type="text/javascript" src="/scripts/knockout-2.1.0.debug.js"></script>
-<script type="text/javascript" src="/scripts/knockout-postbox.min.js"></script>
-<script type="text/javascript" src="/scripts/StarClusters.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+
+    <script type="text/javascript" src="/scripts/StarClusters.js"></script>
+    <script type="text/javascript" src="/scripts/Vector.js"></script>
+
+    <script type="text/javascript" src="/Scripts/ViewModels/VectorViewModel.js"></script>
+    <script type="text/javascript" src="StarClusterIndexViewModel.js"></script>
+    <script type="text/javascript" src="StarClusterViewModel.js"></script>
+}
 

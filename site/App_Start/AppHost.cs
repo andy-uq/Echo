@@ -6,16 +6,6 @@ using ServiceStack.WebHost.Endpoints;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(AppHost), "Start")]
 
-//IMPORTANT: Add the line below to MvcApplication.RegisterRoutes(RouteCollection) in the Global.asax:
-//routes.IgnoreRoute("api/{*pathInfo}"); 
-
-/**
- * Entire ServiceStack Starter Template configured with a 'Hello' Web Service and a 'Todo' Rest Service.
- *
- * Auto-Generated Metadata API page at: /metadata
- * See other complete web service examples at: https://github.com/ServiceStack/ServiceStack.Examples
- */
-
 namespace Echo.Web
 {
 	//A customizeable typed UserSession that can be extended with your own properties
