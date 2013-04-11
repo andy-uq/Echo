@@ -235,10 +235,10 @@
       <DependentUpon>StarClusterViewModel.ts</DependentUpon>
     </Content>
     <Content Include="README.txt" />
-    <Content Include="Scripts\Vector.js">
+    <Content Include="Scripts\Types\Vector.js">
       <DependentUpon>Vector.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\Vector.min.js">
+    <Content Include="Scripts\Types\Vector.min.js">
       <DependentUpon>Vector.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\ViewModels\VectorViewModel.js.map">
@@ -247,7 +247,7 @@
     <Content Include="Scripts\Types\StarClusters.js.map">
       <DependentUpon>StarClusters.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\Vector.js.map">
+    <Content Include="Scripts\Types\Vector.js.map">
       <DependentUpon>Vector.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="Areas\Admin\Views\StarCluster\StarClusterIndexViewModel.ts" />
