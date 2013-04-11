@@ -30,6 +30,19 @@ local.properties
 # PDT-specific
 .buildpath
 
+site/Areas/*/Views/*/*.min.js
+site/Areas/*/Views/*/*.js.map
+site/Areas/*/Views/*/*.js
+
+site/Scripts/Types/*.min.js
+site/Scripts/Types/*.js.map
+site/Scripts/Types/*.js
+
+site/Scripts/ViewModels/*.min.js
+site/Scripts/ViewModels/*.js.map
+site/Scripts/ViewModels/*.js
+
+
 
 #################
 ## Visual Studio

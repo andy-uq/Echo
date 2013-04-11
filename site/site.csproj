@@ -244,7 +244,7 @@
     <Content Include="Scripts\ViewModels\VectorViewModel.js.map">
       <DependentUpon>VectorViewModel.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\StarClusters.js.map">
+    <Content Include="Scripts\Types\StarClusters.js.map">
       <DependentUpon>StarClusters.ts</DependentUpon>
     </Content>
     <Content Include="Scripts\Vector.js.map">
@@ -259,18 +259,18 @@
       <DependentUpon>StarClusterViewModel.ts</DependentUpon>
     </Content>
     <Content Include="Content\js\ss-validation.js" />
-    <TypeScriptCompile Include="Scripts\Vector.ts" />
+    <TypeScriptCompile Include="Scripts\Types\Vector.ts" />
     <Content Include="Scripts\TypeDef\knockout-postbox.d.ts" />
     <Content Include="Scripts\knockout-postbox.js" />
     <Content Include="Scripts\knockout-postbox.min.js" />
     <Content Include="Scripts\TypeDef\knockout.d.ts" />
-    <Content Include="Scripts\StarClusters.js">
+    <Content Include="Scripts\Types\StarClusters.js">
       <DependentUpon>StarClusters.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\StarClusters.min.js">
+    <Content Include="Scripts\Types\StarClusters.min.js">
       <DependentUpon>StarClusters.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\StarClusters.ts" />
+    <Content Include="Scripts\Types\StarClusters.ts" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

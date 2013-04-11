@@ -1,7 +1,7 @@
 /// <reference path="../typedef/knockout.d.ts" />
 /// <reference path="../typedef/knockout-postbox.d.ts" />
 
-/// <reference path="../Vector.ts" />
+/// <reference path="../Types/Vector.ts" />
 
 class VectorViewModel {
     x: KnockoutObservableNumber;

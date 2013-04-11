@@ -1,8 +1,8 @@
-/// <reference path="../../../../scripts/Vector.ts" />
 /// <reference path="../../../../scripts/typedef/knockout.d.ts" />
 /// <reference path="../../../../scripts/typedef/knockout-postbox.d.ts" />
 
-/// <reference path="../../../../scripts/StarClusters.ts" />
+/// <reference path="../../../../scripts/Types/Vector.ts" />
+/// <reference path="../../../../scripts/Types/StarClusters.ts" />
 /// <reference path="StarClusterViewModel.ts" />
 
 declare var starClusters: StarCluster[];
