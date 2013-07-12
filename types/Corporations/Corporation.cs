@@ -15,7 +15,11 @@ namespace Echo.Corporations
 			Employees = new List<Agent>();
 			Property = new ItemCollection();
 			Structures = new List<Structure>();
-			Hangars = new Dictionary<ObjectReference, ItemCollection>();
+			Ships = new List<Ship>();
+
+			BuyOrders = new List<BuyOrder>();
+			SellOrders = new List<SellOrder>();
+			BluePrints = new List<Item>();
 		}
 
 		public ObjectType ObjectType
@@ -33,8 +37,6 @@ namespace Echo.Corporations
 		public List<BuyOrder> BuyOrders { get; set; }
 		public List<SellOrder> SellOrders { get; set; }
 		public List<Item> BluePrints { get; set; }
-
-		public Dictionary<ObjectReference, ItemCollection> Hangars { get; set; }
 
 		public ItemCollection GetProperty(Structure structure)
 		{

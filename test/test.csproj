@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commerce\AuctionTests.cs" />
-    <Compile Include="Commerce\Corporation.cs" />
     <Compile Include="Corporations\CorporationTests.cs" />
     <Compile Include="Infrastructure\ContextTests.cs" />
     <Compile Include="Infrastructure\DisposableObjectTests.cs" />
