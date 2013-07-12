@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Echo;
 using Echo.State;
 
@@ -19,6 +20,46 @@ namespace test.common
 
 			return solarSystem.Build();
 		}
+
+		public StarClusterState StarCluster(Action<StarClusterBuilder> builder)
+		{
+			var starCluster = new StarClusterBuilder();
+			builder(starCluster);
+
+			return starCluster.Build();
+		}
+	}
+
+	public class StarClusterBuilder
+	{
+		private readonly StarClusterState _starCluster;
+		private List<SolarSystemState> _solarSystems;
+
+		public StarClusterBuilder()
+		{
+			_starCluster = new StarClusterState();
+			_solarSystems = new List<SolarSystemState>();
+		}
+
+		public StarClusterBuilder SolarSystem(Vector localCoordinates = default(Vector))
+		{
+			var solarSystem = new SolarSystemState
+			{
+				LocalCoordinates = localCoordinates
+			};
+
+			_solarSystems.Add(solarSystem);
+
+			return this;
+		}
+
+		public StarClusterState Build()
+		{
+			return new StarClusterState
+			{
+				SolarSystems = ImmutableHashSet.From(_solarSystems)
+			};
+		}
 	}
 
 	public class SolarSystemBuilder : CelestialBuilder
@@ -29,6 +70,7 @@ namespace test.common
 		public SolarSystemBuilder()
 		{
 			_solarSystem = new SolarSystemState();
+			_satellites = new List<CelestialObjectState>();
 		}
 
 		public SolarSystemBuilder Planet(Vector localCoordinates = default(Vector))
@@ -46,7 +88,7 @@ namespace test.common
 		{
 			return new SolarSystemState
 			{
-				Satellites = new System.Collections.Generic.,
+				Satellites = ImmutableHashSet.From(_satellites)
 			};
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Echo;
 using Echo.State;
 
@@ -8,12 +9,25 @@ namespace site.code
 	{
 		public static Vector Size(this StarClusterState starCluster)
 		{
-			return starCluster.SolarSystems.Aggregate(Vector.Zero, (current, star) => current + (star.LocalCoordinates + star.Size()));
+			return Max(starCluster.SolarSystems.Select(x => x.LocalCoordinates));
 		}
 
 		public static Vector Size(this SolarSystemState solarSystem)
 		{
-			return solarSystem.Satellites.Aggregate(Vector.Zero, (current, celestialBody) => current + (celestialBody.LocalCoordinates + new Vector(celestialBody.Size, 0)));
+			return Max(solarSystem.Satellites.Select(x => x.LocalCoordinates));
+		}
+
+		private static Vector Max(IEnumerable<Vector> vectors)
+		{
+			var extent = Vector.Zero;
+
+			foreach (var vector in vectors)
+			{
+				if ( vector.Magnitude > extent.Magnitude )
+					extent = vector;
+			}
+
+			return extent;
 		}
 	}
 }
