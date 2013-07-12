@@ -6,10 +6,10 @@ namespace site.code
 {
 	public static class StarClusterExtensions
 	{
-		 public static Vector Size(this StarClusterState starCluster)
-		 {
-			 return starCluster.SolarSystems.Aggregate(Vector.Zero, (current, star) => current + (star.LocalCoordinates + star.Size()));
-		 }
+		public static Vector Size(this StarClusterState starCluster)
+		{
+			return starCluster.SolarSystems.Aggregate(Vector.Zero, (current, star) => current + (star.LocalCoordinates + star.Size()));
+		}
 
 		public static Vector Size(this SolarSystemState solarSystem)
 		{
