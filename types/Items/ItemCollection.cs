@@ -15,13 +15,25 @@ namespace Echo.Items
 		private readonly Dictionary<ItemCode, Item> _storage;
 		private readonly List<ItemCollection> _subCollections;
 
-		public ItemCollection()
+		public ItemCollection(Corporation owner = null, ILocation location = null, IEnumerable<Item> initialContents = null)
 		{
+			_owner = owner;
+			_location = location;
+
 			_storage = new Dictionary<ItemCode, Item>();
 			_subCollections = new List<ItemCollection>();
+
+			if ( initialContents == null )
+				return;
+
+			foreach (var item in initialContents)
+			{
+				Add(item);
+			}
 		}
 
-		public ItemCollection(ItemCollection parent) : this()
+		public ItemCollection(ItemCollection parent, ILocation location = null)
+			: this(location: location)
 		{
 			if (parent != null)
 			{
@@ -30,14 +42,6 @@ namespace Echo.Items
 			}
 		}
 
-		public ItemCollection(IEnumerable<Item> initialContents)
-			: this(parent: null)
-		{
-			foreach (var item in initialContents)
-			{
-				Add(item);
-			}
-		}
 		public ItemCollection(ItemCollection parent, IEnumerable<Item> initialContents)
 			: this(parent)
 		{
@@ -98,6 +102,8 @@ namespace Echo.Items
 			}
 
 			_storage.Add(item.ItemInfo.Code, item);
+			item.Owner = Owner;
+			item.Location = Location;
 		}
 
 		public void Clear()
@@ -107,10 +113,18 @@ namespace Echo.Items
 
 		public bool Contains(Item item)
 		{
+			var itemCode = item.ItemInfo.Code;
+			var quantity = item.Quantity;
+
+			return Contains(itemCode, quantity);
+		}
+
+		public bool Contains(ItemCode itemCode, uint quantity)
+		{
 			Item currentItem;
-			if ( _storage.TryGetValue(item.ItemInfo.Code, out currentItem) )
+			if (_storage.TryGetValue(itemCode, out currentItem))
 			{
-				return currentItem.Quantity >= item.Quantity;
+				return currentItem.Quantity >= quantity;
 			}
 
 			return false;
@@ -160,7 +174,8 @@ namespace Echo.Items
 
 		public void Remove(IEnumerable<ItemState> materials)
 		{
-			foreach (var item in materials.GroupBy(m => m.Code, (key, g) => new { key, quantity = (uint )g.Sum(m => m.Quantity) }))
+			var query = materials.GroupBy(m => m.Code, (key, g) => new { key, quantity = (uint) g.Sum(m => m.Quantity)});
+			foreach (var item in query)
 			{
 				Remove(item.key, item.quantity);
 			}
