@@ -8,6 +8,7 @@ using Echo.Tasks.Structure;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
+using test.common;
 
 namespace Echo.Tests.Structures
 {

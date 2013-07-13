@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Echo;
 using Echo.Agents.Skills;
-using Echo.Builder;
 using Echo.Items;
 using Echo.State;
 using SkillLevel = Echo.State.SkillLevel;
 
-namespace Echo.Tests.Mocks
+namespace test.common
 {
 	public static class TestItems
 	{

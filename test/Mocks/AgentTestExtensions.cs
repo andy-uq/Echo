@@ -1,6 +1,7 @@
 using Echo.Agents;
 using Echo.Corporations;
 using Echo.State;
+using test.common;
 
 namespace Echo.Tests.Mocks
 {

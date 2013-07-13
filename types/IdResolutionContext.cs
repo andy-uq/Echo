@@ -10,7 +10,7 @@ namespace Echo
 
 		public IdResolutionContext(IEnumerable<IObject> collection)
 		{
-			collection = collection.ToArray();
+			collection = collection.ToList();
 
 			var q =
 				(

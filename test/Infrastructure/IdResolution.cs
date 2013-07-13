@@ -4,6 +4,7 @@ using Echo.Items;
 using Echo.State;
 using Echo.Tests.Mocks;
 using NUnit.Framework;
+using test.common;
 
 namespace Echo.Tests.Infrastructure
 {

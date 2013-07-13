@@ -71,6 +71,7 @@
     <Compile Include="Infrastructure\ExceptionHandlerTests.cs" />
     <Compile Include="Infrastructure\ExceptionTests.cs" />
     <Compile Include="Infrastructure\IdResolution.cs" />
+    <Compile Include="Infrastructure\ItemCollectionTests.cs" />
     <Compile Include="Infrastructure\LocationServicesTest.cs" />
     <Compile Include="Infrastructure\ObjectReferenceTests.cs" />
     <Compile Include="Infrastructure\ObjectTests.cs" />
@@ -83,8 +84,6 @@
     <Compile Include="Mocks\AgentTestExtensions.cs" />
     <Compile Include="Mocks\IdGenerator.cs" />
     <Compile Include="Mocks\LocationService.cs" />
-    <Compile Include="Mocks\TestItems.cs" />
-    <Compile Include="Mocks\TestSkills.cs" />
     <Compile Include="Ships\HardPointTests.cs" />
     <Compile Include="Ships\MiningTests.cs" />
     <Compile Include="Ships\ShipCombatTests.cs" />
@@ -112,6 +111,10 @@
     <ProjectReference Include="..\common\common.csproj">
       <Project>{D24CBE2E-F1AD-43CA-A58B-0329F9D96C19}</Project>
       <Name>common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\test-common\test-common.csproj">
+      <Project>{90ff2b04-2887-4658-83b1-183304987ad7}</Project>
+      <Name>test-common</Name>
     </ProjectReference>
     <ProjectReference Include="..\types\types.csproj">
       <Project>{8B605E9C-167D-4A71-8B58-F1D3CB187E45}</Project>

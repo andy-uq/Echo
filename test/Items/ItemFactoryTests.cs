@@ -5,6 +5,7 @@ using Echo.Ships;
 using Echo.State;
 using Echo.Tests.Mocks;
 using NUnit.Framework;
+using test.common;
 
 namespace Echo.Tests.Items
 {

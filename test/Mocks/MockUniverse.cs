@@ -7,6 +7,7 @@ using Echo.Ships;
 using Echo.State;
 using Echo.State.Market;
 using Echo.Statistics;
+using test.common;
 using SkillLevel = Echo.State.SkillLevel;
 
 namespace Echo.Tests.Mocks

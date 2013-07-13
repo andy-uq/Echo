@@ -7,6 +7,7 @@ using Echo.State;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
+using test.common;
 using AgentSkillLevel = Echo.Agents.Skills.SkillLevel;
 
 namespace Echo.Tests.Items
@@ -62,19 +63,19 @@ namespace Echo.Tests.Items
 		{
 			Assert.That(BluePrint.HasMaterials(new ItemCollection()), Is.False);
 
-			var itemCollection = new ItemCollection(BluePrint.Materials.Build());
+			var itemCollection = new ItemCollection(initialContents: BluePrint.Materials.Build());
 			Assert.That(BluePrint.HasMaterials(itemCollection), Is.True);
 
 			var c1 = new[] {new ItemState() {Code = ItemCode.LightFrigate, Quantity = 1}};
-			itemCollection = new ItemCollection(c1.Build());
+			itemCollection = new ItemCollection(initialContents: c1.Build());
 			Assert.That(BluePrint.HasMaterials(itemCollection), Is.False);
 
 			var c2 = new[] {new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}};
-			itemCollection = new ItemCollection(c2.Build());
+			itemCollection = new ItemCollection(initialContents: c2.Build());
 			Assert.That(BluePrint.HasMaterials(itemCollection), Is.False);
 
 			var c3 = new[] {new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}, new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}};
-			itemCollection = new ItemCollection(c3.Build());
+			itemCollection = new ItemCollection(initialContents: c3.Build());
 			Assert.That(BluePrint.HasMaterials(itemCollection), Is.True);
 		}
 

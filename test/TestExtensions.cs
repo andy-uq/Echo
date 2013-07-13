@@ -4,6 +4,7 @@ using Echo.Builder;
 using Echo.Items;
 using Echo.State;
 using Echo.Tests.Mocks;
+using test.common;
 
 namespace Echo.Tests
 {

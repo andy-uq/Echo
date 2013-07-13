@@ -9,6 +9,7 @@ using Echo.Tasks.Ships.Mining;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
+using test.common;
 
 namespace Echo.Tests.Ships
 {
