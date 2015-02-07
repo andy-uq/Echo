@@ -89,14 +89,14 @@ namespace test.common
 			{
 				yield return new BluePrintInfo(ItemCode.MissileLauncher)
 				{
-					BuildRequirements = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5 }, },
+					BuildRequirements = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level:5), },
 					Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, },
 					TargetQuantity = 2,
 				};
 
 				yield return new BluePrintInfo(ItemCode.LightFrigate)
 				{
-					BuildRequirements = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5 }, },
+					BuildRequirements = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level: 5), },
 					Materials = new[]
 					{
 						new ItemState { Code = ItemCode.Veldnium, Quantity = 1000 },

@@ -20,12 +20,12 @@ namespace Echo.Agents
 					Id = state.ObjectId,
 					Name = state.Name,
 					Statistics = new AgentStatistics(state.Statistics.Select(Build)),
-					Implants = state.Implants.ToDictionary(x => x.Stat)
+					Implants = state.Implants.Union(Implant.DefaultImplants).ToDictionary(x => x.Stat)
 				};
 
 				return new ObjectBuilder<Agent>(agent)
 					.Resolve((r, a) => a.Location = r.Get<ILocation>(state.Location))
-					.Resolve((r, a) => a.Skills = state.Skills.Select(skill => Build(r, skill)).ToDictionary(s => s.Skill.Code))
+					.Resolve((r, a) => a.Skills = state.Skills.Union(SkillLevel.DefaultSkillLevels).Select(skill => Build(r, skill)).ToDictionary(s => s.Skill.Code))
 					.Resolve(ApplyStatDeltas);
 			}
 
@@ -68,7 +68,7 @@ namespace Echo.Agents
 
 			private static SkillLevel Save(AgentSkillLevel x)
 			{
-				return new SkillLevel {SkillCode = x.Skill.Code, Level = x.Level};
+				return new SkillLevel(x.Skill.Code, x.Level);
 			}
 		}
 	}

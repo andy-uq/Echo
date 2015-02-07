@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Echo.Agents.Skills;
 using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;
@@ -94,7 +95,7 @@ namespace Echo.Tests.Structures
 		public void RequireAgentSkill()
 		{
 			var agent = _universe.John.StandUp();
-			agent.Skills.Clear();
+			agent.Skills[SkillCode.SpaceshipCommand].Level = 0;
 
 			var parameters = new ManufacturingParameters
 			{

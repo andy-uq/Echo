@@ -59,6 +59,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agents\AgentTests.cs" />
     <Compile Include="Commerce\AuctionTests.cs" />
     <Compile Include="Corporations\CorporationTests.cs" />
     <Compile Include="Infrastructure\ContextTests.cs" />

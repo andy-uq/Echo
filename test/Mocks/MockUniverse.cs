@@ -50,7 +50,7 @@ namespace Echo.Tests.Mocks
 				Name = "John",
 				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
 				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower, }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 }),
-				Skills = new[] { new SkillLevel { SkillCode = SkillCode.SpaceshipCommand, Level = 5, } }
+				Skills = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level: 5) }
 			};
 
 			MSCorp = new CorporationState
@@ -171,7 +171,7 @@ namespace Echo.Tests.Mocks
 						ShipClass = ShipClass.LightFrigate, 
 						PilotRequirements = new[]
 						{
-							new State.SkillLevel { Level  = 1, SkillCode = SkillCode.SpaceshipCommand },
+							new State.SkillLevel(SkillCode.SpaceshipCommand, level:1),
 						}
 					}
 				}

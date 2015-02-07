@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Echo.Agents.Skills;
 using Echo.Corporations;
 using Echo.Ships;
@@ -50,17 +51,7 @@ namespace Echo.Agents
 
 		private bool CanUse(IEnumerable<State.SkillLevel> requirements)
 		{
-			foreach ( var requirement in requirements )
-			{
-				SkillLevel skill;
-				if ( !Skills.TryGetValue(requirement.SkillCode, out skill) )
-					return false;
-
-				if ( skill.Level < requirement.Level )
-					return false;
-			}
-
-			return true;
+			return requirements.All(requirement => Skills[requirement.SkillCode].Level >= requirement.Level);
 		}
 	}
 }
