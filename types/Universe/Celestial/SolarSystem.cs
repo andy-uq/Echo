@@ -39,7 +39,7 @@ namespace Echo.Celestial
 
 		public void EnterSystem(Ship ship, Vector localCoordinates)
 		{
-			Ensure.That(() => ship.Position.Location).IsNull();
+			Ensure.That(ship.Position.Location).IsNull();
 			
 			Ships.Add(ship);
 			ship.Position = new Position(this, localCoordinates);

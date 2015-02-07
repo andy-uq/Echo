@@ -102,7 +102,7 @@ namespace Echo.Tasks.Structure
 
 		public ITaskResult SetParameters(ITaskParameters taskParameters)
 		{
-			Ensure.That(() => taskParameters).IsNotNull();
+			Ensure.That(taskParameters).IsNotNull();
 
 			var parameters = (ManufacturingParameters)taskParameters;
 			BluePrint = parameters.BluePrint;

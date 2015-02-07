@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using Autofac;
-using NUnit.Framework;
 using Raven.Client;
-using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Raven.Imports.Newtonsoft.Json;
 using test;
@@ -12,7 +9,7 @@ namespace Echo.Data.Tests
 {
 	public class CreateFreshDatabase : DisposableObject
 	{
-		private DocumentStore _database;
+	  private EmbeddableDocumentStore _database;
 
 		public void Create(ContainerBuilder containerBuilder)
 		{

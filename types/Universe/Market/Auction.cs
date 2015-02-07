@@ -54,7 +54,7 @@ namespace Echo.Market
 
 		public void List(MarketPlace marketPlace)
 		{
-			Ensure.That(() => marketPlace).IsNotNull();
+			Ensure.That(marketPlace).IsNotNull();
 
 			marketPlace.Add(this);
 		}

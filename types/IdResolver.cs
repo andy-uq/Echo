@@ -41,7 +41,7 @@ namespace Echo
 
 		public T Get<T>(ObjectReference objectReference) where T : class, IObject
 		{
-			Ensure.That(() => objectReference.Id).IsNotEqualTo(0UL);
+			Ensure.That(objectReference.Id).IsNotEqualTo(0UL);
 
 			T value;
 			if ( TryGetById(objectReference.Id, out value) )

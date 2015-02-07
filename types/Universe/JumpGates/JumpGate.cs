@@ -24,7 +24,7 @@ namespace Echo.JumpGates
 		/// <param name="ship">Ship to jump</param>
 		public void Jump(Ship ship)
 		{
-			Ensure.That(() => ship).IsNotNull();
+			Ensure.That(ship).IsNotNull();
 
 			if ( ConnectsTo == null )
 				throw new InvalidOperationException("This gate is an incomming gate only");

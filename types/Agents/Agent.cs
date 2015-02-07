@@ -32,19 +32,19 @@ namespace Echo.Agents
 
 		public bool CanUse(Ship ship)
 		{
-			Ensure.That(() => ship).IsNotNull();
+			Ensure.That(ship).IsNotNull();
 			return CanUse(ship.ShipInfo);
 		}
 
 		private bool CanUse(ShipInfo shipInfo)
 		{
-			Ensure.That(() => shipInfo).IsNotNull();
+			Ensure.That(shipInfo).IsNotNull();
 			return CanUse(shipInfo.PilotRequirements);
 		}
 
 		public bool CanUse(BluePrintInfo bluePrint)
 		{
-			Ensure.That(() => bluePrint).IsNotNull();
+			Ensure.That(bluePrint).IsNotNull();
 			return CanUse(bluePrint.BuildRequirements);
 		}
 

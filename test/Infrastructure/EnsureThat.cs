@@ -28,12 +28,12 @@ namespace Echo.Tests.Infrastructure
 
 		private void Null(A param)
 		{
-			Ensure.That(() => param.Result).IsNull();
+			Ensure.That(param.Result).IsNull();
 		}
 
 		private void NotZero(int param)
 		{
-			Ensure.That(() => param).IsNotEqualTo(0);
+			Ensure.That(param).IsNotEqualTo(0);
 		}
 	}
 }
