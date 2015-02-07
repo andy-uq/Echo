@@ -9,6 +9,7 @@ using Echo.Tasks.Structure;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
+using Shouldly;
 using test.common;
 
 namespace Echo.Tests.Structures
@@ -105,7 +106,7 @@ namespace Echo.Tests.Structures
 			
 			var manufacturing = CreateManufacturingTask(parameters);
 			var result = manufacturing.Manufacture();
-			Assert.That(result.StatusCode, Is.EqualTo(ManufacturingTask.StatusCode.MissingSkillRequirement));
+			result.StatusCode.ShouldBe(ManufacturingTask.StatusCode.MissingSkillRequirement);
 		}
 
 		[Test]

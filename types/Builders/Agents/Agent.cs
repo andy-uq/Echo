@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Builder;
 using Echo.State;
@@ -20,12 +21,12 @@ namespace Echo.Agents
 					Id = state.ObjectId,
 					Name = state.Name,
 					Statistics = new AgentStatistics(state.Statistics.Select(Build)),
-					Implants = state.Implants.Union(Implant.DefaultImplants).ToDictionary(x => x.Stat)
+					Implants = new ImplantCollection(state.Implants)
 				};
 
 				return new ObjectBuilder<Agent>(agent)
 					.Resolve((r, a) => a.Location = r.Get<ILocation>(state.Location))
-					.Resolve((r, a) => a.Skills = state.Skills.Union(SkillLevel.DefaultSkillLevels).Select(skill => Build(r, skill)).ToDictionary(s => s.Skill.Code))
+					.Resolve((r, a) => a.Skills = new SkillCollection(state.Skills.Select(skill => Build(r, skill))))
 					.Resolve(ApplyStatDeltas);
 			}
 
@@ -36,14 +37,14 @@ namespace Echo.Agents
 					ObjectId = agent.Id,
 					Name = agent.Name,
 					Statistics = agent.Statistics.Select(Save),
-					Skills = agent.Skills.Values.Select(Save),
+					Skills = agent.Skills.Select(Save),
 					Location = agent.Location.AsObjectReference()
 				};
 			}
 			
 			private static void ApplyStatDeltas(IIdResolver idResolver, Agent agent)
 			{
-				foreach (var implant in agent.Implants.Values)
+				foreach (var implant in agent.Implants)
 				{
 					agent.Statistics[implant.Stat].Alter(implant);
 				}

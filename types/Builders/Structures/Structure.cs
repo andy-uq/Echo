@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Echo.Agents;
 using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;
@@ -39,6 +40,7 @@ namespace Echo.Structures
 					Owner = structure.Owner.ToObjectReference(),
 					Orbits = structure.Position.Location.ToObjectReference(),
 					StructureType = structure.StructureType,
+					Personnel = structure.Personnel.Select(p => p.ToObjectReference()),
 					HangerItems = structure.Hangar.Where(x => !x.Value.IsEmpty).Select(SaveHangarItems),
 					BuyOrders = structure.BuyOrders.Select(BuyOrder.Builder.Save),
 					SellOrders = structure.SellOrders.Select(SellOrder.Builder.Save),
@@ -56,7 +58,8 @@ namespace Echo.Structures
 
 				builder.Resolve((resolver, target) => target.Owner = resolver.Get<Corporation>(State.Owner));
 				builder.Resolve((resolver, target) => LoadHangarItems(resolver, target, State.HangerItems));
-				
+				builder.Resolve((resolver, target) => target.Personnel = State.Personnel.Select(resolver.Get<Agent>).ToList());
+
 				builder
 					.Dependents(State.BuyOrders)
 					.Build(x => BuyOrder.Builder.Build(builder.Target, x))

@@ -50,9 +50,11 @@
   <ItemGroup>
     <Compile Include="Agents\Agent.cs" />
     <Compile Include="Agents\AgentStatistics.cs" />
-    <Compile Include="Agents\Implant.cs" />
+    <Compile Include="Agents\Implants\Implant.cs" />
+    <Compile Include="Agents\Implants\ImplantCollection.cs" />
     <Compile Include="Agents\Skills\CategoryAttribute.cs" />
     <Compile Include="Agents\Skills\SkillCodeExtensions.cs" />
+    <Compile Include="Agents\Skills\SkillCollection.cs" />
     <Compile Include="Agents\Skills\SkillLevel.cs" />
     <Compile Include="Agents\Skills\SkillCategories.cs" />
     <Compile Include="Agents\Skills\SkillCode.cs" />
@@ -113,12 +115,12 @@
     <Compile Include="State\ItemState.cs" />
     <Compile Include="State\Market\BuyOrderState.cs" />
     <Compile Include="State\HardPointState.cs" />
-    <Compile Include="State\JumpGateState.cs" />
+    <Compile Include="State\JumpGate.cs" />
     <Compile Include="State\Market\AuctionState.cs" />
     <Compile Include="State\Market\SellOrderState.cs" />
     <Compile Include="State\ShipState.cs" />
     <Compile Include="State\StatisticState.cs" />
-    <Compile Include="State\TradingStationState.cs" />
+    <Compile Include="State\TradingStation.cs" />
     <Compile Include="State\WeaponState.cs" />
     <Compile Include="Statistics\AgentStatistic.cs" />
     <Compile Include="Statistics\Math.cs" />

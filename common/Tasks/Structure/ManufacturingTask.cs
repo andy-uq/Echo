@@ -64,7 +64,7 @@ namespace Echo.Tasks.Structure
 			_itemFactory = itemFactory;
 		}
 
-		public ITaskResult Execute()
+		ITaskResult ITask.Execute()
 		{
 			return Manufacture();
 		}
@@ -72,21 +72,19 @@ namespace Echo.Tasks.Structure
 		public ManufacturingResult Manufacture()
 		{
 			var result = ValidateParameters();
-			if (result.Success)
+			if (!result.Success) 
+				return result;
+
+			UseMaterials();
+			TimeRemaining--;
+
+			if (TimeRemaining > 0)
 			{
-				UseMaterials();
-				TimeRemaining--;
-
-				if (TimeRemaining > 0)
-				{
-					return new ManufacturingResult(StatusCode.Pending) {Success = true, TimeRemaining = TimeRemaining};
-				}
-
-				var item = BluePrint.Build(_itemFactory);
-				return Success(item);
+				return new ManufacturingResult(StatusCode.Pending) {Success = true, TimeRemaining = TimeRemaining};
 			}
 
-			return result;
+			var item = BluePrint.Build(_itemFactory);
+			return Success(item);
 		}
 
 		private void UseMaterials()
@@ -135,7 +133,6 @@ namespace Echo.Tasks.Structure
 			_firstLoad = firstLoad.ToArray();
 			_subsequentLoad = subsequentLoads.ToArray();
 		}
-
 
 		private ManufacturingResult ValidateParameters()
 		{

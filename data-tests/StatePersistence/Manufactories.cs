@@ -1,14 +1,14 @@
 using System;
-using Echo.Builder;
+using System.Linq;
+using Echo.Agents;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Corporations;
 using Echo.State;
 using Echo.Structures;
 using Echo.Tests;
-using Echo.Tests.Mocks;
-using Echo.Tests.StatePersistence;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Data.Tests.StatePersistence
 {
@@ -52,6 +52,7 @@ namespace Echo.Data.Tests.StatePersistence
 			builder.Add(Corporation.Builder.Build(Universe.MSCorp));
 
 			var structure = builder.Materialise();
+
 			var state = structure.Save();
 
 			Assert.That(state.Manufactory, Is.Not.Null);
@@ -63,6 +64,7 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Deserialise()
 		{
+			Manufactory.Personnel = new[] { Universe.John.ToObjectReference() };
 			var wrapped = new WrappedObjectState(Manufactory);
 
 			using ( var session = Database.OpenSession() )
@@ -80,12 +82,15 @@ namespace Echo.Data.Tests.StatePersistence
 				
 				var builder = Structure.Builder.For(Manufactory).Build(location: null);
 				builder.Add(Corporation.Builder.Build(Universe.MSCorp));
-
+				builder.Add(Agent.Builder.Build(Universe.John));
+				
 				var structure = builder.Materialise();
 
 				Assert.That(structure, Is.InstanceOf<Manufactory>());
 				Assert.That(structure.Owner, Is.Not.Null);
 				Assert.That(structure.Owner.Id, Is.EqualTo(Universe.MSCorp.ObjectId));
+
+				structure.Personnel.Select(i => i.Id).ShouldContain(Universe.John.ObjectId);
 			}
 		}
 	}

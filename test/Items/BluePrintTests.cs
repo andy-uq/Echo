@@ -47,7 +47,7 @@ namespace Echo.Tests.Items
 		[Test]
 		public void AgentCanBuild()
 		{
-			Agent.Skills.Keys.ShouldContain(SkillCode.SpaceshipCommand);
+			Agent.Skills.ShouldContain(i => i.Skill.Code == SkillCode.SpaceshipCommand);
 			Agent.Skills[SkillCode.SpaceshipCommand].Level.ShouldBeGreaterThanOrEqualTo(5);
 
 			Agent.CanUse(BluePrint).ShouldBe(true);

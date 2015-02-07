@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Corporations;
 using Echo.Ships;
 using Echo.State;
-using Echo.Statistics;
+using Echo.Structures;
 using EnsureThat;
-using SkillLevel = Echo.Agents.Skills.SkillLevel;
 
 namespace Echo.Agents
 {
@@ -14,8 +14,8 @@ namespace Echo.Agents
 	{
 		public Agent()
 		{
-			Implants = new Dictionary<AgentStatistic, Implant>();
-			Skills = new Dictionary<SkillCode, SkillLevel>();
+			Implants = new ImplantCollection();
+			Skills = new SkillCollection();
 		}
 
 		public ObjectType ObjectType
@@ -28,8 +28,8 @@ namespace Echo.Agents
 		public Corporation Corporation { get; set; }
 		public ILocation Location { get; set; }
 		public AgentStatistics Statistics { get; set; }
-		public Dictionary<AgentStatistic, Implant> Implants { get; set; }
-		public Dictionary<SkillCode, SkillLevel> Skills { get; set; }
+		public ImplantCollection Implants { get; set; }
+		public SkillCollection Skills { get; set; }
 
 		public bool CanUse(Ship ship)
 		{
@@ -52,6 +52,16 @@ namespace Echo.Agents
 		private bool CanUse(IEnumerable<State.SkillLevel> requirements)
 		{
 			return requirements.All(requirement => Skills[requirement.SkillCode].Level >= requirement.Level);
+		}
+
+		public void MoveInto(ILocation location)
+		{
+			Location = location;
+			var structure = location as Structure;
+			if (structure != null)
+			{
+				structure.Personnel.Add(this);
+			}
 		}
 	}
 }

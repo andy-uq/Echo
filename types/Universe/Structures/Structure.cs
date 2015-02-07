@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Echo.Agents;
 using Echo.Celestial;
 using Echo;
 using Echo.Corporations;
@@ -20,6 +21,8 @@ namespace Echo.Structures
 		public List<SellOrder> SellOrders { get; private set; }
 		public List<BuyOrder> BuyOrders { get; private set; }
 
+		public List<Agent> Personnel { get; set; }
+
 		public Dictionary<Corporation, ItemCollection> Hangar { get; private set; }
 
 		protected Structure()
@@ -27,6 +30,7 @@ namespace Echo.Structures
 			SellOrders = new List<SellOrder>();
 			BuyOrders = new List<BuyOrder>();
 			Hangar = new Dictionary<Corporation, ItemCollection>();
+			Personnel = new List<Agent>();
 		}
 	}
 }

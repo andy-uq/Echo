@@ -9,6 +9,7 @@ namespace Echo.State
 	{
 		public StructureState()
 		{
+			Personnel = Enumerable.Empty<ObjectReference>();
 			HangerItems = Enumerable.Empty<HangarItemState>();
 			BuyOrders = Enumerable.Empty<BuyOrderState>();
 			SellOrders = Enumerable.Empty<SellOrderState>();
@@ -21,6 +22,7 @@ namespace Echo.State
 		public ObjectReference Orbits { get; set; }
 		public ObjectReference Owner { get; set; }
 
+		public IEnumerable<ObjectReference> Personnel { get; set; }
 		public IEnumerable<HangarItemState> HangerItems { get; set; }
 		public IEnumerable<BuyOrderState> BuyOrders { get; set; }
 		public IEnumerable<SellOrderState> SellOrders { get; set; }

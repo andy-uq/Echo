@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Echo.Agents;
+using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Items;
 using Echo.Ships;

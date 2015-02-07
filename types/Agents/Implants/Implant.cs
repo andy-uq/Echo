@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Echo.Statistics;
 
-namespace Echo.Agents
+namespace Echo.Agents.Implants
 {
 	public class Implant : IStatisticDelta<int>, IEquatable<Implant>
 	{

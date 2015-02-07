@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
+using Echo.Agents.Implants;
 using Echo.Statistics;
 
 using AgentStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.AgentStatistic, int>;
