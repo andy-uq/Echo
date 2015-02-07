@@ -87,6 +87,7 @@
     <Compile Include="Ships\ShipShieldsRepair.cs" />
     <Compile Include="Ships\ShipStatisticTests.cs" />
     <Compile Include="Ships\ShipTests.cs" />
+    <Compile Include="Ships\JumpShipTaskTests.cs" />
     <Compile Include="Ships\UndockTask.cs" />
     <Compile Include="Skills\SkillTests.cs" />
     <Compile Include="SolarSystems\JumpGateRegister.cs" />

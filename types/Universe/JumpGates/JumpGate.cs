@@ -8,6 +8,8 @@ namespace Echo.JumpGates
 {
 	public partial class JumpGate : OrbitingObject
 	{
+		public const double MinimumRangeToJump = 0.5;
+
 		public override ObjectType ObjectType
 		{
 			get { return ObjectType.JumpGate; }
@@ -36,6 +38,11 @@ namespace Echo.JumpGates
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public bool OutOfRange(Ship ship)
+		{
+			return (ship.Position.UniversalCoordinates - Position.UniversalCoordinates).Magnitude > MinimumRangeToJump;
 		}
 	}
 }

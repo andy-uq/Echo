@@ -9,7 +9,9 @@ namespace Echo.Tasks.Ships
 		public enum StatusCode
 		{
 			Success,
+			NoPilot,
 			NotDocked,
+			NotInPosition,
 			MissingSkillRequirement,
 			Pending
 		}
@@ -22,6 +24,10 @@ namespace Echo.Tasks.Ships
 		public abstract ITaskResult Execute();
 
 		#endregion
+
+		public ulong Id { get; set; }
+		public string Name { get; set; }
+		public ObjectType ObjectType { get { return ObjectType.Task; } }
 	}
 
 	public abstract class ShipTask<TParameters, TResult> : ShipTask

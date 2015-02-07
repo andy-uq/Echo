@@ -45,8 +45,13 @@ namespace Echo.Tasks.Ships.Mining
 		{
 			TimeRemaining--;
 
-			if ( TimeRemaining > 0 )
+			if (TimeRemaining > 0)
+			{
+				Ship.RegisterTask(this);
 				return new MiningResult {Success = true, StatusCode = StatusCode.Pending};
+			}
+
+			Ship.TaskComplete(this);
 
 			double min = 0, max = 0;
 

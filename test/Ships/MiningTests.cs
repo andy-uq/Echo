@@ -9,6 +9,7 @@ using Echo.Tasks.Ships.Mining;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
+using Shouldly;
 using test.common;
 
 namespace Echo.Tests.Ships
@@ -80,7 +81,8 @@ namespace Echo.Tests.Ships
 		{
 			var veldnium = new ItemInfo(ItemCode.Veldnium);
 			var itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
-			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>())).Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
+			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>()))
+				.Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
 
 			var mining = new MiningTask(itemFactory.Object) { };
 			mining.SetParameters(new MineAsteroidParameters(_ship, _difficultAsteroid));
@@ -89,6 +91,7 @@ namespace Echo.Tests.Ships
 			Assert.That(result.Success, Is.True);
 			Assert.That(result.StatusCode, Is.EqualTo(ShipTask.StatusCode.Pending));
 			Assert.That(_difficultAsteroid.AmountRemaining, Is.EqualTo(1000));
+			Assert.That(_ship.Tasks, Contains.Item(mining));
 
 			result = mining.Mine();
 
@@ -97,6 +100,7 @@ namespace Echo.Tests.Ships
 
 			Assert.That(result.Ore.Quantity, Is.EqualTo(2));
 			Assert.That(_difficultAsteroid.AmountRemaining, Is.EqualTo(998));
+			_ship.Tasks.ShouldNotContain(mining);
 		}
 	}
 }

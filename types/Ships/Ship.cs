@@ -3,6 +3,7 @@ using System.Linq;
 using Echo.Agents;
 using Echo.Celestial;
 using Echo.State;
+using Echo.Tasks;
 
 namespace Echo.Ships
 {
@@ -21,6 +22,7 @@ namespace Echo.Ships
 		public Vector Heading { get; set; }
 		public ShipStatistics Statistics { get; set; }
 		public ShipInfo ShipInfo { get; set; }
+		public HashSet<ITask> Tasks { get; set; }
 
 		public IEnumerable<HardPoint> HardPoints
 		{
@@ -37,6 +39,7 @@ namespace Echo.Ships
 		public Ship()
 		{
 			_hardPoints = new List<HardPoint>();
+			Tasks = new HashSet<ITask>();
 		}
 
 		/// <summary>
@@ -53,6 +56,16 @@ namespace Echo.Ships
 		public bool CanAimAt(ILocation target)
 		{
 			return _hardPoints.Any(x => x.InRange(target));
+		}
+
+		public void RegisterTask(ITask task)
+		{
+			Tasks.Add(task);
+		}
+
+		public void TaskComplete(ITask task)
+		{
+			Tasks.Remove(task);
 		}
 	}
 }

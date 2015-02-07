@@ -1,4 +1,6 @@
-﻿namespace Echo.Structures
+﻿using Echo.Tasks;
+
+namespace Echo.Structures
 {
 	public partial class Manufactory : Structure
 	{

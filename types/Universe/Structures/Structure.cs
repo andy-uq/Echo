@@ -5,6 +5,7 @@ using Echo;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.Market;
+using Echo.Tasks;
 
 namespace Echo.Structures
 {
@@ -21,6 +22,7 @@ namespace Echo.Structures
 		public List<SellOrder> SellOrders { get; private set; }
 		public List<BuyOrder> BuyOrders { get; private set; }
 
+		public HashSet<ITask> Tasks { get; set; }
 		public List<Agent> Personnel { get; set; }
 
 		public Dictionary<Corporation, ItemCollection> Hangar { get; private set; }
@@ -31,6 +33,17 @@ namespace Echo.Structures
 			BuyOrders = new List<BuyOrder>();
 			Hangar = new Dictionary<Corporation, ItemCollection>();
 			Personnel = new List<Agent>();
+			Tasks = new HashSet<ITask>();
+		}
+
+		public void RegisterTask(ITask task)
+		{
+			Tasks.Add(task);
+		}
+
+		public void TaskComplete(ITask task)
+		{
+			Tasks.Remove(task);
 		}
 	}
 }

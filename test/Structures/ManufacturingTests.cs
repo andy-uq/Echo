@@ -226,6 +226,7 @@ namespace Echo.Tests.Structures
 			while ( buildLength > 1 )
 			{
 				result = manufacturing.Manufacture();
+				Assert.That(Manufactory.Tasks.Contains(manufacturing));
 
 				var veldnium = property.Single(v => v.ItemInfo.Code == ItemCode.Veldnium);
 
@@ -243,6 +244,7 @@ namespace Echo.Tests.Structures
 			Assert.That(result.Item, Is.Not.Null);
 			Assert.That(result.Item.ItemInfo.Code, Is.EqualTo(_universe.ShipBluePrint.Code));
 			Assert.That(result.Item.Quantity, Is.EqualTo(_universe.ShipBluePrint.TargetQuantity));
+			Assert.That(Manufactory.Tasks.Contains(manufacturing) == false);
 		}
 	}
 }

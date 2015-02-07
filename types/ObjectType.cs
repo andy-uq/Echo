@@ -18,6 +18,7 @@
 		Auction,
 		JumpGate,
 		Skill,
-		BluePrint
+		BluePrint,
+		Task
 	}
 }

@@ -41,9 +41,7 @@ namespace Echo.Tasks.Ships.Undocking
 		{
 			if ( Structure == null )
 			{
-				{
-					return Failed(StatusCode.NotDocked, Ship);
-				}
+				return Failed(StatusCode.NotDocked, Ship);
 			}
 
 			if ( !Pilot.CanUse(Ship) )

@@ -29,6 +29,10 @@ namespace Echo.Tasks.Structure
 		private ItemState[] _firstLoad;
 		private ItemState[] _subsequentLoad;
 
+		public ulong Id { get; set; }
+		public string Name { get; set; }
+		public ObjectType ObjectType { get { return ObjectType.Task; } }
+
 		public BluePrintInfo BluePrint { get; private set; }
 		public Agent Agent { get; private set; }
 		public uint TimeRemaining { get; private set; }
@@ -80,9 +84,11 @@ namespace Echo.Tasks.Structure
 
 			if (TimeRemaining > 0)
 			{
+				Location.RegisterTask(this);
 				return new ManufacturingResult(StatusCode.Pending) {Success = true, TimeRemaining = TimeRemaining};
 			}
 
+			Location.TaskComplete(this);
 			var item = BluePrint.Build(_itemFactory);
 			return Success(item);
 		}
@@ -103,9 +109,14 @@ namespace Echo.Tasks.Structure
 			Ensure.That(taskParameters).IsNotNull();
 
 			var parameters = (ManufacturingParameters)taskParameters;
+			return SetManufacturingParameters(parameters);
+		}
+
+		private ManufacturingResult SetManufacturingParameters(ManufacturingParameters parameters)
+		{
 			BluePrint = parameters.BluePrint;
 			Agent = parameters.Agent;
-			
+
 			var result = ValidateParameters();
 			if (result.Success)
 			{
