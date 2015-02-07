@@ -234,7 +234,6 @@
     <Content Include="Areas\Admin\Views\StarCluster\StarClusterViewModel.min.js">
       <DependentUpon>StarClusterViewModel.ts</DependentUpon>
     </Content>
-    <Content Include="README.txt" />
     <Content Include="Scripts\Types\Vector.js">
       <DependentUpon>Vector.ts</DependentUpon>
     </Content>

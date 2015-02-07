@@ -20,7 +20,7 @@ namespace Echo.Items
 		{
 		}
 
-		public long Id { get; private set; }
+		public ulong Id { get; private set; }
 		public string Name { get { return ItemInfo.Name; } }
 
 		public ItemInfo ItemInfo { get; private set; }

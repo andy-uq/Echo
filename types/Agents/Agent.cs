@@ -22,7 +22,7 @@ namespace Echo.Agents
 			get { return ObjectType.Agent; }
 		}
 
-		public long Id { get; private set; }
+		public ulong Id { get; private set; }
 		public string Name { get; private set; }
 		public Corporation Corporation { get; set; }
 		public ILocation Location { get; set; }

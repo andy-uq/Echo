@@ -42,7 +42,7 @@ namespace Echo.Tests.SolarSystems
 			var states = 
 					fields.Values
 					.Where(x => x.FieldType == typeof (JumpGate))
-					.Select((f, i) => new JumpGateState { Name = f.Name, ObjectId = i + 1, ConnectsTo = -1 })
+					.Select((f, i) => new JumpGateState { Name = f.Name, ObjectId = (ulong)(i + 1), ConnectsTo = 0 })
 					.ToArray();
 
 			SetConnections(states.ToDictionary(s => s.Name));
@@ -68,7 +68,7 @@ namespace Echo.Tests.SolarSystems
 
 			foreach ( var x in _solarSystems.Select((s, i) => new { s, i }) )
 			{
-				x.s.Id = (x.i + 10);
+				x.s.Id = (ulong)(x.i + 10);
 			}
 		}
 

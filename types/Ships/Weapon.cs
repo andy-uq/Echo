@@ -10,7 +10,7 @@ namespace Echo.Ships
 			get { return ObjectType.Weapon; }
 		}
 
-		public long Id { get; private set; }
+		public ulong Id { get; private set; }
 		public string Name { get { return WeaponInfo.Name; } }
 
 		public Position Position { get; set; }

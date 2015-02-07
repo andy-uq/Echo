@@ -14,7 +14,7 @@ namespace Echo.State
 			SellOrders = Enumerable.Empty<SellOrderState>();
 		}
 
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 

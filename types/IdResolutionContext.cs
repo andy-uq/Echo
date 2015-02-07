@@ -6,7 +6,7 @@ namespace Echo
 {
 	public class IdResolutionContext : IdResolver
 	{
-		private readonly Dictionary<long, IObject> _lookup;
+		private readonly Dictionary<ulong, IObject> _lookup;
 
 		public IdResolutionContext(IEnumerable<IObject> collection)
 		{
@@ -32,7 +32,7 @@ namespace Echo
 			get { return _lookup.Values.ToArray(); }
 		}
 
-		protected override bool LookupValue<T>(long id, out IObject value)
+		protected override bool LookupValue<T>(ulong id, out IObject value)
 		{
 			return _lookup.TryGetValue(id, out value);
 		}

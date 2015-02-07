@@ -54,14 +54,14 @@ namespace Echo
 				int jumpCount;
 				if (!JumpCountCache.TryGetValue(target, out jumpCount))
 				{
-					jumpCount = GetJumpCount(target, new Stack<long>());
+					jumpCount = GetJumpCount(target, new Stack<ulong>());
 					JumpCountCache.Add(target, jumpCount);
 				}
 
 				return jumpCount;
 			}
 
-			private int GetJumpCount(SolarSystem target, Stack<long> seen)
+			private int GetJumpCount(SolarSystem target, Stack<ulong> seen)
 			{
 				if (seen.Contains(SolarSystem.Id))
 				{

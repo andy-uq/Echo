@@ -2,14 +2,14 @@
 {
 	public class IdGenerator : IIdGenerator
 	{
-		private long _id;
+		private ulong _id;
 
 		public IdGenerator()
 		{
 			_id = 1L;
 		}
 		
-		public long NextId()
+		public ulong NextId()
 		{
 			return _id++;
 		}

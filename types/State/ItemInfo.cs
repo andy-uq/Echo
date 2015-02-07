@@ -20,7 +20,7 @@ namespace Echo.State
 		public ItemCode Code { get; set; }
 		public virtual ItemType Type { get; set; }
 
-		long IObject.Id
+		ulong IObject.Id
 		{
 			get { return ObjectId; }
 		}
@@ -36,7 +36,7 @@ namespace Echo.State
 
 		public string Name { get; set; }
 
-		public long ObjectId
+		public ulong ObjectId
 		{
 			get { return Type.ToId(Code); }
 		}

@@ -7,11 +7,11 @@ namespace Echo.Agents.Skills
 {
 	public static class SkillCodeExtensions
 	{
-		public const long SKILL_ID_MASK = (1 << 62);
+		public const ulong SKILL_ID_MASK = (1 << 62);
 
-		public static long ToId(this SkillCode code)
+		public static ulong ToId(this SkillCode code)
 		{
-			return SKILL_ID_MASK | (long) code;
+			return SKILL_ID_MASK | (ulong) code;
 		}
 
 		public static ObjectReference ToObjectReference(this SkillCode code)
@@ -27,14 +27,14 @@ namespace Echo.Agents.Skills
 			return attributes.Cast<CategoryAttribute>().Select(attribute => attribute.Category);
 		}
 
-		public static bool TryParse(this long id, out SkillCode skillCode)
+		public static bool TryParse(this ulong id, out SkillCode skillCode)
 		{
 			skillCode = SkillCode.Invalid;
 
 			var isSkillCode = (id & SKILL_ID_MASK) != 0L;
 			if (isSkillCode)
 			{
-				int value = (int )(id ^ SKILL_ID_MASK);
+				var value = (int )(id ^ SKILL_ID_MASK);
 				if (Enum.IsDefined(typeof (SkillCode), value))
 				{
 					skillCode = (SkillCode) (id ^ SKILL_ID_MASK);

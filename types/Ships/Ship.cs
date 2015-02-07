@@ -15,7 +15,7 @@ namespace Echo.Ships
 			get { return ObjectType.Ship; }
 		}
 
-		public long Id { get; set; }
+		public ulong Id { get; set; }
 		public string Name { get; set; }
 		public Position Position { get; set; }
 		public Vector Heading { get; set; }

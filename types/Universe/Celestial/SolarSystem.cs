@@ -12,7 +12,7 @@ namespace Echo.Celestial
 	public partial class SolarSystem : ILocation, IMoves, IEquatable<SolarSystem>
 	{
 		public ObjectType ObjectType { get { return ObjectType.SolarSystem;} }
-		public long Id { get; set; }
+		public ulong Id { get; set; }
 		public string Name { get; set; }
 		public Position Position { get; set; }
 

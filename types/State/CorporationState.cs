@@ -7,7 +7,7 @@ namespace Echo.State
 	public class CorporationState : IObjectState
 	{
 		public string Id { get; set; }
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 
 		public IEnumerable<AgentState> Employees { get; set; }

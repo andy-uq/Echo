@@ -14,7 +14,7 @@ namespace Echo.State
 			JumpGates = Enumerable.Empty<JumpGateState>();
 		}
 
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 		public IEnumerable<CelestialObjectState> Satellites { get; set; }

@@ -5,7 +5,7 @@ namespace Echo.State
 {
 	public class CelestialObjectState : IObjectState
 	{
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 

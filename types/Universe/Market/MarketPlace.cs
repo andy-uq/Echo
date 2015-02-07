@@ -15,7 +15,7 @@ namespace Echo.Market
 			get { return ObjectType.MarketPlace; }
 		}
 
-		public long Id { get; set; }
+		public ulong Id { get; set; }
 		public string Name { get; set; }
 
 		public StarCluster StarCluster { get; set; }

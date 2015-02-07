@@ -9,7 +9,7 @@ namespace Echo.Tests.SolarSystems
 {
 	public class JumpGateRegister : IIdResolver
 	{
-		private readonly Dictionary<long, JumpGate> _registry = new Dictionary<long, JumpGate>();
+		private readonly Dictionary<ulong, JumpGate> _registry = new Dictionary<ulong, JumpGate>();
 
 		public void Register(JumpGate jumpGate)
 		{
@@ -27,7 +27,7 @@ namespace Echo.Tests.SolarSystems
 			get { return _registry.Values.ToArray(); }
 		}
 
-		public T GetById<T>(long id) where T : class, IObject
+		public T GetById<T>(ulong id) where T : class, IObject
 		{
 			if (typeof(T) == typeof(JumpGate))
 			{
@@ -41,7 +41,7 @@ namespace Echo.Tests.SolarSystems
 			throw new ArgumentException("Cannot resolve objects that are not jump gates");
 		}
 
-		public bool TryGetById<T>(long id, out T value) where T : class, IObject
+		public bool TryGetById<T>(ulong id, out T value) where T : class, IObject
 		{
 			JumpGate jumpGate;
 			if (!_registry.TryGetValue(id, out jumpGate))

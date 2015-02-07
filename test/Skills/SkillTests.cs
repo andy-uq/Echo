@@ -15,10 +15,10 @@ namespace Echo.Tests.Skills
 		{
 			SkillCode skillCode;
 
-			const long badId = 1L;
+			const ulong badId = 1L;
 			Assert.That(badId.TryParse(out skillCode), Is.False);
 
-			const long goodId = (long )SkillCode.SpaceshipCommand ^ SkillCodeExtensions.SKILL_ID_MASK;
+			const ulong goodId = (long )SkillCode.SpaceshipCommand ^ SkillCodeExtensions.SKILL_ID_MASK;
 			Assert.That(goodId.TryParse(out skillCode), Is.True);
 			Assert.That(skillCode, Is.EqualTo(SkillCode.SpaceshipCommand));
 		}

@@ -7,13 +7,13 @@ namespace Echo.Items
 {
 	public static class ItemCodeExtensions
 	{
-		public const long GENERIC_ITEM_ID_MASK = (1 << 61);
-		public const long WEAPON_ID_MASK = (1 << 60);
-		public const long BLUEPRINT_ID_MASK = (1 << 59);
-		public const long SHIP_ID_MASK = (1 << 58);
-		public const long ITEM_ID_MASK = GENERIC_ITEM_ID_MASK | WEAPON_ID_MASK | BLUEPRINT_ID_MASK | SHIP_ID_MASK;
+		public const ulong GENERIC_ITEM_ID_MASK = (1 << 61);
+		public const ulong WEAPON_ID_MASK = (1 << 60);
+		public const ulong BLUEPRINT_ID_MASK = (1 << 59);
+		public const ulong SHIP_ID_MASK = (1 << 58);
+		public const ulong ITEM_ID_MASK = GENERIC_ITEM_ID_MASK | WEAPON_ID_MASK | BLUEPRINT_ID_MASK | SHIP_ID_MASK;
 
-		private static Dictionary<ItemType, long> _masks = new Dictionary<ItemType, long>()
+		private static Dictionary<ItemType, ulong> _masks = new Dictionary<ItemType, ulong>()
 		{
 			{ ItemType.Unknown, GENERIC_ITEM_ID_MASK },
 			{ ItemType.ShipWeapons, WEAPON_ID_MASK },
@@ -21,16 +21,17 @@ namespace Echo.Items
 			{ ItemType.Ships, SHIP_ID_MASK },
 		};
 
-		public static long ToId(this ItemType type, ItemCode code)
+		public static ulong ToId(this ItemType type, ItemCode code)
 		{
 			if (code == ItemCode.Invalid)
 				throw new InvalidOperationException("Cannot generate an Id for an Invalid item");
 
-			long mask;
+			ulong mask;
 			if (!_masks.TryGetValue(type, out mask))
 				mask = GENERIC_ITEM_ID_MASK;
 
-			return mask | (long)code;
+		    var code1 = (ulong)code;
+		    return mask | code1;
 		}
 
 		public static ObjectReference ToObjectReference(this ItemType type, ItemCode code)
@@ -46,7 +47,7 @@ namespace Echo.Items
 			return attributes.Cast<CategoryAttribute>().Select(attribute => attribute.Type);
 		}
 
-		public static bool TryParse(this long id, out ItemCode itemCode)
+		public static bool TryParse(this ulong id, out ItemCode itemCode)
 		{
 			itemCode = ItemCode.Invalid;
 

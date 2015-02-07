@@ -40,7 +40,7 @@ namespace Echo
 			get { return ObjectType.Universe; }
 		}
 
-		public long Id
+		public ulong Id
 		{
 			get { return 1L; }
 		}

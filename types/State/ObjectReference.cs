@@ -10,7 +10,7 @@ namespace Echo.State
 	{
 		private static readonly Regex _regex = new Regex(@"\[x(?<Id>[a-f0-9]{4,16})\](\s(?<Name>.*))?", RegexOptions.Compiled);
 
-		public long Id { get; private set; }
+		public ulong Id { get; private set; }
 		public string Name { get; private set; }
 
 		public ObjectReference(string value) : this()
@@ -20,7 +20,7 @@ namespace Echo.State
 				var m = _regex.Match(value);
 				if ( m.Success )
 				{
-					Id = long.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier);
+					Id = ulong.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier);
 					Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty;
 					return;
 				}
@@ -29,13 +29,12 @@ namespace Echo.State
 			throw new FormatException("Invalid object reference");
 		}
 
-		public ObjectReference(long id) : this()
+		public ObjectReference(ulong id) : this()
 		{
-			Ensure.That(id, "id").IsGt(0);
 			Id = id;
 		}
 
-		public ObjectReference(long id, string name) : this(id)
+		public ObjectReference(ulong id, string name) : this(id)
 		{
 			Name = name;
 		}
@@ -49,7 +48,7 @@ namespace Echo.State
 				{
 					@ref = new ObjectReference
 					{
-						Id = long.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier),
+						Id = ulong.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier),
 						Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty
 					};
 

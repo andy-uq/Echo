@@ -35,11 +35,6 @@ namespace Echo.Web.Areas.Admin.Controllers
 			var model = new StarClusterIndex() { StarClusters = _backingStore.GetAll(), NewStarCluster = newStarCluster };
 			return View("Index", model);
 		}
-
-	    public ActionResult View()
-	    {
-		    throw new NotImplementedException();
-	    }
     }
 
 	public interface IBackingStore<T>

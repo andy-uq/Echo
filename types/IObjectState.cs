@@ -4,7 +4,7 @@ namespace Echo
 {
 	public interface IObjectState
 	{
-		long ObjectId { get; }
+		ulong ObjectId { get; }
 		string Name { get; }
 	}
 }

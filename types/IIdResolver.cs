@@ -7,8 +7,8 @@ namespace Echo
 	{
 		IEnumerable<IObject> Values { get; }
 
-		T GetById<T>(long id) where T : class, IObject;
-		bool TryGetById<T>(long id, out T value) where T : class, IObject;
+		T GetById<T>(ulong id) where T : class, IObject;
+		bool TryGetById<T>(ulong id, out T value) where T : class, IObject;
 		T Get<T>(ObjectReference objectReference) where T : class, IObject;
 		bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject;
 		T Get<T>(ObjectReference? objectReference) where T : class, IObject;

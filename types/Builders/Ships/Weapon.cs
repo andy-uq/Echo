@@ -6,7 +6,7 @@ namespace Echo
 {
 	public interface IIdGenerator
 	{
-		long NextId();
+		ulong NextId();
 	}
 }
 
@@ -43,7 +43,7 @@ namespace Echo.Ships
 				return Build(id, weaponInfo);
 			}
 
-			private static Weapon Build(long id, WeaponInfo weaponInfo)
+			private static Weapon Build(ulong id, WeaponInfo weaponInfo)
 			{
 				return new Weapon
 				{

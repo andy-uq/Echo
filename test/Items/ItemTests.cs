@@ -12,10 +12,10 @@ namespace Echo.Tests.Items
 		{
 			ItemCode itemCode;
 
-			const long badId = 1L;
+			const ulong badId = 1L;
 			Assert.That(badId.TryParse(out itemCode), Is.False);
 
-			const long goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.GENERIC_ITEM_ID_MASK;
+			const ulong goodId = (ulong)ItemCode.MissileLauncher ^ ItemCodeExtensions.GENERIC_ITEM_ID_MASK;
 			Assert.That(goodId.TryParse(out itemCode), Is.True);
 			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
 		}
@@ -25,7 +25,7 @@ namespace Echo.Tests.Items
 		{
 			ItemCode itemCode;
 			
-			const long goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.WEAPON_ID_MASK;
+			const ulong goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.WEAPON_ID_MASK;
 			Assert.That(goodId.TryParse(out itemCode), Is.True);
 			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
 		}
@@ -35,7 +35,7 @@ namespace Echo.Tests.Items
 		{
 			ItemCode itemCode;
 			
-			const long goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.BLUEPRINT_ID_MASK;
+			const ulong goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.BLUEPRINT_ID_MASK;
 			Assert.That(goodId.TryParse(out itemCode), Is.True);
 			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
 		}

@@ -6,7 +6,7 @@ namespace Echo.State.Market
 	{
 		public AuctionState Auction { get; set; }
 
-		long IObjectState.ObjectId
+		ulong IObjectState.ObjectId
 		{
 			get { return Auction == null ? 0 : Auction.ObjectId; }
 		}

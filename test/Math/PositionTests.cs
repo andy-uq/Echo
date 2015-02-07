@@ -22,7 +22,7 @@ namespace Echo.Tests.Math
 				get { throw new System.NotImplementedException(); }
 			}
 
-			public long Id
+			public ulong Id
 			{
 				get { throw new System.NotImplementedException(); }
 			}

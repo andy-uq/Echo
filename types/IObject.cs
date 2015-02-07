@@ -8,7 +8,7 @@ namespace Echo
 	public interface IObject
 	{
 		ObjectType ObjectType { get; }
-		long Id { get; }
+		ulong Id { get; }
 		string Name { get; }
 	}
 

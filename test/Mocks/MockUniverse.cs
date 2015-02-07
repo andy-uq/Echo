@@ -178,7 +178,7 @@ namespace Echo.Tests.Mocks
 			};
 		}
 
-		private long Id()
+		private ulong Id()
 		{
 			return _idGenerator.NextId();
 		}

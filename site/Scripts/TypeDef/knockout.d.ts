@@ -395,7 +395,7 @@ interface KnockoutTemplateSources {
 
         new (element: Element): KnockoutTemplateSourcesDomElement;
     };
-};
+}
 
 //////////////////////////////////
 // nativeTemplateEngine.js

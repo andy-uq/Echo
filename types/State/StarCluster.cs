@@ -12,7 +12,7 @@ namespace Echo.State
 		}
 
 		public string Id { get; set; }
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 		public IEnumerable<SolarSystemState> SolarSystems { get; set; }

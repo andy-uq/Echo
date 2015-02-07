@@ -4,7 +4,7 @@ namespace Echo.State.Market
 {
 	public class AuctionState : IObjectState
 	{
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 		public int BlockSize { get; set; }
 		public long Expires { get; set; }

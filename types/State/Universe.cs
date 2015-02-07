@@ -5,7 +5,7 @@ namespace Echo.State
 {
 	public class UniverseState : IObjectState
 	{
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 
 		public IEnumerable<StarClusterState> StarClusters { get; set; }

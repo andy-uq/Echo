@@ -18,7 +18,7 @@ namespace Echo.State
 			Training = Enumerable.Empty<SkillTraining>();
 		}
 
-		public long ObjectId { get; set; }
+		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 		public ObjectReference? Location { get; set; }
 		public IEnumerable<AgentStatisticState> Statistics { get; set; }		

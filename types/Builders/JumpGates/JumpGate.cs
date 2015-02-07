@@ -21,7 +21,7 @@ namespace Echo.JumpGates
 				return new ObjectBuilder<JumpGate>(jumpGate)
 					.Resolve(
 						(resolver, target) =>
-						target.ConnectsTo = state.ConnectsTo == -1
+						target.ConnectsTo = state.ConnectsTo == 0
 						                    	? null
 						                    	: resolver.GetById<JumpGate>(state.ConnectsTo)
 					);

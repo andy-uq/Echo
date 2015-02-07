@@ -17,12 +17,12 @@ namespace Echo.State
 		public string Description { get; set; }
 		public IEnumerable<SkillLevel> Prerequisites { get; set; }
 
-		long IObject.Id
+		ulong IObject.Id
 		{
 			get { return ObjectId; }
 		}
 
-		public long ObjectId
+		public ulong ObjectId
 		{
 			get { return Code.ToId(); }
 		}

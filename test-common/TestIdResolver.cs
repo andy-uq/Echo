@@ -6,7 +6,7 @@ namespace test.common
 {
 	public class TestIdResolver : IdResolver
 	{
-		private readonly ImmutableDictionary<long, IObject> _values;
+		private readonly ImmutableDictionary<ulong, IObject> _values;
 
 		public TestIdResolver()
 		{
@@ -33,7 +33,7 @@ namespace test.common
 			get { return _values.Values; }
 		}
 
-		protected override bool LookupValue<T>(long id, out IObject value)
+		protected override bool LookupValue<T>(ulong id, out IObject value)
 		{
 			return _values.TryGetValue(id, out value);
 		}
