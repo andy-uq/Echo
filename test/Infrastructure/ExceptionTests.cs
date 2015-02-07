@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Echo.Exceptions;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Tests.Infrastructure
 {
@@ -19,8 +20,8 @@ namespace Echo.Tests.Infrastructure
 			catch (ItemNotFoundException e)
 			{
 				var d = AssertSerialise(e);
-				Assert.That(d.Item, Is.EqualTo("Bob"));
-				Assert.That(d.ItemType, Is.EqualTo("Foozle"));
+				d.Item.ShouldBe("Bob");
+				d.ItemType.ShouldBe("Foozle");
 			}
 		}
 

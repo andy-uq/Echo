@@ -6,6 +6,7 @@ using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Tests.Corporations
 {
@@ -16,14 +17,14 @@ namespace Echo.Tests.Corporations
 		public void CreateCorporation()
 		{
 			var corp = new Corporation();
-			Assert.That(corp.ObjectType, Is.EqualTo(ObjectType.Corporation));
+			corp.ObjectType.ShouldBe(ObjectType.Corporation);
 		}
 
 		[Test]
 		public void ObjectTypeIsCorporation()
 		{
 			var corp = new Corporation();
-			Assert.That(corp.ObjectType, Is.EqualTo(ObjectType.Corporation));
+			corp.ObjectType.ShouldBe(ObjectType.Corporation);
 		}
 
 		[Test]

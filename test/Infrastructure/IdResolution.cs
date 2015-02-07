@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using Echo.Exceptions;
+﻿using Echo.Exceptions;
 using Echo.Items;
 using Echo.State;
-using Echo.Tests.Mocks;
 using NUnit.Framework;
 using test.common;
 

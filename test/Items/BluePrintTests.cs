@@ -7,6 +7,7 @@ using Echo.State;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
+using Shouldly;
 using test.common;
 using AgentSkillLevel = Echo.Agents.Skills.SkillLevel;
 
@@ -31,52 +32,46 @@ namespace Echo.Tests.Items
 		public void NewBluePrint()
 		{
 			var bluePrint = new BluePrintInfo();
-			Assert.That(bluePrint.BuildRequirements, Is.Empty);
-			Assert.That(bluePrint.Materials, Is.Empty);
+
+			bluePrint.BuildRequirements.ShouldBeEmpty();
+			bluePrint.Materials.ShouldBeEmpty();
 		}
 
 		[Test]
 		public void CanOnlyUseBluePrintItemCodes()
 		{
-			new BluePrintInfo(ItemCode.MiningLaser);
-			try
-			{
-				new BluePrintInfo(ItemCode.Veldnium);
-				Assert.Fail();
-			}
-			catch (ArgumentException)
-			{
-			}
+			Should.NotThrow(() => new BluePrintInfo(ItemCode.MiningLaser));
+			Should.Throw<ArgumentException>(() => new BluePrintInfo(ItemCode.Veldnium));
 		}
 
 		[Test]
 		public void AgentCanBuild()
 		{
-			Assert.That(Agent.Skills.Keys, Contains.Item(SkillCode.SpaceshipCommand));
-			Assert.That(Agent.Skills[SkillCode.SpaceshipCommand].Level, Is.GreaterThanOrEqualTo(5));
+			Agent.Skills.Keys.ShouldContain(SkillCode.SpaceshipCommand);
+			Agent.Skills[SkillCode.SpaceshipCommand].Level.ShouldBeGreaterThanOrEqualTo(5);
 
-			Assert.That(Agent.CanUse(BluePrint), Is.True);
+			Agent.CanUse(BluePrint).ShouldBe(true);
 		}
 
 		[Test]
 		public void HaveMaterials()
 		{
-			Assert.That(BluePrint.HasMaterials(new ItemCollection()), Is.False);
+			BluePrint.HasMaterials(new ItemCollection()).ShouldBe(false);
 
 			var itemCollection = new ItemCollection(initialContents: BluePrint.Materials.Build());
-			Assert.That(BluePrint.HasMaterials(itemCollection), Is.True);
+			BluePrint.HasMaterials(itemCollection).ShouldBe(true);
 
 			var c1 = new[] {new ItemState() {Code = ItemCode.LightFrigate, Quantity = 1}};
 			itemCollection = new ItemCollection(initialContents: c1.Build());
-			Assert.That(BluePrint.HasMaterials(itemCollection), Is.False);
+			BluePrint.HasMaterials(itemCollection).ShouldBe(false);
 
 			var c2 = new[] {new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}};
 			itemCollection = new ItemCollection(initialContents: c2.Build());
-			Assert.That(BluePrint.HasMaterials(itemCollection), Is.False);
+			BluePrint.HasMaterials(itemCollection).ShouldBe(false);
 
 			var c3 = new[] {new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}, new ItemState() {Code = ItemCode.Veldnium, Quantity = 5}};
 			itemCollection = new ItemCollection(initialContents: c3.Build());
-			Assert.That(BluePrint.HasMaterials(itemCollection), Is.True);
+			BluePrint.HasMaterials(itemCollection).ShouldBe(true);
 		}
 
 		[Test]
@@ -87,7 +82,7 @@ namespace Echo.Tests.Items
 			itemFactory.Setup(f => f.Build(_universe.BluePrint.Code, _universe.BluePrint.TargetQuantity)).Returns(expected);
 
 			var item = BluePrint.Build(itemFactory.Object);
-			Assert.That(item, Is.SameAs(expected));
+			item.ShouldBeSameAs(expected);
 		}
 	}
 }

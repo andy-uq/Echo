@@ -21,7 +21,7 @@ namespace Echo.Market
 		public StarCluster StarCluster { get; set; }
 		public List<Auction> Auctions { get; set; }
 
-		public ulong AuctionLength { get; set; }
+		public long AuctionLength { get; set; }
 
 		public void Add(Auction auction)
 		{

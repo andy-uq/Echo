@@ -2,6 +2,7 @@
 using Echo.Items;
 using Echo.State;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Tests.Infrastructure
 {
@@ -12,16 +13,14 @@ namespace Echo.Tests.Infrastructure
 		public void Item()
 		{
 			var item = new Item(new ItemInfo());
-			Assert.That(item.ObjectType, Is.EqualTo(ObjectType.Item));
+			item.ObjectType.ShouldBe(ObjectType.Item);
 		}
 
 		[Test]
 		public void Agent()
 		{
 			var item = new Agent();
-			Assert.That(item.ObjectType, Is.EqualTo(ObjectType.Agent));
+			item.ObjectType.ShouldBe(ObjectType.Agent);
 		}
-
-		
 	}
 }
