@@ -20,6 +20,14 @@ namespace Echo.Items
 		{
 		}
 
+		public Item(Item item, uint quantity, Corporation newOwner)
+		{
+			ItemInfo = item.ItemInfo;
+			Quantity = quantity;
+			Location = item.Location;
+			Owner = newOwner;
+		}
+
 		public ulong Id { get; private set; }
 		public string Name { get { return ItemInfo.Name; } }
 

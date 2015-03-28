@@ -24,18 +24,27 @@ namespace Echo
 			return null;
 		}
 
-		public static MarketPlace GetMarketPlace(this ILocation location)
+		public static StarCluster GetStarCluster(this ILocation location)
 		{
 			while (location != null)
 			{
 				var starCluster = location as StarCluster;
 				if (starCluster != null)
-					return starCluster.MarketPlace;
+					return starCluster;
 
 				location = location.Position.Location;
 			}
 
 			return null;
+		}
+
+		public static MarketPlace GetMarketPlace(this ILocation location)
+		{
+			var starCluster = location.GetStarCluster();
+			if (starCluster == null)
+				return null;
+
+			return starCluster.MarketPlace;
 		}
 
 		public static MarketPlace GetMarketPlace(this Position position)

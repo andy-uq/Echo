@@ -34,6 +34,11 @@ namespace Echo
 			return new Position(position.Location, position.LocalCoordinates - offset);
 		}
 
+		public static Vector operator -(Position p1, Position p2)
+		{
+			return p1.UniversalCoordinates - p2.UniversalCoordinates;
+		}
+
 		public bool Equals(Position other)
 		{
 			return UniversalCoordinates.Equals(other.UniversalCoordinates);

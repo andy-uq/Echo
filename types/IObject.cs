@@ -15,7 +15,19 @@ namespace Echo
 	public class ObjectEqualityComparer
 		: IEqualityComparer<IObject>
 	{
-		public bool Equals(IObject x, IObject y)
+		public static readonly ObjectEqualityComparer Comparer = new ObjectEqualityComparer();
+
+		bool IEqualityComparer<IObject>.Equals(IObject x, IObject y)
+		{
+			return Equals(x, y);
+		}
+
+		int IEqualityComparer<IObject>.GetHashCode(IObject obj)
+		{
+			return GetHashCode(obj);
+		}
+
+		public static bool Equals(IObject x, IObject y)
 		{
 			if ( x == null && y == null )
 				return true;
@@ -26,7 +38,7 @@ namespace Echo
 			return (x.Id == y.Id);
 		}
 
-		public int GetHashCode(IObject obj)
+		public static int GetHashCode(IObject obj)
 		{
 			if ( obj == null )
 				return 0;

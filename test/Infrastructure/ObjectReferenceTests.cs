@@ -1,4 +1,5 @@
-﻿using Echo.State;
+﻿using System.Collections.Generic;
+using Echo.State;
 using Moq;
 using NUnit.Framework;
 
@@ -35,7 +36,7 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void ObjectEquality()
 		{
-			var comparer = new ObjectEqualityComparer();
+			IEqualityComparer<IObject> comparer = new ObjectEqualityComparer();
 			var m1 = new Mock<IObject>(MockBehavior.Strict);
 			m1.SetupGet(o => o.Id).Returns(1L);
 

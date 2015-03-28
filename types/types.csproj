@@ -138,6 +138,7 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Universe\JumpGates\JumpGate.cs" />
     <Compile Include="Universe\Market\Auction.cs" />
+    <Compile Include="Universe\Market\AuctionCollection.cs" />
     <Compile Include="Universe\Market\BuyOrder.cs" />
     <Compile Include="Universe\Market\MarketPlace.cs" />
     <Compile Include="Universe\Market\SellOrder.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="IObjectState.cs" />
     <Compile Include="Builders\Universe.cs" />
     <Compile Include="Universe\Celestial\OrbitingObject.cs" />
+    <Compile Include="Universe\Market\Settlement.cs" />
     <Compile Include="Universe\Structures\Manufactory.cs" />
     <Compile Include="Universe\Celestial\Moon.cs" />
     <Compile Include="Position.cs" />

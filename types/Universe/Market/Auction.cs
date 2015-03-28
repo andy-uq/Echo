@@ -7,9 +7,10 @@ using EnsureThat;
 
 namespace Echo.Market
 {
-	public class Auction : IObject
+	public abstract class Auction : IObject
 	{
 		private Item _item;
+		private uint _blockSize;
 
 		public ObjectType ObjectType
 		{
@@ -26,8 +27,8 @@ namespace Echo.Market
 		{
 			get
 			{
-				return Location == null 
-					? null 
+				return Location == null
+					? null
 					: Location.Position.GetMarketPlace();
 			}
 		}
@@ -43,20 +44,32 @@ namespace Echo.Market
 		}
 
 		public int PricePerUnit { get; set; }
-		public int BlockSize { get; set; }
+
+		public uint BlockSize
+		{
+			get { return _blockSize < 1 ? 1 : _blockSize; }
+			set { _blockSize = value; }
+		}
+
 		public long Expires { get; set; }
-		public int Range { get; set; }
+		public double Range { get; set; }
 
 		public uint Quantity
 		{
 			get { return Item.Quantity; }
 		}
 
-		public void List(MarketPlace marketPlace)
+		public bool OutOfRange(Auction auction)
 		{
-			Ensure.That(marketPlace).IsNotNull();
-
-			marketPlace.Add(this);
+			var vector = Location.Position - auction.Location.Position;
+			return vector.Magnitude > Range;
 		}
+
+		public void Remove()
+		{
+			MarketPlace.Remove(this);
+		}
+
+		public abstract Settlement List(MarketPlace marketPlace);
 	}
 }
