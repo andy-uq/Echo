@@ -1,5 +1,6 @@
 ﻿using System;
 using Echo.Agents;
+using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Corporations;
 using Echo.State;
@@ -28,6 +29,35 @@ namespace Echo.Tests.Agents
 
 			agent.Skills[SkillCode.SpaceshipCommand].Level.ShouldBe(0);
 			agent.Implants[AgentStatistic.Intelligence].Value.ShouldBe(0);
+		}
+
+		[Test]
+		public void CreateAgentWithImplants()
+		{
+			var state = new AgentState
+			{
+				Statistics = new[] { new AgentStatisticState { Statistic = AgentStatistic.Intelligence, Value = 500 } },
+				Implants = new[] { new Implant(AgentStatistic.Intelligence) { Rank = 6, Value = 1000 }, }
+			};
+
+			var agent = Agent.Builder.Build(state).Build(new TestIdResolver());
+
+			agent.Statistics.Intelligence.CurrentValue.ShouldBe(1500);
+
+			agent.Implants[AgentStatistic.Intelligence].Rank.ShouldBe(6);
+			agent.Implants[AgentStatistic.Intelligence].Value.ShouldBe(1000);
+		}
+
+		[Test]
+		public void CreateAgentWithSkills()
+		{
+			var state = new AgentState
+			{
+				Skills = new[] { new Echo.State.SkillLevel(SkillCode.SpaceshipCommand, 5), }
+			};
+
+			var agent = Agent.Builder.Build(state).Build(new TestIdResolver());
+			agent.Skills[SkillCode.SpaceshipCommand].Level.ShouldBe(5);
 		}
 
 		[Test]

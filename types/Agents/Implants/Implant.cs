@@ -7,11 +7,6 @@ namespace Echo.Agents.Implants
 {
 	public class Implant : IStatisticDelta<int>, IEquatable<Implant>
 	{
-		private static readonly AgentStatistic[] AgentStatistics = (AgentStatistic[]) Enum.GetValues(typeof (AgentStatistic));
-		private static readonly Lazy<Implant[]> _defaultImplants = new Lazy<Implant[]>(() => AgentStatistics.Select(x => new Implant(x)).ToArray());
-
-		public static IEnumerable<Implant> DefaultImplants { get { return _defaultImplants.Value; } }
-
 		public Implant()
 		{
 		}
