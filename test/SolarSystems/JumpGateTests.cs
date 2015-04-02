@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Echo.Builder;
-using Echo.Builders;
 using Echo.Celestial;
 using Echo.JumpGates;
 using Echo.Ships;
@@ -15,6 +14,7 @@ namespace Echo.Tests.SolarSystems
 	[TestFixture]
 	public class JumpGateTests
 	{
+#pragma warning disable 169,649 // fields are initialised via reflection
 		private JumpGate _a1, _a2;
 		private JumpGate _b1, _b2;
 		private JumpGate _c1, _c2;
@@ -22,23 +22,31 @@ namespace Echo.Tests.SolarSystems
 		private JumpGate _e1, _e2;
 		private JumpGate _f1;
 		private JumpGate _g1, _g2;
-		
+#pragma warning restore 169,649
+
 		private SolarSystem _a, _b, _c, _d, _e, _f, _g;
 		private SolarSystem[] _solarSystems;
+
+		private static Dictionary<string, FieldInfo> GetFields()
+		{
+			return typeof (JumpGateTests)
+				.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+				.ToDictionary(f => f.Name);
+		}
 
 		[SetUp]
 		public void SetUp()
 		{
-			_a = new SolarSystem() { Name = "A" };
-			_b = new SolarSystem() { Name = "B" };
-			_c = new SolarSystem() { Name = "C" };
-			_d = new SolarSystem() { Name = "D" };
-			_e = new SolarSystem() { Name = "E" };
-			_f = new SolarSystem() { Name = "F" };
-			_g = new SolarSystem() { Name = "G" };
+			_a = new SolarSystem { Name = "A" };
+			_b = new SolarSystem { Name = "B" };
+			_c = new SolarSystem { Name = "C" };
+			_d = new SolarSystem { Name = "D" };
+			_e = new SolarSystem { Name = "E" };
+			_f = new SolarSystem { Name = "F" };
+			_g = new SolarSystem { Name = "G" };
 			_solarSystems = new[] { _a, _b, _c, _d, _e, _f, _g, };
 
-			var fields = Fields;
+			var fields = GetFields();
 			var states = 
 					fields.Values
 					.Where(x => x.FieldType == typeof (JumpGate))
@@ -69,15 +77,6 @@ namespace Echo.Tests.SolarSystems
 			foreach ( var x in _solarSystems.Select((s, i) => new { s, i }) )
 			{
 				x.s.Id = (ulong)(x.i + 10);
-			}
-		}
-
-		private static Dictionary<string, FieldInfo> Fields
-		{
-			get
-			{
-				var fields = typeof (JumpGateTests).GetFields(BindingFlags.NonPublic | BindingFlags.Instance).ToDictionary(f => f.Name);
-				return fields;
 			}
 		}
 
@@ -134,9 +133,10 @@ namespace Echo.Tests.SolarSystems
 		[TestCase("e", "f", 3)]
 		public void JumpCounts(string fromName, string toName, int expectedJumps)
 		{
+			var fields = GetFields();
 			var jumpCountTable = new JumpCountTable(_solarSystems);
-			var from = (SolarSystem)Fields[string.Concat("_", fromName)].GetValue(this);
-			var to = (SolarSystem)Fields[string.Concat("_", toName)].GetValue(this);
+			var from = (SolarSystem)fields[string.Concat("_", fromName)].GetValue(this);
+			var to = (SolarSystem)fields[string.Concat("_", toName)].GetValue(this);
 
 			Assert.That(jumpCountTable.GetJumpCount(from, to), Is.EqualTo(expectedJumps));
 		}
@@ -148,8 +148,9 @@ namespace Echo.Tests.SolarSystems
 		[TestCase("c1", "d4")]
 		public void JumpConnections(string fromName, string toName)
 		{
-			var from = (JumpGate)Fields[string.Concat("_", fromName)].GetValue(this);
-			var to = (JumpGate)Fields[string.Concat("_", toName)].GetValue(this);
+			var fields = GetFields();
+			var from = (JumpGate)fields[string.Concat("_", fromName)].GetValue(this);
+			var to = (JumpGate)fields[string.Concat("_", toName)].GetValue(this);
 
 			Assert.That(from.ConnectsTo, Is.EqualTo(to));
 

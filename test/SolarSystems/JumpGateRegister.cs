@@ -44,33 +44,34 @@ namespace Echo.Tests.SolarSystems
 		public bool TryGetById<T>(ulong id, out T value) where T : class, IObject
 		{
 			JumpGate jumpGate;
-			if (!_registry.TryGetValue(id, out jumpGate))
+			if (_registry.TryGetValue(id, out jumpGate))
 			{
-				jumpGate = null;
+				value = jumpGate as T;
+				return value != null;
 			}
 
-			value = jumpGate as T;
-			return value != null;
+			value = null;
+			return false;
 		}
 
 		public T Get<T>(ObjectReference objectReference) where T : class, IObject
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		public bool TryGet<T>(ObjectReference objectReference, out T value) where T : class, IObject
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		public T Get<T>(ObjectReference? objectReference) where T : class, IObject
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 
 		public bool TryGet<T>(ObjectReference? objectReference, out T value) where T : class, IObject
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 	}
 }

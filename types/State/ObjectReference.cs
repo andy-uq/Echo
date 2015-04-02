@@ -93,7 +93,7 @@ namespace Echo.State
 
 		public override string ToString()
 		{
-			return string.Format("[x{0:x4}] {1}", Id, Name).Trim();
+			return string.Format("[x{0:x8}] {1}", Id, Name).Trim();
 		}
 	}
 }

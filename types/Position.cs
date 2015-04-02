@@ -39,6 +39,11 @@ namespace Echo
 			return p1.UniversalCoordinates - p2.UniversalCoordinates;
 		}
 
+		public static implicit operator Vector(Position p)
+		{
+			return p.UniversalCoordinates;
+		}
+
 		public bool Equals(Position other)
 		{
 			return UniversalCoordinates.Equals(other.UniversalCoordinates);
@@ -54,7 +59,7 @@ namespace Echo
 		{
 			unchecked
 			{
-				return (Location.GetHashCode()*397) ^ LocalCoordinates.GetHashCode();
+				return UniversalCoordinates.GetHashCode();
 			}
 		}
 
@@ -66,6 +71,13 @@ namespace Echo
 		public static bool operator !=(Position left, Position right)
 		{
 			return !left.Equals(right);
+		}
+
+		public override string ToString()
+		{
+			return Location == null 
+				? UniversalCoordinates.ToString()
+				: string.Format("{0} ({1})", UniversalCoordinates, Location);
 		}
 	}
 }

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Echo.Celestial;
 using Echo.Corporations;
 using Echo.Ships;
 using Echo.Tests.Mocks;
-using Moq;
 using NUnit.Framework;
-using Echo;
+using Shouldly;
 
 namespace Echo.Tests.Math
 {
@@ -35,18 +32,16 @@ namespace Echo.Tests.Math
 			public Position Position { get; set; }
 		}
 		
-		private Mock<IIdResolver> _idResolver = new Mock<IIdResolver>(MockBehavior.Strict);
-
 		[Test]
 		public void UniversalCoordinates()
 		{
-			Vector v0 = new Vector(1, 0, 0);
-			Vector v2 = new Vector(0,1,0);
+			var v0 = new Vector(1, 0);
+			var v1 = new Vector(0,1);
 
-			Position p = new Position(new P() { Position = new Position(null, v0)}, v2);
+			var p = new Position(new P { Position = new Position(null, v0)}, v1);
 			
-			Vector expected = new Vector(1, 1, 0);
-			Assert.That(p.UniversalCoordinates, Is.EqualTo(expected));
+			var expected = new Vector(1, 1);
+			p.UniversalCoordinates.ShouldBe(expected);
 		}
 
 		[Test]
@@ -60,16 +55,75 @@ namespace Echo.Tests.Math
 
 			var u = builder.Materialise();
 
-			Assert.That(u.StarClusters, Is.Not.Empty);
-			Assert.That(u.SolarSystems(), Is.Not.Empty);
+			u.StarClusters.ShouldNotBeEmpty();
+			u.SolarSystems().ShouldNotBeEmpty();
 
 			var sol = u.SolarSystems().Single(x => x.Id == s.SolarSystem.ObjectId);
 			var earth = u.Planets().Single(p => p.Id == s.Earth.ObjectId);
 
-			Assert.That(earth.Position.GetSolarSystem(), Is.EqualTo(sol));
+			earth.Position.GetSolarSystem().ShouldBe(sol);
 
-			var ship = new Ship {Position = new Position(earth, new Vector(1, 1, 0))};
-			Assert.That(ship.Position.GetSolarSystem(), Is.EqualTo(sol));
+			var ship = new Ship {Position = new Position(earth, new Vector(1, 1))};
+			ship.Position.GetSolarSystem().ShouldBe(sol);
+		}
+
+		[Test]
+		public void MovePositionForward()
+		{
+			var origin = new Vector(0, 0);
+			var location = new P { Position = new Position(null, origin) };
+
+			var p = new Position(location, origin);
+			var result = p + new Vector(0, 1);
+
+			result.ShouldBe(new Position(location, new Vector(0, 1)));
+		}
+
+		[Test]
+		public void MovePositionBackward()
+		{
+			var origin = new Vector(0, 0);
+			var location = new P { Position = new Position(null, origin) };
+
+			var p = new Position(location, origin);
+			var result = p - new Vector(0, 1);
+
+			result.ShouldBe(new Position(location, new Vector(0, -1)));
+		}
+
+		[Test]
+		public void PositionEquality()
+		{
+			var origin = new Vector(0, 0);
+			var l1 = new P { Position = new Position(null, origin) };
+			var p1 = new Position(l1, origin);
+			
+			var l2 = new P { Position = new Position(null, new Vector(1, 0)) };
+			var p2 = new Position(l2, origin);
+
+			(p1 == p2).ShouldBe(false);
+			(p1 != p2).ShouldBe(true);
+
+			((p2 + new Vector(-1, 0)) == p1).ShouldBe(true);
+
+			Object.Equals(p1, p2).ShouldBe(false);
+		}
+
+		[Test]
+		public void AddToSet()
+		{
+			var origin = new Vector(0, 0);
+			var l1 = new P { Position = new Position(null, origin) };
+
+			var p = new Position(l1, origin);
+
+			var set = new HashSet<Position>();
+			set.Add(p).ShouldBe(true);
+			set.Add(p).ShouldBe(false);
+			
+			var l2 = new P { Position = new Position(null, new Vector(1, 0)) };
+			set.Add(new Position(l2, origin)).ShouldBe(true);
+			set.Add(new Position(l2, new Vector(-1, 0))).ShouldBe(false);
 		}
 	}
 }

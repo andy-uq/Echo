@@ -5,6 +5,7 @@ using Raven.Client;
 namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
+	[NCrunch.Framework.Serial]
 	public class StateTest
 	{
 		protected IDocumentStore Database { get; set; }

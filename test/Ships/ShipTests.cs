@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Echo.Builder;
 using Echo.Builders;
 using Echo.Items;
 using Echo.Ships;
 using Echo.State;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Tests.Ships
 {
@@ -49,13 +51,17 @@ namespace Echo.Tests.Ships
 			var inFront = Build(new ShipState { LocalCoordinates = new Vector(0, 10, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
 			var toTheSide = Build(new ShipState { LocalCoordinates = new Vector(-10, 0, 0), Statistics = Enumerable.Empty<ShipStatisticState>() });
 
-			Assert.That(ship.HardPoints, Is.Not.Empty);
+			ship.ShouldSatisfyAllConditions
+				(
+					() => ship.HardPoints.ShouldNotBeEmpty(),
+					() => ship.CanAimAt(toTheSide).ShouldBe(true),
+					() => ship.CanTrack(toTheSide).ShouldBe(true),
+					() => ship.CanAimAt(inFront).ShouldBe(false),
+					() => ship.CanTrack(inFront).ShouldBe(false)
+				);
 
-			Assert.That(ship.CanAimAt(toTheSide), Is.True);
-			Assert.That(ship.CanTrack(toTheSide), Is.True);
-
-			Assert.That(ship.CanAimAt(inFront), Is.False);
-			Assert.That(ship.CanTrack(inFront), Is.False);
+			Should.Throw<ArgumentException>(() => ship.CanAimAt(ship)).Message.ShouldBe("Target must not be at the same position as the ship");
+			Should.Throw<ArgumentException>(() => ship.CanTrack(ship)).Message.ShouldBe("Target must not be at the same position as the ship");
 		}
 
 		private Ship Build(ShipState state)

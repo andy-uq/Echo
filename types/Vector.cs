@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 
 namespace Echo
@@ -8,8 +7,7 @@ namespace Echo
 	[DebuggerDisplay("X={X}, Y={Y}, Z={Z} [{Magnitude}]")]
 	public struct Vector : IEquatable<Vector>, IFormattable
 	{
-		private const double TOLERANCE = 0.0001;
-		public static readonly Vector Zero = new Vector(0, 0, 0);
+		public static readonly Vector Zero = new Vector(0, 0);
 
 		private const string NUMBER_PATTERN = @"-?\d+(\.\d+)?";
 		private const string VECTOR_PATTERN = @"\s*
@@ -53,7 +51,7 @@ namespace Echo
 		{
 			get
 			{
-				double raw = Math.Sqrt(DotProduct(this, this));
+				double raw = Math.Sqrt((X*X) + (Y*Y) + (Z*Z));
 				return Math.Round(raw, 4);
 			}
 		}
@@ -152,7 +150,7 @@ namespace Echo
 			return !left.Equals(right);
 		}
 
-		[System.Diagnostics.Contracts.Pure]
+		[Pure]
 		public Vector ToUnitVector()
 		{
 			double magnitude = Magnitude;
@@ -163,30 +161,19 @@ namespace Echo
 			if (Units.Equal(magnitude, 1d))
 				return new Vector(X, Y, Z);
 
-			return new Vector {X = X/Magnitude, Y = Y/magnitude, Z = Z/magnitude};
+			return new Vector(X/Magnitude, Y/magnitude, Z/magnitude);
 		}
 
 		[Pure]
 		public Vector Scale(double scale)
 		{
-			return new Vector
-			{
-				X = X*scale,
-				Y = Y*scale,
-				Z = Z*scale
-			};
+			return new Vector(X*scale, Y*scale, Z*scale);
 		}
 
 		[Pure]
 		public double DotProduct(Vector b)
 		{
-			return DotProduct(this, b);
-		}
-
-		[Pure]
-		public static double DotProduct(Vector a, Vector b)
-		{
-			return (a.X*b.X) + (a.Y*b.Y) + (a.Z*b.Z);
+			return (X*b.X) + (Y*b.Y) + (Z*b.Z);
 		}
 
 		[Pure]
@@ -195,7 +182,7 @@ namespace Echo
 			a = a.ToUnitVector();
 			b = b.ToUnitVector();
 
-			double dotProduct = Math.Round(DotProduct(a, b), 4);
+			double dotProduct = Math.Round((a.X*b.X) + (a.Y*b.Y) + (a.Z*b.Z), 4);
 			return Math.Acos(dotProduct);
 		}
 
@@ -205,40 +192,25 @@ namespace Echo
 			double x = Math.Cos(radians)*X - Math.Sin(radians)*Y;
 			double y = Math.Sin(radians)*X + Math.Cos(radians)*Y;
 
-			return new Vector(x, y, 0);
+			return new Vector(x, y);
 		}
 
 		[Pure]
 		public static Vector operator +(Vector a, Vector b)
 		{
-			return new Vector
-			{
-				X = a.X + b.X,
-				Y = a.Y + b.Y,
-				Z = a.Z + b.Z
-			};
+			return new Vector(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
 		}
 
 		[Pure]
 		public static Vector operator -(Vector a, Vector b)
 		{
-			return new Vector
-			{
-				X = a.X - b.X,
-				Y = a.Y - b.Y,
-				Z = a.Z - b.Z
-			};
+			return new Vector(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
 		}
 
 		[Pure]
 		public static Vector operator *(Vector a, Vector b)
 		{
-			return new Vector
-			{
-				X = (a.Y*b.Z) - (b.Y*a.Z),
-				Y = (b.X*a.Z) - (b.Z*a.X),
-				Z = (a.X*b.Y) - (b.X*a.Y)
-			};
+			return new Vector((a.Y*b.Z) - (b.Y*a.Z),(b.X*a.Z) - (b.Z*a.X), (a.X*b.Y) - (b.X*a.Y));
 		}
 
 		[Pure]

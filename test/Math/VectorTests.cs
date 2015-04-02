@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Echo.Ships;
 using NUnit.Framework;
 using Echo;
+using Shouldly;
 
 namespace Echo.Tests.Math
 {
@@ -97,6 +99,7 @@ namespace Echo.Tests.Math
 		[Test]
 		public void Normalise()
 		{
+			Should.Throw<ArgumentException>(() => Vector.Zero.ToUnitVector());
 			Assert.That(new Vector(3, 4, 0).ToUnitVector().Magnitude, Is.EqualTo(1));
 		}
 
@@ -152,6 +155,35 @@ namespace Echo.Tests.Math
 			b = new Vector(0, 1, 0);
 
 			Assert.That(System.Math.Acos(a.DotProduct(b)), Is.EqualTo(System.Math.PI));
+		}
+
+
+
+		[Test]
+		public void Equality()
+		{
+			var origin = new Vector(0, 0);
+			var right = new Vector(1, 0);
+			var left = new Vector(-1, 0);
+
+			(origin == left).ShouldBe(false);
+			(right + left == origin).ShouldBe(true);
+
+			Object.Equals(origin, right + left).ShouldBe(true);
+		}
+
+		[Test]
+		public void AddToSet()
+		{
+			var origin = new Vector(0, 0);
+			var right = new Vector(1, 0);
+			var left = new Vector(-1, 0);
+
+			var set = new HashSet<Vector>();
+			set.Add(origin).ShouldBe(true);
+			set.Add(origin).ShouldBe(false);
+			set.Add(origin + right).ShouldBe(true);
+			set.Add(new Vector(2, 0) + left).ShouldBe(false);
 		}
 	}
 }
