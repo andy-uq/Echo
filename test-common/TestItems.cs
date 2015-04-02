@@ -3,7 +3,9 @@ using System.Linq;
 using Echo;
 using Echo.Agents.Skills;
 using Echo.Items;
+using Echo.Market;
 using Echo.State;
+using Echo.State.Market;
 using SkillLevel = Echo.State.SkillLevel;
 
 namespace test.common
@@ -113,6 +115,11 @@ namespace test.common
 		public static ItemState ToItemState(this ItemCode itemCode, uint quantity=1)
 		{
 			return new ItemState {Code = itemCode, Quantity = quantity};
+		}
+
+		public static AuctionState ToAuctionState(ItemCode itemCode, uint quantity)
+		{
+			return new AuctionState { Item = new ItemState { Code = itemCode, Quantity = quantity } };
 		}
 
 		public static ItemInfo Item(ItemCode itemCode)

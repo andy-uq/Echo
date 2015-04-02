@@ -16,5 +16,6 @@ namespace Echo.State
 		public string Name { get; set; }
 		public Vector LocalCoordinates { get; set; }
 		public IEnumerable<SolarSystemState> SolarSystems { get; set; }
+		public MarketPlaceState MarketPlace { get; set; }
 	}
 }

@@ -5,7 +5,7 @@ using Echo.Items;
 
 namespace Echo.Market
 {
-	public class Settlement
+	public partial class Settlement
 	{
 		private readonly Dictionary<Corporation, long> _spendByOwner;
 		private Item _item;

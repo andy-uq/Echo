@@ -7,6 +7,7 @@ using Echo.Items;
 using Echo.Market;
 using Echo.Ships;
 using Echo.State;
+using Echo.State.Market;
 using Echo.Structures;
 
 namespace Echo
@@ -51,6 +52,26 @@ namespace Echo
 					return null;
 
 				return Weapon.Builder.Save(weapon);
+			}
+
+			public static ItemState Save(this Item item)
+			{
+				return Item.Builder.Save(item);
+			}
+
+			public static MarketPlaceState Save(this MarketPlace marketPlace)
+			{
+				return MarketPlace.Builder.Save(marketPlace);
+			}
+
+			public static AuctionState Save(this Auction auction)
+			{
+				return Auction.Builder.Save(auction);
+			}
+
+			public static IEnumerable<SettlementState> Save(this IEnumerable<Settlement> settlements)
+			{
+				return settlements.Select(Settlement.Builder.Save);
 			}
 
 			public static IEnumerable<CelestialObjectState> Save(this IEnumerable<CelestialObject> celestialObjects)

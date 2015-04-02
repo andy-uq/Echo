@@ -5,7 +5,7 @@ namespace Echo.State
 {
 	public class TradingStationState
 	{
-		public IEnumerable<BuyOrderState> BuyOrders { get; set; }
-		public IEnumerable<SellOrderState> SellOrders { get; set; }
+		public IEnumerable<ObjectReference> BuyOrders { get; set; }
+		public IEnumerable<ObjectReference> SellOrders { get; set; }
 	}
 }

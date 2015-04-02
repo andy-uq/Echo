@@ -39,6 +39,11 @@ namespace Echo.Market
 			_auctions.Add(auction);
 		}
 
+		public void AddRange(IEnumerable<Auction> auctions)
+		{
+			_auctions.AddRange(auctions);
+		}
+
 		public void Remove(Auction auction)
 		{
 			_auctions.Remove(auction);

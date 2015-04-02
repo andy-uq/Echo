@@ -11,8 +11,8 @@ namespace Echo.State
 		{
 			Personnel = Enumerable.Empty<ObjectReference>();
 			HangerItems = Enumerable.Empty<HangarItemState>();
-			BuyOrders = Enumerable.Empty<BuyOrderState>();
-			SellOrders = Enumerable.Empty<SellOrderState>();
+			BuyOrders = Enumerable.Empty<AuctionState>();
+			SellOrders = Enumerable.Empty<AuctionState>();
 		}
 
 		public ulong ObjectId { get; set; }
@@ -24,8 +24,8 @@ namespace Echo.State
 
 		public IEnumerable<ObjectReference> Personnel { get; set; }
 		public IEnumerable<HangarItemState> HangerItems { get; set; }
-		public IEnumerable<BuyOrderState> BuyOrders { get; set; }
-		public IEnumerable<SellOrderState> SellOrders { get; set; }
+		public IEnumerable<AuctionState> BuyOrders { get; set; }
+		public IEnumerable<AuctionState> SellOrders { get; set; }
 
 		public StructureType StructureType { get; set; }
 		public ManufactoryState Manufactory { get; set; }

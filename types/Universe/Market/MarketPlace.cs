@@ -4,7 +4,7 @@ using Echo.Celestial;
 
 namespace Echo.Market
 {
-	public class MarketPlace : IObject
+	public partial class MarketPlace : IObject
 	{
 		private readonly AuctionCollection _auctions;
 		private readonly List<Settlement> _settlements;

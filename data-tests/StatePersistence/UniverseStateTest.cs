@@ -1,12 +1,21 @@
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Data;
 using Echo.Data.Tests;
 using Echo.Data.Tests.StatePersistence;
 using Echo.State;
+using Echo.Statistics;
+using Echo.Structures;
 using NUnit.Framework;
+using Raven.Abstractions.Json;
+using Raven.Client.Document;
+using Raven.Imports.Newtonsoft.Json;
+using Raven.Imports.Newtonsoft.Json.Serialization;
+using Shouldly;
 
 namespace Echo.Tests.StatePersistence
 {
@@ -29,7 +38,14 @@ namespace Echo.Tests.StatePersistence
 		public void Serialise()
 		{
 			var universe = GetUniverse();
-			var json = Database.Conventions.CreateSerializer().Serialize(universe);
+
+			var jsonSerializer = Database.Conventions.CreateSerializer();
+
+			var statistic = new AgentStatisticState { Statistic = AgentStatistic.Intelligence, Value = 100, CurrentValue = 10 };
+			var agent = new AgentState() { Statistics = new[] { statistic }.Where(x => x.CurrentValue > 0) };
+			jsonSerializer.Serialize(agent.Statistics);
+
+			var json = jsonSerializer.Serialize(universe);
 			Console.WriteLine(json);
 		}
 
@@ -151,7 +167,8 @@ namespace Echo.Tests.StatePersistence
 
 			var starCluster = universe.StarClusters.First();
 			Assert.That(starCluster.SolarSystems, Is.Not.Empty);
-
+			Assert.That(starCluster.MarketPlace, Is.Not.Null);
+			
 			SolarSystem sol = starCluster.SolarSystems.First();
 
 			var earth = sol.Satellites.Single(x => x.Name == "Earth");
@@ -159,6 +176,11 @@ namespace Echo.Tests.StatePersistence
 
 			var moon = earth.Satellites.Single(x => x.Name == "Moon");
 			Assert.That(moon, Is.InstanceOf<Moon>());
+
+			var buyOrder = starCluster.MarketPlace.BuyOrders.First();
+			var tradingStation = sol.Structures.OfType<TradingStation>().Single();
+
+			Assert.That(tradingStation.BuyOrders.First(), Is.SameAs(buyOrder));
 		}
 	}
 }

@@ -7,7 +7,7 @@ using EnsureThat;
 
 namespace Echo.Market
 {
-	public abstract class Auction : IObject
+	public abstract partial class Auction : IObject
 	{
 		private Item _item;
 		private uint _blockSize;

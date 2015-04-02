@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
 using Echo.Builder;
+using Echo.Builders;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.Market;
@@ -42,8 +43,8 @@ namespace Echo.Structures
 					StructureType = structure.StructureType,
 					Personnel = structure.Personnel.Select(p => p.ToObjectReference()),
 					HangerItems = structure.Hangar.Where(x => !x.Value.IsEmpty).Select(SaveHangarItems),
-					BuyOrders = structure.BuyOrders.Select(BuyOrder.Builder.Save),
-					SellOrders = structure.SellOrders.Select(SellOrder.Builder.Save),
+					BuyOrders = structure.BuyOrders.Select(_ => _.Save()),
+					SellOrders = structure.SellOrders.Select(_ => _.Save()),
 				};
 
 				return SaveStructure(structure);
@@ -58,16 +59,16 @@ namespace Echo.Structures
 
 				builder.Resolve((resolver, target) => target.Owner = resolver.Get<Corporation>(State.Owner));
 				builder.Resolve((resolver, target) => LoadHangarItems(resolver, target, State.HangerItems));
-				builder.Resolve((resolver, target) => target.Personnel = State.Personnel.Select(resolver.Get<Agent>).ToList());
+				builder.Resolve((resolver, target) => target.Personnel.AddRange(State.Personnel.Select(resolver.Get<Agent>)));
 
 				builder
 					.Dependents(State.BuyOrders)
-					.Build(x => BuyOrder.Builder.Build(builder.Target, x))
+					.Build(x => BuyOrder.Builder.Build(builder.Target, x, () => new BuyOrder()))
 					.Resolve((resolver, target, buyOrder) => target.BuyOrders.Add(buyOrder));
-				
+
 				builder
 					.Dependents(State.SellOrders)
-					.Build(x => SellOrder.Builder.Build(builder.Target, x))
+					.Build(x => SellOrder.Builder.Build(builder.Target, x, () => new SellOrder()))
 					.Resolve((resolver, target, buyOrder) => target.SellOrders.Add(buyOrder));
 
 				return builder;
@@ -78,13 +79,8 @@ namespace Echo.Structures
 				return new HangarItemState
 				{
 					Owner = hangarItems.Key.ToObjectReference(), 
-					Items = hangarItems.Value.Select(ToItemState)
+					Items = hangarItems.Value.Select(_ => _.Save())
 				};
-			}
-
-			private ItemState ToItemState(Item item)
-			{
-				return new ItemState {Code = item.ItemInfo.Code, Quantity = item.Quantity};
 			}
 
 			private void LoadHangarItems(IIdResolver idresolver, Structure target, IEnumerable<HangarItemState> hangerItems)

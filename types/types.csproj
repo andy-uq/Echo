@@ -64,6 +64,8 @@
     <Compile Include="Builders\Items\CategoryAttribute.cs" />
     <Compile Include="Builders\Items\ItemCode.cs" />
     <Compile Include="Builders\Items\ItemCodeExtensions.cs" />
+    <Compile Include="Builders\Market\MarketPlace.cs" />
+    <Compile Include="Builders\Market\Settlement.cs" />
     <Compile Include="Builders\Ships\ShipClass.cs" />
     <Compile Include="IdResolver.cs" />
     <Compile Include="IIdResolver.cs" />
@@ -79,6 +81,8 @@
     <Compile Include="State\HangarItemState.cs" />
     <Compile Include="State\IItemInfo.cs" />
     <Compile Include="State\ItemInfo.cs" />
+    <Compile Include="State\MarketPlaceState.cs" />
+    <Compile Include="State\Market\SettlementState.cs" />
     <Compile Include="State\ObjectReference.cs" />
     <Compile Include="State\ShipInfo.cs" />
     <Compile Include="State\Skill.cs" />
@@ -91,8 +95,7 @@
     <Compile Include="Builders\Corporations\Corporation.cs" />
     <Compile Include="Builders\Items\Item.cs" />
     <Compile Include="Builders\JumpGates\JumpGate.cs" />
-    <Compile Include="Builders\Market\BuyOrder.cs" />
-    <Compile Include="Builders\Market\SellOrder.cs" />
+    <Compile Include="Builders\Market\Auction.cs" />
     <Compile Include="Builders\Ships\HardPoint.cs" />
     <Compile Include="Builders\Ships\Ship.cs" />
     <Compile Include="Builders\Ships\Weapon.cs" />
@@ -113,11 +116,9 @@
     <Compile Include="State\AgentState.cs" />
     <Compile Include="State\CorporationState.cs" />
     <Compile Include="State\ItemState.cs" />
-    <Compile Include="State\Market\BuyOrderState.cs" />
     <Compile Include="State\HardPointState.cs" />
     <Compile Include="State\JumpGate.cs" />
     <Compile Include="State\Market\AuctionState.cs" />
-    <Compile Include="State\Market\SellOrderState.cs" />
     <Compile Include="State\ShipState.cs" />
     <Compile Include="State\StatisticState.cs" />
     <Compile Include="State\TradingStation.cs" />

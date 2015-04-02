@@ -97,6 +97,7 @@
     <Compile Include="StatePersistence\Corporations.cs" />
     <Compile Include="StatePersistence\ItemStateTest.cs" />
     <Compile Include="StatePersistence\Manufactories.cs" />
+    <Compile Include="StatePersistence\MarketTests.cs" />
     <Compile Include="StatePersistence\Moons.cs" />
     <Compile Include="StatePersistence\Planets.cs" />
     <Compile Include="StatePersistence\ShipStateTest.cs" />

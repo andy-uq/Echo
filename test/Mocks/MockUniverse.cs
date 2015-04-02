@@ -4,6 +4,7 @@ using Echo.Agents;
 using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Items;
+using Echo.Market;
 using Echo.Ships;
 using Echo.State;
 using Echo.State.Market;
@@ -34,6 +35,9 @@ namespace Echo.Tests.Mocks
 		public BluePrintInfo BluePrint { get; set; }
 		public BluePrintInfo ShipBluePrint { get; set; }
 
+		public AuctionState BuyOrder { get; set; }
+		public AuctionState SellOrder { get; set; }
+
 		public MockUniverse(IIdGenerator idGenerator = null)
 		{
 			_idGenerator = idGenerator ?? new IdGenerator();
@@ -44,6 +48,19 @@ namespace Echo.Tests.Mocks
 			ShipBluePrint = TestItems.BluePrint(ItemCode.LightFrigate);
 			Weapon = TestItems.Weapon(ItemCode.MissileLauncher);
 			Item = TestItems.Item(ItemCode.Veldnium);
+
+			BuyOrder = new AuctionState
+			{
+				ObjectId = Id(),
+				PricePerUnit = 5,
+				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 50 }
+			};
+			SellOrder = new AuctionState
+			{
+				ObjectId = Id(),
+				PricePerUnit = 10,
+				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 100 }
+			};
 
 			John = new AgentState
 			{
@@ -111,8 +128,8 @@ namespace Echo.Tests.Mocks
 				HangerItems = new[] { new HangarItemState { Owner = MSCorp.ToObjectReference(), Items = new[] { ItemCode.MissileLauncher.ToItemState(quantity:10) }  }, },
 				TradingStation = new TradingStationState()
 				{
-					BuyOrders = new[] { new BuyOrderState { Auction = new AuctionState {} }, },
-					SellOrders = new[] { new SellOrderState { Auction = new AuctionState { } }, }
+					BuyOrders = new[] { BuyOrder.ToObjectReference() },
+					SellOrders = new[] { SellOrder.ToObjectReference() },
 				},
 			};
 
@@ -153,6 +170,13 @@ namespace Echo.Tests.Mocks
 				ObjectId = Id(),
 				Name = "Revvon",
 				SolarSystems = new[] { SolarSystem },
+				MarketPlace = new MarketPlaceState
+				{
+					AuctionLength = 10,
+					SettlementDelay = 5,
+					Settlements = new[] { new SettlementState { }, },
+					Auctions = new[] { BuyOrder.ToObjectReference(), SellOrder.ToObjectReference() },
+				}
 			};
 
 			Universe = new UniverseState
