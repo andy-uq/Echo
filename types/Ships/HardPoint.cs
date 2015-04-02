@@ -165,21 +165,18 @@ namespace Echo.Ships
 
 		public bool AimAt(ILocation target)
 		{
+			var targetPosition = (target.Position - Ship.Position);
+			return AimAt(targetPosition.ToUnitVector());
+		}
+
+		public bool AimAt(Vector targetPosition)
+		{
+			targetPosition = CalculateTargetPosition(targetPosition);
+
 			var orientation = GetAbsoluteOrientation(Orientation);
-
-			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
-			targetPosition = targetPosition.ToUnitVector();
-			
-			double extent = Vector.Angle(_origin, targetPosition);
-			double angleToMove = Vector.Angle(orientation, targetPosition);
-
-			if ( extent - (_radiansOfMovement / 2) > Units.Tolerance )
+			var angleToMove = Vector.Angle(orientation, targetPosition);
+			if (Math.Abs(angleToMove) < Units.Tolerance)
 			{
-				angleToMove = Math.Min(_radiansOfMovement * Speed, _radiansOfMovement / 2);
-				Vector counter = _origin.RotateZ(angleToMove);
-				Vector clock = _origin.RotateZ(angleToMove*-1d);
-
-				Orientation = (counter - targetPosition).Magnitude < (clock - targetPosition).Magnitude ? counter : clock;
 				return false;
 			}
 
@@ -187,7 +184,7 @@ namespace Echo.Ships
 			{
 				angleToMove = _radiansOfMovement * Speed;
 				Vector counter = orientation.RotateZ(angleToMove);
-				Vector clock = orientation.RotateZ(angleToMove*-1d);
+				Vector clock = orientation.RotateZ(-angleToMove);
 
 				Orientation = (counter - targetPosition).Magnitude < (clock - targetPosition).Magnitude ? counter : clock;
 				return false;
@@ -197,6 +194,21 @@ namespace Echo.Ships
 			return true;
 		}
 
+		private Vector CalculateTargetPosition(Vector targetPosition)
+		{
+			double extent = Vector.Angle(_origin, targetPosition);
+			double maxExtent = _radiansOfMovement/2;
+			if (extent - maxExtent <= Units.Tolerance)
+				return targetPosition;
+
+			Vector counter = _origin.RotateZ(maxExtent);
+			Vector clock = _origin.RotateZ(-maxExtent);
+
+			return (counter - targetPosition).Magnitude < (clock - targetPosition).Magnitude
+				? counter
+				: clock;
+		}
+
 		/// <summary>
 		/// Returns true if a hard point can aim at a particular location
 		/// </summary>
@@ -204,15 +216,10 @@ namespace Echo.Ships
 		/// <returns></returns>
 		public bool InRange(ILocation target)
 		{
-			if (target.Position.UniversalCoordinates == Ship.Position.UniversalCoordinates)
-			{
-				throw new ArgumentException("Target must not be at the same position as the ship");
-			}
-
 			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
 			if (targetPosition == Vector.Zero)
-				throw new ArgumentException("Target is co-incident", "target");
-
+				throw new ArgumentException("Target must not be at the same position as the ship");
+			
 			targetPosition = targetPosition.ToUnitVector();
 
 			var orientation = GetAbsoluteOrientation(Origin);
@@ -230,7 +237,7 @@ namespace Echo.Ships
 		{
 			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
 			if (targetPosition == Vector.Zero)
-				throw new ArgumentException("Target is co-incident", "target");
+				throw new ArgumentException("Target must not be at the same position as the ship");
 
 			targetPosition = targetPosition.ToUnitVector();
 

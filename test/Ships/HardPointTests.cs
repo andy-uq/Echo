@@ -1,6 +1,7 @@
 ﻿using System;
 using Echo.Ships;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Tests.Ships
 {
@@ -62,6 +63,56 @@ namespace Echo.Tests.Ships
 			CanTrack(HardPointPosition.Front, new CanTrackResult() { Left = true, Right = true, Front = true, LeftTop = true });
 			CanTrack(HardPointPosition.Top, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true, });
 			CanTrack(HardPointPosition.Bottom, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+		}
+
+		[Test]
+		public void NotFastEnough()
+		{
+			const double pi = System.Math.PI;
+			const double tolerance = 0.01;
+		
+			var hp = new HardPoint(_ship, HardPointPosition.Left) { Speed = 0.25 };
+			
+			var pointDown = hp.Origin.RotateZ(pi/4);
+
+			hp.Inclination.ShouldBe(0, tolerance);
+			
+			hp.AimAt(pointDown).ShouldBe(false);
+			hp.Inclination.ShouldBe(45.0/2, tolerance);
+
+			hp.AimAt(pointDown).ShouldBe(true);
+			hp.Inclination.ShouldBe(45.0, tolerance);
+
+			var nowPointUp = hp.Origin.RotateZ(-pi/4);
+
+			hp.AimAt(nowPointUp).ShouldBe(false);
+			hp.Inclination.ShouldBe(45.0/2, tolerance);
+
+			hp.AimAt(nowPointUp);//.ShouldBe(false);
+			hp.Inclination.ShouldBe(0, tolerance);
+		}
+
+		[Test]
+		public void OutOfRange()
+		{
+			const double pi = System.Math.PI;
+			const double tolerance = 0.01;
+		
+			var hp = new HardPoint(_ship, HardPointPosition.Left) { Speed = 0.25 };
+			
+			var pointDown = hp.Origin.RotateZ(pi);
+
+			hp.Inclination.ShouldBe(0, tolerance);
+			
+			hp.AimAt(pointDown).ShouldBe(false);
+			hp.Inclination.ShouldBe(45.0/2, tolerance);
+
+			hp.AimAt(pointDown).ShouldBe(true);
+			hp.Inclination.ShouldBe(45.0, tolerance);
+
+			// stop moving down -- limit of range
+			hp.AimAt(pointDown).ShouldBe(false);
+			hp.Inclination.ShouldBe(45.0, tolerance);
 		}
 
 		[Test]
