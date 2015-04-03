@@ -60,13 +60,16 @@
     <Compile Include="Agents\Skills\SkillCode.cs" />
     <Compile Include="Builders\DependentObject.cs" />
     <Compile Include="Builders\IBuilderContext.cs" />
+    <Compile Include="Builders\IdResolutionContextExtensions.cs" />
     <Compile Include="Builders\Items\ItemType.cs" />
     <Compile Include="Builders\Items\CategoryAttribute.cs" />
     <Compile Include="Builders\Items\ItemCode.cs" />
     <Compile Include="Builders\Items\ItemCodeExtensions.cs" />
     <Compile Include="Builders\Market\MarketPlace.cs" />
     <Compile Include="Builders\Market\Settlement.cs" />
+    <Compile Include="Builders\Resolver.cs" />
     <Compile Include="Builders\Ships\ShipClass.cs" />
+    <Compile Include="CompositeIdResolver.cs" />
     <Compile Include="IdResolver.cs" />
     <Compile Include="IIdResolver.cs" />
     <Compile Include="Builders\ObjectBuilderT.cs" />

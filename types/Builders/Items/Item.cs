@@ -1,4 +1,5 @@
-﻿using Echo.State;
+﻿using Echo.Corporations;
+using Echo.State;
 
 namespace Echo.Items
 {

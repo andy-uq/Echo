@@ -49,19 +49,6 @@ namespace Echo.Tests.Mocks
 			Weapon = TestItems.Weapon(ItemCode.MissileLauncher);
 			Item = TestItems.Item(ItemCode.Veldnium);
 
-			BuyOrder = new AuctionState
-			{
-				ObjectId = Id(),
-				PricePerUnit = 5,
-				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 50 }
-			};
-			SellOrder = new AuctionState
-			{
-				ObjectId = Id(),
-				PricePerUnit = 10,
-				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 100 }
-			};
-
 			John = new AgentState
 			{
 				ObjectId = Id(),
@@ -76,6 +63,24 @@ namespace Echo.Tests.Mocks
 				ObjectId = Id(),
 				Name = "MS",
 				Employees = new[] { John }
+			};
+
+			BuyOrder = new AuctionState
+			{
+				ObjectId = Id(),
+				PricePerUnit = 5,
+				Trader = John.ToObjectReference(),
+				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 50 },
+				Owner = MSCorp.ToObjectReference(),
+			};
+
+			SellOrder = new AuctionState
+			{
+				ObjectId = Id(),
+				PricePerUnit = 10,
+				Trader = John.ToObjectReference(),
+				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 100 },
+				Owner = MSCorp.ToObjectReference(),
 			};
 
 			Earth = new CelestialObjectState
@@ -126,11 +131,9 @@ namespace Echo.Tests.Mocks
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
 				Owner = MSCorp.ToObjectReference(),
 				HangerItems = new[] { new HangarItemState { Owner = MSCorp.ToObjectReference(), Items = new[] { ItemCode.MissileLauncher.ToItemState(quantity:10) }  }, },
+				BuyOrders = new[] { BuyOrder },
+				SellOrders = new[] { SellOrder },
 				TradingStation = new TradingStationState()
-				{
-					BuyOrders = new[] { BuyOrder.ToObjectReference() },
-					SellOrders = new[] { SellOrder.ToObjectReference() },
-				},
 			};
 
 			Ship = new ShipState()

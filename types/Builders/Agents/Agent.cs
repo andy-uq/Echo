@@ -25,8 +25,8 @@ namespace Echo.Agents
 				};
 
 				return new ObjectBuilder<Agent>(agent)
-					.Resolve((r, a) => a.Location = r.Get<ILocation>(state.Location))
-					.Resolve((r, a) => a.Skills = new SkillCollection(state.Skills.Select(skill => Build(r, skill))))
+					.Resolve((resolver, target) => target.Location = resolver.Get<ILocation>(state.Location))
+					.Resolve((resolver, target) => target.Skills = new SkillCollection(state.Skills.Select(skill => Build(resolver, skill))))
 					.Resolve(ApplyStatDeltas);
 			}
 

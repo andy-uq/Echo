@@ -34,7 +34,8 @@ namespace Echo.Market
 				};
 
 				var builder = new ObjectBuilder<MarketPlace>(marketPlace);
-				builder.Resolve((resolver, target) => target._auctions.AddRange(state.Auctions.Select(resolver.Get<Auction>)));
+				builder
+					.Resolve((resolver, target) => target._auctions.AddRange(state.Auctions.Select(resolver.Get<Auction>)));
 
 				return builder;
 			}

@@ -1,9 +1,11 @@
 ﻿using System;
 using Echo.Agents;
 using Echo.Builder;
+using Echo.Corporations;
 using Echo.Items;
 using Echo.State.Market;
 using Echo.Structures;
+using EnsureThat;
 
 namespace Echo.Market
 {
@@ -13,6 +15,9 @@ namespace Echo.Market
 		{
 			public static AuctionState Save(Auction auction)
 			{
+				Ensure.That(auction.Trader).IsNotNull();
+				Ensure.That(auction.Owner).IsNotNull();
+
 				return new AuctionState
 				{
 					ObjectId = auction.Id,
@@ -39,8 +44,15 @@ namespace Echo.Market
 				auction.Location = location;
 
 				return new ObjectBuilder<T>(auction)
-					.Resolve((resolver, target) => target.Item = Item.Builder.Build(state.Item, resolver))
+					.Resolve((resolver, target) => target.Item = BuildItem<T>(resolver, state))
 					.Resolve((resolver, target) => target.Trader = resolver.Get<Agent>(state.Trader));
+			}
+
+			private static Item BuildItem<T>(IIdResolver resolver, AuctionState state) where T : Auction
+			{
+				var item = Item.Builder.Build(state.Item, resolver);
+				item.Owner = resolver.Get<Corporation>(state.Owner);
+				return item;
 			}
 		}
 	}

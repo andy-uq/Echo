@@ -116,6 +116,7 @@ namespace Echo.Tests.StatePersistence
 				};
 
 				Assert.That(universe.StarClusters, Is.Not.Empty);
+				Assert.That(universe.StarClusters.First().MarketPlace, Is.Not.Null);
 				Assert.That(universe.Corporations, Is.Not.Empty);
 				Assert.That(universe.Items, Is.Not.Empty);
 				Assert.That(universe.Weapons, Is.Not.Empty);

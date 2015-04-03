@@ -1,4 +1,5 @@
 ﻿using System;
+using Echo.Agents;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Market;
@@ -41,7 +42,11 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var market = MarketPlace.Builder.Build(new StarCluster(), Market).Materialise();
+			var buyOrder = new BuyOrder { Id = Universe.BuyOrder.ObjectId };
+			var sellOrder = new SellOrder { Id = Universe.SellOrder.ObjectId };
+			var resolver = new IdResolutionContext(new IObject[] { buyOrder, sellOrder });
+
+			var market = MarketPlace.Builder.Build(new StarCluster(), Market).Materialise(resolver);
 			Assert.That(market, Is.InstanceOf<MarketPlace>());
 
 			var state = market.Save();
@@ -62,10 +67,13 @@ namespace Echo.Data.Tests.StatePersistence
 
 			using (var session = Database.OpenSession())
 			{
+				var buyOrder = new BuyOrder {Id = Universe.BuyOrder.ObjectId};
+				var sellOrder = new SellOrder { Id = Universe.SellOrder.ObjectId };
 				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
 				Assert.That(state, Is.Not.Null);
-
-				var market = MarketPlace.Builder.Build(null, Market).Materialise();
+				
+				var resolver = new IdResolutionContext(new IObject[] { buyOrder, sellOrder });
+				var market = MarketPlace.Builder.Build(null, Market).Materialise(resolver);
 				Assert.That(market, Is.InstanceOf<MarketPlace>());
 			}
 		}

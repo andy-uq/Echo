@@ -24,7 +24,9 @@ namespace Echo
 			if (q.Any())
 				throw new InvalidOperationException("Duplicate keys detected: " + string.Join("; ", q));
 
-			_lookup = collection.Where(x => x.Id != 0).ToDictionary(x => x.Id);
+			_lookup = collection
+				.Where(x => x.Id != 0)
+				.ToDictionary(x => x.Id);
 		}
 
 		public override IEnumerable<IObject> Values

@@ -6,8 +6,6 @@ using Echo.Corporations;
 using Echo.State;
 using Echo.Structures;
 using Echo.Tests;
-using Echo.Tests.Mocks;
-using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
 namespace Echo.Data.Tests.StatePersistence
@@ -46,13 +44,18 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var builder = Structure.Builder.For(TradingStation).Build(new Moon {Id = Universe.Moon.ObjectId});
+			var builder = Structure.Builder
+				.For(TradingStation)
+				.Build(new Moon {Id = Universe.Moon.ObjectId});
+
 			builder.Add(Corporation.Builder.Build(Universe.MSCorp));
 			
 			var structure = builder.Materialise();
 			var state = structure.Save();
 
 			Assert.That(state.TradingStation, Is.Not.Null);
+			Assert.That(state.BuyOrders, Is.Not.Empty);
+			Assert.That(state.SellOrders, Is.Not.Empty);
 
 			var writer = new StringWriter();
 			var serialiser = Database.Conventions.CreateSerializer();
