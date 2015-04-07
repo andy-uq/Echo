@@ -24,6 +24,11 @@ namespace Echo
 			}
 		}
 
+		public Position RotateZ(double radians)
+		{
+			return new Position(Location, LocalCoordinates.RotateZ(radians));
+		}
+
 		public static Position operator +(Position position, Vector offset)
 		{
 			return new Position(position.Location, position.LocalCoordinates + offset);

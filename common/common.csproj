@@ -61,6 +61,7 @@
     <Compile Include="AutoMapTypeMapper.cs" />
     <Compile Include="EchoContext.cs" />
     <Compile Include="JumpCountTable.cs" />
+    <Compile Include="Orbiter.cs" />
     <Compile Include="Tasks\Ships\Jump\JumpShipParameters.cs" />
     <Compile Include="Tasks\Ships\Jump\JumpShipResult.cs" />
     <Compile Include="Tasks\Ships\Jump\JumpShipTask.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Tasks\Ships\Undocking\UndockShipTask.cs" />
     <Compile Include="Tasks\Ships\Undocking\UndockShipResult.cs" />
     <Compile Include="Combat\WeaponAttackResult.cs" />
+    <Compile Include="TickRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

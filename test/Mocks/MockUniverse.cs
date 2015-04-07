@@ -96,7 +96,8 @@ namespace Echo.Tests.Mocks
 				ObjectId = Id(),
 				CelestialObjectType = CelestialObjectType.Planet,
 				Name = "Earth",
-				Mass = 50d,
+				LocalCoordinates = new Vector(Units.FromAU(1), 0),
+				Mass = 5.97219E24,
 				Size = 5d,
 			};
 			AsteroidBelt = new CelestialObjectState

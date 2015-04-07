@@ -80,6 +80,10 @@ namespace Echo
 			if (format.ToLower() == "g")
 				return String.Format("({0:n4}, {1:n4}, {2:n4})", X, Y, Z);
 
+			// If N format specifier is passed, display like this: (x, y).
+			if (format.ToLower() == "n")
+				return String.Format("{0:n4} {1:n4} {2:n4}", X, Y, Z);
+
 			// For "x" formatting, return just the x value as a string
 			if (format.ToLower() == "x")
 				return X.ToString("n4");
@@ -211,6 +215,12 @@ namespace Echo
 		public static Vector operator *(Vector a, Vector b)
 		{
 			return new Vector((a.Y*b.Z) - (b.Y*a.Z),(b.X*a.Z) - (b.Z*a.X), (a.X*b.Y) - (b.X*a.Y));
+		}
+
+		[Pure]
+		public static Vector operator *(Vector a, double scale)
+		{
+			return a.Scale(scale);
 		}
 
 		[Pure]

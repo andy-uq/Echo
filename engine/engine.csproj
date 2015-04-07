@@ -48,10 +48,21 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\common\common.csproj">
+      <Project>{D24CBE2E-F1AD-43CA-A58B-0329F9D96C19}</Project>
+      <Name>common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\types\types.csproj">
+      <Project>{8B605E9C-167D-4A71-8B58-F1D3CB187E45}</Project>
+      <Name>types</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
