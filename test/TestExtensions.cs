@@ -13,7 +13,7 @@ namespace Echo.Tests
 		public static IEnumerable<Item> Build(this IEnumerable<ItemState> items)
 		{
 			var resolver = IdResolver.Empty.RegisterTestItems();
-			return items.Select(i => Item.Builder.Build(i, resolver));
+			return items.Select(i => Item.Builder.Build(i).Build(resolver));
 		}
 		
 		public static T Materialise<T>(this ObjectBuilder<T> build) where T : IObject

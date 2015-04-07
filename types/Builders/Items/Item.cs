@@ -1,4 +1,5 @@
-﻿using Echo.Corporations;
+﻿using Echo.Builder;
+using Echo.Corporations;
 using Echo.State;
 
 namespace Echo.Items
@@ -11,26 +12,30 @@ namespace Echo.Items
 			{
 				return new ItemState
 				{
-					Id = item.Id,
+					ObjectId = item.Id,
 					Type = item.ItemInfo.Type,
 					Code = item.ItemInfo.Code,
 					Quantity = item.Quantity,
 				};
 			}
 
-			public static Item Build(ItemState state, IIdResolver resolver)
+			public static ObjectBuilder<Item> Build(ItemState state, ILocation location = null, Corporation owner = null)
 			{
-				var objRef = state.Type.ToObjectReference(state.Code);
-				var itemInfo = resolver.Get<ItemInfo>(objRef);
-
+				var objRef = state.Type.ToObjectReference(state.Code);						
 				var item = new Item
 				{
-					Id = state.Id,
+					Id = state.ObjectId,
 					Quantity = state.Quantity,
-					ItemInfo = itemInfo
+					Location = location,
+					Owner = owner,
 				};
 
-				return item;
+				var builder = new ObjectBuilder<Item>(item);
+				
+				builder
+					.Resolve((resolver, target) => item.ItemInfo = resolver.Get<ItemInfo>(objRef));
+
+				return builder;
 			}
 		}
 	}

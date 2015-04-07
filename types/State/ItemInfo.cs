@@ -1,5 +1,4 @@
 ﻿using Echo.Items;
-using Echo.Statistics;
 
 namespace Echo.State
 {
@@ -42,11 +41,5 @@ namespace Echo.State
 		}
 
 		#endregion
-	}
-
-	public class ShieldInfo
-	{
-		public ShipStatistic Statistic { get; set; }
-		public double RepairPerTick { get; set; }
 	}
 }

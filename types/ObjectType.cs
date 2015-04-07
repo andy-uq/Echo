@@ -16,6 +16,7 @@
 		Corporation,
 		MarketPlace,
 		Auction,
+		Settlement,
 		JumpGate,
 		Skill,
 		BluePrint,

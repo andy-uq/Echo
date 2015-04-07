@@ -75,9 +75,6 @@ namespace Echo.Celestial
 			{
 				Ensure.That(resolver).IsNotNull();
 
-				if ( state.Structures == null )
-					return;
-
 				var query =
 					(
 						from s in state.Structures
@@ -106,9 +103,6 @@ namespace Echo.Celestial
 			private static void BuildSatelliteOrbits(SolarSystemState state, IIdResolver resolver)
 			{
 				Ensure.That(resolver).IsNotNull();
-
-				if ( state.Satellites == null )
-					return;
 
 				var query =
 					(

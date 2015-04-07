@@ -24,7 +24,7 @@ namespace Echo
 		public Item Build(ItemCode itemCode, uint quantity)
 		{
 			var item = new ItemState {Code = itemCode, Quantity = quantity};
-			return Item.Builder.Build(item, _resolver);
+			return Item.Builder.Build(item).Build(_resolver);
 		}
 
 		public T ToItemInfo<T>(ItemType itemType, ItemCode itemCode) where T : ItemInfo

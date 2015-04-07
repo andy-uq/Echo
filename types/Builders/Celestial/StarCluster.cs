@@ -33,7 +33,7 @@ namespace Echo.Celestial
 				};
 
 				var builder = new ObjectBuilder<StarCluster>(starCluster);
-				builder.Resolve((resolver, target) => target.MarketPlace = Market.MarketPlace.Builder.Build(starCluster, state.MarketPlace).Build(resolver));
+				builder.Resolve((resolver, target) => target.MarketPlace = Market.MarketPlace.Builder.Build(state.MarketPlace, starCluster).Build(resolver));
 
 				builder
 					.Dependents(state.SolarSystems)

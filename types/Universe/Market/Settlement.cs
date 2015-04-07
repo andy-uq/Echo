@@ -5,9 +5,9 @@ using Echo.Items;
 
 namespace Echo.Market
 {
-	public partial class Settlement
+	public partial class Settlement : IObject
 	{
-		private readonly Dictionary<Corporation, long> _spendByOwner;
+		private Dictionary<Corporation, long> _spendByOwner;
 		private Item _item;
 
 		public Settlement()
@@ -35,5 +35,9 @@ namespace Echo.Market
 				_item.Quantity += item.Quantity;
 			}
 		}
+
+		public ObjectType ObjectType { get { return ObjectType.Settlement; } }
+		public ulong Id { get; set; }
+		public string Name { get; set; }
 	}
 }

@@ -87,6 +87,7 @@
     <Compile Include="State\MarketPlaceState.cs" />
     <Compile Include="State\Market\SettlementState.cs" />
     <Compile Include="State\ObjectReference.cs" />
+    <Compile Include="State\ShieldInfo.cs" />
     <Compile Include="State\ShipInfo.cs" />
     <Compile Include="State\Skill.cs" />
     <Compile Include="State\SkillInfo.cs" />

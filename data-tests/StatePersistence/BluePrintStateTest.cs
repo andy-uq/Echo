@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
-	public class ItemStateTest : StateTest
+	public class BluePrintStateTest : StateTest
 	{
 		public class WrappedObjectState
 		{
@@ -21,7 +21,7 @@ namespace Echo.Data.Tests.StatePersistence
 
 		public ItemState Item
 		{
-			get { return Items.Item.Builder.Save(new Item(Universe.Item, quantity:10)); }
+			get { return Items.Item.Builder.Save(new Item(Universe.BluePrint)); }
 		}
 
 		[Test]
@@ -39,10 +39,11 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var idResolver = new IdResolutionContext(new[] { Universe.Item });
+			var idResolver = new IdResolutionContext(new IObject[] { Universe.BluePrint, Universe.Weapon });
 			var item = Echo.Items.Item.Builder.Build(Item).Build(idResolver);
 
 			Assert.That(item.ObjectType, Is.EqualTo(ObjectType.Item));
+			Assert.That(item.ItemInfo, Is.InstanceOf<BluePrintInfo>());
 
 			var state = Echo.Items.Item.Builder.Save(item);
 			var json = Database.Conventions.CreateSerializer().Serialize(state);

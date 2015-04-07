@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
 using Echo.Agents.Implants;
@@ -21,6 +22,7 @@ namespace Echo.Tests.Mocks
 		public ShipState Ship { get; set; }
 		public AgentState John { get; set; }
 		public CorporationState MSCorp { get; set; }
+		public CorporationState AppleCorp { get; set; }
 		public StructureState Manufactory { get; set; }
 		public StructureState TradingStation { get; set; }
 		public CelestialObjectState Moon { get; set; }
@@ -63,6 +65,12 @@ namespace Echo.Tests.Mocks
 				ObjectId = Id(),
 				Name = "MS",
 				Employees = new[] { John }
+			};
+
+			AppleCorp = new CorporationState
+			{
+				ObjectId = Id(),
+				Name = "Apple",
 			};
 
 			BuyOrder = new AuctionState
@@ -177,7 +185,18 @@ namespace Echo.Tests.Mocks
 				{
 					AuctionLength = 10,
 					SettlementDelay = 5,
-					Settlements = new[] { new SettlementState { }, },
+					Settlements = new[]
+					{
+						new SettlementState
+						{
+							ObjectId = Id(),
+							Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 50 }, 
+							Owner = MSCorp.ToObjectReference(), 
+							Location = TradingStation.ToObjectReference(),
+							TimeToSettlement = 100, 
+							SpendByOwner = new Dictionary<ObjectReference, long> { { AppleCorp.ToObjectReference(), 1000 } },
+						}
+					},
 					Auctions = new[] { BuyOrder.ToObjectReference(), SellOrder.ToObjectReference() },
 				}
 			};
@@ -188,7 +207,7 @@ namespace Echo.Tests.Mocks
 				StarClusters = new[] {StarCluster},
 				Weapons = new[] { Weapon },
 				Skills = TestSkills.Skills,
-				Corporations = new[] { MSCorp },
+				Corporations = new[] { MSCorp, AppleCorp },
 				Items = TestItems.Items,
 				BluePrints = TestItems.BluePrints,
 				Ships = new[]

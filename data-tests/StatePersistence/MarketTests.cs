@@ -2,8 +2,11 @@
 using Echo.Agents;
 using Echo.Builders;
 using Echo.Celestial;
+using Echo.Corporations;
+using Echo.Items;
 using Echo.Market;
 using Echo.State;
+using Echo.Structures;
 using Echo.Tests;
 using NUnit.Framework;
 
@@ -44,9 +47,9 @@ namespace Echo.Data.Tests.StatePersistence
 		{
 			var buyOrder = new BuyOrder { Id = Universe.BuyOrder.ObjectId };
 			var sellOrder = new SellOrder { Id = Universe.SellOrder.ObjectId };
-			var resolver = new IdResolutionContext(new IObject[] { buyOrder, sellOrder });
+			var resolver = new IdResolutionContext(new IObject[] { buyOrder, sellOrder, new ItemInfo(ItemCode.Veldnium), new TradingStation { Id = Universe.TradingStation.ObjectId }, new Corporation { Id = Universe.MSCorp.ObjectId }, new Corporation { Id = Universe.AppleCorp.ObjectId } });
 
-			var market = MarketPlace.Builder.Build(new StarCluster(), Market).Materialise(resolver);
+			var market = MarketPlace.Builder.Build(Market, new StarCluster()).Materialise(resolver);
 			Assert.That(market, Is.InstanceOf<MarketPlace>());
 
 			var state = market.Save();
@@ -69,14 +72,19 @@ namespace Echo.Data.Tests.StatePersistence
 			{
 				var buyOrder = new BuyOrder {Id = Universe.BuyOrder.ObjectId};
 				var sellOrder = new SellOrder { Id = Universe.SellOrder.ObjectId };
+				var resolver = new IdResolutionContext(new IObject[] { buyOrder, sellOrder, new ItemInfo(ItemCode.Veldnium), new TradingStation { Id = Universe.TradingStation.ObjectId }, new Corporation { Id = Universe.MSCorp.ObjectId }, new Corporation { Id = Universe.AppleCorp.ObjectId } });
+				
 				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;
 				Assert.That(state, Is.Not.Null);
+				Assert.That(state.Settlements, Is.Not.Empty);
 				
-				var resolver = new IdResolutionContext(new IObject[] { buyOrder, sellOrder });
-				var market = MarketPlace.Builder.Build(null, Market).Materialise(resolver);
+				var market = MarketPlace.Builder.Build(Market, null).Materialise(resolver);
 				Assert.That(market, Is.InstanceOf<MarketPlace>());
+
+				Assert.That(market.BuyOrders, Is.Not.Empty);
+				Assert.That(market.SellOrders, Is.Not.Empty);
+				Assert.That(market.Settlements, Is.Not.Empty);
 			}
 		}
-
 	}
 }

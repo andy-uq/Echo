@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using EnsureThat;
@@ -6,6 +7,7 @@ using EnsureThat;
 namespace Echo.State
 {
 	[Serializable]
+	[TypeConverter(typeof(ObjectReferenceTypeConverter))]
 	public struct ObjectReference : IEquatable<ObjectReference>
 	{
 		private static readonly Regex _regex = new Regex(@"\[x(?<Id>[a-f0-9]{4,16})\](\s(?<Name>.*))?", RegexOptions.Compiled);
@@ -94,6 +96,34 @@ namespace Echo.State
 		public override string ToString()
 		{
 			return string.Format("[x{0:x8}] {1}", Id, Name).Trim();
+		}
+	}
+
+	public class ObjectReferenceTypeConverter : TypeConverter
+	{
+		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+		{
+			if (sourceType == typeof (string))
+			{
+				return true;
+			}
+
+			return base.CanConvertFrom(context, sourceType);
+		}
+
+		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+		{
+			var s = value as string;
+			return s == null 
+				? base.ConvertFrom(context, culture, value) 
+				: ObjectReference.Parse(s);
+		}
+
+		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+		{
+			return destinationType == typeof(string) 
+				? ((ObjectReference) value).ToString() 
+				: base.ConvertTo(context, culture, value, destinationType);
 		}
 	}
 }

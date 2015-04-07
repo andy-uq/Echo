@@ -1,5 +1,4 @@
-﻿using System;
-using Echo.Agents;
+﻿using Echo.Agents;
 using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;
@@ -32,27 +31,32 @@ namespace Echo.Market
 				};
 			}
 
-			public static ObjectBuilder<T> Build<T>(Structure location, AuctionState state, Func<T> createFunc) where T : Auction
+			public static ObjectBuilder<T> Build<T>(AuctionState state, Structure location) where T : Auction, new()
 			{
-				var auction = createFunc();
-				auction.Id = state.ObjectId;
-				auction.Name = state.Name;
-				auction.BlockSize = state.BlockSize;
-				auction.Expires = state.Expires;
-				auction.PricePerUnit = state.PricePerUnit;
-				auction.Range = state.Range;
-				auction.Location = location;
+				var auction = new T
+				{
+					Id = state.ObjectId,
+					Name = state.Name,
+					BlockSize = state.BlockSize,
+					Expires = state.Expires,
+					PricePerUnit = state.PricePerUnit,
+					Range = state.Range,
+					Location = location
+				};
 
-				return new ObjectBuilder<T>(auction)
-					.Resolve((resolver, target) => target.Item = BuildItem<T>(resolver, state))
+				var builder = new ObjectBuilder<T>(auction);
+
+				builder
+					.Dependent(state.Item)
+					.Build(item => Item.Builder.Build(item, location))
+					.Resolve((resolver, target, item) => item.Owner = resolver.Get<Corporation>(state.Owner))
+					.Resolve((resolver, target, item) => target.Item = item)
+					;
+
+				builder
 					.Resolve((resolver, target) => target.Trader = resolver.Get<Agent>(state.Trader));
-			}
 
-			private static Item BuildItem<T>(IIdResolver resolver, AuctionState state) where T : Auction
-			{
-				var item = Item.Builder.Build(state.Item, resolver);
-				item.Owner = resolver.Get<Corporation>(state.Owner);
-				return item;
+				return builder;
 			}
 		}
 	}

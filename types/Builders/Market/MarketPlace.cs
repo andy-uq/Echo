@@ -24,7 +24,7 @@ namespace Echo.Market
 				};
 			}
 
-			public static ObjectBuilder<MarketPlace> Build(StarCluster starCluster, MarketPlaceState state)
+			public static ObjectBuilder<MarketPlace> Build(MarketPlaceState state, StarCluster starCluster)
 			{
 				var marketPlace = new MarketPlace
 				{
@@ -34,6 +34,12 @@ namespace Echo.Market
 				};
 
 				var builder = new ObjectBuilder<MarketPlace>(marketPlace);
+
+				builder
+					.Dependents(state.Settlements)
+					.Build(Settlement.Builder.Build)
+					.Resolve((resolver, target, settlement) => target._settlements.Add(settlement));
+				
 				builder
 					.Resolve((resolver, target) => target._auctions.AddRange(state.Auctions.Select(resolver.Get<Auction>)));
 

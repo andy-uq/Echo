@@ -63,12 +63,12 @@ namespace Echo.Structures
 
 				builder
 					.Dependents(State.BuyOrders)
-					.Build(x => BuyOrder.Builder.Build(builder.Target, x, () => new BuyOrder()))
+					.Build(x => BuyOrder.Builder.Build<BuyOrder>(x, builder.Target))
 					.Resolve((resolver, target, buyOrder) => target.BuyOrders.Add(buyOrder));
 
 				builder
 					.Dependents(State.SellOrders)
-					.Build(x => SellOrder.Builder.Build(builder.Target, x, () => new SellOrder()))
+					.Build(x => SellOrder.Builder.Build<SellOrder>(x, builder.Target))
 					.Resolve((resolver, target, buyOrder) => target.SellOrders.Add(buyOrder));
 
 				return builder;
@@ -91,7 +91,7 @@ namespace Echo.Structures
 				foreach (var hangar in hangerItems)
 				{
 					var corporation = idresolver.Get<Corporation>(hangar.Owner);
-					var items = hangar.Items.Select(i => Item.Builder.Build(i, idresolver));
+					var items = hangar.Items.Select(i => Item.Builder.Build(i, location:target, owner: corporation).Build(idresolver));
 					var itemCollection = new ItemCollection(corporation.Property, items);
 					
 					target.Hangar.Add(corporation, itemCollection);

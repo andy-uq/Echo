@@ -7,6 +7,7 @@ using Echo.State;
 using Echo.Structures;
 using Echo.Tests;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Data.Tests.StatePersistence
 {
@@ -51,6 +52,8 @@ namespace Echo.Data.Tests.StatePersistence
 			builder.Add(Corporation.Builder.Build(Universe.MSCorp));
 			
 			var structure = builder.Materialise();
+			structure.BuyOrders.ShouldAllBe(x => x.Item.Owner != null);
+
 			var state = structure.Save();
 
 			Assert.That(state.TradingStation, Is.Not.Null);
