@@ -8,27 +8,25 @@ namespace Echo
 {
 	public class Orbiter
 	{
-		private readonly Universe _universe;
 		private const double GravitationalConstant = 6.673E-11;
+		private readonly SolarSystem _solarSystem;
 
-		public Orbiter(Universe universe, List<TickRegistration> tickRegistrations)
+		public Orbiter(SolarSystem solarSystem)
 		{
-			_universe = universe;
-			tickRegistrations.Add(new TickRegistration(Orbit));
+			_solarSystem = solarSystem;
 		}
+
+		public TickRegistration TickRegistration { get { return new TickRegistration(Orbit); } }
 
 		public long Orbit(TickContext context)
 		{
-			foreach (var solarSystem in _universe.StarClusters.SelectMany(s => s.SolarSystems))
-			{
-				foreach (var celestialBody in solarSystem.Satellites.Where(x => x.Position.LocalCoordinates != Vector.Zero))
-					Move(celestialBody, Speed(celestialBody) * context.ElapsedTicks);
+			foreach (var celestialBody in _solarSystem.Satellites)
+				Move(celestialBody, Speed(celestialBody) * context.ElapsedTicks);
 
-				foreach (var structure in solarSystem.Structures.Where(x => x.Position.LocalCoordinates != Vector.Zero))
-					Move(structure, context.ElapsedTicks);
-			}
+			foreach (var structure in _solarSystem.Structures)
+				Move(structure, context.ElapsedTicks);
 
-			return 1;			
+			return 1;
 		}
 
 		private double Speed(CelestialObject celestialBody)

@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Echo.Engine
 {
+	public delegate IEnumerable<TickRegistration> TickRegistrationFactory(Universe universe);
+
 	public class Game
 	{
 		public const long TicksPerSlice = TimeSpan.TicksPerSecond/60;
 		
 		private List<TickRegistration> _updateFunctions;
+		private IdleTimer _idle;
 		private long _tick;
 
-		public Game()
+		public Game() : this(new Universe())
 		{
-			Universe = new Universe();
-			_updateFunctions = new List<TickRegistration>();
+		}
+
+		public Game(Universe universe, params TickRegistrationFactory[] tickRegistrationFactories)
+		{
+			Universe = universe;
+
+			_updateFunctions = tickRegistrationFactories.SelectMany(f => f(universe)).ToList();
+			_idle = new IdleTimer();
 			_tick = 0;
 		}
 
@@ -31,27 +41,31 @@ namespace Echo.Engine
 			var tickTimer = Stopwatch.StartNew();
 			while (remaining > 0 && _updateFunctions.Count > index)
 			{
-				var peek = _updateFunctions[index];
-				if (peek.Due > _tick)
+				var tickMethod = _updateFunctions[index];
+				if (tickMethod.Due > _tick)
 				{
 					break;
 				}
 
-				var nextTick = peek.TicketMethod(context);
+				context.ElapsedTicks = _tick - tickMethod.Due;
+				var nextTick = tickMethod.Tick(context);
 				if (nextTick != 0)
 				{
-					peek.LastTick = _tick;
-					peek.Due += nextTick;
-					context.Register(peek);
+					context.Requeue(tickMethod, nextTick);
 				}
 
 				remaining = TicksPerSlice - tickTimer.ElapsedTicks;
 				index++;
 			}
 
-			_updateFunctions = context.Registrations;
-			return (remaining/(double) TicksPerSlice);
-		}
+			_updateFunctions = _updateFunctions
+				.Skip(index)
+				.Concat(context.Registrations)
+				.OrderBy(x => x.Due)
+				.ToList();
 
+			_idle.Enqueue(remaining/(double) TicksPerSlice);
+			return remaining;
+		}
 	}
 }

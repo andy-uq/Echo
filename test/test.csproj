@@ -100,6 +100,8 @@
     <Compile Include="TestExtensions.cs" />
     <Compile Include="TestSettings.cs" />
     <Compile Include="Math\VectorTests.cs" />
+    <Compile Include="TheGame\GameUpdate.cs" />
+    <Compile Include="TheGame\Idle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -112,6 +114,10 @@
       <Project>{D24CBE2E-F1AD-43CA-A58B-0329F9D96C19}</Project>
       <Name>common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\engine\engine.csproj">
+      <Project>{B6AADACA-0EFE-4157-8A28-DA8B93C706C1}</Project>
+      <Name>engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\test-common\test-common.csproj">
       <Project>{90ff2b04-2887-4658-83b1-183304987ad7}</Project>
       <Name>test-common</Name>
@@ -120,6 +126,9 @@
       <Project>{8B605E9C-167D-4A71-8B58-F1D3CB187E45}</Project>
       <Name>types</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Game\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

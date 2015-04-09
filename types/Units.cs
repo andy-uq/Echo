@@ -10,7 +10,7 @@ namespace Echo
 		public const double Epsilon = 0.00001;
 
 		/// <summary>150,000,000 km per AU</summary>
-		public const double AstronomicalUnits = 1.5E8;
+		public const double AstronomicalUnits = 150;
 
 		public static double ToAU(double d)
 		{

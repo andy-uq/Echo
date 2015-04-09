@@ -7,33 +7,38 @@ namespace Echo
 
 	public class TickRegistration
 	{
-		public TickRegistration(TickMethod ticketMethod, long due = 0)
+		public TickRegistration(TickMethod tick, long due = 0)
 		{
-			TicketMethod = ticketMethod;
+			Tick = tick;
 		}
 
 		public long LastTick { get; set; }
 		public long Due { get; set; }
-		public TickMethod TicketMethod { get; set; }
+		public TickMethod Tick { get; set; }
 	}
 
 	public class TickContext
 	{
 		private readonly List<TickRegistration> _registrations;
+		private readonly long _tick;
 
 		public TickContext(long tick)
 		{
 			_registrations = new List<TickRegistration>();
-			Tick = tick;
+			_tick = tick;
 		}
 
-		public long Tick { get; private set; }
 		public long ElapsedTicks { get; set; }
-		public List<TickRegistration> Registrations { get { return _registrations; } }
+		public IEnumerable<TickRegistration> Registrations { get { return _registrations; } }
 
-		public void Register(TickRegistration registration)
+		public void Register(TickMethod tick, long due = 1)
 		{
-			_registrations.Add(registration);
+			_registrations.Add(new TickRegistration(tick, _tick + due));
+		}
+
+		public void Requeue(TickRegistration tick, long nextTick)
+		{
+			_registrations.Add(new TickRegistration(tick.Tick, _tick + nextTick) { LastTick = _tick });
 		}
 	}
 }

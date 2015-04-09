@@ -13,16 +13,17 @@ namespace Echo.Tests.Orbiting
 		public void EarthOrbit()
 		{
 			var world = new MockUniverse();
-			var context = new TickContext(0) { ElapsedTicks = 60*60*5 };
 			var universe = Universe.Builder.Build(world.Universe).Materialise();
-			var orbiter = new Orbiter(universe, new List<TickRegistration>());
 
-			var earth = universe.StarClusters
+			var sol = universe.StarClusters
 				.SelectMany(x => x.SolarSystems)
-				.SelectMany(x => x.Satellites)
+				.Single(x => x.Id == world.SolarSystem.ObjectId);
+
+			var earth = sol.Satellites
 				.Single(x => x.Id == world.Earth.ObjectId);
 
-			Console.WriteLine(earth.Position.LocalCoordinates);
+			var context = new TickContext(0) { ElapsedTicks = 60 * 60 * 5 };
+			var orbiter = new Orbiter(sol);
 			var orbitRadius = earth.Position.LocalCoordinates.Magnitude;
 
 			for (var i = 0; i < 12*21; i++)
