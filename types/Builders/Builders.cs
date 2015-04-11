@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Echo.Agents;
 using Echo.Celestial;
 using Echo.Corporations;
@@ -14,6 +16,51 @@ namespace Echo
 {
 	namespace Builders
 	{
+		public static class SelectStateExtensions
+		{
+			public static IEnumerable<T> AsEnumerable<T>(this object source)
+			{
+				yield return (T)source;
+			}
+
+			public static IEnumerable<IObjectState> Flatten(this UniverseState universe)
+			{
+				return
+					universe.AsEnumerable<IObjectState>()
+						.Concat(universe.BluePrints)
+						.Concat(universe.Corporations.SelectMany(Flatten))
+						.Concat(universe.Items)
+						.Concat(universe.Ships)
+						.Concat(universe.Skills)
+						.Concat(universe.StarClusters.SelectMany(Flatten))
+						.Concat(universe.Weapons);
+			}
+
+			private static IEnumerable<IObjectState> Flatten(StarClusterState starCluster)
+			{
+				return
+					starCluster.AsEnumerable<IObjectState>()
+						.Concat(starCluster.SolarSystems.SelectMany(Flatten));
+			}
+
+			private static IEnumerable<IObjectState> Flatten(SolarSystemState solarSystem)
+			{
+				return
+					solarSystem.AsEnumerable<IObjectState>()
+						.Concat(solarSystem.Satellites)
+						.Concat(solarSystem.Structures)
+						.Concat(solarSystem.JumpGates)
+						.Concat(solarSystem.Ships);
+			}
+
+			public static IEnumerable<IObjectState> Flatten(this CorporationState corporation)
+			{
+				return
+					corporation.AsEnumerable<IObjectState>()
+						.Concat(corporation.Employees);
+			}
+		}
+
 		public static class BuilderExtensions
 		{
 			public static UniverseState Save(this Universe universe)

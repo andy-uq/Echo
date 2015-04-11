@@ -6,7 +6,7 @@ namespace Echo.Tests.Math
 	public class UnitTests
 	{
 		private readonly Vector _sun = new Vector(0, 0, 0);
-		private readonly Vector _earth = new Vector(149597870.7, 0, 0);
+		private readonly Vector _earth = new Vector(Units.FromAU(1), 0, 0);
 
 		[Test] 
 		public void EarthToSun()

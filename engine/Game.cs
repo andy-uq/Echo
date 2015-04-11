@@ -19,7 +19,7 @@ namespace Echo.Engine
 		{
 		}
 
-		public Game(Universe universe, params TickRegistrationFactory[] tickRegistrationFactories)
+		public Game(Universe universe, IEnumerable<TickRegistrationFactory> tickRegistrationFactories)
 		{
 			Universe = universe;
 
@@ -28,7 +28,14 @@ namespace Echo.Engine
 			_tick = 0;
 		}
 
+		public Game(Universe universe, params TickRegistrationFactory[] tickRegistrationFactories)
+			: this(universe, (IEnumerable<TickRegistrationFactory>) tickRegistrationFactories)
+		{
+		}
+
 		public Universe Universe { get; private set; }
+		public IdleTimer IdleTimer { get { return _idle; } }
+		public long Tick { get { return _tick; } }
 
 		public double Update()
 		{

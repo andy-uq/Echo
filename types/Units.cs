@@ -12,6 +12,8 @@ namespace Echo
 		/// <summary>150,000,000 km per AU</summary>
 		public const double AstronomicalUnits = 150;
 
+		public const double SolarMass = 1.9891E8;
+
 		public static double ToAU(double d)
 		{
 			return d / AstronomicalUnits;

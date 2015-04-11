@@ -16,6 +16,8 @@ namespace Echo.State
 		public IEnumerable<ShipInfo> Ships { get; set; }
 		public IEnumerable<BluePrintInfo> BluePrints { get; set; }
 
+		public ulong NextId { get; set; }
+
 		public UniverseState()
 		{
 			StarClusters = Enumerable.Empty<StarClusterState>();

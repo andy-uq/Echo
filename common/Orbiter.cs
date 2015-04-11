@@ -8,7 +8,7 @@ namespace Echo
 {
 	public class Orbiter
 	{
-		private const double GravitationalConstant = 6.673E-11;
+		private const double GravitationalConstant = 6.673E-27;
 		private readonly SolarSystem _solarSystem;
 
 		public Orbiter(SolarSystem solarSystem)
@@ -31,9 +31,7 @@ namespace Echo
 
 		private double Speed(CelestialObject celestialBody)
 		{
-			var u = celestialBody.Mass * GravitationalConstant;
-			var a = celestialBody.Position.LocalCoordinates.Magnitude;
-			return System.Math.Sqrt(u / a);
+			return System.Math.PI / 1000;
 		}
 
 		private void Move(IMoves target, double distanceTravelled)

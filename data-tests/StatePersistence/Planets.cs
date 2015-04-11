@@ -69,6 +69,7 @@ namespace Echo.Tests.StatePersistence
 
 				var earth = CelestialObject.Builder.For(state).Build(null).Materialise();
 				Assert.That(earth, Is.InstanceOf<Planet>());
+				Assert.That(earth.Position.LocalCoordinates, Is.Not.EqualTo(Vector.Zero));
 			}
 		}
 	}

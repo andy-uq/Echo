@@ -12,8 +12,19 @@ namespace Echo.State
 	{
 		private static readonly Regex _regex = new Regex(@"\[x(?<Id>[a-f0-9]{4,16})\](\s(?<Name>.*))?", RegexOptions.Compiled);
 
-		public ulong Id { get; private set; }
-		public string Name { get; private set; }
+		private readonly IObjectState _state;
+		private readonly ulong _id;
+		private readonly string _name;
+
+		public ulong Id
+		{
+			get { return _state == null ? _id : _state.ObjectId; }
+		}
+
+		public string Name
+		{
+			get { return _state == null ? _name : _state.Name; }
+		}
 
 		public ObjectReference(string value) : this()
 		{
@@ -22,8 +33,8 @@ namespace Echo.State
 				var m = _regex.Match(value);
 				if ( m.Success )
 				{
-					Id = ulong.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier);
-					Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty;
+					_id = ulong.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier);
+					_name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty;
 					return;
 				}
 			}
@@ -31,14 +42,19 @@ namespace Echo.State
 			throw new FormatException("Invalid object reference");
 		}
 
+		public ObjectReference(IObjectState refersTo) : this()
+		{
+			_state = refersTo;
+		}
+
 		public ObjectReference(ulong id) : this()
 		{
-			Id = id;
+			_id = id;
 		}
 
 		public ObjectReference(ulong id, string name) : this(id)
 		{
-			Name = name;
+			_name = name;
 		}
 
 		public static bool TryParse(string value, out ObjectReference @ref)
@@ -48,11 +64,9 @@ namespace Echo.State
 				var m = _regex.Match(value);
 				if ( m.Success )
 				{
-					@ref = new ObjectReference
-					{
-						Id = ulong.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier),
-						Name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty
-					};
+					var id = ulong.Parse(m.Groups["Id"].Value, NumberStyles.AllowHexSpecifier);
+					var name = m.Groups["Name"].Success ? m.Groups["Name"].Value : String.Empty;
+					@ref = new ObjectReference(id, name);
 
 					return true;
 				}
@@ -98,6 +112,38 @@ namespace Echo.State
 			return string.Format("[x{0:x8}] {1}", Id, Name).Trim();
 		}
 	}
+
+	public static class ObjectReferenceExtensions
+	{
+		public static ObjectReference? AsObjectReference(this IObject @object)
+		{
+			if (@object == null)
+				return null;
+
+			return new ObjectReference(@object.Id, @object.Name);
+		}
+
+		public static ObjectReference? AsObjectReference(this IObjectState state)
+		{
+			if (state == null)
+				return null;
+
+			return new ObjectReference(state);
+		}
+
+		public static ObjectReference ToObjectReference(this IObject @object)
+		{
+			Ensure.That(@object, "object").IsNotNull();
+			return new ObjectReference(@object.Id, @object.Name);
+		}
+
+		public static ObjectReference ToObjectReference(this IObjectState state)
+		{
+			Ensure.That(state, "state").IsNotNull();
+			return new ObjectReference(state);
+		}
+	}
+
 
 	public class ObjectReferenceTypeConverter : TypeConverter
 	{

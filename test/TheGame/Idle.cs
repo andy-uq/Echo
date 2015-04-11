@@ -18,7 +18,7 @@ namespace Echo.Tests.TheGame
 		public void OneSample()
 		{
 			var idle = new IdleTimer();
-			idle.Enqueue(50);
+			idle.Enqueue(0.5);
 			idle.Idle.ShouldBe(50);
 		}
 
@@ -26,8 +26,8 @@ namespace Echo.Tests.TheGame
 		public void TwoSample()
 		{
 			var idle = new IdleTimer();
-			idle.Enqueue(25);
-			idle.Enqueue(75);
+			idle.Enqueue(0.25);
+			idle.Enqueue(0.75);
 			idle.Idle.ShouldBe(50);
 			Console.WriteLine(idle.Idle);
 		}
@@ -39,8 +39,8 @@ namespace Echo.Tests.TheGame
 
 			for (var i = 0; i < 250; i++)
 			{
-				idle.Enqueue(25);
-				idle.Enqueue(75);
+				idle.Enqueue(0.25);
+				idle.Enqueue(0.75);
 			}
 			
 			idle.Idle.ShouldBe(50, 1);

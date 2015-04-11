@@ -2,6 +2,7 @@
 using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;
+using Echo.State;
 using Echo.State.Market;
 using Echo.Structures;
 using EnsureThat;
