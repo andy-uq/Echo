@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Echo;
 using Echo.Builder;
@@ -18,10 +19,11 @@ namespace echo_console
 	{
 	}
 
-	class Program
+	internal class Program
 	{
 		private static volatile bool _alive = true;
 		private static readonly Queue<ICommand> _commandQueue = new Queue<ICommand>();
+		private static readonly Dictionary<IObject, Vector> _obj = new Dictionary<IObject, Vector>();
 
 		private static IEnumerable<TickRegistrationFactory> Registrations
 		{
@@ -35,14 +37,14 @@ namespace echo_console
 			}
 		}
 
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-			var universeFileName = args.FirstOrDefault() ?? "universe.txt";
+			string universeFileName = args.FirstOrDefault() ?? "universe.txt";
 			UniverseState universe;
 
 			if (File.Exists(universeFileName))
 			{
-				using (var fs = File.OpenText(universeFileName))
+				using (StreamReader fs = File.OpenText(universeFileName))
 				{
 					var reader = new JsonTextReader(fs);
 					var serialiser = new JsonSerializer();
@@ -55,18 +57,44 @@ namespace echo_console
 				universe = CreateNewUniverse();
 			}
 
-			var universeBuilder = Universe.Builder.Build(universe);
+			ObjectBuilder<Universe> universeBuilder = Universe.Builder.Build(universe);
 			var resolver = new IdResolutionContext(universeBuilder.FlattenObjectTree());
 
 			var game = new Game(universeBuilder.Build(resolver), Registrations);
 			var gameThread = new Thread(() => GameThread(game));
 			gameThread.Start();
 
+			var render = new System.Threading.Timer(state => Render(game));
+			render.Change(0, 200);
+
 			int? saveSlot = null;
+			bool recordInput = false;
+			string command = "";
 			WriteHelp();
 			while (_alive)
 			{
-				var key = Console.ReadKey(intercept: true);
+				ConsoleKeyInfo key = Console.ReadKey(intercept: true);
+				if (recordInput)
+				{
+					switch (key.Key)
+					{
+						case ConsoleKey.Escape:
+							recordInput = false;
+							command = "";
+							break;
+						case ConsoleKey.Enter:
+							recordInput = false;
+							command = "";
+							break;
+						default:
+							command += key.KeyChar;
+							break;
+					}
+
+					WritePrompt(": " + command);
+					continue;
+				}
+
 				switch (key.KeyChar)
 				{
 					case 'q':
@@ -88,7 +116,6 @@ namespace echo_console
 						else
 						{
 							WritePrompt("Please enter save slot [0-9]");
-							break;
 						}
 						break;
 					case '0':
@@ -103,6 +130,11 @@ namespace echo_console
 					case '9':
 						saveSlot = key.KeyChar - '0';
 						break;
+					case ':':
+					case ';':
+						recordInput = true;
+						WritePrompt(": ");
+						break;
 				}
 			}
 
@@ -112,11 +144,11 @@ namespace echo_console
 
 		private static void SaveState(Game game, string universeFileName)
 		{
-			var state = Universe.Builder.Save(game.Universe);
+			UniverseState state = Universe.Builder.Save(game.Universe);
 
-			using (var fs = File.CreateText(universeFileName))
+			using (StreamWriter fs = File.CreateText(universeFileName))
 			{
-				var writer = new JsonTextWriter(fs) { Formatting = Formatting.Indented };
+				var writer = new JsonTextWriter(fs) {Formatting = Formatting.Indented};
 				var serialiser = new JsonSerializer();
 				serialiser.TypeNameHandling = TypeNameHandling.None;
 				serialiser.Converters.Add(new UInt64Converter());
@@ -137,30 +169,34 @@ namespace echo_console
 			_commandQueue.Enqueue(new SaveState(saveSlot));
 		}
 
+		private static void Render(Game game)
+		{
+			var curPosition = new Vector(Console.CursorLeft, Console.CursorTop);
+
+			Console.CursorVisible = false;
+			DrawState(game);
+
+			Console.SetCursorPosition((int )curPosition.X, (int )curPosition.Y);
+			Console.CursorVisible = true;
+		}
+
 		private static void GameThread(Game game)
 		{
-			var frameTimer = Stopwatch.StartNew();
+			Stopwatch frameTimer = Stopwatch.StartNew();
 			while (_alive)
 			{
 				frameTimer.Start();
 				while (_commandQueue.Any())
 				{
-					var cmd = _commandQueue.Dequeue();
+					ICommand cmd = _commandQueue.Dequeue();
+
 				}
 
 				game.Update();
 
-				Console.CursorVisible = false;
-				DrawState(game);
-
-				Console.SetCursorPosition(0, 25);
-				Console.CursorVisible = true;
-
-				var remaining = Game.TicksPerSlice - frameTimer.ElapsedTicks;
+				long remaining = Game.TicksPerSlice - frameTimer.ElapsedTicks;
 				if (remaining > 0)
 				{
-					Console.SetCursorPosition(0, 0);
-					Console.WriteLine("IDLE: {0:n2}%, Tick: {1:x8}, Sleep: {2}ms", game.IdleTimer.Idle, game.Tick, remaining / TimeSpan.TicksPerMillisecond);
 					Thread.Sleep(TimeSpan.FromTicks(remaining));
 				}
 
@@ -171,24 +207,22 @@ namespace echo_console
 		private static void DrawState(Game game)
 		{
 			Console.SetCursorPosition(0, 0);
-			Console.WriteLine("IDLE: {0:n2}%, Tick: {1:x8}", game.IdleTimer.Idle, game.Tick);
+			Console.Write("IDLE: {0:n2}%, Tick: {1:x8}", game.IdleTimer.Idle, game.Tick);
 
 			DrawSolarSystem(game.Universe.StarClusters.SelectMany(s => s.SolarSystems).SingleOrDefault());
 		}
 
-		private static Dictionary<IObject, Vector> _obj = new Dictionary<IObject, Vector>();
-
 		private static void DrawSolarSystem(SolarSystem solarSystem)
 		{
-			var origin = solarSystem.Position.UniversalCoordinates;
-			var scaleX = 40/Units.FromAU(3);
-			var scaleY = 10/Units.FromAU(2);
-			foreach (var satellite in solarSystem.Satellites.OfType<Planet>())
+			Vector origin = solarSystem.Position.UniversalCoordinates;
+			double scaleX = 40/Units.FromAU(3);
+			double scaleY = 10/Units.FromAU(2);
+			foreach (Planet satellite in solarSystem.Satellites.OfType<Planet>())
 			{
-				var position = satellite.Position.UniversalCoordinates - origin;
+				Vector position = satellite.Position.UniversalCoordinates - origin;
 
-				var xOffset = (int )(position.X * scaleX) + 40;
-				var yOffset = (int )(position.Y * scaleY) + 15;
+				int xOffset = (int) (position.X*scaleX) + 40;
+				int yOffset = (int) (position.Y*scaleY) + 15;
 
 				if (xOffset < 0 || xOffset > 79)
 					continue;
@@ -198,11 +232,11 @@ namespace echo_console
 
 				if (_obj.ContainsKey(satellite))
 				{
-					var lastPosition = _obj[satellite];
+					Vector lastPosition = _obj[satellite];
 					if (lastPosition.X == xOffset && lastPosition.Y == yOffset)
 						continue;
 
-					Console.SetCursorPosition((int )lastPosition.X, (int )lastPosition.Y);
+					Console.SetCursorPosition((int) lastPosition.X, (int) lastPosition.Y);
 					Console.Write(' ');
 				}
 
@@ -264,10 +298,10 @@ namespace echo_console
 		private static UniverseState Idify(UniverseState universeState)
 		{
 			ulong id = 1 << 8;
-			foreach (var state in universeState.Flatten())
+			foreach (IObjectState state in universeState.Flatten())
 			{
-				var type = state.GetType();
-				var property = type.GetProperty("ObjectId", typeof (ulong));
+				Type type = state.GetType();
+				PropertyInfo property = type.GetProperty("ObjectId", typeof (ulong));
 				if (property != null && property.CanWrite)
 					property.SetValue(state, id++);
 			}
@@ -278,8 +312,8 @@ namespace echo_console
 
 		private static void WritePrompt(string prompt)
 		{
-			Console.SetCursorPosition(0, 25);
-			Console.WriteLine(prompt);
+			Console.SetCursorPosition(0, 24);
+			Console.Write(prompt.PadRight(79));
 		}
 
 		private static void WriteHelp()
@@ -302,7 +336,7 @@ namespace echo_console
 			}
 			else if (value is Vector)
 			{
-				var vector = (Vector)value;
+				var vector = (Vector) value;
 				writer.WriteValue(vector.ToString("g"));
 			}
 			else
@@ -317,12 +351,12 @@ namespace echo_console
 			{
 				return null;
 			}
-			
+
 			if (reader.TokenType == JsonToken.String)
 			{
 				try
 				{
-					return Vector.Parse((string)reader.Value);
+					return Vector.Parse((string) reader.Value);
 				}
 				catch (Exception ex)
 				{
@@ -330,12 +364,13 @@ namespace echo_console
 				}
 			}
 
-			throw new Exception(string.Format("Unexpected token or value when parsing version. Token: {0}, Value: {1}", reader.TokenType, reader.Value));
+			throw new Exception(string.Format("Unexpected token or value when parsing version. Token: {0}, Value: {1}",
+				reader.TokenType, reader.Value));
 		}
 
 		public override bool CanConvert(Type objectType)
 		{
-			return objectType == typeof(Vector);
+			return objectType == typeof (Vector);
 		}
 	}
 
@@ -343,7 +378,7 @@ namespace echo_console
 	{
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			writer.WriteRawValue("0x" + ((ulong )value).ToString("x"));
+			writer.WriteRawValue("0x" + ((ulong) value).ToString("x"));
 		}
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -353,7 +388,7 @@ namespace echo_console
 
 		public override bool CanConvert(Type objectType)
 		{
-			return objectType == typeof(ulong);
+			return objectType == typeof (ulong);
 		}
 	}
 
@@ -367,12 +402,12 @@ namespace echo_console
 
 		public static long Days(int days)
 		{
-			return days * TicksPerDay;
+			return days*TicksPerDay;
 		}
 
 		public static long Hours(int hours)
 		{
-			return hours * TicksPerHour;
+			return hours*TicksPerHour;
 		}
 	}
 
