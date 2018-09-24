@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using Echo;
 using Echo.State;
 
@@ -57,7 +56,7 @@ namespace test.common
 		{
 			return new StarClusterState
 			{
-				SolarSystems = ImmutableHashSet.From(_solarSystems)
+				SolarSystems = _solarSystems.ToArray(),
 			};
 		}
 	}
@@ -88,7 +87,7 @@ namespace test.common
 		{
 			return new SolarSystemState
 			{
-				Satellites = ImmutableHashSet.From(_satellites)
+				Satellites = _satellites.ToArray()
 			};
 		}
 	}

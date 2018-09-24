@@ -6,9 +6,9 @@ namespace Echo
 {
 	public class AutoMapTypeMapper : ITypeMapper
 	{
-		private readonly IMappingEngine _autoMap;
+		private readonly IMapper _autoMap;
 
-		public AutoMapTypeMapper(IMappingEngine autoMap)
+		public AutoMapTypeMapper(IMapper autoMap)
 		{
 			_autoMap = autoMap;
 		}

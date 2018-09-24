@@ -94,7 +94,7 @@ namespace Echo.Tests.Agents
 			c1.Hire(agent);
 
 			var c2 = new Corporation();
-			Should.Throw<ArgumentException>(() => c2.Hire(agent));
+			Should.Throw<InvalidOperationException>(() => c2.Hire(agent));
 		}
 
 		[Test]

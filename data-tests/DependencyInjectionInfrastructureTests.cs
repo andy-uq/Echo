@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using NUnit.Framework;
 using Echo.Mapping;
+using Shouldly;
 
 namespace Echo.Data.Tests
 {
@@ -65,13 +66,13 @@ namespace Echo.Data.Tests
 			Assert.That(resolver.TryResolve(out value), Is.False);
 		}
 
-		[Test, ExpectedException(typeof(Autofac.Core.Registration.ComponentNotRegisteredException))]
+		[Test]
 		public void TestDependencyInjectionThrowsWhenMissing()
 		{
 			var container = new ContainerBuilder();
 			var resolver = new AutofacResolver(container.Build());
 
-			resolver.Resolve<IFoo>();
+			Should.Throw<Autofac.Core.Registration.ComponentNotRegisteredException>(() => resolver.Resolve<IFoo>());
 		}
 
 	}

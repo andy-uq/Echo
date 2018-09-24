@@ -1,11 +1,11 @@
 ﻿using Echo.Tests.Mocks;
 using NUnit.Framework;
 using Raven.Client;
+using Raven.Client.Documents;
 
 namespace Echo.Data.Tests.StatePersistence
 {
 	[TestFixture]
-	[NCrunch.Framework.Serial]
 	public class StateTest
 	{
 		protected IDocumentStore Database { get; set; }

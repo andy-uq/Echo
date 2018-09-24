@@ -1,11 +1,11 @@
-﻿using Echo.Agents;
+﻿using System;
+using Echo.Agents;
 using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.State;
 using Echo.State.Market;
 using Echo.Structures;
-using EnsureThat;
 
 namespace Echo.Market
 {
@@ -15,9 +15,6 @@ namespace Echo.Market
 		{
 			public static AuctionState Save(Auction auction)
 			{
-				Ensure.That(auction.Trader).IsNotNull();
-				Ensure.That(auction.Owner).IsNotNull();
-
 				return new AuctionState
 				{
 					ObjectId = auction.Id,

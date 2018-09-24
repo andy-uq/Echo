@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Echo.Items;
-using EnsureThat;
 
 namespace Echo.Market
 {
@@ -33,8 +33,11 @@ namespace Echo.Market
 
 		public void Add(Auction auction)
 		{
-			Ensure.That(auction.PricePerUnit, "pricePerUnit").IsGt(0);
-			Ensure.That(auction.Quantity, "quantity").IsGt(0u);
+			if (auction.PricePerUnit <= 0)
+				throw new ArgumentOutOfRangeException(nameof(auction), "Price per unit must be > 0");
+
+			if (auction.Quantity <= 0)
+				throw new ArgumentOutOfRangeException(nameof(auction), "Quantity must be > 0");
 
 			_auctions.Add(auction);
 		}

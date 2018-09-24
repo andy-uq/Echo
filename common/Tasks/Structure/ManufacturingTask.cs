@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents;
 using Echo.Items;
 using Echo.State;
 using Echo.Structures;
-using EnsureThat;
 
 namespace Echo.Tasks.Structure
 {
@@ -106,14 +106,13 @@ namespace Echo.Tasks.Structure
 
 		public ITaskResult SetParameters(ITaskParameters taskParameters)
 		{
-			Ensure.That(taskParameters).IsNotNull();
-
-			var parameters = (ManufacturingParameters)taskParameters;
-			return SetManufacturingParameters(parameters);
+			return SetManufacturingParameters(taskParameters as ManufacturingParameters);
 		}
 
 		private ManufacturingResult SetManufacturingParameters(ManufacturingParameters parameters)
 		{
+			if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+
 			BluePrint = parameters.BluePrint;
 			Agent = parameters.Agent;
 

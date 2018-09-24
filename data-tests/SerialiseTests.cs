@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Autofac;
+using Newtonsoft.Json;
 using NUnit.Framework;
-using Raven.Client;
-using Raven.Imports.Newtonsoft.Json;
+using Raven.Client.Documents;
 
 namespace Echo.Data.Tests
 {

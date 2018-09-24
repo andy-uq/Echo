@@ -1,7 +1,6 @@
 ﻿using System;
 using Echo.Celestial;
 using Echo.Ships;
-using EnsureThat;
 
 
 namespace Echo.JumpGates
@@ -26,10 +25,10 @@ namespace Echo.JumpGates
 		/// <param name="ship">Ship to jump</param>
 		public void Jump(Ship ship)
 		{
-			Ensure.That(ship).IsNotNull();
+			if (ship == null) throw new ArgumentNullException(nameof(ship));
 
 			if ( ConnectsTo == null )
-				throw new InvalidOperationException("This gate is an incomming gate only");
+				throw new InvalidOperationException("This gate is an incoming gate only");
 
 			ship.SolarSystem.LeaveSystem(ship);
 			ConnectsTo.SolarSystem.EnterSystem(ship, ConnectsTo.Position.LocalCoordinates);

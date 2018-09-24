@@ -1,9 +1,8 @@
 ﻿using Autofac;
 using Autofac.Core;
 using Echo.Mapping;
-using Raven.Client;
-using Raven.Client.Document;
-using Raven.Imports.Newtonsoft.Json;
+using Newtonsoft.Json;
+using Raven.Client.Documents;
 
 namespace Echo.Data
 {
@@ -19,8 +18,7 @@ namespace Echo.Data
 
 		private void InitialiseDocumentStore(IActivatedEventArgs<DocumentStore> obj)
 		{
-			obj.Instance.Url = "http://raven.local";
-			obj.Instance.DefaultDatabase = "Echo";
+			obj.Instance.Urls = new[] {"http://localhost:8080"};
 			obj.Instance.Conventions.CustomizeJsonSerializer = ConfigureJsonSerialiser;
 			obj.Instance.Initialize();
 		}

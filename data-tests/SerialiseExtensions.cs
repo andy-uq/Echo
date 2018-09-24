@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Raven.Imports.Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace Echo.Data.Tests
 {

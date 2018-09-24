@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Echo.Items;
-using EnsureThat;
 
 namespace Echo.Market
 {
@@ -9,8 +8,10 @@ namespace Echo.Market
 	{
 		public override Settlement List(MarketPlace marketPlace)
 		{
-			Ensure.That(marketPlace).IsNotNull();
-			Ensure.That(marketPlace.StarCluster.Equals(Item.Location.GetStarCluster()));
+			if (marketPlace == null) throw new ArgumentNullException(nameof(marketPlace));
+			
+			if (!marketPlace.StarCluster.Equals(Item.Location.GetStarCluster()))
+				throw new InvalidOperationException($"Unable to list {Item} in target marketplace because they don't exist int the same Star Cluster.");
 
 			var settlement = new Settlement();
 

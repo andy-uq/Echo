@@ -9,7 +9,6 @@ using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
 using Echo;
-using EnsureThat;
 
 namespace Echo.Celestial
 {
@@ -73,7 +72,8 @@ namespace Echo.Celestial
 
 			private static void BuildStructureOrbits(SolarSystemState state, IIdResolver resolver)
 			{
-				Ensure.That(resolver).IsNotNull();
+				if (resolver == null)
+					throw new ArgumentNullException(nameof(resolver));
 
 				var query =
 					(
@@ -102,8 +102,7 @@ namespace Echo.Celestial
 
 			private static void BuildSatelliteOrbits(SolarSystemState state, IIdResolver resolver)
 			{
-				Ensure.That(resolver).IsNotNull();
-
+				
 				var query =
 					(
 						from s in state.Satellites

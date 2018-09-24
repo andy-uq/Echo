@@ -11,10 +11,6 @@ using Echo.State;
 using Echo.Statistics;
 using Echo.Structures;
 using NUnit.Framework;
-using Raven.Abstractions.Json;
-using Raven.Client.Document;
-using Raven.Imports.Newtonsoft.Json;
-using Raven.Imports.Newtonsoft.Json.Serialization;
 using Shouldly;
 
 namespace Echo.Tests.StatePersistence

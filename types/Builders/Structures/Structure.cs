@@ -9,7 +9,6 @@ using Echo.Items;
 using Echo.Market;
 using Echo.State;
 using Echo;
-using EnsureThat;
 
 namespace Echo.Structures
 {
@@ -30,8 +29,8 @@ namespace Echo.Structures
 
 			public StructureState Save(Structure structure)
 			{
-				Ensure.That(structure, "structure").IsNotNull();
-				Ensure.That(structure.Position.Location, "structure.Position.Location").IsNotNull();
+				if (structure == null) throw new ArgumentNullException(nameof(structure));
+				if (structure.Position.Location == null) throw new ArgumentNullException("structure.Position.Location");
 
 				State = new StructureState
 				{

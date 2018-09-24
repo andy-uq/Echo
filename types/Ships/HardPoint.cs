@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using EnsureThat;
 
 namespace Echo.Ships
 {
@@ -95,7 +94,9 @@ namespace Echo.Ships
 			get { return _speed; }
 			set
 			{
-				Ensure.That(value, "value").IsInRange(0d, 1d);
+				if (value < 0d || value > 1d)
+					throw new ArgumentOutOfRangeException(nameof(value), value, "Speed must be 0/0 <= speed <= 1.0");
+
 				_speed = value;
 			}
 		}

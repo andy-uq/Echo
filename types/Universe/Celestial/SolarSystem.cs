@@ -5,7 +5,6 @@ using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
 using Echo;
-using EnsureThat;
 
 namespace Echo.Celestial
 {
@@ -39,8 +38,6 @@ namespace Echo.Celestial
 
 		public void EnterSystem(Ship ship, Vector localCoordinates)
 		{
-			Ensure.That(ship.Position.Location).IsNull();
-			
 			Ships.Add(ship);
 			ship.Position = new Position(this, localCoordinates);
 		}

@@ -20,11 +20,11 @@ namespace Echo.Data.Tests
 		[Test]
 		public void CanMap()
 		{
-			Mapper.CreateMap<A, B>();
+			Mapper.Initialize(config => { config.CreateMap<A, B>(); });
 
 			var value = new A() { Name = "A" };
 
-			ITypeMapper mapper = new AutoMapTypeMapper(Mapper.Engine);
+			ITypeMapper mapper = new AutoMapTypeMapper(Mapper.Instance);
 			var b = mapper.Map<B>(value);
 			Assert.That(b.Name,Is.EqualTo("A"));
 

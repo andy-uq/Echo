@@ -9,7 +9,7 @@ namespace Echo.Tests.StatePersistence
 	[TestFixture]
 	public class BuilderSystemTests
 	{
-		class TestObject : IObject
+		public class TestObject : IObject
 		{
 			public ObjectType ObjectType
 			{

@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Echo.Exceptions;
 using Echo.State;
-using EnsureThat;
 
 namespace Echo
 {
@@ -31,8 +31,7 @@ namespace Echo
 
 		public bool TryGetById<T>(ulong id, out T value) where T : class, IObject
 		{
-			IObject rawValue;
-			if ( !LookupValue<T>(id, out rawValue) )
+			if ( !LookupValue<T>(id, out var rawValue) )
 				rawValue = null;
 			
 			value = rawValue as T;
@@ -41,10 +40,10 @@ namespace Echo
 
 		public T Get<T>(ObjectReference objectReference) where T : class, IObject
 		{
-			Ensure.That(objectReference.Id).IsGt(0);
+			if (objectReference.Id <=0)
+				throw new InvalidOperationException($"Invalid id: {objectReference.Id}");
 
-			T value;
-			if ( TryGetById(objectReference.Id, out value) )
+			if ( TryGetById(objectReference.Id, out T value) )
 				return value;
 
 			throw AddLookup(new ItemNotFoundException(typeof(T).Name, objectReference));

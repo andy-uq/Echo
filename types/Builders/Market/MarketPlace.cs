@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.State;
-using EnsureThat;
 
 namespace Echo.Market
 {
@@ -13,7 +13,7 @@ namespace Echo.Market
 		{
 			public static MarketPlaceState Save(MarketPlace marketPlace)
 			{
-				Ensure.That(marketPlace).IsNotNull();
+				if (marketPlace == null) throw new ArgumentNullException(nameof(marketPlace));
 
 				return new MarketPlaceState
 				{

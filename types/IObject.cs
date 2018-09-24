@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Echo;
 using Echo.State;
-using EnsureThat;
 
 namespace Echo
 {

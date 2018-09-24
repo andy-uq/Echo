@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using EnsureThat;
 
 namespace Echo.State
 {
@@ -133,13 +132,13 @@ namespace Echo.State
 
 		public static ObjectReference ToObjectReference(this IObject @object)
 		{
-			Ensure.That(@object, "object").IsNotNull();
+			if (@object == null) throw new ArgumentNullException(nameof(@object));
 			return new ObjectReference(@object.Id, @object.Name);
 		}
 
 		public static ObjectReference ToObjectReference(this IObjectState state)
 		{
-			Ensure.That(state, "state").IsNotNull();
+			if (state == null) throw new ArgumentNullException(nameof(state));
 			return new ObjectReference(state);
 		}
 	}

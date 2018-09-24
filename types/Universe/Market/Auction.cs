@@ -3,7 +3,6 @@ using Echo.Agents;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.Structures;
-using EnsureThat;
 
 namespace Echo.Market
 {

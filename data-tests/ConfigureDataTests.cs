@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
-using Echo.Tests.Infrastructure;
 using NUnit.Framework;
-using Raven.Client;
-using test;
+using Raven.Client.Documents;
 
 namespace Echo.Data.Tests
 {

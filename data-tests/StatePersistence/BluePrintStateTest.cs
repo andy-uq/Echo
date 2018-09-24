@@ -10,7 +10,7 @@ namespace Echo.Data.Tests.StatePersistence
 	{
 		public class WrappedObjectState
 		{
-			public Guid Id { get; set; }
+			public string Id { get; set; }
 			public ItemState Value { get; set; }
 
 			public WrappedObjectState(ItemState value)

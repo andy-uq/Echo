@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo.Agents.Implants;
 using Echo.Agents.Skills;
@@ -6,7 +7,6 @@ using Echo.Corporations;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
-using EnsureThat;
 
 namespace Echo.Agents
 {
@@ -33,19 +33,19 @@ namespace Echo.Agents
 
 		public bool CanUse(Ship ship)
 		{
-			Ensure.That(ship).IsNotNull();
+			if (ship == null) throw new ArgumentNullException(nameof(ship));
 			return CanUse(ship.ShipInfo);
 		}
 
 		private bool CanUse(ShipInfo shipInfo)
 		{
-			Ensure.That(shipInfo).IsNotNull();
+			if (shipInfo == null) throw new ArgumentNullException(nameof(shipInfo));
 			return CanUse(shipInfo.PilotRequirements);
 		}
 
 		public bool CanUse(BluePrintInfo bluePrint)
 		{
-			Ensure.That(bluePrint).IsNotNull();
+			if (bluePrint == null) throw new ArgumentNullException(nameof(bluePrint));
 			return CanUse(bluePrint.BuildRequirements);
 		}
 

@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Linq;
 using Echo;
 
 namespace test.common
 {
 	public class TestIdResolver : IdResolver
 	{
-		private readonly ImmutableDictionary<ulong, IObject> _values;
+		private readonly IDictionary<ulong, IObject> _values;
 
 		public TestIdResolver()
 		{
-			_values = BuildValues().ToImmutableDictionary(k => k.Id, v => v);
+			_values = BuildValues().ToDictionary(k => k.Id, v => v);
 		}
 
 		public IEnumerable<IObject> BuildValues()

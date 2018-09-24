@@ -65,7 +65,6 @@ namespace Echo.Tests.StatePersistence
 
 			DumpObjects("WrappedObject");
 
-
 			using ( var session = Database.OpenSession() )
 			{
 				var state = session.Load<WrappedObjectState>(wrapped.Id).Value;

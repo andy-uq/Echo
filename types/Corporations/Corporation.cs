@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Echo.Agents;
 using Echo.Items;
 using Echo.Market;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
-using EnsureThat;
 
 namespace Echo.Corporations
 {
@@ -53,7 +53,8 @@ namespace Echo.Corporations
 
 		public void Hire(Agent agent)
 		{
-			Ensure.That(agent.Corporation).IsNull();
+			if (agent.Corporation != null)
+				throw new InvalidOperationException("Unable able to hire an agent that's owned by another corporation");
 
 			Employees.Add(agent);
 			agent.Corporation = this;

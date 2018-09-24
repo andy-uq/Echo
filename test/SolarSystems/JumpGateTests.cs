@@ -8,6 +8,7 @@ using Echo.JumpGates;
 using Echo.Ships;
 using Echo.State;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Echo.Tests.SolarSystems
 {
@@ -156,16 +157,16 @@ namespace Echo.Tests.SolarSystems
 
 		}
 
-		[Test, ExpectedException(typeof (ArgumentNullException))]
+		[Test]
 		public void JumpNullShip()
 		{
-			_a1.Jump(null);
+			Should.Throw<ArgumentNullException>(() => _a1.Jump(null));
 		}
 
 		[Test]
 		public void JumpShip()
 		{
-			var s = new Ship();
+			var s = new Ship {Position = new Position(_b, Vector.Zero)};
 			_a.EnterSystem(s, Vector.Zero);
 			_a1.Jump(s);
 
