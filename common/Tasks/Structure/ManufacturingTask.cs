@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Echo.Agents;
 using Echo.Items;
 using Echo.State;
@@ -31,37 +30,22 @@ namespace Echo.Tasks.Structure
 
 		public ulong Id { get; set; }
 		public string Name { get; set; }
-		public ObjectType ObjectType { get { return ObjectType.Task; } }
+		public ObjectType ObjectType => ObjectType.Task;
 
 		public BluePrintInfo BluePrint { get; private set; }
 		public Agent Agent { get; private set; }
 		public uint TimeRemaining { get; private set; }
 
-		public IEnumerable<ItemState> FirstLoad
-		{
-			get { return _firstLoad; }
-		}
+		public IEnumerable<ItemState> FirstLoad => _firstLoad;
 
-		public IEnumerable<ItemState> SubsequentLoad
-		{
-			get { return _subsequentLoad; }
-		}
+		public IEnumerable<ItemState> SubsequentLoad => _subsequentLoad;
 
-		private ItemCollection Property
-		{
-			get
-			{
-				if (Agent == null || Agent.Corporation == null)
-					return new ItemCollection();
+		private ItemCollection Property =>
+			Agent?.Corporation == null
+				? new ItemCollection()
+				: Agent.Corporation.GetProperty(Location);
 
-				return Agent.Corporation.GetProperty(Location);
-			}
-		}
-
-		private Manufactory Location
-		{
-			get { return Agent.Location as Manufactory; }
-		}
+		private Manufactory Location => Agent.Location as Manufactory;
 
 		public ManufacturingTask(IItemFactory itemFactory)
 		{
@@ -134,10 +118,10 @@ namespace Echo.Tasks.Structure
 			var quantaFactor = (double)TimeRemaining;
 			foreach (var item in bluePrint.Materials)
 			{
-				var quanta = new ItemState() {Code = item.Code, Quantity = (uint) System.Math.Floor(item.Quantity/quantaFactor)};
+				var quanta = new ItemState {Code = item.Code, Quantity = (uint) Math.Floor(item.Quantity/quantaFactor)};
 				subsequentLoads.Add(quanta);
 
-				firstLoad.Add(new ItemState { Code = item.Code, Quantity = item.Quantity - (uint )System.Math.Floor(quanta.Quantity * (quantaFactor - 1)) } );
+				firstLoad.Add(new ItemState { Code = item.Code, Quantity = item.Quantity - (uint )Math.Floor(quanta.Quantity * (quantaFactor - 1)) } );
 			}
 
 			_firstLoad = firstLoad.ToArray();
@@ -164,14 +148,7 @@ namespace Echo.Tasks.Structure
 			return Success();
 		}
 
-		private ManufacturingResult Success(Item item = null)
-		{
-			return new ManufacturingResult { Success = true, Item = item };
-		}
-
-		private ManufacturingResult Failed(StatusCode statusCode)
-		{
-			return new ManufacturingResult(statusCode);
-		}
+		private ManufacturingResult Success(Item item = null) => new ManufacturingResult { Success = true, Item = item };
+		private ManufacturingResult Failed(StatusCode statusCode) => new ManufacturingResult(statusCode);
 	}
 }

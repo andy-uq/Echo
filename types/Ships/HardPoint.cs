@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Echo.Ships
 {
-	[DebuggerDisplay("{CurrentPosition}, Equipped: {Weapon}")]
+	[DebuggerDisplay("{Position}, Equipped: {Weapon}")]
 	public partial class HardPoint
 	{
 		private readonly Vector _origin;
@@ -28,10 +28,7 @@ namespace Echo.Ships
 
 		public static Vector CalculateOrientation(HardPointPosition position)
 		{
-			double radiansOfMovement;
-			Vector origin;
-
-			CalculateHardPoint(position, out origin, out radiansOfMovement);
+			CalculateHardPoint(position, out var origin, out _);
 			return origin;
 		}
 
@@ -91,7 +88,7 @@ namespace Echo.Ships
 		/// <summary>Speed of this hard point, measured from 0..1.  0 means the hard point is fixed and cannot move, 1 means the hard point can travel its full rotational degree in one pass</summary>
 		public double Speed
 		{
-			get { return _speed; }
+			get => _speed;
 			set
 			{
 				if (value < 0d || value > 1d)
@@ -101,8 +98,8 @@ namespace Echo.Ships
 			}
 		}
 
-		public HardPointPosition Position { get; private set; }
-		public Ship Ship { get; private set; }
+		public HardPointPosition Position { get; }
+		public Ship Ship { get; }
 		public Weapon Weapon { get; private set; }
 		public double AttackCounter { get; set; }
 
@@ -120,7 +117,7 @@ namespace Echo.Ships
 		/// <summary>Current position (as a UnitVector)</summary>
 		public Vector Orientation
 		{
-			get { return _orientation; }
+			get => _orientation;
 			private set
 			{
 				if ( value == Vector.Zero )
@@ -133,7 +130,7 @@ namespace Echo.Ships
 					var newAngle = CalculateCurrentAngle(value);
 					if (newAngle >= _radiansOfMovement)
 					{
-						throw new ArgumentOutOfRangeException("value", "Cannot move to new position because it is out of range");
+						throw new ArgumentOutOfRangeException(nameof(value), "Cannot move to new position because it is out of range");
 					}
 
 					_orientation = value;
@@ -141,14 +138,11 @@ namespace Echo.Ships
 			}
 		}
 
-		public Vector Origin
-		{
-			get { return _origin; }
-		}
+		public Vector Origin => _origin;
 
 		private double CalculateCurrentAngle(Vector orientation)
 		{
-			Vector rightExtent = _origin.RotateZ(_radiansOfMovement / -2d);
+			var rightExtent = _origin.RotateZ(_radiansOfMovement / -2d);
 			return Vector.Angle(rightExtent, orientation) - (_radiansOfMovement / 2d);
 		}
 
@@ -184,8 +178,8 @@ namespace Echo.Ships
 			if ( angleToMove - (_radiansOfMovement * Speed) > Units.Tolerance )
 			{
 				angleToMove = _radiansOfMovement * Speed;
-				Vector counter = orientation.RotateZ(angleToMove);
-				Vector clock = orientation.RotateZ(-angleToMove);
+				var counter = orientation.RotateZ(angleToMove);
+				var clock = orientation.RotateZ(-angleToMove);
 
 				Orientation = (counter - targetPosition).Magnitude < (clock - targetPosition).Magnitude ? counter : clock;
 				return false;
@@ -197,13 +191,13 @@ namespace Echo.Ships
 
 		private Vector CalculateTargetPosition(Vector targetPosition)
 		{
-			double extent = Vector.Angle(_origin, targetPosition);
-			double maxExtent = _radiansOfMovement/2;
+			var extent = Vector.Angle(_origin, targetPosition);
+			var maxExtent = _radiansOfMovement/2;
 			if (extent - maxExtent <= Units.Tolerance)
 				return targetPosition;
 
-			Vector counter = _origin.RotateZ(maxExtent);
-			Vector clock = _origin.RotateZ(-maxExtent);
+			var counter = _origin.RotateZ(maxExtent);
+			var clock = _origin.RotateZ(-maxExtent);
 
 			return (counter - targetPosition).Magnitude < (clock - targetPosition).Magnitude
 				? counter
@@ -217,7 +211,7 @@ namespace Echo.Ships
 		/// <returns></returns>
 		public bool InRange(ILocation target)
 		{
-			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
+			var targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
 			if (targetPosition == Vector.Zero)
 				throw new ArgumentException("Target must not be at the same position as the ship");
 			
@@ -225,7 +219,7 @@ namespace Echo.Ships
 
 			var orientation = GetAbsoluteOrientation(Origin);
 
-			double extent = Vector.Angle(orientation, targetPosition);
+			var extent = Vector.Angle(orientation, targetPosition);
 			return (extent - (_radiansOfMovement / 2) < Units.Tolerance);
 		}
 
@@ -236,20 +230,20 @@ namespace Echo.Ships
 		/// <returns></returns>
 		public bool CanTrack(ILocation target)
 		{
-			Vector targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
+			var targetPosition = (target.Position.UniversalCoordinates - Ship.Position.UniversalCoordinates);
 			if (targetPosition == Vector.Zero)
 				throw new ArgumentException("Target must not be at the same position as the ship");
 
 			targetPosition = targetPosition.ToUnitVector();
 
 			var orientation = GetAbsoluteOrientation(Origin);
-			double extent = Math.Acos(orientation.DotProduct(targetPosition));
+			var extent = Math.Acos(orientation.DotProduct(targetPosition));
 
 			if ( extent - (_radiansOfMovement / 2) > Units.Tolerance )
 				return false;
 
 			orientation = GetAbsoluteOrientation(Orientation);
-			double angleToMove = Vector.Angle(orientation, targetPosition);
+			var angleToMove = Vector.Angle(orientation, targetPosition);
 			if ( angleToMove - (_radiansOfMovement * Speed) > Units.Tolerance )
 				return false;
 

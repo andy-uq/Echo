@@ -65,7 +65,7 @@ namespace Echo.Market
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			return this._auctions.GetEnumerator();
+			return _auctions.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

@@ -1,5 +1,4 @@
 ﻿using System;
-using Echo.Agents;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Corporations;
@@ -7,17 +6,16 @@ using Echo.Items;
 using Echo.Market;
 using Echo.State;
 using Echo.Structures;
-using Echo.Tests;
 using NUnit.Framework;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	public class Markets : StateTest
 	{
 		class WrappedObjectState
 		{
 			public string Id { get; set; }
-			public State.MarketPlaceState Value { get; set; }
+			public MarketPlaceState Value { get; set; }
 
 			public WrappedObjectState(MarketPlaceState value)
 			{
@@ -25,10 +23,7 @@ namespace Echo.Data.Tests.StatePersistence
 			}
 		}
 
-		private MarketPlaceState Market
-		{
-			get { return Universe.StarCluster.MarketPlace; }
-		}
+		private MarketPlaceState Market => Universe.StarCluster.MarketPlace;
 
 		[Test]
 		public void Persist()

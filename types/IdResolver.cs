@@ -22,8 +22,7 @@ namespace Echo
 
 		public T GetById<T>(ulong id) where T : class, IObject
 		{
-			IObject value;
-			if ( LookupValue<T>(id, out value) )
+			if (LookupValue<T>(id, out var value))
 				return (T)value;
 
 			throw AddLookup(new ItemNotFoundException(typeof (T).Name, id));
@@ -73,10 +72,7 @@ namespace Echo
 			return TryGet(objectReference.Value, out value);
 		}
 
-		public static IIdResolver Empty
-		{
-			get { return new IdResolutionContext(Enumerable.Empty<IObject>()); }
-		}
+		public static IIdResolver Empty => new IdResolutionContext(Enumerable.Empty<IObject>());
 	}
 
 	public static class IdResolverExtensions

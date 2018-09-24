@@ -3,7 +3,6 @@ using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Builder;
 using Echo.State;
-
 using AgentStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.AgentStatistic, int>;
 using AgentSkillLevel = Echo.Agents.Skills.SkillLevel;
 using SkillLevel = Echo.State.SkillLevel;
@@ -64,7 +63,7 @@ namespace Echo.Agents
 
 			private static AgentStatisticState Save(AgentStatisticValue x)
 			{
-				return new AgentStatisticState {Statistic = x.Stat, CurrentValue = x.CurrentValue, Value = x.Value,};
+				return new AgentStatisticState {Statistic = x.Stat, CurrentValue = x.CurrentValue, Value = x.Value};
 			}
 
 			private static SkillLevel Save(AgentSkillLevel x)

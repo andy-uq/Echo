@@ -9,7 +9,7 @@ namespace Echo
 		Ballistic,
 		Energy,
 		Kinetic,
-		Thermal,		
+		Thermal		
 	}
 
 	public static class DamageTypeExtensions
@@ -34,7 +34,7 @@ namespace Echo
 					return ShipStatistic.ThermalArmourStrength;
 
 				default:
-					throw new ArgumentOutOfRangeException("damageType");
+					throw new ArgumentOutOfRangeException(nameof(damageType));
 			}
 		}
 	}

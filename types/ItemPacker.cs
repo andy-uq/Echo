@@ -14,8 +14,8 @@ namespace Echo
 			Success = (item != null);
 		}
 
-		public IObject Item { get; private set; }
-		public bool Success { get; private set; }
+		public IObject Item { get; }
+		public bool Success { get; }
 	}
 
 	public interface IItemPacker
@@ -40,7 +40,7 @@ namespace Echo
 		{
 			if (item.Quantity != 0)
 			{
-				IItemPacker itemPacker = GetItemPacker<T>();
+				var itemPacker = GetItemPacker<T>();
 				var result = itemPacker.Unpack(item);
 				if (result.Success)
 				{
@@ -49,25 +49,24 @@ namespace Echo
 				}
 			}
 
-			return default(T);
+			return default;
 		}
 
 		public bool CanPack<T>(T item) where T : IObject
 		{
-			IItemPacker itemPacker = GetItemPacker<T>();
+			var itemPacker = GetItemPacker<T>();
 			return itemPacker.CanPack(item);
 		}
 
 		public Item Pack<T>(T item) where T : IObject
 		{
-			IItemPacker itemPacker = GetItemPacker<T>();
+			var itemPacker = GetItemPacker<T>();
 			return itemPacker.Pack(item);
 		}
 		
 		private IItemPacker GetItemPacker<T>() where T : IObject
 		{
-			IItemPacker builder;
-			if ( _itemPackers.TryGetValue(typeof(T), out builder) )
+			if (_itemPackers.TryGetValue(typeof(T), out var builder))
 				return builder;
 
 			throw new ItemNotFoundException("Item unpacker", typeof(T).Name);

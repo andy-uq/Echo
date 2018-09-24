@@ -18,9 +18,8 @@ namespace Echo.Ships
 			var factoryStats = (initialStats ?? Enumerable.Empty<ShipStatisticValue>()).ToDictionary(x => x.Stat);
 			foreach (ShipStatistic stat in Enum.GetValues(typeof (ShipStatistic)))
 			{
-				ShipStatisticValue factoryValue;
 				var value = new ShipStatisticValue(stat, 0);
-				if (factoryStats.TryGetValue(stat, out factoryValue))
+				if (factoryStats.TryGetValue(stat, out var factoryValue))
 				{
 					value = factoryValue;
 				}
@@ -29,10 +28,7 @@ namespace Echo.Ships
 			}
 		}
 
-		public ShipStatisticValue this[ShipStatistic stat]
-		{
-			get { return _stats[stat]; }
-		}
+		public ShipStatisticValue this[ShipStatistic stat] => _stats[stat];
 
 		public ShipStatisticValue ArmourStrength(DamageType damageType)
 		{
@@ -40,14 +36,7 @@ namespace Echo.Ships
 			return _stats[armourType];
 		}
 
-		public IEnumerator<ShipStatisticValue> GetEnumerator()
-		{
-			return _stats.Values.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		public IEnumerator<ShipStatisticValue> GetEnumerator() => _stats.Values.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

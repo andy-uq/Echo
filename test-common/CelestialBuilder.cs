@@ -32,7 +32,7 @@ namespace test.common
 	public class StarClusterBuilder
 	{
 		private readonly StarClusterState _starCluster;
-		private List<SolarSystemState> _solarSystems;
+		private readonly List<SolarSystemState> _solarSystems;
 
 		public StarClusterBuilder()
 		{
@@ -40,7 +40,7 @@ namespace test.common
 			_solarSystems = new List<SolarSystemState>();
 		}
 
-		public StarClusterBuilder SolarSystem(Vector localCoordinates = default(Vector))
+		public StarClusterBuilder SolarSystem(Vector localCoordinates = default)
 		{
 			var solarSystem = new SolarSystemState
 			{
@@ -56,7 +56,7 @@ namespace test.common
 		{
 			return new StarClusterState
 			{
-				SolarSystems = _solarSystems.ToArray(),
+				SolarSystems = _solarSystems.ToArray()
 			};
 		}
 	}
@@ -64,7 +64,7 @@ namespace test.common
 	public class SolarSystemBuilder : CelestialBuilder
 	{
 		private readonly SolarSystemState _solarSystem;
-		private List<CelestialObjectState> _satellites;
+		private readonly List<CelestialObjectState> _satellites;
 
 		public SolarSystemBuilder()
 		{
@@ -72,11 +72,11 @@ namespace test.common
 			_satellites = new List<CelestialObjectState>();
 		}
 
-		public SolarSystemBuilder Planet(Vector localCoordinates = default(Vector))
+		public SolarSystemBuilder Planet(Vector localCoordinates = default)
 		{
 			var planet = new CelestialObjectState
 			{
-				LocalCoordinates = localCoordinates,
+				LocalCoordinates = localCoordinates
 			};
 
 			_satellites.Add(planet);

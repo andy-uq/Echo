@@ -1,9 +1,7 @@
-﻿using System.Dynamic;
-using System.Linq;
-using Echo.Builder;
+﻿using Echo.Builder;
 using Echo.Builders;
+using Echo.Market;
 using Echo.State;
-using Echo;
 
 namespace Echo.Celestial
 {
@@ -19,7 +17,7 @@ namespace Echo.Celestial
 					Name = starCluster.Name,
 					LocalCoordinates = starCluster.Position.LocalCoordinates,
 					SolarSystems = starCluster.SolarSystems.Save(),
-					MarketPlace = starCluster.MarketPlace.Save(),
+					MarketPlace = starCluster.MarketPlace.Save()
 				};
 			}
 
@@ -29,11 +27,13 @@ namespace Echo.Celestial
 				{
 					Id = state.ObjectId,
 					Name = state.Name,
-					Position = new Position(universe, state.LocalCoordinates),
+					Position = new Position(universe, state.LocalCoordinates)
 				};
 
 				var builder = new ObjectBuilder<StarCluster>(starCluster);
-				builder.Resolve((resolver, target) => target.MarketPlace = Market.MarketPlace.Builder.Build(state.MarketPlace, starCluster).Build(resolver));
+				builder.Resolve((resolver, target) => target.MarketPlace = MarketPlace.Builder
+					.Build(state.MarketPlace, starCluster)
+					.Build(resolver));
 
 				builder
 					.Dependents(state.SolarSystems)

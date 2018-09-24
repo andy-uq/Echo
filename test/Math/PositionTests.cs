@@ -14,20 +14,11 @@ namespace Echo.Tests.Math
 	{
 		class P : ILocation
 		{
-			public ObjectType ObjectType
-			{
-				get { throw new System.NotImplementedException(); }
-			}
+			public ObjectType ObjectType => throw new NotImplementedException();
 
-			public ulong Id
-			{
-				get { throw new System.NotImplementedException(); }
-			}
+			public ulong Id => throw new NotImplementedException();
 
-			public string Name
-			{
-				get { throw new System.NotImplementedException(); }
-			}
+			public string Name => throw new NotImplementedException();
 
 			public Position Position { get; set; }
 		}
@@ -106,7 +97,7 @@ namespace Echo.Tests.Math
 
 			((p2 + new Vector(-1, 0)) == p1).ShouldBe(true);
 
-			Object.Equals(p1, p2).ShouldBe(false);
+			Equals(p1, p2).ShouldBe(false);
 		}
 
 		[Test]

@@ -15,7 +15,7 @@ namespace Echo.Items
 					ObjectId = item.Id,
 					Type = item.ItemInfo.Type,
 					Code = item.ItemInfo.Code,
-					Quantity = item.Quantity,
+					Quantity = item.Quantity
 				};
 			}
 
@@ -27,7 +27,7 @@ namespace Echo.Items
 					Id = state.ObjectId,
 					Quantity = state.Quantity,
 					Location = location,
-					Owner = owner,
+					Owner = owner
 				};
 
 				var builder = new ObjectBuilder<Item>(item);

@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using Echo.JumpGates;
 using Echo.Ships;
-using Echo.State;
 using Echo.Structures;
-using Echo;
 
 namespace Echo.Celestial
 {
 	public partial class SolarSystem : ILocation, IMoves, IEquatable<SolarSystem>
 	{
-		public ObjectType ObjectType { get { return ObjectType.SolarSystem;} }
+		public ObjectType ObjectType => ObjectType.SolarSystem;
 		public ulong Id { get; set; }
 		public string Name { get; set; }
 		public Position Position { get; set; }
 
-		public List<CelestialObject> Satellites { get; set; } 
-		public List<Structure> Structures { get; set; } 
-		public List<Ship> Ships { get; set; }
-		public List<JumpGate> JumpGates { get; set; }
+		public List<CelestialObject> Satellites { get; } 
+		public List<Structure> Structures { get; } 
+		public List<Ship> Ships { get; }
+		public List<JumpGate> JumpGates { get; }
 
 		public SolarSystem()
 		{

@@ -12,10 +12,7 @@ namespace Echo.Ships
 			DamageType = damageType;
 		}
 
-		double IStatisticDelta<double>.Value
-		{
-			get { return -Value; }
-		}
+		double IStatisticDelta<double>.Value => -Value;
 
 		public static Damage operator +(Damage lValue, Damage rValue)
 		{

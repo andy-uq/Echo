@@ -19,11 +19,10 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using Echo.ConsoleRunner.Commands;
 
 namespace Echo.ConsoleRunner.Commands
 {
-	[DebuggerDisplay("{Parameter}")]
+	[DebuggerDisplay("{" + nameof(Parameter) + "}")]
 	partial class Argument : DisplayInfoBase, IArgument
 	{
 		private readonly bool _allArguments;

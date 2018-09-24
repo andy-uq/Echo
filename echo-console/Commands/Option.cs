@@ -19,7 +19,7 @@ using System.ComponentModel;
 
 namespace Echo.ConsoleRunner.Commands
 {
-	[System.Diagnostics.DebuggerDisplay("{Property}")]
+	[System.Diagnostics.DebuggerDisplay("{" + nameof(Property) + "}")]
 	partial class Option : DisplayInfoBase, IOption
 	{
 		readonly bool _required;

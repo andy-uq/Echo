@@ -9,15 +9,12 @@ namespace Echo
 	{
 		private readonly Dictionary<SolarSystem, JumpEntry> _jumpCountTable;
 
-		public IEnumerable<JumpEntry> Table
-		{
-			get { return _jumpCountTable.Values; }
-		}
+		public IEnumerable<JumpEntry> Table => _jumpCountTable.Values;
 
 		public JumpCountTable(IEnumerable<SolarSystem> solarSystems)
 		{
 			_jumpCountTable = solarSystems.ToDictionary(x => x, x => new JumpEntry(x));
-			foreach (JumpEntry jumpEntry in _jumpCountTable.Values)
+			foreach (var jumpEntry in _jumpCountTable.Values)
 			{
 				var connections = jumpEntry.GetConnectedSolarSystems();
 				jumpEntry.DirectConnections.AddRange(connections.Select(x => _jumpCountTable[x]));
@@ -26,8 +23,7 @@ namespace Echo
 
 		public int GetJumpCount(SolarSystem from, SolarSystem to)
 		{
-			JumpEntry entry;
-			if (_jumpCountTable.TryGetValue(from, out entry))
+			if (_jumpCountTable.TryGetValue(from, out var entry))
 				return entry.GetJumpCount(to);
 
 			throw new ItemNotFoundException("Solar System", from);
@@ -51,8 +47,7 @@ namespace Echo
 
 			public int GetJumpCount(SolarSystem target)
 			{
-				int jumpCount;
-				if (!JumpCountCache.TryGetValue(target, out jumpCount))
+				if (!JumpCountCache.TryGetValue(target, out var jumpCount))
 				{
 					jumpCount = GetJumpCount(target, new Stack<ulong>());
 					JumpCountCache.Add(target, jumpCount);

@@ -4,7 +4,7 @@ using Echo.Items;
 
 namespace Echo.Market
 {
-	public partial class BuyOrder : Auction
+	public class BuyOrder : Auction
 	{
 		public override Settlement List(MarketPlace marketPlace)
 		{
@@ -36,8 +36,7 @@ namespace Echo.Market
 
 		private bool BuyFrom(SellOrder sellOrder, Settlement settlement)
 		{
-			uint commonBlockSize;
-			if (!GetBlockSize(sellOrder, out commonBlockSize)) 
+			if (!GetBlockSize(sellOrder, out var commonBlockSize))
 				return Quantity == 0;
 
 			var targetQuantity = Math.Min(Quantity, sellOrder.Quantity);

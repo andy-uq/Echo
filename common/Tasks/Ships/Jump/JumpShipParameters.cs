@@ -5,23 +5,13 @@ namespace Echo.Tasks.Ships.Jump
 {
 	public class JumpShipParameters : ITaskParameters
 	{
-		private readonly Ship _ship;
-		private readonly JumpGate _jumpGate;
-
 		public JumpShipParameters(Ship ship, JumpGate jumpGate)
 		{
-			_ship = ship;
-			_jumpGate = jumpGate;
+			Ship = ship;
+			JumpGate = jumpGate;
 		}
 
-		public Ship Ship
-		{
-			get { return _ship; }
-		}
-
-		public JumpGate JumpGate
-		{
-			get { return _jumpGate; }
-		}
+		public Ship Ship { get; }
+		public JumpGate JumpGate { get; }
 	}
 }

@@ -4,7 +4,6 @@ using Echo.Agents;
 using Echo.Items;
 using Echo.Market;
 using Echo.Ships;
-using Echo.State;
 using Echo.Structures;
 
 namespace Echo.Corporations
@@ -23,26 +22,22 @@ namespace Echo.Corporations
 			BluePrints = new List<Item>();
 		}
 
-		public ObjectType ObjectType
-		{
-			get { return ObjectType.Corporation; }
-		}
+		public ObjectType ObjectType => ObjectType.Corporation;
 
 		public ulong Id { get; set; }
 		public string Name { get; set; }
 		
-		public ItemCollection Property { get; set; }
-		public List<Ship> Ships { get; set; }
-		public List<Structure> Structures { get; set; }
-		public List<Agent> Employees { get; set; }
-		public List<BuyOrder> BuyOrders { get; set; }
-		public List<SellOrder> SellOrders { get; set; }
-		public List<Item> BluePrints { get; set; }
+		public ItemCollection Property { get; }
+		public List<Ship> Ships { get; }
+		public List<Structure> Structures { get; }
+		public List<Agent> Employees { get; }
+		public List<BuyOrder> BuyOrders { get; }
+		public List<SellOrder> SellOrders { get; }
+		public List<Item> BluePrints { get; }
 
 		public ItemCollection GetProperty(Structure structure)
 		{
-			ItemCollection property;
-			if (!structure.Hangar.TryGetValue(this, out property))
+			if (!structure.Hangar.TryGetValue(this, out var property))
 			{
 				property = new ItemCollection();
 				structure.Hangar[this] = property;

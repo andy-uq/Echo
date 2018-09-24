@@ -19,15 +19,9 @@ namespace Echo.State
 		public ItemCode Code { get; set; }
 		public virtual ItemType Type { get; set; }
 
-		ulong IObject.Id
-		{
-			get { return ObjectId; }
-		}
+		ulong IObject.Id => ObjectId;
 
-		public virtual ObjectType ObjectType
-		{
-			get { return ObjectType.Info; }
-		}
+		public virtual ObjectType ObjectType => ObjectType.Info;
 
 		#endregion
 
@@ -35,10 +29,7 @@ namespace Echo.State
 
 		public string Name { get; set; }
 
-		public ulong ObjectId
-		{
-			get { return Type.ToId(Code); }
-		}
+		public ulong ObjectId => Type.ToId(Code);
 
 		#endregion
 	}

@@ -15,10 +15,7 @@ namespace Echo.Items.Packing
 			_itemFactory = itemFactory;
 		}
 
-		public Type Type
-		{
-			get { return typeof(Weapon); }
-		}
+		public Type Type => typeof(Weapon);
 
 		public PackerResult Unpack(Item item)
 		{

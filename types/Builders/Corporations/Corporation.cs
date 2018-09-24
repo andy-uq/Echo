@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Echo.Agents;
 using Echo.Builder;
 using Echo.State;
@@ -16,7 +15,7 @@ namespace Echo.Corporations
 				{
 					ObjectId = corporation.Id,
 					Name = corporation.Name,
-					Employees = corporation.Employees.Select(Agent.Builder.Save),
+					Employees = corporation.Employees.Select(Agent.Builder.Save)
 				};
 			}
 
@@ -25,7 +24,7 @@ namespace Echo.Corporations
 				var corporation = new Corporation
 				{
 					Id = state.ObjectId,
-					Name = state.Name,
+					Name = state.Name
 				};
 
 				var builder = new ObjectBuilder<Corporation>(corporation);

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Echo.Agents.Skills;
-using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.State;
@@ -21,17 +20,14 @@ namespace Echo.Tests.Structures
 		private Mock<IItemFactory> _itemFactory;
 		private Structure _manufactory;
 
-		public Structure Manufactory
-		{
-			get { return _manufactory; }
-		}
+		public Structure Manufactory => _manufactory;
 
 		[SetUp]
 		public void CreateItemFactory()
 		{
 			_universe = new MockUniverse();
 
-			_itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
+			_itemFactory = new Mock<IItemFactory>(MockBehavior.Strict);
 
 			SetupItem(_universe.BluePrint);
 			SetupItem(_universe.ShipBluePrint);
@@ -84,7 +80,7 @@ namespace Echo.Tests.Structures
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
-				Agent = null,
+				Agent = null
 			};
 
 			var manufacturing = CreateManufacturingTask(parameters);
@@ -101,7 +97,7 @@ namespace Echo.Tests.Structures
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
-				Agent = agent,
+				Agent = agent
 			};
 			
 			var manufacturing = CreateManufacturingTask(parameters);
@@ -117,7 +113,7 @@ namespace Echo.Tests.Structures
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
-				Agent = agent,
+				Agent = agent
 			};
 
 			var manufacturing = CreateManufacturingTask(parameters);
@@ -128,13 +124,13 @@ namespace Echo.Tests.Structures
 		[Test]
 		public void RequireItemsAtManufactory()
 		{
-			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
+			var corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
 			var agent = _universe.John.StandUp(corporation, initialLocation:Manufactory);
 
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
-				Agent = agent,
+				Agent = agent
 			};
 
 			var manufacturing = CreateManufacturingTask(parameters);
@@ -145,7 +141,7 @@ namespace Echo.Tests.Structures
 		[Test]
 		public void CreateItem()
 		{
-			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
+			var corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
 			var materials = TestItems.BuildItem(ItemCode.Veldnium, quantity: 20);
 	
 			var property = corporation.GetProperty(Manufactory);
@@ -154,7 +150,7 @@ namespace Echo.Tests.Structures
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.BluePrint,
-				Agent = _universe.John.StandUp(corporation, initialLocation:Manufactory),
+				Agent = _universe.John.StandUp(corporation, initialLocation:Manufactory)
 			};
 			
 			var manufacturing = CreateManufacturingTask(parameters);
@@ -174,7 +170,7 @@ namespace Echo.Tests.Structures
 		[Test]
 		public void BuildMaterialsCalculatedCorrectly()
 		{
-			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
+			var corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
 
 			var property = corporation.GetProperty(Manufactory);
 			property.Add(TestItems.BuildItem(ItemCode.Veldnium, quantity: 2000));
@@ -185,7 +181,7 @@ namespace Echo.Tests.Structures
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.ShipBluePrint,
-				Agent = _universe.John.StandUp(corporation, initialLocation: Manufactory),
+				Agent = _universe.John.StandUp(corporation, initialLocation: Manufactory)
 			};
 
 			var manufacturing = CreateManufacturingTask(parameters);
@@ -202,7 +198,7 @@ namespace Echo.Tests.Structures
 		[Test]
 		public void CreateItemOverTime()
 		{
-			Corporation corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
+			var corporation = Corporation.Builder.Build(_universe.MSCorp).Materialise();
 	
 			var property = corporation.GetProperty(Manufactory);
 			property.Add(TestItems.BuildItem(ItemCode.Veldnium, quantity: 2000));
@@ -213,7 +209,7 @@ namespace Echo.Tests.Structures
 			var parameters = new ManufacturingParameters
 			{
 				BluePrint = _universe.ShipBluePrint,
-				Agent = _universe.John.StandUp(corporation, initialLocation:Manufactory),
+				Agent = _universe.John.StandUp(corporation, initialLocation:Manufactory)
 			};
 			
 			var manufacturing = CreateManufacturingTask(parameters);

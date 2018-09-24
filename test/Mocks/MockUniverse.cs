@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Echo.Agents;
 using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Items;
-using Echo.Market;
 using Echo.Ships;
 using Echo.State;
 using Echo.State.Market;
@@ -56,7 +54,7 @@ namespace Echo.Tests.Mocks
 				ObjectId = Id(),
 				Name = "John",
 				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
-				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower, }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 }),
+				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 }),
 				Skills = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level: 5) }
 			};
 
@@ -70,7 +68,7 @@ namespace Echo.Tests.Mocks
 			AppleCorp = new CorporationState
 			{
 				ObjectId = Id(),
-				Name = "Apple",
+				Name = "Apple"
 			};
 
 			BuyOrder = new AuctionState
@@ -79,7 +77,7 @@ namespace Echo.Tests.Mocks
 				PricePerUnit = 5,
 				Trader = John.ToObjectReference(),
 				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 50 },
-				Owner = MSCorp.ToObjectReference(),
+				Owner = MSCorp.ToObjectReference()
 			};
 
 			SellOrder = new AuctionState
@@ -88,7 +86,7 @@ namespace Echo.Tests.Mocks
 				PricePerUnit = 10,
 				Trader = John.ToObjectReference(),
 				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 100 },
-				Owner = MSCorp.ToObjectReference(),
+				Owner = MSCorp.ToObjectReference()
 			};
 
 			Earth = new CelestialObjectState
@@ -98,20 +96,20 @@ namespace Echo.Tests.Mocks
 				Name = "Earth",
 				LocalCoordinates = new Vector(Units.FromAU(1), 0),
 				Mass = Units.SolarMass*1E-6,
-				Size = 5d,
+				Size = 5d
 			};
 			AsteroidBelt = new CelestialObjectState
 			{
 				ObjectId = Id(),
-				CelestialObjectType = CelestialObjectType.AsteriodBelt,
+				CelestialObjectType = CelestialObjectType.AsteroidBelt,
 				Name = "Asteroid Belt",
 				Orbits = Earth.ToObjectReference(),
 				LocalCoordinates = new Vector(-5.5, 0, 0),
 				AsteroidBelt = new AsteroidBeltState
 				{
 					Richness = 500000,
-					AmountRemaining = 250000,
-				},
+					AmountRemaining = 250000
+				}
 			};
 			Moon = new CelestialObjectState
 			{
@@ -123,29 +121,29 @@ namespace Echo.Tests.Mocks
 				Size = 0.5d,
 				LocalCoordinates = new Vector(7.5, 0, 0)
 			};
-			Manufactory = new StructureState()
+			Manufactory = new StructureState
 			{
 				ObjectId = Id(),
 				Name = "MFC",
 				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(0.5001, 0, 0),
 				Owner = MSCorp.ToObjectReference(),
-				Manufactory = new ManufactoryState() { Efficiency = 0.5d },
+				Manufactory = new ManufactoryState { Efficiency = 0.5d }
 			};
-			TradingStation = new StructureState()
+			TradingStation = new StructureState
 			{
 				ObjectId = Id(),
 				Name = "TS",
 				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
 				Owner = MSCorp.ToObjectReference(),
-				HangerItems = new[] { new HangarItemState { Owner = MSCorp.ToObjectReference(), Items = new[] { ItemCode.MissileLauncher.ToItemState(quantity:10) }  }, },
+				HangerItems = new[] { new HangarItemState { Owner = MSCorp.ToObjectReference(), Items = new[] { ItemCode.MissileLauncher.ToItemState(quantity:10) }  } },
 				BuyOrders = new[] { BuyOrder },
 				SellOrders = new[] { SellOrder },
 				TradingStation = new TradingStationState()
 			};
 
-			Ship = new ShipState()
+			Ship = new ShipState
 			{
 				ObjectId = Id(),
 				Name = "Ship",
@@ -162,18 +160,18 @@ namespace Echo.Tests.Mocks
 						{
 							ObjectId = Id(), 
 							Name = "Blaster",
-							Code = Weapon.Code,
+							Code = Weapon.Code
 						}
-					},
+					}
 				},
 				Pilot = John,
-				Statistics = Enum.GetValues(typeof(ShipStatistic)).Cast<ShipStatistic>().Select(x => new ShipStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
+				Statistics = Enum.GetValues(typeof(ShipStatistic)).Cast<ShipStatistic>().Select(x => new ShipStatisticState { Statistic = x, CurrentValue = 50, Value = 50 })
 			};
 			SolarSystem = new SolarSystemState
 			{
 				ObjectId = Id(),
 				Name = "Sol",
-				Satellites = new[] { Earth, Moon, AsteroidBelt, },
+				Satellites = new[] { Earth, Moon, AsteroidBelt },
 				Structures = new[] { Manufactory, TradingStation },
 				Ships = new[] { Ship }
 			};
@@ -195,10 +193,10 @@ namespace Echo.Tests.Mocks
 							Owner = MSCorp.ToObjectReference(), 
 							Location = TradingStation.ToObjectReference(),
 							TimeToSettlement = 100, 
-							SpendByOwner = new Dictionary<ObjectReference, long> { { AppleCorp.ToObjectReference(), 1000 } },
+							SpendByOwner = new Dictionary<ObjectReference, long> { { AppleCorp.ToObjectReference(), 1000 } }
 						}
 					},
-					Auctions = new[] { BuyOrder.ToObjectReference(), SellOrder.ToObjectReference() },
+					Auctions = new[] { BuyOrder.ToObjectReference(), SellOrder.ToObjectReference() }
 				}
 			};
 
@@ -219,7 +217,7 @@ namespace Echo.Tests.Mocks
 						ShipClass = ShipClass.LightFrigate, 
 						PilotRequirements = new[]
 						{
-							new State.SkillLevel(SkillCode.SpaceshipCommand, level:1),
+							new SkillLevel(SkillCode.SpaceshipCommand, level:1)
 						}
 					}
 				}

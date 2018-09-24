@@ -27,7 +27,7 @@ namespace Echo.Tasks.Ships
 
 		public ulong Id { get; set; }
 		public string Name { get; set; }
-		public ObjectType ObjectType { get { return ObjectType.Task; } }
+		public ObjectType ObjectType => ObjectType.Task;
 	}
 
 	public abstract class ShipTask<TParameters, TResult> : ShipTask
@@ -48,7 +48,7 @@ namespace Echo.Tasks.Ships
 				return new TResult {Success = true};
 			}
 
-			TResult result = taskResult();
+			var result = taskResult();
 			result.Success = true;
 
 			return result;

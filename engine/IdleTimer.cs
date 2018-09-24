@@ -16,10 +16,7 @@ namespace Echo.Engine
 			_tail = 0;
 		}
 
-		public double Idle
-		{
-			get { return _data.Take(_tail).DefaultIfEmpty(1.0).Average() * 100.0; }
-		}
+		public double Idle => _data.Take(_tail).DefaultIfEmpty(1.0).Average() * 100.0;
 
 		public void Enqueue(double idle)
 		{

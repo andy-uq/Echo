@@ -13,12 +13,12 @@ namespace Echo.Items
 		public const ulong SHIP_ID_MASK = (1 << 58);
 		public const ulong ITEM_ID_MASK = GENERIC_ITEM_ID_MASK | WEAPON_ID_MASK | BLUEPRINT_ID_MASK | SHIP_ID_MASK;
 
-		private static Dictionary<ItemType, ulong> _masks = new Dictionary<ItemType, ulong>()
+		private static readonly Dictionary<ItemType, ulong> _masks = new Dictionary<ItemType, ulong>
 		{
 			{ ItemType.Unknown, GENERIC_ITEM_ID_MASK },
 			{ ItemType.ShipWeapons, WEAPON_ID_MASK },
 			{ ItemType.Blueprints, BLUEPRINT_ID_MASK },
-			{ ItemType.Ships, SHIP_ID_MASK },
+			{ ItemType.Ships, SHIP_ID_MASK }
 		};
 
 		public static ulong ToId(this ItemType type, ItemCode code)
@@ -26,11 +26,10 @@ namespace Echo.Items
 			if (code == ItemCode.Invalid)
 				throw new InvalidOperationException("Cannot generate an Id for an Invalid item");
 
-			ulong mask;
-			if (!_masks.TryGetValue(type, out mask))
+			if (!_masks.TryGetValue(type, out var mask))
 				mask = GENERIC_ITEM_ID_MASK;
 
-		    var code1 = (ulong)code;
+			var code1 = (ulong)code;
 		    return mask | code1;
 		}
 

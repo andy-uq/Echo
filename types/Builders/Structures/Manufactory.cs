@@ -1,6 +1,5 @@
 ﻿using Echo.Builder;
 using Echo.State;
-using Echo;
 
 namespace Echo.Structures
 {
@@ -8,7 +7,7 @@ namespace Echo.Structures
 	{
 		public new class Builder : Structure.Builder
 		{
-			public Builder() : base()
+			public Builder()
 			{
 			}
 
@@ -32,7 +31,7 @@ namespace Echo.Structures
 				var manufactory = (Manufactory) structure;
 				State.Manufactory = new ManufactoryState
 				{
-					Efficiency = manufactory.Efficiency,
+					Efficiency = manufactory.Efficiency
 				};
 
 				return State;

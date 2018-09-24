@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Echo.Builder;
+﻿using Echo.Builder;
 using Echo.Celestial;
 using Echo.State;
 
@@ -15,7 +14,7 @@ namespace Echo.JumpGates
 				{
 					Id = state.ObjectId,
 					Name = state.Name,
-					Position = new Position(location, state.LocalCoordinates),
+					Position = new Position(location, state.LocalCoordinates)
 				};
 
 				return new ObjectBuilder<JumpGate>(jumpGate)

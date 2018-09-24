@@ -22,7 +22,7 @@ namespace Echo
 					Items = universe.Items.Values.ToArray(),
 					Weapons = universe.Weapons.Values.ToArray(),
 					Ships = universe.Ships.Values.ToArray(),
-					BluePrints = universe.BluePrints.Values.ToArray(),
+					BluePrints = universe.BluePrints.Values.ToArray()
 				};
 			}
 

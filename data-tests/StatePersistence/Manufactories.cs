@@ -6,11 +6,10 @@ using Echo.Celestial;
 using Echo.Corporations;
 using Echo.State;
 using Echo.Structures;
-using Echo.Tests;
 using NUnit.Framework;
 using Shouldly;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class Manufactories : StateTest
@@ -26,10 +25,7 @@ namespace Echo.Data.Tests.StatePersistence
 			}
 		}
 		
-		private StructureState Manufactory
-		{
-			get { return Universe.Manufactory; }
-		}
+		private StructureState Manufactory => Universe.Manufactory;
 
 		[Test]
 		public void Persist()

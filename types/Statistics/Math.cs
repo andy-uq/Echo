@@ -14,10 +14,10 @@ namespace Echo.Statistics
 			IsZero = isZero;
 		}
 
-		public Binary Add { get; private set; }
-		public Predicate<TValue> IsPositive { get; private set; }
-		public Predicate<TValue> IsNegative { get; private set; }
-		public Predicate<TValue> IsZero { get; private set; }
+		public Binary Add { get; }
+		public Predicate<TValue> IsPositive { get; }
+		public Predicate<TValue> IsNegative { get; }
+		public Predicate<TValue> IsZero { get; }
 	}
 
 	public static class Math

@@ -32,7 +32,7 @@ namespace Echo.Tests.Ships
 			_weapon = new Weapon();
 			
 			_combatFactory = (state, idResolver) => new AttackShipCombat(_random.Object) { Ship = ship(state).Build(idResolver), Target = _target };
-			_combat = _combatFactory(new ShipState(ItemCode.LightFrigate), new IdResolutionContext(new[] { new ShipInfo() { Code = ItemCode.LightFrigate } }));
+			_combat = _combatFactory(new ShipState(ItemCode.LightFrigate), new IdResolutionContext(new[] { new ShipInfo { Code = ItemCode.LightFrigate } }));
 		}
 
 		private IEnumerable<ShipStatisticValue> Stats()
@@ -66,7 +66,7 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void FireAll()
 		{
-			var items = new IObject[] { new ShipInfo { Code = ItemCode.LightFrigate }, new WeaponInfo { Code = ItemCode.MissileLauncher, MinimumDamage = 100, MaximumDamage = 100 }, };
+			var items = new IObject[] { new ShipInfo { Code = ItemCode.LightFrigate }, new WeaponInfo { Code = ItemCode.MissileLauncher, MinimumDamage = 100, MaximumDamage = 100 } };
 
 			var ship = new ShipState(ItemCode.LightFrigate)
 			{
@@ -76,7 +76,7 @@ namespace Echo.Tests.Ships
 				{
 					new HardPointState { Weapon = new WeaponState {Code = ItemCode.MissileLauncher}, Position = HardPointPosition.Front },
 					new HardPointState { Weapon = new WeaponState {Code = ItemCode.MissileLauncher}, Position = HardPointPosition.Rear },
-					new HardPointState { Weapon = new WeaponState {Code = ItemCode.MissileLauncher}, Position = HardPointPosition.Top },
+					new HardPointState { Weapon = new WeaponState {Code = ItemCode.MissileLauncher}, Position = HardPointPosition.Top }
 				}
 			};
 

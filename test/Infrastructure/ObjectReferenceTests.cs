@@ -25,8 +25,7 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void TryParseObjectReference()
 		{
-			ObjectReference objRef;
-			Assert.That(ObjectReference.TryParse("[x00000001] X", out objRef), Is.True);
+			Assert.That(ObjectReference.TryParse("[x00000001] X", out var objRef), Is.True);
 			Assert.That(objRef.Id, Is.EqualTo(1));
 			Assert.That(objRef.Name, Is.EqualTo("X"));
 
@@ -58,7 +57,7 @@ namespace Echo.Tests.Infrastructure
 			IObject o = null;
 			Assert.That(o.AsObjectReference(), Is.Null);
 
-			var m = new Moq.Mock<IObject>(MockBehavior.Strict);
+			var m = new Mock<IObject>(MockBehavior.Strict);
 			m.Setup(x => x.Id).Returns(1);
 			m.Setup(x => x.Name).Returns("X");
 
@@ -74,7 +73,7 @@ namespace Echo.Tests.Infrastructure
 			IObjectState o = null;
 			Assert.That(o.AsObjectReference(), Is.Null);
 
-			var m = new Moq.Mock<IObjectState>(MockBehavior.Strict);
+			var m = new Mock<IObjectState>(MockBehavior.Strict);
 			m.Setup(x => x.ObjectId).Returns(1);
 			m.Setup(x => x.Name).Returns("X");
 
@@ -87,7 +86,7 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void ToObjectReference()
 		{
-			var m = new Moq.Mock<IObject>(MockBehavior.Strict);
+			var m = new Mock<IObject>(MockBehavior.Strict);
 			m.Setup(x => x.Id).Returns(1);
 			m.Setup(x => x.Name).Returns("X");
 

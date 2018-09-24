@@ -2,7 +2,6 @@
 using System.Linq;
 using Echo.Agents.Skills;
 using Echo.Celestial;
-using Echo;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.State;
@@ -11,15 +10,13 @@ namespace Echo
 {
 	public static class UniverseExtensions
 	{
-		public static IEnumerable<Planet> Planets(this Universe u)
-		{
-			return u.SolarSystems().SelectMany(x => x.Satellites.OfType<Planet>());
-		}
+		public static IEnumerable<Planet> Planets(this Universe u) => u
+			.SolarSystems()
+			.SelectMany(x => x.Satellites.OfType<Planet>());
 
-		public static IEnumerable<SolarSystem> SolarSystems(this Universe u)
-		{
-			return u.StarClusters.SelectMany(starCluster => starCluster.SolarSystems);
-		}
+		public static IEnumerable<SolarSystem> SolarSystems(this Universe u) => u
+			.StarClusters
+			.SelectMany(starCluster => starCluster.SolarSystems);
 	}
 
 	public partial class Universe : IObject, ILocation
@@ -35,38 +32,22 @@ namespace Echo
 			Ships = new Dictionary<ItemCode, ShipInfo>();
 		}
 
-		public ObjectType ObjectType
-		{
-			get { return ObjectType.Universe; }
-		}
+		public ObjectType ObjectType => ObjectType.Universe;
 
-		public ulong Id
-		{
-			get { return 1L; }
-		}
+		public ulong Id => 1L;
 
-		public string Name
-		{
-			get { return "The Universe"; }
-		}
+		public string Name => "The Universe";
 
-		public Vector LocalCoordinates
-		{
-			get { return Vector.Zero; }
-		}
+		public Vector LocalCoordinates => Vector.Zero;
 
-		public List<StarCluster> StarClusters { get; private set; }
-		public List<Corporation> Corporations { get; private set; }
-		public Dictionary<ItemCode, ItemInfo> Items { get; private set; }
-		public Dictionary<ItemCode, WeaponInfo> Weapons { get; private set; }
-		public Dictionary<ItemCode, BluePrintInfo> BluePrints { get; private set; }
-		public Dictionary<ItemCode, ShipInfo> Ships { get; private set; }
-		public Dictionary<SkillCode, SkillInfo> Skills { get; private set; }
+		public List<StarCluster> StarClusters { get; }
+		public List<Corporation> Corporations { get; }
+		public Dictionary<ItemCode, ItemInfo> Items { get; }
+		public Dictionary<ItemCode, WeaponInfo> Weapons { get; }
+		public Dictionary<ItemCode, BluePrintInfo> BluePrints { get; }
+		public Dictionary<ItemCode, ShipInfo> Ships { get; }
+		public Dictionary<SkillCode, SkillInfo> Skills { get; }
 
-		public Position Position
-		{
-			get { return new Position(); }
-		}
-
+		public Position Position => new Position();
 	}
 }

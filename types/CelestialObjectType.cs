@@ -5,6 +5,6 @@
 		Object,
 		Planet,
 		Moon,
-		AsteriodBelt
+		AsteroidBelt
 	}
 }

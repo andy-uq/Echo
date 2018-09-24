@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Echo.Agents;
 using Echo.Celestial;
-using Echo;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.Market;
@@ -11,21 +10,18 @@ namespace Echo.Structures
 {
 	public abstract partial class Structure : OrbitingObject
 	{
-		public override ObjectType ObjectType
-		{
-			get { return ObjectType.Structure; }
-		}
+		public override ObjectType ObjectType => ObjectType.Structure;
 
 		public abstract StructureType StructureType { get; }
 
 		public Corporation Owner { get; set; }
-		public List<SellOrder> SellOrders { get; private set; }
-		public List<BuyOrder> BuyOrders { get; private set; }
+		public List<SellOrder> SellOrders { get; }
+		public List<BuyOrder> BuyOrders { get; }
 
-		public HashSet<ITask> Tasks { get; set; }
-		public List<Agent> Personnel { get; set; }
+		public HashSet<ITask> Tasks { get; }
+		public List<Agent> Personnel { get; }
 
-		public Dictionary<Corporation, ItemCollection> Hangar { get; private set; }
+		public Dictionary<Corporation, ItemCollection> Hangar { get; }
 
 		protected Structure()
 		{

@@ -6,6 +6,6 @@ namespace Echo.Statistics
 		BallisticStrength,
 		EnergyStrength,
 		KineticStrength,
-		ThermalStrength,
+		ThermalStrength
 	}
 }

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Echo.Celestial;
 using Echo.Engine;
-using Echo.State;
 using Echo.Tests.Mocks;
 using NUnit.Framework;
 using Shouldly;

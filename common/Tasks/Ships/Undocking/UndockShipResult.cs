@@ -12,15 +12,8 @@ namespace Echo.Tasks.Ships.Undocking
 
 		#region ITaskResult Members
 
-		string ITaskResult.StatusCode
-		{
-			get { return StatusCode.ToString(); }
-		}
-
-		object ITaskResult.ErrorParams
-		{
-			get { return new {Ship, Pilot}; }
-		}
+		string ITaskResult.StatusCode => StatusCode.ToString();
+		object ITaskResult.ErrorParams => new {Ship, Pilot};
 
 		#endregion
 	}

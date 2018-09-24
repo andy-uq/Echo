@@ -11,6 +11,6 @@ namespace Echo.Combat
 		public Damage ArmourDamage { get; set; }
 		public Damage HullDamage { get; set; }
 
-		public Damage TotalDamage { get { return ArmourDamage + HullDamage; } }
+		public Damage TotalDamage => ArmourDamage + HullDamage;
 	}
 }

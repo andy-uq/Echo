@@ -17,7 +17,7 @@ namespace Echo.Tests.Infrastructure
 			const long id = 1L;
 			var itemInfo = TestItems.Item(ItemCode.MissileLauncher);
 
-			var idResolution = new IdResolutionContext(new[] { itemInfo, });
+			var idResolution = new IdResolutionContext(new[] { itemInfo });
 			var objRef = new ObjectReference(id);
 
 			Should.Throw<ItemNotFoundException>(() => idResolution.Get<ItemInfo>(objRef)).Message.ShouldBe("Could not find ItemInfo \"[x00000001]\"");
@@ -29,9 +29,8 @@ namespace Echo.Tests.Infrastructure
 		{
 			var idResolution = new IdResolutionContext(Enumerable.Empty<IObject>());
 
-			ItemInfo value;
 			idResolution.Get<ItemInfo>(null).ShouldBe(null);
-			idResolution.TryGet(null, out value).ShouldBe(false);
+			idResolution.TryGet(null, out ItemInfo value).ShouldBe(false);
 		}
 
 		[Test]
@@ -39,7 +38,7 @@ namespace Echo.Tests.Infrastructure
 		{
 			var itemInfo = TestItems.Item(ItemCode.MissileLauncher);
 
-			var idResolution = new IdResolutionContext(new[] { itemInfo, });
+			var idResolution = new IdResolutionContext(new[] { itemInfo });
 			var objRef = new ObjectReference(itemInfo.ObjectId);
 			idResolution.Get<ItemInfo>(objRef);
 		}
@@ -50,8 +49,8 @@ namespace Echo.Tests.Infrastructure
 			var i1 = TestItems.Item(ItemCode.MissileLauncher);
 			var i2 = TestItems.Item(ItemCode.EnergyShield);
 
-			var r1 = new IdResolutionContext(new[] { i1, });
-			var r2 = new IdResolutionContext(new[] { i2, });
+			var r1 = new IdResolutionContext(new[] { i1 });
+			var r2 = new IdResolutionContext(new[] { i2 });
 			
 			var idResolution = r1.Combine(r2);
 			idResolution.ShouldBeOfType<CompositeIdResolver>();

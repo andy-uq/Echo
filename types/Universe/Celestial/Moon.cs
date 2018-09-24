@@ -1,15 +1,11 @@
 ﻿using System;
-using Echo;
 using Echo.Items;
 
 namespace Echo.Celestial
 {
 	public class AsteroidBelt : CelestialObject
 	{
-		public override CelestialObjectType CelestialObjectType
-		{
-			get { return CelestialObjectType.AsteriodBelt; }
-		}
+		public override CelestialObjectType CelestialObjectType => CelestialObjectType.AsteroidBelt;
 
 		public ItemCode Ore { get; set; }
 		public int Richness { get; set; }
@@ -27,27 +23,15 @@ namespace Echo.Celestial
 
 	public class Moon : CelestialObject
 	{
-		public override CelestialObjectType CelestialObjectType
-		{
-			get { return CelestialObjectType.Moon; }
-		}
+		public override CelestialObjectType CelestialObjectType => CelestialObjectType.Moon;
 
-		public Planet Planet
-		{
-			get { return (Planet) Position.Location; }
-		}
+		public Planet Planet => (Planet) Position.Location;
 	}
 
 	public class Planet : CelestialObject
 	{
-		public override CelestialObjectType CelestialObjectType
-		{
-			get { return CelestialObjectType.Planet; }
-		}
+		public override CelestialObjectType CelestialObjectType => CelestialObjectType.Planet;
 
-		public SolarSystem Sun
-		{
-			get { return (SolarSystem) Position.Location; }
-		}
+		public SolarSystem Sun => (SolarSystem) Position.Location;
 	}
 }

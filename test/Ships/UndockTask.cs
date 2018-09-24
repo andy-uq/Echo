@@ -5,13 +5,12 @@ using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
 using Echo.Tasks;
-using Echo.Tasks.Ships.Undocking;
 using Echo.Tasks.Ships;
+using Echo.Tasks.Ships.Undocking;
 using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
-using Shouldly;
-using SkillLevel = Echo.State.SkillLevel;
+using SkillLevel = Echo.Agents.Skills.SkillLevel;
 
 namespace Echo.Tests.Ships
 {
@@ -26,7 +25,7 @@ namespace Echo.Tests.Ships
 		{
 			_universe = new MockUniverse();
 
-			var mock = new Moq.Mock<ILocationServices>();
+			var mock = new Mock<ILocationServices>();
 			mock.Setup(x => x.GetExitPosition(It.IsAny<ILocation>())).Returns<ILocation>(l => l.Position.LocalCoordinates);
 			
 			_task = new UndockShipTask(mock.Object);
@@ -69,7 +68,7 @@ namespace Echo.Tests.Ships
 		{
 			var structure = new Manufactory();
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
-			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Echo.Agents.Skills.SkillLevel { Level = 1 } } } };
+			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new SkillLevel { Level = 1 } } } };
 
 			_task.SetParameters(new UndockShipParameters(ship, pilot));
 			var result = (UndockShipResult)_task.Execute();
@@ -82,7 +81,7 @@ namespace Echo.Tests.Ships
 			var solarSystem = new SolarSystem();
 			var structure = new Manufactory { Position = new Position(solarSystem, Vector.Parse("0,1,0")) };
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
-			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new Echo.Agents.Skills.SkillLevel { Level = 5 } } } };
+			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new SkillLevel { Level = 5 } } } };
 
 			_task.SetParameters(new UndockShipParameters(ship, pilot));
 			
@@ -98,7 +97,7 @@ namespace Echo.Tests.Ships
 			{
 				PilotRequirements = new[]
 				{
-					new SkillLevel(SkillCode.SpaceshipCommand, level:5)
+					new State.SkillLevel(SkillCode.SpaceshipCommand, level:5)
 				}
 			};
 		}

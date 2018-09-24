@@ -22,17 +22,13 @@ namespace Echo.Tests.SolarSystems
 				Register(x);
 		}
 
-		public IEnumerable<IObject> Values
-		{
-			get { return _registry.Values.ToArray(); }
-		}
+		public IEnumerable<IObject> Values => _registry.Values.ToArray();
 
 		public T GetById<T>(ulong id) where T : class, IObject
 		{
 			if (typeof(T) == typeof(JumpGate))
 			{
-				JumpGate jumpGate;
-				if (_registry.TryGetValue(id, out jumpGate))
+				if (_registry.TryGetValue(id, out var jumpGate))
 					return jumpGate as T;
 
 				throw new ItemNotFoundException("Jump Gate", id);
@@ -43,8 +39,7 @@ namespace Echo.Tests.SolarSystems
 
 		public bool TryGetById<T>(ulong id, out T value) where T : class, IObject
 		{
-			JumpGate jumpGate;
-			if (_registry.TryGetValue(id, out jumpGate))
+			if (_registry.TryGetValue(id, out var jumpGate))
 			{
 				value = jumpGate as T;
 				return value != null;

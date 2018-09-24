@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Echo.JumpGates;
 
 namespace Echo
 {
@@ -22,10 +21,7 @@ namespace Echo
 				}
 			}
 
-			public IEnumerable<IBuilderContext> DependentObjects
-			{
-				get { return _dependents; }
-			}
+			public IEnumerable<IBuilderContext> DependentObjects => _dependents;
 
 			public void Add(IBuilderContext dependent)
 			{

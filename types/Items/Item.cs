@@ -5,10 +5,7 @@ namespace Echo.Items
 {
 	public partial class Item : IObject
 	{
-		public ObjectType ObjectType
-		{
-			get { return ObjectType.Item; }
-		}
+		public ObjectType ObjectType => ObjectType.Item;
 
 		public Item(ItemInfo itemInfo, uint quantity = 1)
 		{
@@ -29,7 +26,7 @@ namespace Echo.Items
 		}
 
 		public ulong Id { get; private set; }
-		public string Name { get { return ItemInfo.Name; } }
+		public string Name => ItemInfo.Name;
 
 		public ItemInfo ItemInfo { get; private set; }
 		

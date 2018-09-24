@@ -15,15 +15,14 @@ namespace Echo.Market
 			_spendByOwner = new Dictionary<Corporation, long>();
 		}
 
-		public Item Item { get { return _item; } }
-		public bool Success { get { return _item != null; } }
-		public long Sum { get { return _spendByOwner.Sum(x => x.Value); } }
+		public Item Item => _item;
+		public bool Success => _item != null;
+		public long Sum => _spendByOwner.Sum(x => x.Value);
 		public long Timer { get; set; }
 
 		public void Add(Auction auction, long settlementPrice, Item item)
 		{
-			long price;
-			_spendByOwner.TryGetValue(auction.Owner, out price);
+			_spendByOwner.TryGetValue(auction.Owner, out var price);
 			_spendByOwner[auction.Owner] = price + settlementPrice;
 
 			if (_item == null)
@@ -36,7 +35,7 @@ namespace Echo.Market
 			}
 		}
 
-		public ObjectType ObjectType { get { return ObjectType.Settlement; } }
+		public ObjectType ObjectType => ObjectType.Settlement;
 		public ulong Id { get; set; }
 		public string Name { get; set; }
 	}

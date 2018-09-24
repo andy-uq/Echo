@@ -14,15 +14,9 @@ namespace Echo.Tasks.Ships.Jump
 
 		#region ITaskResult Members
 
-		string ITaskResult.StatusCode
-		{
-			get { return StatusCode.ToString(); }
-		}
+		string ITaskResult.StatusCode => StatusCode.ToString();
 
-		object ITaskResult.ErrorParams
-		{
-			get { return new { Ship, Pilot, JumpGate }; }
-		}
+		object ITaskResult.ErrorParams => new { Ship, Pilot, JumpGate };
 
 		#endregion
 	}

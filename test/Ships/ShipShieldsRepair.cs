@@ -15,8 +15,8 @@ namespace Echo.Tests.Ships
 		[SetUp]
 		public void SetUp()
 		{
-			_shieldInfo = new ShieldInfo() { Statistic = ShipStatistic.EnergyArmourStrength, RepairPerTick = 5d };
-			_ship = new Ship()
+			_shieldInfo = new ShieldInfo { Statistic = ShipStatistic.EnergyArmourStrength, RepairPerTick = 5d };
+			_ship = new Ship
 			{
 				Statistics =
 					new ShipStatistics(new[]
@@ -28,7 +28,7 @@ namespace Echo.Tests.Ships
 						new StatisticValue<ShipStatistic, double>(
 							ShipStatistic.BallisticArmourStrength,
 							value: 100d
-							),
+							)
 					})
 			};
 		}

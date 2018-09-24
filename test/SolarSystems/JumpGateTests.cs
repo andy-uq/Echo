@@ -15,7 +15,7 @@ namespace Echo.Tests.SolarSystems
 	[TestFixture]
 	public class JumpGateTests
 	{
-#pragma warning disable 169,649 // fields are initialised via reflection
+		#pragma warning disable 169,649 // fields are initialised via reflection
 		private JumpGate _a1, _a2;
 		private JumpGate _b1, _b2;
 		private JumpGate _c1, _c2;
@@ -23,7 +23,7 @@ namespace Echo.Tests.SolarSystems
 		private JumpGate _e1, _e2;
 		private JumpGate _f1;
 		private JumpGate _g1, _g2;
-#pragma warning restore 169,649
+		#pragma warning restore 169,649
 
 		private SolarSystem _a, _b, _c, _d, _e, _f, _g;
 		private SolarSystem[] _solarSystems;
@@ -45,7 +45,7 @@ namespace Echo.Tests.SolarSystems
 			_e = new SolarSystem { Name = "E" };
 			_f = new SolarSystem { Name = "F" };
 			_g = new SolarSystem { Name = "G" };
-			_solarSystems = new[] { _a, _b, _c, _d, _e, _f, _g, };
+			_solarSystems = new[] { _a, _b, _c, _d, _e, _f, _g };
 
 			var fields = GetFields();
 			var states = 
@@ -83,23 +83,27 @@ namespace Echo.Tests.SolarSystems
 
 		private void SetConnections(IDictionary<string, JumpGateState> states)
 		{
-			Action<string, string> connect = (src, target) => { states["_"+src].ConnectsTo = states["_"+target].ObjectId; };
-			connect("a1", "b2");
-			connect("a2", "d5");
-			connect("b1", "d1");
-			connect("b2", "a1");
-			connect("c1", "d4");
-			connect("c2", "f1");
-			connect("d1", "b1");
-			connect("d2", "e1");
-			connect("d3", "g1");
-			connect("d4", "c1");
-			connect("d5", "a2");
-			connect("e2", "d2");
-			connect("f1", "c2");
-			connect("g1", "d3");
-			connect("e1", "g2");
-			connect("g2", "e1");
+			void Connect(string src, string target)
+			{
+				states["_" + src].ConnectsTo = states["_" + target].ObjectId;
+			}
+
+			Connect("a1", "b2");
+			Connect("a2", "d5");
+			Connect("b1", "d1");
+			Connect("b2", "a1");
+			Connect("c1", "d4");
+			Connect("c2", "f1");
+			Connect("d1", "b1");
+			Connect("d2", "e1");
+			Connect("d3", "g1");
+			Connect("d4", "c1");
+			Connect("d5", "a2");
+			Connect("e2", "d2");
+			Connect("f1", "c2");
+			Connect("g1", "d3");
+			Connect("e1", "g2");
+			Connect("g2", "e1");
 		}
 
 		[Test]

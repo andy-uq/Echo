@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Echo.Builder;
-using Echo.Builders;
 using Echo.Items;
 using Echo.Ships;
 using Echo.State;
@@ -27,11 +26,9 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void ShipCanTrack()
 		{
-			Vector left, right;
-			double radiansOfMovement;
 
-			HardPoint.CalculateHardPoint(HardPointPosition.Left, out left, out radiansOfMovement);
-			HardPoint.CalculateHardPoint(HardPointPosition.Right, out right, out radiansOfMovement);
+			HardPoint.CalculateHardPoint(HardPointPosition.Left, out var left, out var radiansOfMovement);
+			HardPoint.CalculateHardPoint(HardPointPosition.Right, out var right, out radiansOfMovement);
 			
 			Assert.That(left, Is.Not.EqualTo(Vector.Zero));
 			Assert.That(right, Is.Not.EqualTo(Vector.Zero));
@@ -41,7 +38,7 @@ namespace Echo.Tests.Ships
 				HardPoints = new[]
 				{
 					new HardPointState {Position = HardPointPosition.Left, Speed = 0.5d, Orientation = left },
-					new HardPointState {Position = HardPointPosition.Right, Speed = 0.5d, Orientation = right },
+					new HardPointState {Position = HardPointPosition.Right, Speed = 0.5d, Orientation = right }
 				},
 				LocalCoordinates = new Vector(0, 0, 0),
 				Statistics = Enumerable.Empty<ShipStatisticState>()

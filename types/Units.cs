@@ -14,24 +14,10 @@ namespace Echo
 
 		public const double SolarMass = 1.9891E8;
 
-		public static double ToAU(double d)
-		{
-			return d / AstronomicalUnits;
-		}
+		public static double ToAU(double d) => d / AstronomicalUnits;
+		public static double FromAU(double d) => d * AstronomicalUnits;
 
-		public static double FromAU(double d)
-		{
-			return d * AstronomicalUnits;
-		}
-
-		public static bool IsZero(double value)
-		{
-			return Math.Abs(value) < Epsilon;
-		}
-
-		public static bool Equal(double a, double b)
-		{
-			return Math.Abs(a - b) < Epsilon;
-		}
+		public static bool IsZero(double value) => Math.Abs(value) < Epsilon;
+		public static bool Equal(double a, double b) => Math.Abs(a - b) < Epsilon;
 	}
 }

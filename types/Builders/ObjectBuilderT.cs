@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Echo
@@ -10,7 +9,7 @@ namespace Echo
 		{
 			private readonly List<ResolveHandler<T>> _resolveActions;
 
-			public T Target { get; private set; }
+			public T Target { get; }
 
 			public ObjectBuilder(T target)
 			{
@@ -20,21 +19,14 @@ namespace Echo
 
 			#region IBuilderContext Members
 
-			IObject IBuilderContext.Target
-			{
-				get { return Target; }
-			}
-
-			IObject IBuilderContext.Build(IIdResolver idResolver)
-			{
-				return Build(idResolver);
-			}
+			IObject IBuilderContext.Target => Target;
+			IObject IBuilderContext.Build(IIdResolver idResolver) => Build(idResolver);
 
 			#endregion
 
 			public T Build(IIdResolver idResolver)
 			{
-				foreach (IBuilderContext dependent in DependentObjects)
+				foreach (var dependent in DependentObjects)
 					dependent.Build(idResolver);
 
 				foreach (var action in _resolveActions)

@@ -50,7 +50,7 @@ namespace Echo.Tests.Infrastructure
 			var collection = new ItemCollection();
 			collection.Add(_itemFactory.Build(ItemCode.LightFrigate, 10));
 
-			bool canRemove = collection.Remove(_itemFactory.Build(ItemCode.MiningLaser, 1));
+			var canRemove = collection.Remove(_itemFactory.Build(ItemCode.MiningLaser, 1));
 			Assert.That(canRemove, Is.False);
 
 			canRemove = collection.Remove(_itemFactory.Build(ItemCode.LightFrigate, 20));

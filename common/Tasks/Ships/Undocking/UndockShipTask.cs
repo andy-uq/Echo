@@ -58,7 +58,7 @@ namespace Echo.Tasks.Ships.Undocking
 			{
 				StatusCode = statusCode,
 				Ship = ship,
-				Pilot = pilot,
+				Pilot = pilot
 			};
 		}
 	}

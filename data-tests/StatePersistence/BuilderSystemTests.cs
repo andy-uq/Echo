@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo.Builder;
 using Moq;
@@ -11,10 +12,7 @@ namespace Echo.Tests.StatePersistence
 	{
 		public class TestObject : IObject
 		{
-			public ObjectType ObjectType
-			{
-				get { throw new System.NotImplementedException(); }
-			}
+			public ObjectType ObjectType => throw new NotImplementedException();
 
 			public ulong Id { get; set; }
 			public string Name { get; set; }
@@ -47,7 +45,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void Resolves()
 		{
-			var testObject = new TestObject() { Id = 1, Children = new List<TestObject>() };
+			var testObject = new TestObject { Id = 1, Children = new List<TestObject>() };
 
 			var mChildObject = new Mock<IObject>(MockBehavior.Strict);
 			mChildObject.SetupGet(o => o.Id).Returns(2);
@@ -63,7 +61,7 @@ namespace Echo.Tests.StatePersistence
 		[Test]
 		public void ResolvesChildren()
 		{
-			var testObject = new TestObject() { Id = 1, Children = new List<TestObject>() };
+			var testObject = new TestObject { Id = 1, Children = new List<TestObject>() };
 			var child = new TestObject();
 
 			var mChildState = new Mock<IObjectState>(MockBehavior.Strict);

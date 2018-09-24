@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
@@ -9,9 +10,9 @@ namespace Echo.Statistics
 	{
 		private readonly HashSet<IStatisticDelta<TValue>> _deltas;
 
-		private static Math<TValue> Math { get; set; }
+		private static Math<TValue> Math { get; }
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		[SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
 		static StatisticValue()
 		{
 			var type = typeof (Math);
@@ -44,10 +45,10 @@ namespace Echo.Statistics
 
 		public TValue Value { get; set; }
 		public TValue CurrentValue { get; set; }
-		public T Stat { get; private set; }
+		public T Stat { get; }
 
-		public IEnumerable<IStatisticDelta<TValue>> Buffs { get { return _deltas.Where(x => Math.IsPositive(x.Value)); } }
-		public IEnumerable<IStatisticDelta<TValue>> Debuffs { get { return _deltas.Where(x => Math.IsNegative(x.Value)); } }
+		public IEnumerable<IStatisticDelta<TValue>> Buffs => _deltas.Where(x => Math.IsPositive(x.Value));
+		public IEnumerable<IStatisticDelta<TValue>> Debuffs => _deltas.Where(x => Math.IsNegative(x.Value));
 
 		public StatisticValue<T, TValue> Clone()
 		{
@@ -72,38 +73,17 @@ namespace Echo.Statistics
 			Recalculate();
 		}
 
-		public bool Remove(IStatisticDelta<TValue> delta)
-		{
-			return _deltas.Remove(delta);
-		}
+		public bool Remove(IStatisticDelta<TValue> delta) => _deltas.Remove(delta);
 
 		#region Operators
 
-		public static bool operator <(StatisticValue<T, TValue> stat, TValue value)
-		{
-			return stat.CurrentValue.CompareTo(value) < 0;
-		}
-
-		public static bool operator >(StatisticValue<T, TValue> stat, TValue value)
-		{
-			return stat.CurrentValue.CompareTo(value) > 0;
-		}
-
-		public static bool operator <=(StatisticValue<T, TValue> stat, TValue value)
-		{
-			return stat.CurrentValue.CompareTo(value) <= 0;
-		}
-
-		public static bool operator >=(StatisticValue<T, TValue> stat, TValue value)
-		{
-			return stat.CurrentValue.CompareTo(value) >= 0;
-		}
+		public static bool operator <(StatisticValue<T, TValue> stat, TValue value) => stat.CurrentValue.CompareTo(value) < 0;
+		public static bool operator >(StatisticValue<T, TValue> stat, TValue value) => stat.CurrentValue.CompareTo(value) > 0;
+		public static bool operator <=(StatisticValue<T, TValue> stat, TValue value) => stat.CurrentValue.CompareTo(value) <= 0;
+		public static bool operator >=(StatisticValue<T, TValue> stat, TValue value) => stat.CurrentValue.CompareTo(value) >= 0;
 
 		#endregion
 
-		public int CompareTo(TValue other)
-		{
-			return CurrentValue.CompareTo(other);
-		}
+		public int CompareTo(TValue other) => CurrentValue.CompareTo(other);
 	}
 }

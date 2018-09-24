@@ -23,7 +23,7 @@ namespace Echo.Market
 					Owner = settlement.Item.Owner.ToObjectReference(),
 					Location = settlement.Item.Location.ToObjectReference(),
 					TimeToSettlement = settlement.Timer,
-					SpendByOwner = settlement._spendByOwner.ToDictionary(k => k.Key.ToObjectReference(), v => v.Value),
+					SpendByOwner = settlement._spendByOwner.ToDictionary(k => k.Key.ToObjectReference(), v => v.Value)
 				};
 			}
 
@@ -33,7 +33,7 @@ namespace Echo.Market
 				{
 					Id = state.ObjectId,
 					Name = state.Name,
-					Timer = state.TimeToSettlement,
+					Timer = state.TimeToSettlement
 				};
 
 				var builder = new ObjectBuilder<Settlement>(settlement);

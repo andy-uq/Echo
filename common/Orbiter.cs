@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Echo.Celestial;
-using Echo.Statistics;
 
 namespace Echo
 {
@@ -16,7 +13,7 @@ namespace Echo
 			_solarSystem = solarSystem;
 		}
 
-		public TickRegistration TickRegistration { get { return new TickRegistration(Orbit); } }
+		public TickRegistration TickRegistration => new TickRegistration(Orbit);
 
 		public long Orbit(TickContext context)
 		{
@@ -29,10 +26,7 @@ namespace Echo
 			return 1;
 		}
 
-		private double Speed(CelestialObject celestialBody)
-		{
-			return System.Math.PI / 1000;
-		}
+		private double Speed(CelestialObject celestialBody) => Math.PI / 1000;
 
 		private void Move(IMoves target, double distanceTravelled)
 		{

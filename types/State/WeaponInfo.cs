@@ -1,5 +1,4 @@
-﻿using System;
-using Echo.Items;
+﻿using Echo.Items;
 
 namespace Echo.State
 {
@@ -33,13 +32,10 @@ namespace Echo.State
 
 		public override ItemType Type
 		{
-			get { return ItemType.ShipWeapons; }
+			get => ItemType.ShipWeapons;
 			set {  }
 		}
 
-		public override ObjectType ObjectType
-		{
-			get { return ObjectType.Weapon; }
-		}
+		public override ObjectType ObjectType => ObjectType.Weapon;
 	}
 }

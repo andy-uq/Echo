@@ -1,9 +1,9 @@
-﻿using Echo.Tests.Mocks;
+﻿using Autofac;
+using Echo.Tests.Mocks;
 using NUnit.Framework;
-using Raven.Client;
 using Raven.Client.Documents;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class StateTest
@@ -14,7 +14,7 @@ namespace Echo.Data.Tests.StatePersistence
 		[SetUp]
 		public virtual void SetUp()
 		{
-			var configurationBuilder = new Autofac.ContainerBuilder();
+			var configurationBuilder = new ContainerBuilder();
 
 			var fresh = new CreateFreshDatabase();
 			fresh.Create(configurationBuilder);

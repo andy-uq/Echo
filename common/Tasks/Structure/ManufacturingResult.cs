@@ -17,19 +17,13 @@ namespace Echo.Tasks.Structure
 		{
 		}
 
-		public ManufacturingTask.StatusCode StatusCode { get; private set; }
+		public ManufacturingTask.StatusCode StatusCode { get; }
 
 		#region ITaskResult Members
 
-		string ITaskResult.StatusCode
-		{
-			get { return StatusCode.ToString(); }
-		}
+		string ITaskResult.StatusCode => StatusCode.ToString();
 
-		object ITaskResult.ErrorParams
-		{
-			get { return _errorParams; }
-		}
+		object ITaskResult.ErrorParams => _errorParams;
 
 		public Item Item { get; set; }
 

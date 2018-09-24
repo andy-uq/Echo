@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Echo.Builder;
 using Echo.Builders;
-using Echo.Celestial;
 using Echo.JumpGates;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
-using Echo;
 
 namespace Echo.Celestial
 {
@@ -25,7 +22,7 @@ namespace Echo.Celestial
 					LocalCoordinates = solarSystem.Position.LocalCoordinates,
 					Satellites = solarSystem.Satellites.Save(),
 					Structures = solarSystem.Structures.Save(),
-					Ships = solarSystem.Ships.Save(),
+					Ships = solarSystem.Ships.Save()
 				};
 			}
 
@@ -35,7 +32,7 @@ namespace Echo.Celestial
 				{
 					Id = state.ObjectId,
 					Name = state.Name,
-					Position = new Position(starCluster, state.LocalCoordinates),
+					Position = new Position(starCluster, state.LocalCoordinates)
 				};
 
 				var builder = new ObjectBuilder<SolarSystem>(solarSystem)
@@ -43,12 +40,12 @@ namespace Echo.Celestial
 
 				builder
 					.Dependents(state.Ships)
-					.Build(Echo.Ships.Ship.Builder.Build)
+					.Build(Ship.Builder.Build)
 					.Resolve((resolver, target, dependent) => target.Ships.Add(dependent));
 				
 				builder
 					.Dependents(state.JumpGates)
-					.Build(Echo.JumpGates.JumpGate.Builder.Build)
+					.Build(JumpGate.Builder.Build)
 					.Resolve((resolver, target, dependent) => target.JumpGates.Add(dependent));
 
 				builder
@@ -84,7 +81,7 @@ namespace Echo.Celestial
 							s.ObjectId,
 							s.Orbits,
 							s.LocalCoordinates,
-							Instance = structure,
+							Instance = structure
 						}
 					);
 
@@ -113,7 +110,7 @@ namespace Echo.Celestial
 							s.ObjectId,
 							s.Orbits,
 							s.LocalCoordinates,
-							Instance = satellite,
+							Instance = satellite
 						}
 					);
 
@@ -131,13 +128,12 @@ namespace Echo.Celestial
 
 			private static CelestialObject GetParent(IIdResolver resolver, IObject satellite, ObjectReference? orbits)
 			{
-				CelestialObject parent;
-				if (resolver.TryGet(orbits, out parent))
+				if (resolver.TryGet(orbits, out CelestialObject parent))
 				{
 					return parent;
 				}
 
-				throw new InvalidOperationException(string.Format("{0} is not orbiting anything", satellite.AsObjectReference()));
+				throw new InvalidOperationException($"{satellite.AsObjectReference()} is not orbiting anything");
 			}
 
 			private static void CheckOrbitDistance(OrbitingObject @object, CelestialObject parent, double orbitDistance)
@@ -148,7 +144,7 @@ namespace Echo.Celestial
 				}
 				
 				throw new InvalidOperationException(
-					string.Format("{0} cannot orbit {1} as the orbit is decaying", @object.Name, parent.Name));
+					$"{@object.Name} cannot orbit {parent.Name} as the orbit is decaying");
 			}
 		}
 	}

@@ -15,15 +15,9 @@ namespace Echo.State
 		private readonly ulong _id;
 		private readonly string _name;
 
-		public ulong Id
-		{
-			get { return _state == null ? _id : _state.ObjectId; }
-		}
+		public ulong Id => _state?.ObjectId ?? _id;
 
-		public string Name
-		{
-			get { return _state == null ? _name : _state.Name; }
-		}
+		public string Name => _state == null ? _name : _state.Name;
 
 		public ObjectReference(string value) : this()
 		{
@@ -108,7 +102,7 @@ namespace Echo.State
 
 		public override string ToString()
 		{
-			return string.Format("[x{0:x8}] {1}", Id, Name).Trim();
+			return $"[x{Id:x8}] {Name}".Trim();
 		}
 	}
 

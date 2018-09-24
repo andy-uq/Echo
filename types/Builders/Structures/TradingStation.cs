@@ -19,9 +19,7 @@ namespace Echo.Structures
 
 			protected override ObjectBuilder<Structure> BuildStructure(ILocation location)
 			{
-				var structure = new TradingStation
-				{
-				};
+				var structure = new TradingStation();
 
 				return new ObjectBuilder<Structure>(structure);
 			}
@@ -29,9 +27,7 @@ namespace Echo.Structures
 			protected override StructureState SaveStructure(Structure structure)
 			{
 				var tradingStation = (TradingStation)structure;
-				State.TradingStation = new TradingStationState
-				{
-				};
+				State.TradingStation = new TradingStationState();
 
 				return State;
 			}

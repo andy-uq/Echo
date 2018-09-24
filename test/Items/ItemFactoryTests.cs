@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Echo.Items;
+﻿using Echo.Items;
 using Echo.Items.Packing;
 using Echo.Ships;
 using Echo.State;
@@ -41,10 +40,10 @@ namespace Echo.Tests.Items
 		[Test]
 		public void PackWeaponInBox()
 		{
-			var itemFactory = new ItemFactory(new IdResolutionContext(new[] { TestItems.Item(ItemCode.MissileLauncher), }));
+			var itemFactory = new ItemFactory(new IdResolutionContext(new[] { TestItems.Item(ItemCode.MissileLauncher) }));
 			var weaponPacker = new WeaponPacker(new IdGenerator(), itemFactory);
 			var itemPacker = new ItemPacker(new[] { weaponPacker });
-			var weapon = new Weapon() { WeaponInfo = new WeaponInfo { Code = ItemCode.MissileLauncher} };
+			var weapon = new Weapon { WeaponInfo = new WeaponInfo { Code = ItemCode.MissileLauncher} };
 
 			Assert.That(itemPacker.CanPack(weapon), Is.True);
 			var weaponInBox = itemPacker.Pack(weapon);

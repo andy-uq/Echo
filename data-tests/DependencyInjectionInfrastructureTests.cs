@@ -1,9 +1,10 @@
 ﻿using Autofac;
-using NUnit.Framework;
+using Autofac.Core.Registration;
 using Echo.Mapping;
+using NUnit.Framework;
 using Shouldly;
 
-namespace Echo.Data.Tests
+namespace Echo.Tests
 {
 	[TestFixture]
 	public class DependencyInjectionInfrastructureTests
@@ -62,8 +63,7 @@ namespace Echo.Data.Tests
 			var container = new ContainerBuilder();
 			var resolver = new AutofacResolver(container.Build());
 
-			IFoo value;
-			Assert.That(resolver.TryResolve(out value), Is.False);
+			Assert.That(resolver.TryResolve(out IFoo value), Is.False);
 		}
 
 		[Test]
@@ -72,7 +72,7 @@ namespace Echo.Data.Tests
 			var container = new ContainerBuilder();
 			var resolver = new AutofacResolver(container.Build());
 
-			Should.Throw<Autofac.Core.Registration.ComponentNotRegisteredException>(() => resolver.Resolve<IFoo>());
+			Should.Throw<ComponentNotRegisteredException>(() => resolver.Resolve<IFoo>());
 		}
 
 	}

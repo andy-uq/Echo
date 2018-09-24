@@ -1,4 +1,5 @@
 ﻿using Echo.Mapping;
+using Echo.Ships;
 
 namespace Echo
 {

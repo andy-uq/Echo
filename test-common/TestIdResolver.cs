@@ -28,10 +28,7 @@ namespace test.common
 				yield return item;
 		}
 
-		public override IEnumerable<IObject> Values
-		{
-			get { return _values.Values; }
-		}
+		public override IEnumerable<IObject> Values => _values.Values;
 
 		protected override bool LookupValue<T>(ulong id, out IObject value)
 		{

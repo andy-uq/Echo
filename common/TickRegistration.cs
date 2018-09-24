@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Echo
 {
@@ -14,7 +13,7 @@ namespace Echo
 
 		public long LastTick { get; set; }
 		public long Due { get; set; }
-		public TickMethod Tick { get; set; }
+		public TickMethod Tick { get; }
 	}
 
 	public class TickContext
@@ -29,7 +28,7 @@ namespace Echo
 		}
 
 		public long ElapsedTicks { get; set; }
-		public IEnumerable<TickRegistration> Registrations { get { return _registrations; } }
+		public IEnumerable<TickRegistration> Registrations => _registrations;
 
 		public void Register(TickMethod tick, long due = 1)
 		{

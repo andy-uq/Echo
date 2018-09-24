@@ -1,4 +1,6 @@
 ﻿using Echo.Mapping;
+using Echo.Ships;
+using Moq;
 using NUnit.Framework;
 
 namespace Echo.Tests.Infrastructure
@@ -10,7 +12,7 @@ namespace Echo.Tests.Infrastructure
 		private IRandom _random;
 		private IIdGenerator _idGenerator;
 
-		public EchoContext Create()
+		private EchoContext Create()
 		{
 			return new EchoContext(_typeMapper, _random, _idGenerator);
 		}
@@ -18,9 +20,9 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void CreateContext()
 		{
-			_typeMapper = new Moq.Mock<ITypeMapper>().Object;
-			_random = new Moq.Mock<IRandom>().Object;
-			_idGenerator = new Moq.Mock<IIdGenerator>().Object;
+			_typeMapper = new Mock<ITypeMapper>().Object;
+			_random = new Mock<IRandom>().Object;
+			_idGenerator = new Mock<IIdGenerator>().Object;
 
 			var context = Create();
 

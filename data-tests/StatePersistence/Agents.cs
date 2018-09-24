@@ -4,12 +4,9 @@ using Echo.Agents;
 using Echo.Agents.Skills;
 using Echo.Builders;
 using Echo.State;
-using Echo.Tests;
-using Echo.Tests.Mocks;
-using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class Agents : StateTest
@@ -25,10 +22,7 @@ namespace Echo.Data.Tests.StatePersistence
 			}
 		}
 
-		public AgentState John
-		{
-			get { return Universe.John; }
-		}
+		public AgentState John => Universe.John;
 
 		[Test]
 		public void Persist()

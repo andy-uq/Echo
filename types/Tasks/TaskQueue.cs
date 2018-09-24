@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Echo.Tasks
 {
@@ -12,10 +11,7 @@ namespace Echo.Tasks
 			_queue.Add(task);
 		}
 
-		public int Count
-		{
-			get { return _queue.Count; }
-		}
+		public int Count => _queue.Count;
 
 		public int Tick()
 		{

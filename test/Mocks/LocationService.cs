@@ -6,14 +6,11 @@ namespace Echo.Tests.Mocks
 	{
 		private readonly Mock<ILocationServices> _mock;
 
-		public Mock<ILocationServices> Mock
-		{
-			get { return _mock; }
-		}
+		public Mock<ILocationServices> Mock => _mock;
 
 		public LocationService()
 		{
-			_mock = new Moq.Mock<ILocationServices>();
+			_mock = new Mock<ILocationServices>();
 		}
 
 		public Vector GetExitPosition(ILocation location)

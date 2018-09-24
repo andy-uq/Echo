@@ -10,10 +10,9 @@ namespace Echo.Tests.Items
 		[Test]
 		public void ParseBoxedItemCode()
 		{
-			ItemCode itemCode;
 
 			const ulong badId = 1L;
-			Assert.That(badId.TryParse(out itemCode), Is.False);
+			Assert.That(badId.TryParse(out var itemCode), Is.False);
 
 			const ulong goodId = (ulong)ItemCode.MissileLauncher ^ ItemCodeExtensions.GENERIC_ITEM_ID_MASK;
 			Assert.That(goodId.TryParse(out itemCode), Is.True);
@@ -23,20 +22,18 @@ namespace Echo.Tests.Items
 		[Test]
 		public void ParseWeaponItemCode()
 		{
-			ItemCode itemCode;
-			
+
 			const ulong goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.WEAPON_ID_MASK;
-			Assert.That(goodId.TryParse(out itemCode), Is.True);
+			Assert.That(goodId.TryParse(out var itemCode), Is.True);
 			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
 		}
 
 		[Test]
 		public void ParseBluePrintItemCode()
 		{
-			ItemCode itemCode;
-			
+
 			const ulong goodId = (long)ItemCode.MissileLauncher ^ ItemCodeExtensions.BLUEPRINT_ID_MASK;
-			Assert.That(goodId.TryParse(out itemCode), Is.True);
+			Assert.That(goodId.TryParse(out var itemCode), Is.True);
 			Assert.That(itemCode, Is.EqualTo(ItemCode.MissileLauncher));
 		}
 		
@@ -45,7 +42,7 @@ namespace Echo.Tests.Items
 		{
 			var categories = ItemCode.LightFrigate.GetItemCategories();
 			Assert.That(categories, Is.Not.Empty);
-			Assert.That(categories, Is.EquivalentTo(new[] { ItemType.Ships, ItemType.Blueprints,  }));
+			Assert.That(categories, Is.EquivalentTo(new[] { ItemType.Ships, ItemType.Blueprints  }));
 		}
 
 		[Test]

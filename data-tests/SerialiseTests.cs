@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Raven.Client.Documents;
 
-namespace Echo.Data.Tests
+namespace Echo.Tests
 {
 	[TestFixture]
 	public class SerialiseTests
@@ -50,7 +50,7 @@ namespace Echo.Data.Tests
 		public void SetUp()
 		{
 			var fresh = new CreateFreshDatabase();
-			var configurationBuilder = new Autofac.ContainerBuilder();
+			var configurationBuilder = new ContainerBuilder();
 
 			fresh.Create(configurationBuilder);
 			var resolver = configurationBuilder.Build();
@@ -62,14 +62,13 @@ namespace Echo.Data.Tests
 		[TearDown]
 		public void TearDown()
 		{
-			if (_databaseHandle != null)
-				_databaseHandle.Dispose();
+			_databaseHandle?.Dispose();
 		}
 
 		[Test]
 		public void CanSerialiseNestedObject()
 		{
-			var item = new A() {Name = "A", Children = new List<A>() { new A() { Name = "Child A", }, new A{ Name = "Child B" }} };
+			var item = new A {Name = "A", Children = new List<A> { new A { Name = "Child A" }, new A{ Name = "Child B" }} };
 			var json = new StringWriter();
 			_serialiser.Serialize(json, item);
 			Console.WriteLine(json);
@@ -98,7 +97,7 @@ namespace Echo.Data.Tests
 		[Test]
 		public void CanSerialiseInheritedObject()
 		{
-			var item = new B() { Id = 10, Name = "B", Children = new List<A>() { new A() { Name = "Child A", }, new A{ Name = "Child B" }} };
+			var item = new B { Id = 10, Name = "B", Children = new List<A> { new A { Name = "Child A" }, new A{ Name = "Child B" }} };
 			var json = new StringWriter();
 			_serialiser.Serialize(json, item);
 			Console.WriteLine(json);
@@ -107,7 +106,7 @@ namespace Echo.Data.Tests
 		[Test, Ignore("Type information required")]
 		public void CanDeserialiseInheritedObject()
 		{
-			var item = new A() { Name = "B", Children = new List<A>() { new B() { Id = 10, Name = "Child B", }, new A { Name = "Child A" } } };
+			var item = new A { Name = "B", Children = new List<A> { new B { Id = 10, Name = "Child B" }, new A { Name = "Child A" } } };
 			var json = new StringWriter();
 			_serialiser.Serialize(json, item);
 

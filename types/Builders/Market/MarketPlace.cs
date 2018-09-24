@@ -20,7 +20,7 @@ namespace Echo.Market
 					AuctionLength = marketPlace.AuctionLength,
 					SettlementDelay = marketPlace.SettlementDelay,
 					Settlements = marketPlace.Settlements.Save(),
-					Auctions = marketPlace.Auctions.Select(_ => _.ToObjectReference()),
+					Auctions = marketPlace.Auctions.Select(_ => _.ToObjectReference())
 				};
 			}
 
@@ -30,7 +30,7 @@ namespace Echo.Market
 				{
 					AuctionLength = state.AuctionLength,
 					SettlementDelay = state.SettlementDelay,
-					StarCluster = starCluster,					
+					StarCluster = starCluster					
 				};
 
 				var builder = new ObjectBuilder<MarketPlace>(marketPlace);

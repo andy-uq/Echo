@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Echo.Ships;
 using NUnit.Framework;
-using Echo;
 using Shouldly;
 
 namespace Echo.Tests.Math
@@ -169,7 +167,7 @@ namespace Echo.Tests.Math
 			(origin == left).ShouldBe(false);
 			(right + left == origin).ShouldBe(true);
 
-			Object.Equals(origin, right + left).ShouldBe(true);
+			Equals(origin, right + left).ShouldBe(true);
 		}
 
 		[Test]

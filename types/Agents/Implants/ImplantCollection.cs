@@ -19,28 +19,11 @@ namespace Echo.Agents.Implants
 			_implants = skills.ToDictionary(s => s.Stat);
 		}
 
-		public Implant this[AgentStatistic stat]
-		{
-			get
-			{
-				Implant implant;
-				if (_implants.TryGetValue(stat, out implant))
-				{
-					return implant;
-				}
+		public Implant this[AgentStatistic stat] => _implants.TryGetValue(stat, out var implant)
+			? implant
+			: new Implant {Stat = stat, Rank = 0, Value = 0};
 
-				return new Implant {Stat = stat, Rank = 0, Value = 0};
-			}
-		}
-
-		public IEnumerator<Implant> GetEnumerator()
-		{
-			return _implants.Values.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		public IEnumerator<Implant> GetEnumerator() => _implants.Values.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 	}
 }

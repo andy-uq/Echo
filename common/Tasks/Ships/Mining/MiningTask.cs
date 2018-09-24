@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Echo.Celestial;
-using Echo.Items;
 using Echo.Ships;
 
 namespace Echo.Tasks.Ships.Mining
@@ -65,10 +65,10 @@ namespace Echo.Tasks.Ships.Mining
 				max += miningLaser.MaximumDamage*miningLaser.Speed;
 			}
 
-			var quantity = (uint) System.Math.Floor((min + max)/2.0);
+			var quantity = (uint) Math.Floor((min + max)/2.0);
 				
 			quantity = AsteroidBelt.Reduce(quantity);
-			Item ore = _itemFactory.Build(AsteroidBelt.Ore, quantity);
+			var ore = _itemFactory.Build(AsteroidBelt.Ore, quantity);
 
 			return Success(() => new MiningResult {Ore = ore});
 		}

@@ -6,10 +6,10 @@ namespace Echo.Exceptions
 	[Serializable]
 	public class ItemNotFoundException : Exception
 	{
-		public string ItemType { get; set; }
-		public object Item { get; set; }
+		public string ItemType { get; }
+		public object Item { get; }
 
-		public ItemNotFoundException(string itemType, object item) : base(string.Format("Could not find {0} \"{1}\"", itemType, item))
+		public ItemNotFoundException(string itemType, object item) : base($"Could not find {itemType} \"{item}\"")
 		{
 			ItemType = itemType;
 			Item = item;

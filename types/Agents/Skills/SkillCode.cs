@@ -5,11 +5,11 @@
 		Invalid,
 
 		[Category(SkillCategory.SpaceshipCommand)]
-		SpaceshipCommand,
+		SpaceshipCommand
 	}
 
 	public static class SkillCodes
 	{
-		public static readonly SkillCode[] All = {SkillCode.SpaceshipCommand,};
+		public static readonly SkillCode[] All = {SkillCode.SpaceshipCommand};
 	}
 }

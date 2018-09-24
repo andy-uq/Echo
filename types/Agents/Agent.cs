@@ -7,6 +7,7 @@ using Echo.Corporations;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
+using SkillLevel = Echo.State.SkillLevel;
 
 namespace Echo.Agents
 {
@@ -18,10 +19,7 @@ namespace Echo.Agents
 			Skills = new SkillCollection();
 		}
 
-		public ObjectType ObjectType
-		{
-			get { return ObjectType.Agent; }
-		}
+		public ObjectType ObjectType => ObjectType.Agent;
 
 		public ulong Id { get; private set; }
 		public string Name { get; private set; }
@@ -49,7 +47,7 @@ namespace Echo.Agents
 			return CanUse(bluePrint.BuildRequirements);
 		}
 
-		private bool CanUse(IEnumerable<State.SkillLevel> requirements)
+		private bool CanUse(IEnumerable<SkillLevel> requirements)
 		{
 			return requirements.All(requirement => Skills[requirement.SkillCode].Level >= requirement.Level);
 		}
@@ -58,10 +56,7 @@ namespace Echo.Agents
 		{
 			Location = location;
 			var structure = location as Structure;
-			if (structure != null)
-			{
-				structure.Personnel.Add(this);
-			}
+			structure?.Personnel.Add(this);
 		}
 	}
 }

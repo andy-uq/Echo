@@ -1,6 +1,4 @@
-﻿using Echo;
-
-namespace Echo
+﻿namespace Echo
 {
 	public interface IMoves
 	{

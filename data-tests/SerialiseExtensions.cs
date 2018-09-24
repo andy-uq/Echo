@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace Echo.Data.Tests
+namespace Echo.Tests
 {
 	public static class SerialiseExtensions
 	{

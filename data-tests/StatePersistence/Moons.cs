@@ -1,11 +1,8 @@
 using System;
 using Echo.Builders;
 using Echo.Celestial;
-using Echo.Data.Tests;
-using Echo.Data.Tests.StatePersistence;
 using Echo.State;
 using NUnit.Framework;
-using Echo;
 
 namespace Echo.Tests.StatePersistence
 {
@@ -15,18 +12,15 @@ namespace Echo.Tests.StatePersistence
 		class WrappedObjectState
 		{
 			public string Id { get; set; }
-			public State.CelestialObjectState Value { get; set; }
+			public CelestialObjectState Value { get; set; }
 
-			public WrappedObjectState(State.CelestialObjectState value)
+			public WrappedObjectState(CelestialObjectState value)
 			{
 				Value = value;
 			}
 		}
 		
-		private CelestialObjectState Moon
-		{
-			get { return Universe.Moon; }
-		}
+		private CelestialObjectState Moon => Universe.Moon;
 
 		[Test]
 		public void Persist()

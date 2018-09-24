@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Echo.State
+﻿namespace Echo.State
 {
 	public class JumpGateState : IObjectState
 	{

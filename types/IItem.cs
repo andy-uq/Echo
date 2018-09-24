@@ -1,6 +1,4 @@
-﻿using Echo.Corporations;
-
-namespace Echo
+﻿namespace Echo
 {
 	//public interface IItem : IObject
 	//{

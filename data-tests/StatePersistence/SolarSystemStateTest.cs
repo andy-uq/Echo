@@ -5,12 +5,9 @@ using Echo.Celestial;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.State;
-using Echo.Tests;
-using Echo.Tests.Mocks;
-using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class SolarSystemStateTest : StateTest
@@ -26,31 +23,16 @@ namespace Echo.Data.Tests.StatePersistence
 			}
 		}
 		
-		private SolarSystemState SolarSystem
-		{
-			get { return Universe.SolarSystem; }
-		}
+		private SolarSystemState SolarSystem => Universe.SolarSystem;
 
-		private CelestialObjectState Earth
-		{
-			get { return Universe.Earth; }
-		}
+		private CelestialObjectState Earth => Universe.Earth;
 
-		private CelestialObjectState Moon
-		{
-			get { return Universe.Moon; }
-		}
+		private CelestialObjectState Moon => Universe.Moon;
 
-		private CelestialObjectState AsteroidBelt
-		{
-			get { return Universe.AsteroidBelt; }
-		}
+		private CelestialObjectState AsteroidBelt => Universe.AsteroidBelt;
 
-		private StructureState Manufactory
-		{
-			get { return Universe.Manufactory; }
-		}
-		
+		private StructureState Manufactory => Universe.Manufactory;
+
 		[Test]
 		public void Persist()
 		{
@@ -66,7 +48,7 @@ namespace Echo.Data.Tests.StatePersistence
 		[Test]
 		public void Save()
 		{
-			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, SolarSystem);
+			var builder = Celestial.SolarSystem.Builder.Build(null, SolarSystem);
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 			builder.Dependent(Universe.MSCorp).Build(Corporation.Builder.Build);
@@ -74,7 +56,7 @@ namespace Echo.Data.Tests.StatePersistence
 			var solarSystem = builder.Materialise();
 			Check(solarSystem);
 
-			var state = Echo.Celestial.SolarSystem.Builder.Save(solarSystem);
+			var state = Celestial.SolarSystem.Builder.Save(solarSystem);
 
 			var json = Database.Conventions.CreateSerializer().Serialize(state);
 			Console.WriteLine(json);
@@ -109,7 +91,7 @@ namespace Echo.Data.Tests.StatePersistence
 
 		private void Check(SolarSystemState state)
 		{
-			var builder = Echo.Celestial.SolarSystem.Builder.Build(null, state);
+			var builder = Celestial.SolarSystem.Builder.Build(null, state);
 			builder.Dependent(new ShipInfo { Code = ItemCode.LightFrigate }).Build(x => new ObjectBuilder<ShipInfo>(x));
 			builder.Dependent(Universe.Weapon).Build(x => new ObjectBuilder<WeaponInfo>(x));
 			builder.Dependent(Universe.MSCorp).Build(Corporation.Builder.Build);

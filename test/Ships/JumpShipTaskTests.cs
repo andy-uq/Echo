@@ -3,8 +3,8 @@ using Echo.Celestial;
 using Echo.JumpGates;
 using Echo.Ships;
 using Echo.Tasks;
-using Echo.Tasks.Ships.Jump;
 using Echo.Tasks.Ships;
+using Echo.Tasks.Ships.Jump;
 using Moq;
 using NUnit.Framework;
 
@@ -18,7 +18,7 @@ namespace Echo.Tests.Ships
 		[SetUp]
 		public void SetUp()
 		{
-			var mock = new Moq.Mock<ILocationServices>();
+			var mock = new Mock<ILocationServices>();
 			mock.Setup(x => x.GetExitPosition(It.IsAny<ILocation>())).Returns<ILocation>(l => l.Position.LocalCoordinates);
 			
 			_task = new JumpShipTask(mock.Object);

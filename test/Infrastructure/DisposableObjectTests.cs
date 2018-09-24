@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Moq;
 using NUnit.Framework;
 
@@ -43,7 +44,7 @@ namespace Echo.Tests.Infrastructure
 		}
 
 		[Test]
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+		[SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
 		public void MultipleDisposal()
 		{
 			var t = new TestDisposableObject();
@@ -56,7 +57,7 @@ namespace Echo.Tests.Infrastructure
 		[Test]
 		public void SafeDisposal()
 		{
-			var exceptionHandler = new Moq.Mock<IExceptionHandler>(MockBehavior.Strict);
+			var exceptionHandler = new Mock<IExceptionHandler>(MockBehavior.Strict);
 			exceptionHandler.Setup(x => x.Warn(It.IsAny<Exception>())).Returns<Exception>(x => x).Verifiable();
 			
 			ExceptionHandler.Initialise(exceptionHandler.Object);

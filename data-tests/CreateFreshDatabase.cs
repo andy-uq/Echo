@@ -4,15 +4,14 @@ using Autofac;
 using Newtonsoft.Json;
 using Raven.Client.Documents;
 using Raven.Embedded;
-using test;
 
-namespace Echo.Data.Tests
+namespace Echo.Tests
 {
 	public class CreateFreshDatabase : DisposableObject
 	{
-		private static Lazy<EmbeddedServer> s_database = new Lazy<EmbeddedServer>(() =>
+		private static readonly Lazy<EmbeddedServer> s_database = new Lazy<EmbeddedServer>(() =>
 		{
-			var database = Raven.Embedded.EmbeddedServer.Instance;
+			var database = EmbeddedServer.Instance;
 			database.StartServer();
 
 			Console.WriteLine($"Using in-memory database: {database.GetServerUriAsync().GetAwaiter().GetResult()}");

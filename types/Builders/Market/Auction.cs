@@ -1,5 +1,4 @@
-﻿using System;
-using Echo.Agents;
+﻿using Echo.Agents;
 using Echo.Builder;
 using Echo.Corporations;
 using Echo.Items;

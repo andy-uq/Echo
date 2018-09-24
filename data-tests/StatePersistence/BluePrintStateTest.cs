@@ -3,7 +3,7 @@ using Echo.Items;
 using Echo.State;
 using NUnit.Framework;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class BluePrintStateTest : StateTest
@@ -19,10 +19,7 @@ namespace Echo.Data.Tests.StatePersistence
 			}
 		}
 
-		public ItemState Item
-		{
-			get { return Items.Item.Builder.Save(new Item(Universe.BluePrint)); }
-		}
+		public ItemState Item => Echo.Items.Item.Builder.Save(new Item(Universe.BluePrint));
 
 		[Test]
 		public void Persist()

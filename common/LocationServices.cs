@@ -13,12 +13,13 @@ namespace Echo
 
 		public Vector GetExitPosition(ILocation location)
 		{
+			double Translate(double x1, double xD) => (x1 + 5d * (xD - 0.5d));
+			
 			var xDelta = _random.GetNext();
 			var yDelta = _random.GetNext();
 
 			var origin = location.Position.LocalCoordinates;
-			Func<double, double, double> translate = (x1, xD) => (x1 + 5d*(xD - 0.5d));
-			return new Vector(translate(origin.X, xDelta), translate(origin.Y, yDelta), origin.Z);
+			return new Vector(Translate(origin.X, xDelta), Translate(origin.Y, yDelta), origin.Z);
 		}
 	}
 

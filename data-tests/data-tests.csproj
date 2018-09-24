@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RootNamespace>Echo.Data.Tests</RootNamespace>
+    <RootNamespace>Echo.Tests</RootNamespace>
     <AssemblyName>Echo.Data.Tests</AssemblyName>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>latest</LangVersion>

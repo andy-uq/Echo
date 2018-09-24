@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Echo
+﻿namespace Echo
 {
 	public interface IObjectState
 	{

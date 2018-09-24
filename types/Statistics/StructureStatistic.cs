@@ -6,6 +6,6 @@
 		BallisticArmourStrength,
 		EnergyArmourStrength,
 		KineticArmourStrength,
-		ThermalArmourStrength,
+		ThermalArmourStrength
 	}
 }

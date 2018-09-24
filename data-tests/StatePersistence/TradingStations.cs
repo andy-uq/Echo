@@ -5,11 +5,10 @@ using Echo.Celestial;
 using Echo.Corporations;
 using Echo.State;
 using Echo.Structures;
-using Echo.Tests;
 using NUnit.Framework;
 using Shouldly;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class TradingStations : StateTest
@@ -25,10 +24,7 @@ namespace Echo.Data.Tests.StatePersistence
 			}
 		}	
 	
-		private StructureState TradingStation
-		{
-			get { return Universe.TradingStation; }
-		}
+		private StructureState TradingStation => Universe.TradingStation;
 
 		[Test]
 		public void Persist()

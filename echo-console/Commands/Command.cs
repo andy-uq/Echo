@@ -25,7 +25,7 @@ using Echo.ConsoleRunner.Commands;
 
 namespace Echo.ConsoleRunner.Commands
 {
-	[System.Diagnostics.DebuggerDisplay("{Method}")]
+	[System.Diagnostics.DebuggerDisplay("{" + nameof(Method) + "}")]
 	partial class Command : DisplayInfoBase, ICommand
 	{
 		Dictionary<string, int> _names;
@@ -128,7 +128,7 @@ namespace Echo.ConsoleRunner.Commands
 				Exception innerException = te.InnerException;
 
 				ThreadStart savestack = Delegate.CreateDelegate(typeof(ThreadStart), innerException, "InternalPreserveStackTrace", false, false) as ThreadStart;
-				if(savestack != null) savestack();
+				savestack?.Invoke();
 				throw innerException;// -- now we can re-throw without trashing the stack
 			}
 		}

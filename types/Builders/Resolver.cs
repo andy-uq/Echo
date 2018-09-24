@@ -17,7 +17,7 @@ namespace Echo
 
 			public Resolver()
 			{
-				_resolveObject = resolver => default(TDependent);
+				_resolveObject = resolver => default;
 			}
 
 			public Resolver(ObjectBuilder<T> target, ObjectBuilder<TDependent> dependent)
@@ -60,16 +60,10 @@ namespace Echo
 				}
 			}
 
-			public IEnumerable<IBuilderContext> DependentObjects
-			{
-				get
-				{
-					if (_dependent == null)
-						return Enumerable.Empty<IBuilderContext>();
-
-					return _dependent.DependentObjects;
-				}
-			}
+			public IEnumerable<IBuilderContext> DependentObjects =>
+				_dependent == null
+					? Enumerable.Empty<IBuilderContext>()
+					: _dependent.DependentObjects;
 
 			public IObject Build(IIdResolver idResolver)
 			{

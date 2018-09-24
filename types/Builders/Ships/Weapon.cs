@@ -1,17 +1,13 @@
-﻿using Echo.Builder;
-using Echo.Items;
+﻿using Echo.Items;
 using Echo.State;
 
-namespace Echo
+namespace Echo.Ships
 {
 	public interface IIdGenerator
 	{
 		ulong NextId();
 	}
-}
 
-namespace Echo.Ships
-{
 	partial class Weapon
 	{
 		public static class Builder
@@ -22,7 +18,7 @@ namespace Echo.Ships
 				{
 					ObjectId = weapon.Id,
 					Name = weapon.Name,
-					Code = weapon.WeaponInfo.Code,
+					Code = weapon.WeaponInfo.Code
 				};
 			}
 
@@ -48,7 +44,7 @@ namespace Echo.Ships
 				return new Weapon
 				{
 					Id = id,
-					WeaponInfo = weaponInfo,
+					WeaponInfo = weaponInfo
 				};
 			}
 		}

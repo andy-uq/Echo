@@ -34,7 +34,7 @@ namespace Echo.Tests.Items
 			var hp = new HardPoint(null, HardPointPosition.Top);
 			hp.EquipWeapon(new Weapon { WeaponInfo = _w1 });
 
-			int attacks = GetAttackCount(hp, 10, 1d);
+			var attacks = GetAttackCount(hp, 10, 1d);
 			Assert.That(attacks, Is.EqualTo(10));
 
 			attacks = GetAttackCount(hp, 10, 1.25);
@@ -46,12 +46,12 @@ namespace Echo.Tests.Items
 
 		private int GetAttackCount(HardPoint hp, int numberOfRounds, double speed)
 		{
-			int attack = 0;
+			var attack = 0;
 
 			hp.AttackCounter = 0;
 			_w1.Speed = speed;
 
-			for (int i = 0; i < numberOfRounds; i++)
+			for (var i = 0; i < numberOfRounds; i++)
 			{
 				hp.AttackCounter += hp.Weapon.WeaponInfo.Speed;
 				while (hp.AttackCounter >= 1d)

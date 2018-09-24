@@ -9,7 +9,7 @@ namespace Echo.State
 	{
 		private static readonly Lazy<SkillLevel[]> _defaultSkillLevels = new Lazy<SkillLevel[]>(() => SkillCodes.All.Select(x => new SkillLevel(x, 0)).ToArray());
 
-		public static IEnumerable<SkillLevel> DefaultSkillLevels { get { return _defaultSkillLevels.Value; } }
+		public static IEnumerable<SkillLevel> DefaultSkillLevels => _defaultSkillLevels.Value;
 
 		public SkillLevel(SkillCode skillCode, int level)
 		{
@@ -31,7 +31,7 @@ namespace Echo.State
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
+			if (obj.GetType() != GetType()) return false;
 			return Equals((SkillLevel) obj);
 		}
 

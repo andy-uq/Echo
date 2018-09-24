@@ -1,13 +1,10 @@
 ﻿using Echo.Builder;
 using Echo.State;
-using Echo;
 
 namespace Echo.Celestial
 {
 	partial class CelestialObject
 	{
-		#region Nested type: Builder
-
 		public class Builder
 		{
 			protected CelestialObjectState State { get; set; }
@@ -92,7 +89,7 @@ namespace Echo.Celestial
 			{
 				switch (state.CelestialObjectType)
 				{
-					case CelestialObjectType.AsteriodBelt:
+					case CelestialObjectType.AsteroidBelt:
 						return new AsteroidBeltBuilder(state);
 
 					default:
@@ -131,7 +128,7 @@ namespace Echo.Celestial
 					state.AsteroidBelt = new AsteroidBeltState
 					{
 						AmountRemaining = asteroidBelt.AmountRemaining,
-						Richness = asteroidBelt.Richness,
+						Richness = asteroidBelt.Richness
 					};
 
 					return state;
@@ -151,7 +148,5 @@ namespace Echo.Celestial
 			#endregion
 
 		}
-
-		#endregion
 	}
 }

@@ -5,7 +5,6 @@ using Echo.Builder;
 using Echo.Builders;
 using Echo.Items;
 using Echo.State;
-
 using ShipStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.ShipStatistic, double>;
 
 namespace Echo.Ships
@@ -25,7 +24,7 @@ namespace Echo.Ships
 					LocalCoordinates = ship.Position.LocalCoordinates,
 		 			Statistics = ship.Statistics.Select(Save),
 					HardPoints = ship.HardPoints.Save(),
-					Pilot = ship.Pilot.Save(),
+					Pilot = ship.Pilot.Save()
 				};
 			}
 
@@ -37,7 +36,7 @@ namespace Echo.Ships
 					Name = state.Name,
 					Heading = state.Heading,
 					Position = new Position(location, state.LocalCoordinates),
-					Statistics = new ShipStatistics(state.Statistics.Select(Build)),
+					Statistics = new ShipStatistics(state.Statistics.Select(Build))
 				};
 
 				var builder = new ObjectBuilder<Ship>(ship)
@@ -71,7 +70,7 @@ namespace Echo.Ships
 				{
 					Statistic = x.Stat,
 					CurrentValue = x.CurrentValue,
-					Value = x.Value,
+					Value = x.Value
 				};
 			}
 		}

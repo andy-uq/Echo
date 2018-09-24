@@ -354,12 +354,12 @@ namespace Echo.ConsoleRunner.Commands
 			/// <summary>
 			/// Converts this item to a string by getting the first value or null if none
 			/// </summary>
-			public static implicit operator string(Item item) { return item == null ? null : item.Value; }
+			public static implicit operator string(Item item) { return item?.Value; }
 
 			/// <summary>
 			/// Converts this item to array of strings
 			/// </summary>
-			public static implicit operator string[](Item item) { return item == null ? null : item.Values; }
+			public static implicit operator string[](Item item) { return item?.Values; }
 		}
 
 		#endregion Item class used for collection
@@ -387,7 +387,7 @@ namespace Echo.ConsoleRunner.Commands
 		{
 			List<String> list = new List<string>();
 			if (rawtext == null)
-				throw new ArgumentNullException("rawtext");
+				throw new ArgumentNullException(nameof(rawtext));
 			ArgReader characters = new ArgReader(rawtext.Trim());
 
 			while (!characters.IsEOF)
@@ -433,7 +433,7 @@ namespace Echo.ConsoleRunner.Commands
 		public static string Join(params string[] arguments)
 		{
 			if (arguments == null)
-				throw new ArgumentNullException("arguments");
+				throw new ArgumentNullException(nameof(arguments));
 			char[] escaped = " \t\"&()[]{}^=;!'+,`~".ToCharArray();
 
 			StringBuilder sb = new StringBuilder();

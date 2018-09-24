@@ -5,7 +5,7 @@ namespace Echo
 	public static class ExceptionHandler
 	{
 		private static readonly NullExceptionHandler _nullExceptionHandler = new NullExceptionHandler();
-		private static IExceptionHandler _exceptionHandler = null;
+		private static IExceptionHandler _exceptionHandler;
 
 		public static void Initialise(IExceptionHandler exceptionHandler)
 		{

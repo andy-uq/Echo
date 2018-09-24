@@ -1,12 +1,9 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using Echo.Celestial;
+﻿using Echo.Celestial;
 using Echo.Items;
 using Echo.Ships;
 using Echo.State;
 using Echo.Tasks.Ships;
 using Echo.Tasks.Ships.Mining;
-using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
 using Shouldly;
@@ -52,10 +49,10 @@ namespace Echo.Tests.Ships
 		public void CanMineAsteroid()
 		{
 			var veldnium = new ItemInfo(ItemCode.Veldnium);
-			var itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
+			var itemFactory = new Mock<IItemFactory>(MockBehavior.Strict);
 			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>())).Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
 
-			var mining = new MiningTask(itemFactory.Object) { };
+			var mining = new MiningTask(itemFactory.Object);
 			mining.SetParameters(new MineAsteroidParameters(_ship, _asteroid));
 			var result = (MiningResult )mining.Execute();
 
@@ -80,11 +77,11 @@ namespace Echo.Tests.Ships
 		public void AsteroidHasDifficulty()
 		{
 			var veldnium = new ItemInfo(ItemCode.Veldnium);
-			var itemFactory = new Moq.Mock<IItemFactory>(MockBehavior.Strict);
+			var itemFactory = new Mock<IItemFactory>(MockBehavior.Strict);
 			itemFactory.Setup(x => x.Build(ItemCode.Veldnium, It.IsAny<uint>()))
 				.Returns<ItemCode, uint>((item, quantity) => new Item(veldnium, quantity));
 
-			var mining = new MiningTask(itemFactory.Object) { };
+			var mining = new MiningTask(itemFactory.Object);
 			mining.SetParameters(new MineAsteroidParameters(_ship, _difficultAsteroid));
 			
 			var result = mining.Mine();

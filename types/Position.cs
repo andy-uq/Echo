@@ -4,8 +4,8 @@ namespace Echo
 {
 	public struct Position : IEquatable<Position>
 	{
-		public ILocation Location { get; private set; }
-		public Vector LocalCoordinates { get; private set; }
+		public ILocation Location { get; }
+		public Vector LocalCoordinates { get; }
 
 		public Position(ILocation location, Vector localCoordinates) : this()
 		{
@@ -24,35 +24,15 @@ namespace Echo
 			}
 		}
 
-		public Position RotateZ(double radians)
-		{
-			return new Position(Location, LocalCoordinates.RotateZ(radians));
-		}
+		public Position RotateZ(double radians) => new Position(Location, LocalCoordinates.RotateZ(radians));
 
-		public static Position operator +(Position position, Vector offset)
-		{
-			return new Position(position.Location, position.LocalCoordinates + offset);
-		}
+		public static Position operator +(Position position, Vector offset) => new Position(position.Location, position.LocalCoordinates + offset);
+		public static Position operator -(Position position, Vector offset) => new Position(position.Location, position.LocalCoordinates - offset);
+		public static Vector operator -(Position p1, Position p2) => p1.UniversalCoordinates - p2.UniversalCoordinates;
 
-		public static Position operator -(Position position, Vector offset)
-		{
-			return new Position(position.Location, position.LocalCoordinates - offset);
-		}
+		public static implicit operator Vector(Position p) => p.UniversalCoordinates;
 
-		public static Vector operator -(Position p1, Position p2)
-		{
-			return p1.UniversalCoordinates - p2.UniversalCoordinates;
-		}
-
-		public static implicit operator Vector(Position p)
-		{
-			return p.UniversalCoordinates;
-		}
-
-		public bool Equals(Position other)
-		{
-			return UniversalCoordinates.Equals(other.UniversalCoordinates);
-		}
+		public bool Equals(Position other) => UniversalCoordinates.Equals(other.UniversalCoordinates);
 
 		public override bool Equals(object obj)
 		{
@@ -62,27 +42,17 @@ namespace Echo
 
 		public override int GetHashCode()
 		{
-			unchecked
-			{
-				return UniversalCoordinates.GetHashCode();
-			}
+			return UniversalCoordinates.GetHashCode();
 		}
 
-		public static bool operator ==(Position left, Position right)
-		{
-			return left.Equals(right);
-		}
-
-		public static bool operator !=(Position left, Position right)
-		{
-			return !left.Equals(right);
-		}
+		public static bool operator ==(Position left, Position right) => left.Equals(right);
+		public static bool operator !=(Position left, Position right) => !left.Equals(right);
 
 		public override string ToString()
 		{
 			return Location == null 
 				? UniversalCoordinates.ToString()
-				: string.Format("{0} ({1})", UniversalCoordinates, Location);
+				: $"{UniversalCoordinates} ({Location})";
 		}
 	}
 }

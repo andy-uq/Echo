@@ -11,10 +11,7 @@ namespace Echo.Ships
 	{
 		private readonly List<HardPoint> _hardPoints;
 
-		public ObjectType ObjectType
-		{
-			get { return ObjectType.Ship; }
-		}
+		public ObjectType ObjectType => ObjectType.Ship;
 
 		public ulong Id { get; set; }
 		public string Name { get; set; }
@@ -22,17 +19,11 @@ namespace Echo.Ships
 		public Vector Heading { get; set; }
 		public ShipStatistics Statistics { get; set; }
 		public ShipInfo ShipInfo { get; set; }
-		public HashSet<ITask> Tasks { get; set; }
+		public HashSet<ITask> Tasks { get; }
 
-		public IEnumerable<HardPoint> HardPoints
-		{
-			get { return _hardPoints; }
-		}
+		public IEnumerable<HardPoint> HardPoints => _hardPoints;
 
-		public SolarSystem SolarSystem
-		{
-			get { return Position.GetSolarSystem(); }
-		}
+		public SolarSystem SolarSystem => Position.GetSolarSystem();
 
 		public Agent Pilot { get; set; }
 

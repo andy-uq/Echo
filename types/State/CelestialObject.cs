@@ -1,7 +1,4 @@
-﻿using System;
-using Echo;
-
-namespace Echo.State
+﻿namespace Echo.State
 {
 	public class CelestialObjectState : IObjectState
 	{

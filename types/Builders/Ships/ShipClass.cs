@@ -6,6 +6,6 @@
 		Frigate,
 		Destroyer,
 		Cruiser,
-		BattleCruiser,
+		BattleCruiser
 	}
 }

@@ -24,8 +24,7 @@ namespace Echo.Agents.Skills
 		{
 			get
 			{
-				SkillLevel skillLevel;
-				if (_skills.TryGetValue(skillCode, out skillLevel))
+				if (_skills.TryGetValue(skillCode, out var skillLevel))
 				{
 					return skillLevel;
 				}
@@ -34,20 +33,13 @@ namespace Echo.Agents.Skills
 			}
 		}
 
-		public IEnumerator<SkillLevel> GetEnumerator()
-		{
-			return _skills.Values.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		public IEnumerator<SkillLevel> GetEnumerator() => _skills.Values.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 		public void Add(SkillCode skillCode, SkillLevel skillLevel)
 		{
 			if (_skills.ContainsKey(skillCode))
-				throw new ArgumentException("Agent already posesses this skill", "skillCode");
+				throw new ArgumentException("Agent already possesses this skill", nameof(skillCode));
 
 			_skills.Add(skillCode, skillLevel);
 		}

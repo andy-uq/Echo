@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Echo.State.Market
+﻿namespace Echo.State.Market
 {
 	public class AuctionState : IObjectState
 	{

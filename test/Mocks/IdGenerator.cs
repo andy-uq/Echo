@@ -1,4 +1,6 @@
-﻿namespace Echo.Tests.Mocks
+﻿using Echo.Ships;
+
+namespace Echo.Tests.Mocks
 {
 	public class IdGenerator : IIdGenerator
 	{

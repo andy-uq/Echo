@@ -3,7 +3,6 @@ using System.Linq;
 using Echo;
 using Echo.Agents.Skills;
 using Echo.Items;
-using Echo.Market;
 using Echo.State;
 using Echo.State.Market;
 using SkillLevel = Echo.State.SkillLevel;
@@ -12,15 +11,15 @@ namespace test.common
 {
 	public static class TestItems
 	{
-		private static readonly Dictionary<ItemCode, ItemInfo> _Items;
-		private static readonly Dictionary<ItemCode, WeaponInfo> _Weapons;
-		private static readonly Dictionary<ItemCode, BluePrintInfo> _BluePrints;
+		private static readonly Dictionary<ItemCode, ItemInfo> _items;
+		private static readonly Dictionary<ItemCode, WeaponInfo> _weapons;
+		private static readonly Dictionary<ItemCode, BluePrintInfo> _bluePrints;
 
 		static TestItems()
 		{
-			_Items = Items.ToDictionary(k => k.Code);
-			_Weapons = Weapons.ToDictionary(k => k.Code);
-			_BluePrints = BluePrints.ToDictionary(k => k.Code);
+			_items = Items.ToDictionary(k => k.Code);
+			_weapons = Weapons.ToDictionary(k => k.Code);
+			_bluePrints = BluePrints.ToDictionary(k => k.Code);
 		}
 
 		public static IEnumerable<ItemInfo> Items
@@ -30,31 +29,31 @@ namespace test.common
 				yield return new ItemInfo
 				{
 					Code = ItemCode.EnergyShield,
-					Name = "Energy Shield",
+					Name = "Energy Shield"
 				};
 
 				yield return new ItemInfo
 				{
 					Code = ItemCode.LightFrigate,
-					Name = "Light Frigate",
+					Name = "Light Frigate"
 				};
 
 				yield return new ItemInfo
 				{
 					Code = ItemCode.MiningLaser,
-					Name = "Mining Laser",
+					Name = "Mining Laser"
 				};
 
 				yield return new ItemInfo
 				{
 					Code = ItemCode.MissileLauncher,
-					Name = "Mining Laser",
+					Name = "Mining Laser"
 				};
 
 				yield return new ItemInfo
 				{
 					Code = ItemCode.Veldnium,
-					Name = "Veldnium",
+					Name = "Veldnium"
 				};
 			}
 		}
@@ -91,23 +90,23 @@ namespace test.common
 			{
 				yield return new BluePrintInfo(ItemCode.MissileLauncher)
 				{
-					BuildRequirements = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level:5), },
-					Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 }, },
-					TargetQuantity = 2,
+					BuildRequirements = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level:5) },
+					Materials = new[] { new ItemState { Code = ItemCode.Veldnium, Quantity = 10 } },
+					TargetQuantity = 2
 				};
 
 				yield return new BluePrintInfo(ItemCode.LightFrigate)
 				{
-					BuildRequirements = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level: 5), },
+					BuildRequirements = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level: 5) },
 					Materials = new[]
 					{
 						new ItemState { Code = ItemCode.Veldnium, Quantity = 1000 },
 						new ItemState { Code = ItemCode.MissileLauncher, Quantity = 10 },
 						new ItemState { Code = ItemCode.MiningLaser, Quantity = 2 },
-						new ItemState { Code = ItemCode.EnergyShield, Quantity = 4 },
+						new ItemState { Code = ItemCode.EnergyShield, Quantity = 4 }
 					},
 					TargetQuantity = 1,
-					BuildLength = 5,
+					BuildLength = 5
 				};
 			}
 		}
@@ -124,17 +123,17 @@ namespace test.common
 
 		public static ItemInfo Item(ItemCode itemCode)
 		{
-			return _Items[itemCode];
+			return _items[itemCode];
 		}
 
 		public static WeaponInfo Weapon(ItemCode itemCode)
 		{
-			return _Weapons[itemCode];
+			return _weapons[itemCode];
 		}
 
 		public static BluePrintInfo BluePrint(ItemCode itemCode)
 		{
-			return _BluePrints[itemCode];
+			return _bluePrints[itemCode];
 		}
 
 		public static IIdResolver RegisterTestItems(this IIdResolver resolver)

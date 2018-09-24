@@ -1,17 +1,12 @@
 using System;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Data;
-using Echo.Data.Tests;
-using Echo.Data.Tests.StatePersistence;
 using Echo.State;
 using Echo.Statistics;
 using Echo.Structures;
 using NUnit.Framework;
-using Shouldly;
 
 namespace Echo.Tests.StatePersistence
 {
@@ -38,7 +33,7 @@ namespace Echo.Tests.StatePersistence
 			var jsonSerializer = Database.Conventions.CreateSerializer();
 
 			var statistic = new AgentStatisticState { Statistic = AgentStatistic.Intelligence, Value = 100, CurrentValue = 10 };
-			var agent = new AgentState() { Statistics = new[] { statistic }.Where(x => x.CurrentValue > 0) };
+			var agent = new AgentState { Statistics = new[] { statistic }.Where(x => x.CurrentValue > 0) };
 			jsonSerializer.Serialize(agent.Statistics);
 
 			var json = jsonSerializer.Serialize(universe);
@@ -150,7 +145,7 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(state.StarClusters, Is.Not.Empty);
 
 			var starClusterState = state.StarClusters.First();
-			SolarSystemState solState = starClusterState.SolarSystems.First();
+			var solState = starClusterState.SolarSystems.First();
 			Assert.That(solState, Is.Not.Null);
 
 			var earthState = solState.Satellites.FirstOrDefault();
@@ -166,7 +161,7 @@ namespace Echo.Tests.StatePersistence
 			Assert.That(starCluster.SolarSystems, Is.Not.Empty);
 			Assert.That(starCluster.MarketPlace, Is.Not.Null);
 			
-			SolarSystem sol = starCluster.SolarSystems.First();
+			var sol = starCluster.SolarSystems.First();
 
 			var earth = sol.Satellites.Single(x => x.Name == "Earth");
 			Assert.That(earth, Is.InstanceOf<Planet>());

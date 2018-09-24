@@ -7,6 +7,6 @@ namespace Echo.Statistics
 		EnergyArmourStrength,
 		KineticArmourStrength,
 		ThermalArmourStrength,
-		Speed,
+		Speed
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Echo.Agents.Skills;
 using Echo.Statistics;
 
@@ -17,19 +16,10 @@ namespace Echo.State
 		public string Description { get; set; }
 		public IEnumerable<SkillLevel> Prerequisites { get; set; }
 
-		ulong IObject.Id
-		{
-			get { return ObjectId; }
-		}
+		ulong IObject.Id => ObjectId;
 
-		public ulong ObjectId
-		{
-			get { return Code.ToId(); }
-		}
+		public ulong ObjectId => Code.ToId();
 
-		ObjectType IObject.ObjectType
-		{
-			get { return ObjectType.Skill; }
-		}
+		ObjectType IObject.ObjectType => ObjectType.Skill;
 	}
 }

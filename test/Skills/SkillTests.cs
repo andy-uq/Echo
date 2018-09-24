@@ -1,5 +1,4 @@
-﻿using Echo.Agents;
-using Echo.Agents.Skills;
+﻿using Echo.Agents.Skills;
 using Echo.State;
 using Echo.Statistics;
 using NUnit.Framework;
@@ -13,10 +12,9 @@ namespace Echo.Tests.Skills
 		[Test]
 		public void ParseSkillCode()
 		{
-			SkillCode skillCode;
 
 			const ulong badId = 1L;
-			Assert.That(badId.TryParse(out skillCode), Is.False);
+			Assert.That(badId.TryParse(out var skillCode), Is.False);
 
 			const ulong goodId = (long )SkillCode.SpaceshipCommand ^ SkillCodeExtensions.SKILL_ID_MASK;
 			Assert.That(goodId.TryParse(out skillCode), Is.True);
@@ -40,7 +38,7 @@ namespace Echo.Tests.Skills
 				PrimaryStat = AgentStatistic.Perception,
 				SecondaryStat = AgentStatistic.Willpower,
 				TrainingMultiplier = 1,
-				Prerequisites = new SkillLevel[0],
+				Prerequisites = new SkillLevel[0]
 
 			};
 		}

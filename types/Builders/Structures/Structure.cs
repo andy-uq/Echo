@@ -8,7 +8,6 @@ using Echo.Corporations;
 using Echo.Items;
 using Echo.Market;
 using Echo.State;
-using Echo;
 
 namespace Echo.Structures
 {
@@ -43,7 +42,7 @@ namespace Echo.Structures
 					Personnel = structure.Personnel.Select(p => p.ToObjectReference()),
 					HangerItems = structure.Hangar.Where(x => !x.Value.IsEmpty).Select(SaveHangarItems),
 					BuyOrders = structure.BuyOrders.Select(_ => _.Save()),
-					SellOrders = structure.SellOrders.Select(_ => _.Save()),
+					SellOrders = structure.SellOrders.Select(_ => _.Save())
 				};
 
 				return SaveStructure(structure);
@@ -62,12 +61,12 @@ namespace Echo.Structures
 
 				builder
 					.Dependents(State.BuyOrders)
-					.Build(x => BuyOrder.Builder.Build<BuyOrder>(x, builder.Target))
+					.Build(x => Auction.Builder.Build<BuyOrder>(x, builder.Target))
 					.Resolve((resolver, target, buyOrder) => target.BuyOrders.Add(buyOrder));
 
 				builder
 					.Dependents(State.SellOrders)
-					.Build(x => SellOrder.Builder.Build<SellOrder>(x, builder.Target))
+					.Build(x => Auction.Builder.Build<SellOrder>(x, builder.Target))
 					.Resolve((resolver, target, buyOrder) => target.SellOrders.Add(buyOrder));
 
 				return builder;
@@ -82,15 +81,15 @@ namespace Echo.Structures
 				};
 			}
 
-			private void LoadHangarItems(IIdResolver idresolver, Structure target, IEnumerable<HangarItemState> hangerItems)
+			private void LoadHangarItems(IIdResolver resolver, Structure target, IEnumerable<HangarItemState> hangerItems)
 			{
 				if (target.Owner == null)
 					throw new InvalidOperationException("Cannot load hangar items without owner");
 
 				foreach (var hangar in hangerItems)
 				{
-					var corporation = idresolver.Get<Corporation>(hangar.Owner);
-					var items = hangar.Items.Select(i => Item.Builder.Build(i, location:target, owner: corporation).Build(idresolver));
+					var corporation = resolver.Get<Corporation>(hangar.Owner);
+					var items = hangar.Items.Select(i => Item.Builder.Build(i, location:target, owner: corporation).Build(resolver));
 					var itemCollection = new ItemCollection(corporation.Property, items);
 					
 					target.Hangar.Add(corporation, itemCollection);

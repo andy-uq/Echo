@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using Echo.Data;
 using NUnit.Framework;
 using Raven.Client.Documents;
 
-namespace Echo.Data.Tests
+namespace Echo.Tests
 {
 	[TestFixture]
 	public class ConfigureDataTests
@@ -17,7 +18,7 @@ namespace Echo.Data.Tests
 		[Test]
 		public void CanConfigureFromAppConfig()
 		{
-			var configurationBuilder = new Autofac.ContainerBuilder();
+			var configurationBuilder = new ContainerBuilder();
 			
 			var configuration = new Configure();
 			configuration.Build(configurationBuilder);
@@ -36,7 +37,7 @@ namespace Echo.Data.Tests
 		{
 			using ( var fresh = new CreateFreshDatabase() )
 			{
-				var configurationBuilder = new Autofac.ContainerBuilder();
+				var configurationBuilder = new ContainerBuilder();
 
 				fresh.Create(configurationBuilder);
 				using ( var resolver = configurationBuilder.Build() )
@@ -54,7 +55,7 @@ namespace Echo.Data.Tests
 		{
 			using ( var fresh = new CreateFreshDatabase() )
 			{
-				var configurationBuilder = new Autofac.ContainerBuilder();
+				var configurationBuilder = new ContainerBuilder();
 				fresh.Create(configurationBuilder);
 
 				using ( var resolver = configurationBuilder.Build() )
@@ -62,7 +63,7 @@ namespace Echo.Data.Tests
 					var dbA = resolver.Resolve<IDocumentStore>();
 					using (var session = dbA.OpenSession())
 					{
-						session.Store(new A() {Name = "Bob"});
+						session.Store(new A {Name = "Bob"});
 					}
 				}
 			}

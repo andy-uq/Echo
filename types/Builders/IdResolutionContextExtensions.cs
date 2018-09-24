@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Echo.Builder;
 
-namespace Echo.Builder
+namespace Echo
 {
 	public static class IdResolutionContextExtensions
 	{
@@ -27,9 +28,7 @@ namespace Echo.Builder
 			where T : IObject 
 			where TDependentState : class, IObjectState
 		{
-			return childStates == null
-				? Enumerable.Empty<DependentObject<T, TDependentState>>()
-				: childStates.Select(x => new DependentObject<T, TDependentState>(context, x)).ToArray();
+			return childStates?.Select(x => new DependentObject<T, TDependentState>(context, x)).ToArray() ?? Enumerable.Empty<DependentObject<T, TDependentState>>();
 		}
 
 		public static IEnumerable<Resolver<T, TDependentState, TObject>> Build<T, TDependentState, TObject>(this IEnumerable<DependentObject<T, TDependentState>> dependents, Func<T, TDependentState, ObjectBuilder<TObject>> build)
@@ -37,11 +36,8 @@ namespace Echo.Builder
 			where TDependentState : class, IObjectState
 			where TObject : IObject
 		{
-			return dependents == null
-				? Enumerable.Empty<Resolver<T, TDependentState, TObject>>()
-				: dependents
-					.Select(d => d.Build(build))
-					.ToArray();
+			return dependents?.Select(d => d.Build(build))
+				       .ToArray() ?? Enumerable.Empty<Resolver<T, TDependentState, TObject>>();
 		}
 
 		public static IEnumerable<Resolver<T, TDependentState, TObject>> Build<T, TDependentState, TObject>(this IEnumerable<DependentObject<T, TDependentState>> dependents, Func<TDependentState, ObjectBuilder<TObject>> build)

@@ -1,5 +1,4 @@
-﻿using System;
-using Echo.Items;
+﻿using Echo.Items;
 using Echo.State;
 
 namespace Echo

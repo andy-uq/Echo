@@ -1,11 +1,8 @@
 using System;
 using Echo.Builders;
 using Echo.Celestial;
-using Echo.Data.Tests;
-using Echo.Data.Tests.StatePersistence;
 using Echo.State;
 using NUnit.Framework;
-using Echo;
 
 namespace Echo.Tests.StatePersistence
 {
@@ -23,10 +20,7 @@ namespace Echo.Tests.StatePersistence
 			}
 		}
 
-		private State.CelestialObjectState AsteroidBelt
-		{
-			get { return Universe.AsteroidBelt; }
-		}
+		private CelestialObjectState AsteroidBelt => Universe.AsteroidBelt;
 
 		[Test]
 		public void Persist()

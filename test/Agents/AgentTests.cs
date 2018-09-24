@@ -9,6 +9,7 @@ using Echo.Structures;
 using NUnit.Framework;
 using Shouldly;
 using test.common;
+using SkillLevel = Echo.State.SkillLevel;
 
 namespace Echo.Tests.Agents
 {
@@ -37,7 +38,7 @@ namespace Echo.Tests.Agents
 			var state = new AgentState
 			{
 				Statistics = new[] { new AgentStatisticState { Statistic = AgentStatistic.Intelligence, Value = 500 } },
-				Implants = new[] { new Implant(AgentStatistic.Intelligence) { Rank = 6, Value = 1000 }, }
+				Implants = new[] { new Implant(AgentStatistic.Intelligence) { Rank = 6, Value = 1000 } }
 			};
 
 			var agent = Agent.Builder.Build(state).Build(new TestIdResolver());
@@ -53,7 +54,7 @@ namespace Echo.Tests.Agents
 		{
 			var state = new AgentState
 			{
-				Skills = new[] { new Echo.State.SkillLevel(SkillCode.SpaceshipCommand, 5), }
+				Skills = new[] { new SkillLevel(SkillCode.SpaceshipCommand, 5) }
 			};
 
 			var agent = Agent.Builder.Build(state).Build(new TestIdResolver());

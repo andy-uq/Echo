@@ -1,5 +1,4 @@
-﻿using System;
-using Echo.Ships;
+﻿using Echo.Ships;
 using NUnit.Framework;
 using Shouldly;
 
@@ -8,11 +7,11 @@ namespace Echo.Tests.Ships
 	[TestFixture]
 	public class HardPointTests
 	{
-		private readonly Ship _leftTarget = new Ship() { Position = new Position(new Universe(), new Vector(-1, 0, 0)) };
-		private readonly Ship _rightTarget = new Ship() { Position = new Position(new Universe(), new Vector(1, 0, 0)) };
-		private readonly Ship _frontTarget = new Ship() { Position = new Position(new Universe(), new Vector(0, 1, 0)) };
-		private readonly Ship _rearTarget = new Ship() { Position = new Position(new Universe(), new Vector(0, -1, 0)) };
-		private readonly Ship _sideTarget = new Ship() { Position = new Position(new Universe(), new Vector(-1, 1, 0)) };
+		private readonly Ship _leftTarget = new Ship { Position = new Position(new Universe(), new Vector(-1, 0, 0)) };
+		private readonly Ship _rightTarget = new Ship { Position = new Position(new Universe(), new Vector(1, 0, 0)) };
+		private readonly Ship _frontTarget = new Ship { Position = new Position(new Universe(), new Vector(0, 1, 0)) };
+		private readonly Ship _rearTarget = new Ship { Position = new Position(new Universe(), new Vector(0, -1, 0)) };
+		private readonly Ship _sideTarget = new Ship { Position = new Position(new Universe(), new Vector(-1, 1, 0)) };
 		private Ship _ship;
 
 		private class CanTrackResult
@@ -57,12 +56,12 @@ namespace Echo.Tests.Ships
 		[Test]
 		public void CanTrack()
 		{
-			CanTrack(HardPointPosition.Left, new CanTrackResult() { Left = true, LeftTop = true });
-			CanTrack(HardPointPosition.Right, new CanTrackResult() { Right = true, LeftTop = false });
-			CanTrack(HardPointPosition.Rear, new CanTrackResult() { Left = true, Right = true, Rear = true, LeftTop = false });
-			CanTrack(HardPointPosition.Front, new CanTrackResult() { Left = true, Right = true, Front = true, LeftTop = true });
-			CanTrack(HardPointPosition.Top, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true, });
-			CanTrack(HardPointPosition.Bottom, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(HardPointPosition.Left, new CanTrackResult { Left = true, LeftTop = true });
+			CanTrack(HardPointPosition.Right, new CanTrackResult { Right = true, LeftTop = false });
+			CanTrack(HardPointPosition.Rear, new CanTrackResult { Left = true, Right = true, Rear = true, LeftTop = false });
+			CanTrack(HardPointPosition.Front, new CanTrackResult { Left = true, Right = true, Front = true, LeftTop = true });
+			CanTrack(HardPointPosition.Top, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(HardPointPosition.Bottom, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
 		}
 
 		[Test]
@@ -120,30 +119,30 @@ namespace Echo.Tests.Ships
 		{
 			var headingRight = new Vector(1,0);
 
-			CanTrack(headingRight, HardPointPosition.Left, new CanTrackResult() { Front = true, LeftTop = true });
-			CanTrack(headingRight, HardPointPosition.Right, new CanTrackResult() { Rear = true });
-			CanTrack(headingRight, HardPointPosition.Top, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true, });
-			CanTrack(headingRight, HardPointPosition.Bottom, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
-			CanTrack(headingRight, HardPointPosition.Front, new CanTrackResult() { Right = true, Rear = true, Front = true });
-			CanTrack(headingRight, HardPointPosition.Rear, new CanTrackResult() { Front = true, Left = true, LeftTop = true, Rear = true });
+			CanTrack(headingRight, HardPointPosition.Left, new CanTrackResult { Front = true, LeftTop = true });
+			CanTrack(headingRight, HardPointPosition.Right, new CanTrackResult { Rear = true });
+			CanTrack(headingRight, HardPointPosition.Top, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(headingRight, HardPointPosition.Bottom, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(headingRight, HardPointPosition.Front, new CanTrackResult { Right = true, Rear = true, Front = true });
+			CanTrack(headingRight, HardPointPosition.Rear, new CanTrackResult { Front = true, Left = true, LeftTop = true, Rear = true });
 
 			var headingLeft = new Vector(-1,0);
 
-			CanTrack(headingLeft, HardPointPosition.Left, new CanTrackResult() { Rear = true });
-			CanTrack(headingLeft, HardPointPosition.Right, new CanTrackResult() { Front = true, LeftTop = true });
-			CanTrack(headingLeft, HardPointPosition.Top, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true, });
-			CanTrack(headingLeft, HardPointPosition.Bottom, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
-			CanTrack(headingLeft, HardPointPosition.Front, new CanTrackResult() { Front = true, Left = true, LeftTop = true, Rear = true });
-			CanTrack(headingLeft, HardPointPosition.Rear, new CanTrackResult() { Right = true, Rear = true, Front = true });
+			CanTrack(headingLeft, HardPointPosition.Left, new CanTrackResult { Rear = true });
+			CanTrack(headingLeft, HardPointPosition.Right, new CanTrackResult { Front = true, LeftTop = true });
+			CanTrack(headingLeft, HardPointPosition.Top, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(headingLeft, HardPointPosition.Bottom, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(headingLeft, HardPointPosition.Front, new CanTrackResult { Front = true, Left = true, LeftTop = true, Rear = true });
+			CanTrack(headingLeft, HardPointPosition.Rear, new CanTrackResult { Right = true, Rear = true, Front = true });
 
 			var headingDown = new Vector(0,-1);
 
-			CanTrack(headingDown, HardPointPosition.Left, new CanTrackResult() { Right = true });
-			CanTrack(headingDown, HardPointPosition.Right, new CanTrackResult() { Left = true, LeftTop = true });
-			CanTrack(headingDown, HardPointPosition.Top, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true, });
-			CanTrack(headingDown, HardPointPosition.Bottom, new CanTrackResult() { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
-			CanTrack(headingDown, HardPointPosition.Front, new CanTrackResult() { Rear = true, Left = true, Right = true });
-			CanTrack(headingDown, HardPointPosition.Rear, new CanTrackResult() { Right = true, Front = true, LeftTop = true, Left = true });
+			CanTrack(headingDown, HardPointPosition.Left, new CanTrackResult { Right = true });
+			CanTrack(headingDown, HardPointPosition.Right, new CanTrackResult { Left = true, LeftTop = true });
+			CanTrack(headingDown, HardPointPosition.Top, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(headingDown, HardPointPosition.Bottom, new CanTrackResult { Left = true, Right = true, Front = true, Rear = true, LeftTop = true });
+			CanTrack(headingDown, HardPointPosition.Front, new CanTrackResult { Rear = true, Left = true, Right = true });
+			CanTrack(headingDown, HardPointPosition.Rear, new CanTrackResult { Right = true, Front = true, LeftTop = true, Left = true });
 		}
 
 		[Test]

@@ -12,15 +12,9 @@ namespace Echo.Tasks.Ships.Mining
 
 		#region ITaskResult Members
 
-		string ITaskResult.StatusCode
-		{
-			get { return StatusCode.ToString(); }
-		}
+		string ITaskResult.StatusCode => StatusCode.ToString();
 
-		object ITaskResult.ErrorParams
-		{
-			get { return Ship; }
-		}
+		object ITaskResult.ErrorParams => Ship;
 
 		#endregion
 	}

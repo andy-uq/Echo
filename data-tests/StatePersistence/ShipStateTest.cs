@@ -5,18 +5,15 @@ using Echo.Celestial;
 using Echo.Corporations;
 using Echo.Ships;
 using Echo.State;
-using Echo.Tests;
-using Echo.Tests.Mocks;
-using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class ShipStateTest : StateTest
 	{
-		public ShipState Ship { get { return Universe.Ship; }}
-		
+		public ShipState Ship => Universe.Ship;
+
 		private Ship Build(ShipState state)
 		{
 			var builder = Echo.Ships.Ship.Builder.Build(null, state);

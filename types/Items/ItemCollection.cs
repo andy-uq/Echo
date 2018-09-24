@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Echo.Corporations;
@@ -35,11 +36,11 @@ namespace Echo.Items
 		public ItemCollection(ItemCollection parent, ILocation location = null)
 			: this(location: location)
 		{
-			if (parent != null)
-			{
-				_parent = parent;
-				parent._subCollections.Add(this);
-			}
+			if (parent == null) 
+				return;
+
+			_parent = parent;
+			parent._subCollections.Add(this);
 		}
 
 		public ItemCollection(ItemCollection parent, IEnumerable<Item> initialContents)
@@ -51,51 +52,19 @@ namespace Echo.Items
 			}
 		}
 
-		public Corporation Owner
-		{
-			get
-			{
-				if (_owner != null)
-					return _owner;
+		public Corporation Owner => _owner ?? _parent?._owner;
+		public ILocation Location => _location ?? _parent?._location;
 
-				return _parent == null
-				       	? null
-				       	: _parent._owner;
-			}
-		}
+		private IEnumerable<Item> Items => _storage.Values.Concat(_subCollections.SelectMany(x => x.Items));
 
-		public ILocation Location
-		{
-			get
-			{
-				if (_location != null)
-					return _location;
-
-				return _parent == null
-				       	? null
-				       	: _parent._location;
-			}
-		}
-
-		private IEnumerable<Item> Items
-		{
-			get { return _storage.Values.Concat(_subCollections.SelectMany(x => x.Items)); }
-		}
-
-		public IEnumerator<Item> GetEnumerator()
-		{
-			return Items.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		public IEnumerator<Item> GetEnumerator() => Items.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 		public void Add(Item item)
 		{
-			Item currentItem;
-			if (_storage.TryGetValue(item.ItemInfo.Code, out currentItem))
+			if (item == null) throw new ArgumentNullException(nameof(item));
+
+			if (_storage.TryGetValue(item.ItemInfo.Code, out var currentItem))
 			{
 				currentItem.Quantity += item.Quantity;
 				return;
@@ -113,6 +82,8 @@ namespace Echo.Items
 
 		public bool Contains(Item item)
 		{
+			if (item == null) throw new ArgumentNullException(nameof(item));
+
 			var itemCode = item.ItemInfo.Code;
 			var quantity = item.Quantity;
 
@@ -121,8 +92,7 @@ namespace Echo.Items
 
 		public bool Contains(ItemCode itemCode, uint quantity)
 		{
-			Item currentItem;
-			if (_storage.TryGetValue(itemCode, out currentItem))
+			if (_storage.TryGetValue(itemCode, out var currentItem))
 			{
 				return currentItem.Quantity >= quantity;
 			}
@@ -149,8 +119,7 @@ namespace Echo.Items
 
 		private bool Remove(ItemCode itemCode, uint quantity)
 		{
-			Item currentItem;
-			if (_storage.TryGetValue(itemCode, out currentItem))
+			if (_storage.TryGetValue(itemCode, out var currentItem))
 			{
 				if (currentItem.Quantity < quantity)
 				{
@@ -181,25 +150,13 @@ namespace Echo.Items
 			}
 		}
 
-		public int Count
-		{
-			get { return _storage.Count; }
-		}
+		public int Count => _storage.Count;
 
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 
-		public long	ItemCount
-		{
-			get { return Items.Sum(i => i.Quantity); }
-		}
+		public long	ItemCount => Items.Sum(i => i.Quantity);
 
-		public bool IsEmpty
-		{
-			get { return _storage.Count == 0; }
-		}
+		public bool IsEmpty => _storage.Count == 0;
 
 		public bool Contains(ICollection<ItemState> items)
 		{
@@ -216,10 +173,6 @@ namespace Echo.Items
 			return hasItems || _subCollections.Any(x => x.Contains(items));
 		}
 
-		private uint GetQuantity(ItemCode code)
-		{
-			Item item;
-			return _storage.TryGetValue(code, out item) ? item.Quantity : 0;
-		}
+		private uint GetQuantity(ItemCode code) => _storage.TryGetValue(code, out var item) ? item.Quantity : 0;
 	}
 }

@@ -10,7 +10,7 @@ namespace Echo.Tests.TaskQueues
 		[Test]
 		public void AddTaskQueue()
 		{
-			var mock = new Moq.Mock<ITask>();
+			var mock = new Mock<ITask>();
 
 			var queue = new TaskQueue();
 			queue.Add(mock.Object);
@@ -21,8 +21,8 @@ namespace Echo.Tests.TaskQueues
 		[Test]
 		public void TickTaskWithNoRemainingTime()
 		{
-			var result = new Moq.Mock<ITaskResult>(MockBehavior.Strict);
-			var mock = new Moq.Mock<ITask>(MockBehavior.Strict);
+			var result = new Mock<ITaskResult>(MockBehavior.Strict);
+			var mock = new Mock<ITask>(MockBehavior.Strict);
 
 			mock.Setup(x => x.Execute()).Returns(result.Object);
 			result.SetupGet(f => f.TimeRemaining).Returns(0);
@@ -30,7 +30,7 @@ namespace Echo.Tests.TaskQueues
 			var queue = new TaskQueue();
 			queue.Add(mock.Object);
 
-			int count = queue.Tick();
+			var count = queue.Tick();
 			Assert.That(count, Is.EqualTo(1));
 			Assert.That(queue.Count, Is.EqualTo(0));
 		}
@@ -38,8 +38,8 @@ namespace Echo.Tests.TaskQueues
 		[Test]
 		public void TickTaskWithRemainingTime()
 		{
-			var result = new Moq.Mock<ITaskResult>(MockBehavior.Strict);
-			var mock = new Moq.Mock<ITask>(MockBehavior.Strict);
+			var result = new Mock<ITaskResult>(MockBehavior.Strict);
+			var mock = new Mock<ITask>(MockBehavior.Strict);
 
 			mock.Setup(x => x.Execute()).Returns(result.Object);
 			result.SetupGet(f => f.TimeRemaining).Returns(1);

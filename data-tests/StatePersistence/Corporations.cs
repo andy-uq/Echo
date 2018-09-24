@@ -1,14 +1,10 @@
 using System;
-using System.Linq;
 using Echo.Builders;
 using Echo.Corporations;
 using Echo.State;
-using Echo.Tests;
-using Echo.Tests.Mocks;
-using Echo.Tests.StatePersistence;
 using NUnit.Framework;
 
-namespace Echo.Data.Tests.StatePersistence
+namespace Echo.Tests.StatePersistence
 {
 	[TestFixture]
 	public class Corporations : StateTest
@@ -24,10 +20,7 @@ namespace Echo.Data.Tests.StatePersistence
 			}
 		}
 
-		public CorporationState Corp
-		{
-			get { return Universe.MSCorp; }
-		}
+		public CorporationState Corp => Universe.MSCorp;
 
 		[Test]
 		public void Persist()

@@ -2,24 +2,17 @@
 using Echo.Celestial;
 using Echo.Ships;
 
-
 namespace Echo.JumpGates
 {
 	public partial class JumpGate : OrbitingObject
 	{
 		public const double MinimumRangeToJump = 0.5;
 
-		public override ObjectType ObjectType
-		{
-			get { return ObjectType.JumpGate; }
-		}
+		public override ObjectType ObjectType => ObjectType.JumpGate;
 
 		public JumpGate ConnectsTo { get; set; }
 
-		public Celestial.SolarSystem SolarSystem
-		{
-			get { return Position.GetSolarSystem(); }
-		}
+		public SolarSystem SolarSystem => Position.GetSolarSystem();
 
 		/// <summary>Jumps a ship away from this gate</summary>
 		/// <param name="ship">Ship to jump</param>

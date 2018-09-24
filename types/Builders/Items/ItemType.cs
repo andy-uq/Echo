@@ -13,10 +13,10 @@
 		ShipWeapons,
 		ShipShields,
 
-		Starbases,
+		StarBases,
 
 		Ores,
 		Materials,
-		TradeGoods,
+		TradeGoods
 	}
 }

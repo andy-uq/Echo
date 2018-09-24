@@ -45,20 +45,11 @@ namespace Echo
 				return new Resolver<T, TDependentState, TObject>();
 			}
 
-			public IObject Target
-			{
-				get { return _target.Target; }
-			}
+			public IObject Target => _target.Target;
 
-			public IEnumerable<IBuilderContext> DependentObjects
-			{
-				get { return _target.DependentObjects; }
-			}
+			public IEnumerable<IBuilderContext> DependentObjects => _target.DependentObjects;
 
-			public IObject Build(IIdResolver resolver)
-			{
-				return _target.Build(resolver);
-			}
+			public IObject Build(IIdResolver resolver) => _target.Build(resolver);
 		}
 	}
 }

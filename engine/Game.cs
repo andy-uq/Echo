@@ -12,7 +12,7 @@ namespace Echo.Engine
 		public const long TicksPerSlice = TimeSpan.TicksPerSecond/60;
 		
 		private List<TickRegistration> _updateFunctions;
-		private IdleTimer _idle;
+		private readonly IdleTimer _idle;
 		private long _tick;
 
 		public Game() : this(new Universe())
@@ -34,8 +34,8 @@ namespace Echo.Engine
 		}
 
 		public Universe Universe { get; private set; }
-		public IdleTimer IdleTimer { get { return _idle; } }
-		public long Tick { get { return _tick; } }
+		public IdleTimer IdleTimer => _idle;
+		public long Tick => _tick;
 
 		public double Update()
 		{
@@ -43,7 +43,7 @@ namespace Echo.Engine
 			var context = new TickContext(_tick);
 
 			var index = 0;
-			long remaining = TicksPerSlice;
+			var remaining = TicksPerSlice;
 
 			var tickTimer = Stopwatch.StartNew();
 			while (remaining > 0 && _updateFunctions.Count > index)

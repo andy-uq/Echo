@@ -1,5 +1,4 @@
-﻿using System;
-using Echo.Agents;
+﻿using Echo.Agents;
 using Echo.Corporations;
 using Echo.Items;
 using Echo.Structures;
@@ -11,10 +10,7 @@ namespace Echo.Market
 		private Item _item;
 		private uint _blockSize;
 
-		public ObjectType ObjectType
-		{
-			get { return ObjectType.Auction; }
-		}
+		public ObjectType ObjectType => ObjectType.Auction;
 
 		public ulong Id { get; set; }
 		public string Name { get; set; }
@@ -22,19 +18,11 @@ namespace Echo.Market
 		public Agent Trader { get; set; }
 		public Structure Location { get; set; }
 
-		public MarketPlace MarketPlace
-		{
-			get
-			{
-				return Location == null
-					? null
-					: Location.Position.GetMarketPlace();
-			}
-		}
+		public MarketPlace MarketPlace => Location?.Position.GetMarketPlace();
 
 		public Item Item
 		{
-			get { return _item; }
+			get => _item;
 			set
 			{
 				_item = value;
@@ -46,17 +34,14 @@ namespace Echo.Market
 
 		public uint BlockSize
 		{
-			get { return _blockSize < 1 ? 1 : _blockSize; }
-			set { _blockSize = value; }
+			get => _blockSize < 1 ? 1 : _blockSize;
+			set => _blockSize = value;
 		}
 
 		public long Expires { get; set; }
 		public double Range { get; set; }
 
-		public uint Quantity
-		{
-			get { return Item.Quantity; }
-		}
+		public uint Quantity => Item.Quantity;
 
 		public bool OutOfRange(Auction auction)
 		{

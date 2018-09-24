@@ -67,7 +67,7 @@ namespace Echo.Combat
 				Ship = Ship,
 				Target = Target,
 
-				Hit = false,
+				Hit = false
 			};
 		}
 

@@ -14,8 +14,7 @@ namespace Echo
 		{
 			while (position.Location != null)
 			{
-				var solarSystem = position.Location as SolarSystem;
-				if (solarSystem != null)
+				if (position.Location is SolarSystem solarSystem)
 					return solarSystem;
 
 				position = position.Location.Position;
@@ -28,8 +27,7 @@ namespace Echo
 		{
 			while (location != null)
 			{
-				var starCluster = location as StarCluster;
-				if (starCluster != null)
+				if (location is StarCluster starCluster)
 					return starCluster;
 
 				location = location.Position.Location;
@@ -41,10 +39,7 @@ namespace Echo
 		public static MarketPlace GetMarketPlace(this ILocation location)
 		{
 			var starCluster = location.GetStarCluster();
-			if (starCluster == null)
-				return null;
-
-			return starCluster.MarketPlace;
+			return starCluster?.MarketPlace;
 		}
 
 		public static MarketPlace GetMarketPlace(this Position position)

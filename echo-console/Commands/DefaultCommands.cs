@@ -210,8 +210,7 @@ namespace Echo.ConsoleRunner.Commands
                     }
                     finally
                     {
-                        if (disposeMe != null)
-                            disposeMe.Dispose();
+	                    disposeMe?.Dispose();
                     }
                 }
 

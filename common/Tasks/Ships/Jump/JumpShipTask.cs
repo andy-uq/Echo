@@ -14,7 +14,7 @@ namespace Echo.Tasks.Ships.Jump
 		}
 
 		private Ship Ship { get; set; }
-		private Agent Pilot { get { return Ship.Pilot; } }
+		private Agent Pilot => Ship.Pilot;
 		private JumpGate JumpGate { get; set; }
 
 		protected override JumpShipResult SetParameters(JumpShipParameters parameters)

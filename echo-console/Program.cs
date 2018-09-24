@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
-using Echo;
-using Echo.Builder;
 using Echo.Builders;
 using Echo.Celestial;
 using Echo.Engine;
 using Echo.State;
 using Newtonsoft.Json;
 
-namespace echo_console
+namespace Echo.Console
 {
 	internal interface ICommand
 	{
@@ -39,12 +36,12 @@ namespace echo_console
 
 		private static void Main(string[] args)
 		{
-			string universeFileName = args.FirstOrDefault() ?? "universe.txt";
+			var universeFileName = args.FirstOrDefault() ?? "universe.txt";
 			UniverseState universe;
 
 			if (File.Exists(universeFileName))
 			{
-				using (StreamReader fs = File.OpenText(universeFileName))
+				using (var fs = File.OpenText(universeFileName))
 				{
 					var reader = new JsonTextReader(fs);
 					var serialiser = new JsonSerializer();
@@ -57,23 +54,23 @@ namespace echo_console
 				universe = CreateNewUniverse();
 			}
 
-			ObjectBuilder<Universe> universeBuilder = Universe.Builder.Build(universe);
+			var universeBuilder = Universe.Builder.Build(universe);
 			var resolver = new IdResolutionContext(universeBuilder.FlattenObjectTree());
 
 			var game = new Game(universeBuilder.Build(resolver), Registrations);
 			var gameThread = new Thread(() => GameThread(game));
 			gameThread.Start();
 
-			var render = new System.Threading.Timer(state => Render(game));
+			var render = new Timer(state => Render(game));
 			render.Change(0, 200);
 
 			int? saveSlot = null;
-			bool recordInput = false;
-			string command = "";
+			var recordInput = false;
+			var command = "";
 			WriteHelp();
 			while (_alive)
 			{
-				ConsoleKeyInfo key = Console.ReadKey(intercept: true);
+				var key = System.Console.ReadKey(intercept: true);
 				if (recordInput)
 				{
 					switch (key.Key)
@@ -144,9 +141,9 @@ namespace echo_console
 
 		private static void SaveState(Game game, string universeFileName)
 		{
-			UniverseState state = Universe.Builder.Save(game.Universe);
+			var state = Universe.Builder.Save(game.Universe);
 
-			using (StreamWriter fs = File.CreateText(universeFileName))
+			using (var fs = File.CreateText(universeFileName))
 			{
 				var writer = new JsonTextWriter(fs) {Formatting = Formatting.Indented};
 				var serialiser = new JsonSerializer();
@@ -171,30 +168,30 @@ namespace echo_console
 
 		private static void Render(Game game)
 		{
-			var curPosition = new Vector(Console.CursorLeft, Console.CursorTop);
+			var curPosition = new Vector(System.Console.CursorLeft, System.Console.CursorTop);
 
-			Console.CursorVisible = false;
+			System.Console.CursorVisible = false;
 			DrawState(game);
 
-			Console.SetCursorPosition((int )curPosition.X, (int )curPosition.Y);
-			Console.CursorVisible = true;
+			System.Console.SetCursorPosition((int )curPosition.X, (int )curPosition.Y);
+			System.Console.CursorVisible = true;
 		}
 
 		private static void GameThread(Game game)
 		{
-			Stopwatch frameTimer = Stopwatch.StartNew();
+			var frameTimer = Stopwatch.StartNew();
 			while (_alive)
 			{
 				frameTimer.Start();
 				while (_commandQueue.Any())
 				{
-					ICommand cmd = _commandQueue.Dequeue();
+					var cmd = _commandQueue.Dequeue();
 
 				}
 
 				game.Update();
 
-				long remaining = Game.TicksPerSlice - frameTimer.ElapsedTicks;
+				var remaining = Game.TicksPerSlice - frameTimer.ElapsedTicks;
 				if (remaining > 0)
 				{
 					Thread.Sleep(TimeSpan.FromTicks(remaining));
@@ -206,23 +203,23 @@ namespace echo_console
 
 		private static void DrawState(Game game)
 		{
-			Console.SetCursorPosition(0, 0);
-			Console.Write("IDLE: {0:n2}%, Tick: {1:x8}", game.IdleTimer.Idle, game.Tick);
+			System.Console.SetCursorPosition(0, 0);
+			System.Console.Write("IDLE: {0:n2}%, Tick: {1:x8}", game.IdleTimer.Idle, game.Tick);
 
 			DrawSolarSystem(game.Universe.StarClusters.SelectMany(s => s.SolarSystems).SingleOrDefault());
 		}
 
 		private static void DrawSolarSystem(SolarSystem solarSystem)
 		{
-			Vector origin = solarSystem.Position.UniversalCoordinates;
-			double scaleX = 40/Units.FromAU(3);
-			double scaleY = 10/Units.FromAU(2);
-			foreach (Planet satellite in solarSystem.Satellites.OfType<Planet>())
+			var origin = solarSystem.Position.UniversalCoordinates;
+			var scaleX = 40/Units.FromAU(3);
+			var scaleY = 10/Units.FromAU(2);
+			foreach (var satellite in solarSystem.Satellites.OfType<Planet>())
 			{
-				Vector position = satellite.Position.UniversalCoordinates - origin;
+				var position = satellite.Position.UniversalCoordinates - origin;
 
-				int xOffset = (int) (position.X*scaleX) + 40;
-				int yOffset = (int) (position.Y*scaleY) + 15;
+				var xOffset = (int) (position.X*scaleX) + 40;
+				var yOffset = (int) (position.Y*scaleY) + 15;
 
 				if (xOffset < 0 || xOffset > 79)
 					continue;
@@ -232,17 +229,17 @@ namespace echo_console
 
 				if (_obj.ContainsKey(satellite))
 				{
-					Vector lastPosition = _obj[satellite];
+					var lastPosition = _obj[satellite];
 					if (lastPosition.X == xOffset && lastPosition.Y == yOffset)
 						continue;
 
-					Console.SetCursorPosition((int) lastPosition.X, (int) lastPosition.Y);
-					Console.Write(' ');
+					System.Console.SetCursorPosition((int) lastPosition.X, (int) lastPosition.Y);
+					System.Console.Write(' ');
 				}
 
 				_obj[satellite] = new Vector(xOffset, yOffset);
-				Console.SetCursorPosition(xOffset, yOffset);
-				Console.Write(satellite.CelestialObjectType == CelestialObjectType.Planet ? '*' : '.');
+				System.Console.SetCursorPosition(xOffset, yOffset);
+				System.Console.Write(satellite.CelestialObjectType == CelestialObjectType.Planet ? '*' : '.');
 			}
 		}
 
@@ -254,7 +251,7 @@ namespace echo_console
 				CelestialObjectType = CelestialObjectType.Planet,
 				Mass = Units.SolarMass*1E-6,
 				LocalCoordinates = new Vector(Units.FromAU(1), 0),
-				Size = 1E-3,
+				Size = 1E-3
 			};
 
 			return Idify(new UniverseState
@@ -285,7 +282,7 @@ namespace echo_console
 										Mass = Units.SolarMass*3.7E-8,
 										LocalCoordinates = new Vector(Units.FromAU(1E-3), 0),
 										Size = 1E-9,
-										Orbits = earth.ToObjectReference(),
+										Orbits = earth.ToObjectReference()
 									}
 								}
 							}
@@ -298,10 +295,10 @@ namespace echo_console
 		private static UniverseState Idify(UniverseState universeState)
 		{
 			ulong id = 1 << 8;
-			foreach (IObjectState state in universeState.Flatten())
+			foreach (var state in universeState.Flatten())
 			{
-				Type type = state.GetType();
-				PropertyInfo property = type.GetProperty("ObjectId", typeof (ulong));
+				var type = state.GetType();
+				var property = type.GetProperty("ObjectId", typeof (ulong));
 				if (property != null && property.CanWrite)
 					property.SetValue(state, id++);
 			}
@@ -312,17 +309,17 @@ namespace echo_console
 
 		private static void WritePrompt(string prompt)
 		{
-			Console.SetCursorPosition(0, 24);
-			Console.Write(prompt.PadRight(79));
+			System.Console.SetCursorPosition(0, 24);
+			System.Console.Write(prompt.PadRight(79));
 		}
 
 		private static void WriteHelp()
 		{
-			Console.SetCursorPosition(0, 1);
-			Console.WriteLine("[0-9] Set state number");
-			Console.WriteLine("S - Save state");
-			Console.WriteLine("L - Load state");
-			Console.WriteLine("Q - Quit");
+			System.Console.SetCursorPosition(0, 1);
+			System.Console.WriteLine("[0-9] Set state number");
+			System.Console.WriteLine("S - Save state");
+			System.Console.WriteLine("L - Load state");
+			System.Console.WriteLine("Q - Quit");
 		}
 	}
 
@@ -360,12 +357,12 @@ namespace echo_console
 				}
 				catch (Exception ex)
 				{
-					throw new Exception(string.Format("Error parsing vector: {0}", reader.Value), ex);
+					throw new Exception($"Error parsing vector: {reader.Value}", ex);
 				}
 			}
 
-			throw new Exception(string.Format("Unexpected token or value when parsing version. Token: {0}, Value: {1}",
-				reader.TokenType, reader.Value));
+			throw new Exception(
+				$"Unexpected token or value when parsing version. Token: {reader.TokenType}, Value: {reader.Value}");
 		}
 
 		public override bool CanConvert(Type objectType)
