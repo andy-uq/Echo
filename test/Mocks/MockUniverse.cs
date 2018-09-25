@@ -10,6 +10,7 @@ using Echo.State.Market;
 using Echo.Statistics;
 using test.common;
 using SkillLevel = Echo.State.SkillLevel;
+using SkillTraining = Echo.State.SkillTraining;
 
 namespace Echo.Tests.Mocks
 {
@@ -55,7 +56,8 @@ namespace Echo.Tests.Mocks
 				Name = "John",
 				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState {Statistic = x, CurrentValue = 50, Value = 50}),
 				Implants = new[] {AgentStatistic.Intelligence, AgentStatistic.Willpower}.Select(x => new State.Implant { Stat = x, Rank = 3, Value = 15}),
-				Skills = new[] {new SkillLevel(SkillCode.SpaceshipCommand, level: 5)}
+				Skills = new[] {new SkillLevel(SkillCode.SpaceshipCommand, level: 5)},
+				Training = new [] { new SkillTraining(SkillCode.SpaceshipCommand) { Remaining = SpaceshipCommand.GetTimeToTrainToNextLevel(5) } }
 			};
 
 			MSCorp = new CorporationState

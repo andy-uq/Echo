@@ -7,9 +7,11 @@ using Echo.State;
 using AgentStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.AgentStatistic, int>;
 using AgentSkillLevel = Echo.Agents.Skills.SkillLevel;
 using AgentSkillTraining = Echo.Agents.Skills.SkillTraining;
+using AgentImplant = Echo.Agents.Implants.Implant;
 
 using SkillLevel = Echo.State.SkillLevel;
 using SkillTraining = Echo.State.SkillTraining;
+using Implant = Echo.State.Implant;
 
 namespace Echo.Agents
 {
@@ -24,7 +26,7 @@ namespace Echo.Agents
 					Id = state.ObjectId,
 					Name = state.Name,
 					Statistics = new AgentStatistics(state.Statistics.Select(Build)),
-					Implants = new ImplantCollection(state.Implants)
+					Implants = new ImplantCollection(state.Implants.Select(Build))
 				};
 
 				return new ObjectBuilder<Agent>(agent)
@@ -41,6 +43,7 @@ namespace Echo.Agents
 					ObjectId = agent.Id,
 					Name = agent.Name,
 					Statistics = agent.Statistics.Select(Save),
+					Implants = agent.Implants.Select(Save),
 					Skills = agent.Skills.Select(Save),
 					Location = agent.Location.AsObjectReference(),
 					Training = agent.Training.Select(Save)
@@ -62,6 +65,11 @@ namespace Echo.Agents
 				return new AgentStatisticValue(x.Statistic, x.Value);
 			}
 
+			private static AgentImplant Build(Implant x)
+			{
+				return new AgentImplant(x.Stat) { Rank = x.Rank, Value = x.Value };
+			}
+
 			private static AgentSkillLevel Build(IIdResolver resolver, SkillLevel x)
 			{
 				var skill = resolver.Get<SkillInfo>(x.SkillCode.ToObjectReference());
@@ -71,12 +79,17 @@ namespace Echo.Agents
 			private static AgentSkillTraining Build(IIdResolver resolver, SkillTraining x)
 			{
 				var skill = resolver.Get<SkillInfo>(x.SkillCode.ToObjectReference());
-				return new AgentSkillTraining(skill) { Remaining = x.Remaining, Start = x.Start, Complete = x.Complete, Paused = x.Paused };
+				return new AgentSkillTraining(skill) { Remaining = (uint) x.Remaining, Paused = x.Paused };
 			}
 
 			private static AgentStatisticState Save(AgentStatisticValue x)
 			{
 				return new AgentStatisticState {Statistic = x.Stat, CurrentValue = x.CurrentValue, Value = x.Value};
+			}
+
+			private static Implant Save(AgentImplant x)
+			{
+				return new Implant {Stat = x.Stat, Rank = x.Rank, Value = x.Rank};
 			}
 
 			private static SkillLevel Save(AgentSkillLevel x)
@@ -86,7 +99,7 @@ namespace Echo.Agents
 
 			private static SkillTraining Save(AgentSkillTraining x)
 			{
-				return new SkillTraining { SkillCode = x.SkillCode, Remaining = x.Remaining, Start = x.Start, Complete = x.Complete, Paused = x.Paused };
+				return new SkillTraining { SkillCode = x.SkillCode, Remaining = (int)x.Remaining, Paused = x.Paused };
 			}
 		}
 	}

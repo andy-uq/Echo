@@ -28,7 +28,7 @@ namespace test.common
 					Name = "Spaceship Command",
 					Prerequisites = new SkillLevel[0],
 					PrimaryStat = AgentStatistic.Perception,
-					SecondaryStat = AgentStatistic.Willpower,
+					SecondaryStat = AgentStatistic.Charisma,
 					TrainingMultiplier = 1
 				};
 			}

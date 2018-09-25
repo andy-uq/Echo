@@ -41,24 +41,6 @@ namespace Echo.Tests
 			return objects.Select(builder => builder.Build(idResolver));
 		}
 
-		public static SkillInfo ToInfo(this SkillCode skillCode)
-		{
-			var skill = new SkillInfo
-			{
-				Code = skillCode,
-				Id = $"skills/{skillCode}",
-				Name = skillCode.ToString("G"),
-			};
-
-			switch (skillCode)
-			{
-				case SkillCode.SpaceshipCommand:
-					skill.PrimaryStat = AgentStatistic.Perception;
-					skill.SecondaryStat = AgentStatistic.Charisma;
-					break;
-			}
-
-			return skill;
-		}
+		public static SkillInfo ToInfo(this SkillCode skillCode) => TestSkills.For(skillCode);
 	}
 }

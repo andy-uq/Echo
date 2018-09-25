@@ -15,9 +15,7 @@ namespace Echo.Agents.Skills
 		public SkillCode SkillCode => Skill.Code;
 		public SkillInfo Skill { get; }
 
-		public long Start { get; set; }
-		public long? Complete { get; set; }
-		public int Remaining { get; set; }
+		public uint Remaining { get; set; }
 		public bool Paused { get; set; }
 	}
 
@@ -38,6 +36,18 @@ namespace Echo.Agents.Skills
 		{
 			_collection.Add(skill);
 			return skill;
+		}
+
+		public SkillTraining Dequeue()
+		{
+			return _collection.Count == 0
+				? null
+				: _collection[0];
+		}
+
+		public void Remove(SkillTraining skill)
+		{
+			_collection.Remove(skill);
 		}
 
 		public bool IsTraining(SkillCode skill)

@@ -14,9 +14,9 @@ namespace Echo.Agents.Implants
 			_implants = new Dictionary<AgentStatistic, Implant>();
 		}
 
-		public ImplantCollection(IEnumerable<State.Implant> skills)
+		public ImplantCollection(IEnumerable<Implant> skills)
 		{
-			_implants = skills.ToDictionary(s => s.Stat, s => new Implant(s));
+			_implants = skills.ToDictionary(s => s.Stat);
 		}
 
 		public Implant this[AgentStatistic stat] => _implants.TryGetValue(stat, out var implant)

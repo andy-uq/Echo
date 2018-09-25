@@ -10,13 +10,6 @@ namespace Echo.Agents.Implants
 			Stat = stat;
 		}
 
-		public Implant(State.Implant implant)
-		{
-			Stat = implant.Stat;
-			Rank = implant.Rank;
-			Value = implant.Value;
-		}
-
 		public AgentStatistic Stat { get; }
 		public int Rank { get; set; }
 		public int Value { get; set; }

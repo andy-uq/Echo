@@ -19,5 +19,39 @@ namespace Echo.State
 		ulong IObject.Id => ObjectId;
 		public ulong ObjectId => Code.ToId();
 		ObjectType IObject.ObjectType => ObjectType.Skill;
+
+		public int GetTimeToTrainToNextLevel(int currentLevel)
+		{
+			var timeRequired = TimeSpentGettingToLevel(currentLevel);
+			return TimeToTrainToLevel(timeRequired, currentLevel + 1);
+		}
+
+		private static int TimeSpentGettingToLevel(int currentLevel)
+		{
+			if (currentLevel == 0)
+				return 0;
+
+			var timeTakenSoFar = 0;
+			var timeRequired = 5;
+
+			for (var i = 2; i <= currentLevel; i++)
+			{
+				timeRequired = TimeToTrainToLevel(timeTakenSoFar, i);
+				timeTakenSoFar += timeRequired;
+			}
+
+			return timeRequired;
+		}
+
+		private static int TimeToTrainToLevel(int timeTakenSoFar, int targetLevel)
+		{
+			if (timeTakenSoFar == 0)
+			{
+				return 5;
+			}
+
+			var multiplier = 2.0 - (1.0 / targetLevel);
+			return ((int) System.Math.Ceiling(timeTakenSoFar * multiplier / 5.0) * 5) - timeTakenSoFar;
+		}
 	}
 }

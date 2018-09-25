@@ -5,7 +5,7 @@ using test.common;
 
 namespace Echo.Tests.Mocks
 {
-	static internal class AgentTestExtensions
+	internal static class AgentTestExtensions
 	{
 		public static Agent StandUp(this AgentState state, Corporation corporation = null, ILocation initialLocation = null)
 		{
