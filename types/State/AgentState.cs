@@ -19,10 +19,17 @@ namespace Echo.State
 		public ulong ObjectId { get; set; }
 		public string Name { get; set; }
 		public ObjectReference? Location { get; set; }
-		public IEnumerable<AgentStatisticState> Statistics { get; set; }		
+		public IEnumerable<AgentStatisticState> Statistics { get; set; }
 		public IEnumerable<Implant> Implants { get; set; }
 		public IEnumerable<SkillLevel> Skills { get; set; }
 		public IEnumerable<SkillTraining> Training { get; set; }
+	}
+
+	public class Implant
+	{
+		public AgentStatistic Stat { get; set; }
+		public int Rank { get; set; }
+		public int Value { get; set; }
 	}
 
 	public class AgentStatisticState : StatisticState<int>

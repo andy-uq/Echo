@@ -8,11 +8,7 @@ namespace Echo.State
 		public ShipClass ShipClass { get; set; }
 		public SkillLevel[] PilotRequirements { get; set; }
 		
-		public override ItemType Type
-		{
-			get => ItemType.Ships;
-			set {  }
-		}
+		public override ItemType Type => ItemType.Ships;
 
 		public override ObjectType ObjectType => ObjectType.Ship;
 	}

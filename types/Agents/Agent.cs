@@ -7,7 +7,6 @@ using Echo.Corporations;
 using Echo.Ships;
 using Echo.State;
 using Echo.Structures;
-using SkillLevel = Echo.State.SkillLevel;
 
 namespace Echo.Agents
 {
@@ -17,6 +16,7 @@ namespace Echo.Agents
 		{
 			Implants = new ImplantCollection();
 			Skills = new SkillCollection();
+			Training = new SkillTrainingCollection();
 		}
 
 		public ObjectType ObjectType => ObjectType.Agent;
@@ -28,6 +28,7 @@ namespace Echo.Agents
 		public AgentStatistics Statistics { get; set; }
 		public ImplantCollection Implants { get; set; }
 		public SkillCollection Skills { get; set; }
+		public SkillTrainingCollection Training { get; set; }
 
 		public bool CanUse(Ship ship)
 		{
@@ -47,7 +48,7 @@ namespace Echo.Agents
 			return CanUse(bluePrint.BuildRequirements);
 		}
 
-		private bool CanUse(IEnumerable<SkillLevel> requirements)
+		private bool CanUse(IEnumerable<State.SkillLevel> requirements)
 		{
 			return requirements.All(requirement => Skills[requirement.SkillCode].Level >= requirement.Level);
 		}

@@ -33,7 +33,7 @@ namespace Echo.Engine
 		{
 		}
 
-		public Universe Universe { get; private set; }
+		public Universe Universe { get; }
 		public IdleTimer IdleTimer => _idle;
 		public long Tick => _tick;
 

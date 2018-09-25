@@ -5,7 +5,7 @@ namespace Echo.State
 	public class ItemState : IObjectState
 	{
 		public ulong ObjectId { get; set; }
-		public string Name { get; private set; }
+		public string Name { get; set; }
 
 		public ItemCode Code { get; set; }
 		public ItemType Type { get; set; }

@@ -3,9 +3,13 @@ using Echo.Agents.Implants;
 using Echo.Agents.Skills;
 using Echo.Builder;
 using Echo.State;
+
 using AgentStatisticValue = Echo.Statistics.StatisticValue<Echo.Statistics.AgentStatistic, int>;
 using AgentSkillLevel = Echo.Agents.Skills.SkillLevel;
+using AgentSkillTraining = Echo.Agents.Skills.SkillTraining;
+
 using SkillLevel = Echo.State.SkillLevel;
+using SkillTraining = Echo.State.SkillTraining;
 
 namespace Echo.Agents
 {
@@ -26,6 +30,7 @@ namespace Echo.Agents
 				return new ObjectBuilder<Agent>(agent)
 					.Resolve((resolver, target) => target.Location = resolver.Get<ILocation>(state.Location))
 					.Resolve((resolver, target) => target.Skills = new SkillCollection(state.Skills.Select(skill => Build(resolver, skill))))
+					.Resolve((resolver, target) => target.Training = new SkillTrainingCollection(state.Training.Select(skill => Build(resolver, skill))))
 					.Resolve(ApplyStatDeltas);
 			}
 
@@ -37,7 +42,8 @@ namespace Echo.Agents
 					Name = agent.Name,
 					Statistics = agent.Statistics.Select(Save),
 					Skills = agent.Skills.Select(Save),
-					Location = agent.Location.AsObjectReference()
+					Location = agent.Location.AsObjectReference(),
+					Training = agent.Training.Select(Save)
 				};
 			}
 			
@@ -58,7 +64,14 @@ namespace Echo.Agents
 
 			private static AgentSkillLevel Build(IIdResolver resolver, SkillLevel x)
 			{
-				return new AgentSkillLevel { Skill = resolver.Get<SkillInfo>(x.SkillCode.ToObjectReference()), Level = x.Level };
+				var skill = resolver.Get<SkillInfo>(x.SkillCode.ToObjectReference());
+				return new AgentSkillLevel(skill, x.Level);
+			}
+
+			private static AgentSkillTraining Build(IIdResolver resolver, SkillTraining x)
+			{
+				var skill = resolver.Get<SkillInfo>(x.SkillCode.ToObjectReference());
+				return new AgentSkillTraining(skill) { Remaining = x.Remaining, Start = x.Start, Complete = x.Complete, Paused = x.Paused };
 			}
 
 			private static AgentStatisticState Save(AgentStatisticValue x)
@@ -69,6 +82,11 @@ namespace Echo.Agents
 			private static SkillLevel Save(AgentSkillLevel x)
 			{
 				return new SkillLevel(x.Skill.Code, x.Level);
+			}
+
+			private static SkillTraining Save(AgentSkillTraining x)
+			{
+				return new SkillTraining { SkillCode = x.SkillCode, Remaining = x.Remaining, Start = x.Start, Complete = x.Complete, Paused = x.Paused };
 			}
 		}
 	}

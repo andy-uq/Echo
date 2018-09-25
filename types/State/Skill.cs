@@ -8,8 +8,11 @@ namespace Echo.State
 	public class SkillLevel : IEquatable<SkillLevel>
 	{
 		private static readonly Lazy<SkillLevel[]> _defaultSkillLevels = new Lazy<SkillLevel[]>(() => SkillCodes.All.Select(x => new SkillLevel(x, 0)).ToArray());
-
 		public static IEnumerable<SkillLevel> DefaultSkillLevels => _defaultSkillLevels.Value;
+
+		public SkillLevel()
+		{
+		}
 
 		public SkillLevel(SkillCode skillCode, int level)
 		{

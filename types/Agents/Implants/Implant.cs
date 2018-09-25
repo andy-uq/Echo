@@ -5,16 +5,19 @@ namespace Echo.Agents.Implants
 {
 	public class Implant : IStatisticDelta<int>, IEquatable<Implant>
 	{
-		public Implant()
-		{
-		}
-
 		public Implant(AgentStatistic stat)
 		{
 			Stat = stat;
 		}
 
-		public AgentStatistic Stat { get; set; }
+		public Implant(State.Implant implant)
+		{
+			Stat = implant.Stat;
+			Rank = implant.Rank;
+			Value = implant.Value;
+		}
+
+		public AgentStatistic Stat { get; }
 		public int Rank { get; set; }
 		public int Value { get; set; }
 
@@ -29,13 +32,9 @@ namespace Echo.Agents.Implants
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != GetType()) return false;
-			return Equals((Implant) obj);
+			return obj.GetType() == GetType() && Equals((Implant) obj);
 		}
 
-		public override int GetHashCode()
-		{
-			return (int) Stat;
-		}
+		public override int GetHashCode() => (int) Stat;
 	}
 }

@@ -146,11 +146,13 @@ namespace Echo.Console
 			using (var fs = File.CreateText(universeFileName))
 			{
 				var writer = new JsonTextWriter(fs) {Formatting = Formatting.Indented};
-				var serialiser = new JsonSerializer();
-				serialiser.TypeNameHandling = TypeNameHandling.None;
+				var serialiser = new JsonSerializer
+				{
+					TypeNameHandling = TypeNameHandling.None, ConstructorHandling = ConstructorHandling.Default
+				};
+
 				serialiser.Converters.Add(new UInt64Converter());
 				serialiser.Converters.Add(new VectorConverter());
-				serialiser.ConstructorHandling = ConstructorHandling.Default;
 
 				serialiser.Serialize(writer, state);
 			}
@@ -230,7 +232,7 @@ namespace Echo.Console
 				if (_obj.ContainsKey(satellite))
 				{
 					var lastPosition = _obj[satellite];
-					if (lastPosition.X == xOffset && lastPosition.Y == yOffset)
+					if (Units.Equal(lastPosition.X, xOffset) && Units.Equal(lastPosition.Y, yOffset))
 						continue;
 
 					System.Console.SetCursorPosition((int) lastPosition.X, (int) lastPosition.Y);
@@ -327,18 +329,18 @@ namespace Echo.Console
 	{
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			if (value == null)
+			switch (value)
 			{
-				writer.WriteNull();
-			}
-			else if (value is Vector)
-			{
-				var vector = (Vector) value;
-				writer.WriteValue(vector.ToString("g"));
-			}
-			else
-			{
-				throw new JsonSerializationException("Expected Vector object value");
+				case null:
+					writer.WriteNull();
+					break;
+
+				case Vector vector:
+					writer.WriteValue(vector.ToString("g"));
+					break;
+
+				default:
+					throw new JsonSerializationException("Expected Vector object value");
 			}
 		}
 

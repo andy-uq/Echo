@@ -4,7 +4,7 @@ namespace Echo.Ships
 {
 	public class Damage : IStatisticDelta<double>
 	{
-		public DamageType DamageType { get; set; }
+		public DamageType DamageType { get; }
 		public double Value { get; set; }
 
 		public Damage(DamageType damageType)

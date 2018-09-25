@@ -17,7 +17,7 @@ namespace Echo.State
 
 		public string Id { get; set; }
 		public ItemCode Code { get; set; }
-		public virtual ItemType Type { get; set; }
+		public virtual ItemType Type { get; }
 
 		ulong IObject.Id => ObjectId;
 

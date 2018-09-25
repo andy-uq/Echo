@@ -30,11 +30,7 @@ namespace Echo.State
 			}
 		}
 
-		public override ItemType Type
-		{
-			get => ItemType.ShipWeapons;
-			set {  }
-		}
+		public override ItemType Type => ItemType.ShipWeapons;
 
 		public override ObjectType ObjectType => ObjectType.Weapon;
 	}

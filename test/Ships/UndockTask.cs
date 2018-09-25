@@ -11,6 +11,7 @@ using Echo.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
 using SkillLevel = Echo.Agents.Skills.SkillLevel;
+using SkillTraining = Echo.Agents.Skills.SkillTraining;
 
 namespace Echo.Tests.Ships
 {
@@ -68,7 +69,7 @@ namespace Echo.Tests.Ships
 		{
 			var structure = new Manufactory();
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
-			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new SkillLevel { Level = 1 } } } };
+			var pilot = new Agent { Skills = { { new SkillLevel(SkillCode.SpaceshipCommand.ToInfo(), level: 1) } } };
 
 			_task.SetParameters(new UndockShipParameters(ship, pilot));
 			var result = (UndockShipResult)_task.Execute();
@@ -81,7 +82,7 @@ namespace Echo.Tests.Ships
 			var solarSystem = new SolarSystem();
 			var structure = new Manufactory { Position = new Position(solarSystem, Vector.Parse("0,1,0")) };
 			var ship = new Ship { Position = new Position(structure, Vector.Zero), ShipInfo = GetShipInfo() };
-			var pilot = new Agent { Skills = { { SkillCode.SpaceshipCommand, new SkillLevel { Level = 5 } } } };
+			var pilot = new Agent { Skills = { { new SkillLevel(SkillCode.SpaceshipCommand.ToInfo(), level: 5) } } };
 
 			_task.SetParameters(new UndockShipParameters(ship, pilot));
 			

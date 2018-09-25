@@ -38,7 +38,7 @@ namespace Echo.Tests.Agents
 			var state = new AgentState
 			{
 				Statistics = new[] { new AgentStatisticState { Statistic = AgentStatistic.Intelligence, Value = 500 } },
-				Implants = new[] { new Implant(AgentStatistic.Intelligence) { Rank = 6, Value = 1000 } }
+				Implants = new[] { new State.Implant { Stat = AgentStatistic.Intelligence, Rank = 6, Value = 1000 } }
 			};
 
 			var agent = Agent.Builder.Build(state).Build(new TestIdResolver());

@@ -40,10 +40,10 @@ namespace Echo
 				JumpCountCache = new Dictionary<SolarSystem, int>();
 			}
 
-			public SolarSystem SolarSystem { get; set; }
-			private Dictionary<SolarSystem, int> JumpCountCache { get; set; }
+			public SolarSystem SolarSystem { get; }
+			private Dictionary<SolarSystem, int> JumpCountCache { get; }
 
-			public List<JumpEntry> DirectConnections { get; set; }
+			public List<JumpEntry> DirectConnections { get; }
 
 			public int GetJumpCount(SolarSystem target)
 			{

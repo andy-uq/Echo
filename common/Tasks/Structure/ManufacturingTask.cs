@@ -148,7 +148,7 @@ namespace Echo.Tasks.Structure
 			return Success();
 		}
 
-		private ManufacturingResult Success(Item item = null) => new ManufacturingResult { Success = true, Item = item };
+		private ManufacturingResult Success(Item item = null) => new ManufacturingResult(item);
 		private ManufacturingResult Failed(StatusCode statusCode) => new ManufacturingResult(statusCode);
 	}
 }

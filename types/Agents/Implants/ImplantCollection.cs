@@ -14,14 +14,14 @@ namespace Echo.Agents.Implants
 			_implants = new Dictionary<AgentStatistic, Implant>();
 		}
 
-		public ImplantCollection(IEnumerable<Implant> skills)
+		public ImplantCollection(IEnumerable<State.Implant> skills)
 		{
-			_implants = skills.ToDictionary(s => s.Stat);
+			_implants = skills.ToDictionary(s => s.Stat, s => new Implant(s));
 		}
 
 		public Implant this[AgentStatistic stat] => _implants.TryGetValue(stat, out var implant)
 			? implant
-			: new Implant {Stat = stat, Rank = 0, Value = 0};
+			: new Implant(stat) {Rank = 0, Value = 0};
 
 		public IEnumerator<Implant> GetEnumerator() => _implants.Values.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

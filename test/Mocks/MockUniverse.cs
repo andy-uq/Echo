@@ -16,27 +16,27 @@ namespace Echo.Tests.Mocks
 	public class MockUniverse
 	{
 		private readonly IIdGenerator _idGenerator;
-		public SkillInfo SpaceshipCommand { get; set; }
-		public ShipState Ship { get; set; }
-		public AgentState John { get; set; }
-		public CorporationState MSCorp { get; set; }
-		public CorporationState AppleCorp { get; set; }
-		public StructureState Manufactory { get; set; }
-		public StructureState TradingStation { get; set; }
-		public CelestialObjectState Moon { get; set; }
-		public CelestialObjectState Earth { get; set; }
-		public CelestialObjectState AsteroidBelt { get; set; }
-		public SolarSystemState SolarSystem { get; set; }
-		public StarClusterState StarCluster { get; set; }
-		public UniverseState Universe { get; set; }
+		public SkillInfo SpaceshipCommand { get; }
+		public ShipState Ship { get; }
+		public AgentState John { get; }
+		public CorporationState MSCorp { get; }
+		public CorporationState AppleCorp { get; }
+		public StructureState Manufactory { get; }
+		public StructureState TradingStation { get; }
+		public CelestialObjectState Moon { get; }
+		public CelestialObjectState Earth { get; }
+		public CelestialObjectState AsteroidBelt { get; }
+		public SolarSystemState SolarSystem { get; }
+		public StarClusterState StarCluster { get; }
+		public UniverseState Universe { get; }
 
-		public ItemInfo Item { get; set; }
-		public WeaponInfo Weapon { get; set; }
-		public BluePrintInfo BluePrint { get; set; }
-		public BluePrintInfo ShipBluePrint { get; set; }
+		public ItemInfo Item { get; }
+		public WeaponInfo Weapon { get; }
+		public BluePrintInfo BluePrint { get; }
+		public BluePrintInfo ShipBluePrint { get; }
 
-		public AuctionState BuyOrder { get; set; }
-		public AuctionState SellOrder { get; set; }
+		public AuctionState BuyOrder { get; }
+		public AuctionState SellOrder { get; }
 
 		public MockUniverse(IIdGenerator idGenerator = null)
 		{
@@ -53,16 +53,16 @@ namespace Echo.Tests.Mocks
 			{
 				ObjectId = Id(),
 				Name = "John",
-				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState { Statistic = x, CurrentValue = 50, Value = 50 }),
-				Implants = new[] { AgentStatistic.Intelligence, AgentStatistic.Willpower }.Select(x => new Implant { Stat = x, Rank = 3, Value = 15 }),
-				Skills = new[] { new SkillLevel(SkillCode.SpaceshipCommand, level: 5) }
+				Statistics = Enum.GetValues(typeof(AgentStatistic)).Cast<AgentStatistic>().Select(x => new AgentStatisticState {Statistic = x, CurrentValue = 50, Value = 50}),
+				Implants = new[] {AgentStatistic.Intelligence, AgentStatistic.Willpower}.Select(x => new State.Implant { Stat = x, Rank = 3, Value = 15}),
+				Skills = new[] {new SkillLevel(SkillCode.SpaceshipCommand, level: 5)}
 			};
 
 			MSCorp = new CorporationState
 			{
 				ObjectId = Id(),
 				Name = "MS",
-				Employees = new[] { John }
+				Employees = new[] {John}
 			};
 
 			AppleCorp = new CorporationState
@@ -76,7 +76,7 @@ namespace Echo.Tests.Mocks
 				ObjectId = Id(),
 				PricePerUnit = 5,
 				Trader = John.ToObjectReference(),
-				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 50 },
+				Item = new ItemState {Code = ItemCode.Veldnium, Quantity = 50},
 				Owner = MSCorp.ToObjectReference()
 			};
 
@@ -85,7 +85,7 @@ namespace Echo.Tests.Mocks
 				ObjectId = Id(),
 				PricePerUnit = 10,
 				Trader = John.ToObjectReference(),
-				Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 100 },
+				Item = new ItemState {Code = ItemCode.Veldnium, Quantity = 100},
 				Owner = MSCorp.ToObjectReference()
 			};
 
@@ -95,7 +95,7 @@ namespace Echo.Tests.Mocks
 				CelestialObjectType = CelestialObjectType.Planet,
 				Name = "Earth",
 				LocalCoordinates = new Vector(Units.FromAU(1), 0),
-				Mass = Units.SolarMass*1E-6,
+				Mass = Units.SolarMass * 1E-6,
 				Size = 5d
 			};
 			AsteroidBelt = new CelestialObjectState
@@ -128,7 +128,7 @@ namespace Echo.Tests.Mocks
 				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(0.5001, 0, 0),
 				Owner = MSCorp.ToObjectReference(),
-				Manufactory = new ManufactoryState { Efficiency = 0.5d }
+				Manufactory = new ManufactoryState {Efficiency = 0.5d}
 			};
 			TradingStation = new StructureState
 			{
@@ -137,9 +137,16 @@ namespace Echo.Tests.Mocks
 				Orbits = Moon.ToObjectReference(),
 				LocalCoordinates = new Vector(-0.5001, 0, 0),
 				Owner = MSCorp.ToObjectReference(),
-				HangerItems = new[] { new HangarItemState { Owner = MSCorp.ToObjectReference(), Items = new[] { ItemCode.MissileLauncher.ToItemState(quantity:10) }  } },
-				BuyOrders = new[] { BuyOrder },
-				SellOrders = new[] { SellOrder },
+				HangerItems = new[]
+				{
+					new HangarItemState
+					{
+						Owner = MSCorp.ToObjectReference(),
+						Items = new[] {ItemCode.MissileLauncher.ToItemState(quantity: 10)}
+					}
+				},
+				BuyOrders = new[] {BuyOrder},
+				SellOrders = new[] {SellOrder},
 				TradingStation = new TradingStationState()
 			};
 
@@ -153,33 +160,34 @@ namespace Echo.Tests.Mocks
 				{
 					new HardPointState
 					{
-						Position = HardPointPosition.Front, 
+						Position = HardPointPosition.Front,
 						Orientation = HardPoint.CalculateOrientation(HardPointPosition.Front),
-						Speed = 0.5d, 
+						Speed = 0.5d,
 						Weapon = new WeaponState
 						{
-							ObjectId = Id(), 
+							ObjectId = Id(),
 							Name = "Blaster",
 							Code = Weapon.Code
 						}
 					}
 				},
 				Pilot = John,
-				Statistics = Enum.GetValues(typeof(ShipStatistic)).Cast<ShipStatistic>().Select(x => new ShipStatisticState { Statistic = x, CurrentValue = 50, Value = 50 })
+				Statistics = Enum.GetValues(typeof(ShipStatistic)).Cast<ShipStatistic>().Select(x =>
+					new ShipStatisticState {Statistic = x, CurrentValue = 50, Value = 50})
 			};
 			SolarSystem = new SolarSystemState
 			{
 				ObjectId = Id(),
 				Name = "Sol",
-				Satellites = new[] { Earth, Moon, AsteroidBelt },
-				Structures = new[] { Manufactory, TradingStation },
-				Ships = new[] { Ship }
+				Satellites = new[] {Earth, Moon, AsteroidBelt},
+				Structures = new[] {Manufactory, TradingStation},
+				Ships = new[] {Ship}
 			};
 			StarCluster = new StarClusterState
 			{
 				ObjectId = Id(),
 				Name = "Revvon",
-				SolarSystems = new[] { SolarSystem },
+				SolarSystems = new[] {SolarSystem},
 				MarketPlace = new MarketPlaceState
 				{
 					AuctionLength = 10,
@@ -189,14 +197,14 @@ namespace Echo.Tests.Mocks
 						new SettlementState
 						{
 							ObjectId = Id(),
-							Item = new ItemState { Code = ItemCode.Veldnium, Quantity = 50 }, 
-							Owner = MSCorp.ToObjectReference(), 
+							Item = new ItemState {Code = ItemCode.Veldnium, Quantity = 50},
+							Owner = MSCorp.ToObjectReference(),
 							Location = TradingStation.ToObjectReference(),
-							TimeToSettlement = 100, 
-							SpendByOwner = new Dictionary<ObjectReference, long> { { AppleCorp.ToObjectReference(), 1000 } }
+							TimeToSettlement = 100,
+							SpendByOwner = new Dictionary<ObjectReference, long> {{AppleCorp.ToObjectReference(), 1000}}
 						}
 					},
-					Auctions = new[] { BuyOrder.ToObjectReference(), SellOrder.ToObjectReference() }
+					Auctions = new[] {BuyOrder.ToObjectReference(), SellOrder.ToObjectReference()}
 				}
 			};
 
@@ -204,20 +212,20 @@ namespace Echo.Tests.Mocks
 			{
 				ObjectId = universeId,
 				StarClusters = new[] {StarCluster},
-				Weapons = new[] { Weapon },
+				Weapons = new[] {Weapon},
 				Skills = TestSkills.Skills,
-				Corporations = new[] { MSCorp, AppleCorp },
+				Corporations = new[] {MSCorp, AppleCorp},
 				Items = TestItems.Items,
 				BluePrints = TestItems.BluePrints,
 				Ships = new[]
 				{
 					new ShipInfo
 					{
-						Code = ItemCode.LightFrigate, 
-						ShipClass = ShipClass.LightFrigate, 
+						Code = ItemCode.LightFrigate,
+						ShipClass = ShipClass.LightFrigate,
 						PilotRequirements = new[]
 						{
-							new SkillLevel(SkillCode.SpaceshipCommand, level:1)
+							new SkillLevel(SkillCode.SpaceshipCommand, level: 1)
 						}
 					}
 				}

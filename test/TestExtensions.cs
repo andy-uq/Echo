@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Echo.Agents.Skills;
 using Echo.Builder;
 using Echo.Items;
 using Echo.State;
+using Echo.Statistics;
 using test.common;
 
 namespace Echo.Tests
@@ -36,6 +39,26 @@ namespace Echo.Tests
 			var idResolver = new IdResolutionContext(collection);
 
 			return objects.Select(builder => builder.Build(idResolver));
+		}
+
+		public static SkillInfo ToInfo(this SkillCode skillCode)
+		{
+			var skill = new SkillInfo
+			{
+				Code = skillCode,
+				Id = $"skills/{skillCode}",
+				Name = skillCode.ToString("G"),
+			};
+
+			switch (skillCode)
+			{
+				case SkillCode.SpaceshipCommand:
+					skill.PrimaryStat = AgentStatistic.Perception;
+					skill.SecondaryStat = AgentStatistic.Charisma;
+					break;
+			}
+
+			return skill;
 		}
 	}
 }

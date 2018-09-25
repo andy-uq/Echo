@@ -39,11 +39,7 @@ namespace Echo.State
 			return itemFactory.Build(Code, TargetQuantity);
 		}
 
-		public override ItemType Type
-		{
-			get => ItemType.Blueprints;
-			set {  }
-		}
+		public override ItemType Type => ItemType.Blueprints;
 
 		public override ObjectType ObjectType => ObjectType.BluePrint;
 	}
